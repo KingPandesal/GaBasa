@@ -38,3 +38,14 @@ This project follows a **3-layer architecture**:
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/SixxCodes/GaBasa.git
+```
+
+### 2. Open in Visual Studio
+- Open LMS_GaBasa.sln in Visual Studio 2022.
+- Ensure all three projects (Presentation, BusinessLogic, DataAccess) are loaded.
+
+3. Set Startup Project
+- Right-click LMS.Presentation → Set as Startup Project.
+
+4. Build and Run
+- Press F5 to build and run the application.
