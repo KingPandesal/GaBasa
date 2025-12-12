@@ -1,6 +1,7 @@
 # 📚Library Management System (LMS)📚
 
-A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting.  
+A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
+
 This project follows a **3-layer architecture**:
 
 - 🥙**LMS.Presentation** → WinForms UI  
