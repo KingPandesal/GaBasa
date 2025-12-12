@@ -42,10 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Core\User.cs" />
-    <Compile Include="Managers\IUserManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Controllers\IUserController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LMS.DataAccess\LMS.DataAccess.csproj">
+      <Project>{c9f33a9a-e578-4965-bf55-f5615736a17c}</Project>
+      <Name>LMS.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

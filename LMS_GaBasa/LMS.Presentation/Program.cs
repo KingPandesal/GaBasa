@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LMS.Presentation.Forms;
 
 namespace LMS.Presentation
 {
@@ -16,7 +17,7 @@ namespace LMS.Presentation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new Login());
         }
     }
 }
