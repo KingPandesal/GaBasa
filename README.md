@@ -24,7 +24,7 @@ This project follows a **3-layer architecture**:
 ## 🌮Prerequisites
 
 - Windows 10 or later  
-- **Visual Studio 2022** (Community, Professional, or Enterprise)  
+- **Visual Studio 2022** (Community)  
 - **.NET Framework 4.8**  
 - **SQL Server** for database
 
