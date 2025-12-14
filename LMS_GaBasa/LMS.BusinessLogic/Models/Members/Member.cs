@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using LMS.BusinessLogic.Models.Users;
 
-namespace LMS.BusinessLogic.Models
+namespace LMS.BusinessLogic.Models.Members
 {
     public class Member
     {
