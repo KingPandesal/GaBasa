@@ -9,7 +9,7 @@ namespace LMS.DataAccess.Database
 {
     public class DbConnection
     {
-        private string connectionString = @"Server=LAPTOP-40FGBKCR\SQLEXPRESS;Database=LibraryDB;Trusted_Connection=True;";
+        private const string connectionString = @"Server=LAPTOP-40FGBKCR\SQLEXPRESS;Database=LibraryDB;Trusted_Connection=True;";
         // If using SQL Authentication, use:
         // private string connectionString = @"Server=localhost\SQLEXPRESS;Database=LibraryDB;User Id=sa;Password=yourPassword;";
 
@@ -19,6 +19,7 @@ namespace LMS.DataAccess.Database
         }
 
         // Temporary test method
+        // wla mn pud nuon gigamit kay nagbuhat na lang kog button sa login form -ken:>
         public void TestConnection()
         {
             using (var conn = GetConnection())

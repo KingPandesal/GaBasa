@@ -41,18 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Catalog\Author.cs" />
-    <Compile Include="Models\Catalog\Book.cs" />
-    <Compile Include="Models\Catalog\BookCopy.cs" />
-    <Compile Include="Models\Transactions\BorrowingTransaction.cs" />
-    <Compile Include="Models\Catalog\Category.cs" />
-    <Compile Include="Models\Transactions\Fine.cs" />
-    <Compile Include="Models\Members\Member.cs" />
-    <Compile Include="Models\Members\MemberType.cs" />
-    <Compile Include="Models\Transactions\Payment.cs" />
-    <Compile Include="Models\Catalog\Publisher.cs" />
-    <Compile Include="Models\Transactions\Reservation.cs" />
-    <Compile Include="Models\Users\User.cs" />
     <Compile Include="Managers\IUserManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +49,10 @@
     <ProjectReference Include="..\LMS.DataAccess\LMS.DataAccess.csproj">
       <Project>{c9f33a9a-e578-4965-bf55-f5615736a17c}</Project>
       <Name>LMS.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMS.Model\LMS.Model.csproj">
+      <Project>{1a39a60e-34f4-4e5e-8719-b8aea4299f5d}</Project>
+      <Name>LMS.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

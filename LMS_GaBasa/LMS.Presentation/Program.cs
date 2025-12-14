@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LMS.BusinessLogic.Managers;
+using LMS.Presentation.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using LMS.Presentation.Forms;
 
 namespace LMS.Presentation
 {
@@ -17,7 +18,10 @@ namespace LMS.Presentation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+
+            // Presentation only knows about UserManager (BLL)
+            IUserManager userManager = new UserManager(); // UserManager internally creates UserRepository
+            Application.Run(new Login(userManager));
         }
     }
 }

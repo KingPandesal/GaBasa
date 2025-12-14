@@ -32,7 +32,7 @@
             this.lblH1 = new System.Windows.Forms.Label();
             this.lbl3 = new System.Windows.Forms.Label();
             this.lbl2 = new System.Windows.Forms.Label();
-            this.TxtEmail = new System.Windows.Forms.TextBox();
+            this.TxtUsername = new System.Windows.Forms.TextBox();
             this.TxtPassword = new System.Windows.Forms.TextBox();
             this.CmbbxSelectUserType = new System.Windows.Forms.ComboBox();
             this.BtnLogin = new System.Windows.Forms.Button();
@@ -81,14 +81,15 @@
             this.lbl2.TabIndex = 15;
             this.lbl2.Text = "WELCOME BACK, GA!";
             // 
-            // TxtEmail
+            // TxtUsername
             // 
-            this.TxtEmail.Location = new System.Drawing.Point(49, 324);
-            this.TxtEmail.Margin = new System.Windows.Forms.Padding(4);
-            this.TxtEmail.Name = "TxtEmail";
-            this.TxtEmail.Size = new System.Drawing.Size(304, 26);
-            this.TxtEmail.TabIndex = 11;
-            this.TxtEmail.Text = "Enter your email";
+            this.TxtUsername.Location = new System.Drawing.Point(49, 324);
+            this.TxtUsername.Margin = new System.Windows.Forms.Padding(4);
+            this.TxtUsername.Name = "TxtUsername";
+            this.TxtUsername.Size = new System.Drawing.Size(304, 26);
+            this.TxtUsername.TabIndex = 11;
+            this.TxtUsername.Text = "Enter your username";
+            this.TxtUsername.TextChanged += new System.EventHandler(this.TxtUsername_TextChanged);
             // 
             // TxtPassword
             // 
@@ -126,6 +127,7 @@
             this.BtnLogin.TabIndex = 14;
             this.BtnLogin.Text = "Login";
             this.BtnLogin.UseVisualStyleBackColor = false;
+            this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // pictureBox2
             // 
@@ -185,7 +187,7 @@
             this.Controls.Add(this.lblH1);
             this.Controls.Add(this.lbl3);
             this.Controls.Add(this.lbl2);
-            this.Controls.Add(this.TxtEmail);
+            this.Controls.Add(this.TxtUsername);
             this.Controls.Add(this.TxtPassword);
             this.Controls.Add(this.CmbbxSelectUserType);
             this.Controls.Add(this.BtnLogin);
@@ -207,7 +209,7 @@
         private System.Windows.Forms.Label lblH1;
         private System.Windows.Forms.Label lbl3;
         private System.Windows.Forms.Label lbl2;
-        private System.Windows.Forms.TextBox TxtEmail;
+        private System.Windows.Forms.TextBox TxtUsername;
         private System.Windows.Forms.TextBox TxtPassword;
         private System.Windows.Forms.ComboBox CmbbxSelectUserType;
         private System.Windows.Forms.Button BtnLogin;
