@@ -32,10 +32,10 @@
             this.lblH1 = new System.Windows.Forms.Label();
             this.lbl3 = new System.Windows.Forms.Label();
             this.lbl2 = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.cmbbxSelectUserType = new System.Windows.Forms.ComboBox();
-            this.btnLogin = new System.Windows.Forms.Button();
+            this.TxtEmail = new System.Windows.Forms.TextBox();
+            this.TxtPassword = new System.Windows.Forms.TextBox();
+            this.CmbbxSelectUserType = new System.Windows.Forms.ComboBox();
+            this.BtnLogin = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lbl1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -81,55 +81,51 @@
             this.lbl2.TabIndex = 15;
             this.lbl2.Text = "WELCOME BACK, GA!";
             // 
-            // txtEmail
+            // TxtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(49, 324);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(304, 26);
-            this.txtEmail.TabIndex = 11;
-            this.txtEmail.Text = "Enter your email";
-            this.txtEmail.TextChanged += new System.EventHandler(this.txtEmail_TextChanged);
+            this.TxtEmail.Location = new System.Drawing.Point(49, 324);
+            this.TxtEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.TxtEmail.Name = "TxtEmail";
+            this.TxtEmail.Size = new System.Drawing.Size(304, 26);
+            this.TxtEmail.TabIndex = 11;
+            this.TxtEmail.Text = "Enter your email";
             // 
-            // txtPassword
+            // TxtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(49, 391);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(304, 26);
-            this.txtPassword.TabIndex = 12;
-            this.txtPassword.Text = "Enter your password";
-            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
+            this.TxtPassword.Location = new System.Drawing.Point(49, 391);
+            this.TxtPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.TxtPassword.Name = "TxtPassword";
+            this.TxtPassword.Size = new System.Drawing.Size(304, 26);
+            this.TxtPassword.TabIndex = 12;
+            this.TxtPassword.Text = "Enter your password";
             // 
-            // cmbbxSelectUserType
+            // CmbbxSelectUserType
             // 
-            this.cmbbxSelectUserType.FormattingEnabled = true;
-            this.cmbbxSelectUserType.Items.AddRange(new object[] {
+            this.CmbbxSelectUserType.FormattingEnabled = true;
+            this.CmbbxSelectUserType.Items.AddRange(new object[] {
             "Librarian / Admin",
             "Library Staff",
             "Library Member"});
-            this.cmbbxSelectUserType.Location = new System.Drawing.Point(49, 457);
-            this.cmbbxSelectUserType.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbbxSelectUserType.Name = "cmbbxSelectUserType";
-            this.cmbbxSelectUserType.Size = new System.Drawing.Size(304, 28);
-            this.cmbbxSelectUserType.TabIndex = 13;
-            this.cmbbxSelectUserType.Text = "Select User Type";
-            this.cmbbxSelectUserType.SelectedIndexChanged += new System.EventHandler(this.cmbbxSelectUserType_SelectedIndexChanged);
+            this.CmbbxSelectUserType.Location = new System.Drawing.Point(49, 457);
+            this.CmbbxSelectUserType.Margin = new System.Windows.Forms.Padding(4);
+            this.CmbbxSelectUserType.Name = "CmbbxSelectUserType";
+            this.CmbbxSelectUserType.Size = new System.Drawing.Size(304, 28);
+            this.CmbbxSelectUserType.TabIndex = 13;
+            this.CmbbxSelectUserType.Text = "Select User Type";
             // 
-            // btnLogin
+            // BtnLogin
             // 
-            this.btnLogin.BackColor = System.Drawing.Color.Maroon;
-            this.btnLogin.FlatAppearance.BorderSize = 0;
-            this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogin.ForeColor = System.Drawing.Color.White;
-            this.btnLogin.Location = new System.Drawing.Point(49, 529);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(305, 43);
-            this.btnLogin.TabIndex = 14;
-            this.btnLogin.Text = "Login";
-            this.btnLogin.UseVisualStyleBackColor = false;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.BtnLogin.BackColor = System.Drawing.Color.Maroon;
+            this.BtnLogin.FlatAppearance.BorderSize = 0;
+            this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnLogin.ForeColor = System.Drawing.Color.White;
+            this.BtnLogin.Location = new System.Drawing.Point(49, 529);
+            this.BtnLogin.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnLogin.Name = "BtnLogin";
+            this.BtnLogin.Size = new System.Drawing.Size(305, 43);
+            this.BtnLogin.TabIndex = 14;
+            this.BtnLogin.Text = "Login";
+            this.BtnLogin.UseVisualStyleBackColor = false;
             // 
             // pictureBox2
             // 
@@ -189,10 +185,10 @@
             this.Controls.Add(this.lblH1);
             this.Controls.Add(this.lbl3);
             this.Controls.Add(this.lbl2);
-            this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.cmbbxSelectUserType);
-            this.Controls.Add(this.btnLogin);
+            this.Controls.Add(this.TxtEmail);
+            this.Controls.Add(this.TxtPassword);
+            this.Controls.Add(this.CmbbxSelectUserType);
+            this.Controls.Add(this.BtnLogin);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -211,10 +207,10 @@
         private System.Windows.Forms.Label lblH1;
         private System.Windows.Forms.Label lbl3;
         private System.Windows.Forms.Label lbl2;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.ComboBox cmbbxSelectUserType;
-        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.TextBox TxtEmail;
+        private System.Windows.Forms.TextBox TxtPassword;
+        private System.Windows.Forms.ComboBox CmbbxSelectUserType;
+        private System.Windows.Forms.Button BtnLogin;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lbl1;
         private System.Windows.Forms.PictureBox pictureBox1;

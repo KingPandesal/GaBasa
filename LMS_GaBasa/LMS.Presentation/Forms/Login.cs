@@ -18,26 +18,6 @@ namespace LMS.Presentation.Forms
             InitializeComponent();
         }
 
-        private void txtEmail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtPassword_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbbxSelectUserType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-
-        }
-
         // delete or comment ni after testing
         // para lang this test if naka-konek sa datavis
         private void BtnTestConnection_Click(object sender, EventArgs e)
