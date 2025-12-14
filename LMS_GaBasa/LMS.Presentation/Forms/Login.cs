@@ -45,8 +45,15 @@ namespace LMS.Presentation.Forms
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            string username = TxtUsername.Text;
+            string username = TxtUsername.Text.Trim();
             string password = TxtPassword.Text;
+            string selectedRole = GetSelectedRole();
+
+            if (string.IsNullOrEmpty(selectedRole))
+            {
+                MessageBox.Show("Please select a role.");
+                return;
+            }
 
             var user = _userManager.Authenticate(username, password);
 
@@ -56,19 +63,29 @@ namespace LMS.Presentation.Forms
                 return;
             }
 
-            // Redirect based on role
+            // 🔒 Role validation
+            if (!user.Role.Equals(selectedRole, StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Selected role does not match your account role.");
+                return;
+            }
+
+            // ✅ Role-based redirect
             switch (user.Role)
             {
                 case "Admin":
                     new DashboardLibrarian(user).Show();
                     break;
+
                 case "Staff":
                     new DashboardStaff(user).Show();
                     break;
+
                 case "Member":
                     new DashboardMember(user).Show();
                     break;
             }
+
             this.Hide();
         }
 
@@ -76,5 +93,21 @@ namespace LMS.Presentation.Forms
         {
 
         }
+        private string GetSelectedRole()
+        {
+            switch (CmbbxSelectUserType.SelectedItem?.ToString())
+            {
+                case "Librarian / Admin":
+                    return "Admin";
+                case "Library Staff":
+                    return "Staff";
+                case "Library Member":
+                    return "Member";
+                default:
+                    return null;
+            }
+        }
+
+    // end code
     }
 }
