@@ -18,30 +18,55 @@ namespace LMS.Presentation.Forms
     {
         private readonly IUserManager _userManager;
 
+        private void Login_Load(object sender, EventArgs e)
+        {
+            // aron dli focused ang TxtUsername sa sugod
+            this.ActiveControl = lblH1;
+            lblH1.Focus();
+        }
+
         public Login(IUserManager userManager)
         {
             InitializeComponent();
             _userManager = userManager;
+
+            // for placeholders
+            SetPlaceholder(TxtUsername, "Enter your username");
+            SetPlaceholder(TxtPassword, "Enter your password", isPassword: true);
+
         }
 
-        // delete or comment ni after testing
-        // para lang this test if naka-konek sa datavis
-        private void BtnTestConnection_Click(object sender, EventArgs e)
+        private void SetPlaceholder(TextBox textBox, string placeholder, bool isPassword = false)
         {
-            string connString = @"Server=localhost\SQLEXPRESS;Database=LibraryDB;Trusted_Connection=True;";
-            using (var conn = new SqlConnection(connString))
+            textBox.Text = placeholder;
+            textBox.ForeColor = Color.Gray;
+
+            textBox.Enter += (s, e) =>
             {
-                try
+                if (textBox.Text == placeholder)
                 {
-                    conn.Open();
-                    MessageBox.Show("Database Connected!");
+                    textBox.Text = "";
+                    textBox.ForeColor = Color.Black;
+
+                    if (isPassword)
+                        textBox.UseSystemPasswordChar = true;
                 }
-                catch (Exception ex)
+            };
+
+            textBox.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
                 {
-                    MessageBox.Show("Failed: " + ex.Message);
+                    textBox.Text = placeholder;
+                    textBox.ForeColor = Color.Gray;
+
+                    if (isPassword)
+                        textBox.UseSystemPasswordChar = false;
                 }
-            }
+            };
         }
+
+        // ========== EVENT HANDLERS UI ==========
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
@@ -89,10 +114,35 @@ namespace LMS.Presentation.Forms
             this.Hide();
         }
 
-        private void TxtUsername_TextChanged(object sender, EventArgs e)
+        private void ChkbxShowPassword_CheckedChanged(object sender, EventArgs e)
         {
+            // If placeholder is showing, do nothing
+            if (TxtPassword.ForeColor == Color.Gray)
+                return;
 
+            TxtPassword.UseSystemPasswordChar = !ChkbxShowPassword.Checked;
         }
+
+        // ========== NOT RELATED TO UI ==========
+        // delete or comment ni after testing
+        // para lang this test if naka-konek sa datavis
+        private void BtnTestConnection_Click(object sender, EventArgs e)
+        {
+            string connString = @"Server=localhost\SQLEXPRESS;Database=LibraryDB;Trusted_Connection=True;";
+            using (var conn = new SqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+                    MessageBox.Show("Database Connected!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed: " + ex.Message);
+                }
+            }
+        }
+
         private string GetSelectedRole()
         {
             switch (CmbbxSelectUserType.SelectedItem?.ToString())
@@ -108,6 +158,6 @@ namespace LMS.Presentation.Forms
             }
         }
 
-    // end code
+        // end code
     }
 }

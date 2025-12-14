@@ -40,6 +40,7 @@
             this.lbl1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BtnTestConnection = new System.Windows.Forms.Button();
+            this.ChkbxShowPassword = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -89,14 +90,13 @@
             this.TxtUsername.Size = new System.Drawing.Size(304, 26);
             this.TxtUsername.TabIndex = 11;
             this.TxtUsername.Text = "Enter your username";
-            this.TxtUsername.TextChanged += new System.EventHandler(this.TxtUsername_TextChanged);
             // 
             // TxtPassword
             // 
             this.TxtPassword.Location = new System.Drawing.Point(49, 391);
             this.TxtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPassword.Name = "TxtPassword";
-            this.TxtPassword.Size = new System.Drawing.Size(304, 26);
+            this.TxtPassword.Size = new System.Drawing.Size(275, 26);
             this.TxtPassword.TabIndex = 12;
             this.TxtPassword.Text = "Enter your password";
             // 
@@ -172,6 +172,17 @@
             this.BtnTestConnection.UseVisualStyleBackColor = true;
             this.BtnTestConnection.Click += new System.EventHandler(this.BtnTestConnection_Click);
             // 
+            // ChkbxShowPassword
+            // 
+            this.ChkbxShowPassword.AutoSize = true;
+            this.ChkbxShowPassword.BackColor = System.Drawing.Color.Transparent;
+            this.ChkbxShowPassword.Location = new System.Drawing.Point(331, 395);
+            this.ChkbxShowPassword.Name = "ChkbxShowPassword";
+            this.ChkbxShowPassword.Size = new System.Drawing.Size(22, 21);
+            this.ChkbxShowPassword.TabIndex = 22;
+            this.ChkbxShowPassword.UseVisualStyleBackColor = false;
+            this.ChkbxShowPassword.CheckedChanged += new System.EventHandler(this.ChkbxShowPassword_CheckedChanged);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -180,6 +191,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1058, 744);
+            this.Controls.Add(this.ChkbxShowPassword);
             this.Controls.Add(this.BtnTestConnection);
             this.Controls.Add(this.lbl1);
             this.Controls.Add(this.pictureBox2);
@@ -198,6 +210,7 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.Login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -217,5 +230,6 @@
         private System.Windows.Forms.Label lbl1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button BtnTestConnection;
+        private System.Windows.Forms.CheckBox ChkbxShowPassword;
     }
 }
