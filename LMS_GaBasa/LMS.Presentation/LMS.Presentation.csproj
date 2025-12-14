@@ -46,11 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Dashboard.cs">
+    <Compile Include="Forms\Dashboards\DashboardLibrarian.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dashboard.Designer.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
+    <Compile Include="Forms\Dashboards\DashboardLibrarian.Designer.cs">
+      <DependentUpon>DashboardLibrarian.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dashboards\DashboardMember.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dashboards\DashboardMember.Designer.cs">
+      <DependentUpon>DashboardMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dashboards\DashboardStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dashboards\DashboardStaff.Designer.cs">
+      <DependentUpon>DashboardStaff.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Login.cs">
       <SubType>Form</SubType>
@@ -60,6 +72,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Dashboards\DashboardLibrarian.resx">
+      <DependentUpon>DashboardLibrarian.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dashboards\DashboardMember.resx">
+      <DependentUpon>DashboardMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dashboards\DashboardStaff.resx">
+      <DependentUpon>DashboardStaff.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,6 +111,9 @@
     <None Include="Resources\pictures\BG-login.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Forms\Librarian\" />
+    <Folder Include="Forms\LibraryMember\" />
+    <Folder Include="Forms\LibraryStaff\" />
     <Folder Include="Resources\logos\" />
   </ItemGroup>
   <ItemGroup>

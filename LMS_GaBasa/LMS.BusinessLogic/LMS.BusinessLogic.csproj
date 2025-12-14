@@ -43,8 +43,8 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Controllers\IUserController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Managers\IUserManager.cs" />
+    <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
