@@ -31,23 +31,43 @@ namespace LMS.DataAccess.Repositories
 
                 // SQL command to select user info based on username
                 using (var cmd = new SqlCommand(
-                    "SELECT UserID, Username, [Password], [Role], [Status], FirstName, LastName FROM [User] WHERE Username=@Username", conn))
+                    "SELECT UserID, Username, [Password], [Role], [Status], FirstName, LastName " +
+                    "FROM [User] WHERE Username = @Username", conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", username);
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            user = new User
+                            string role = reader.GetString(3);
+
+                            // Role-based object creation (POLYMORPHISM)
+                            switch (role)
                             {
-                                UserID = reader.GetInt32(0),
-                                Username = reader.GetString(1),
-                                Password = reader.GetString(2),
-                                Role = reader.GetString(3),
-                                Status = reader.GetString(4),
-                                FirstName = reader.GetString(5),
-                                LastName = reader.GetString(6)
-                            };
+                                case "Admin":
+                                    user = new Librarian();
+                                    break;
+
+                                case "Staff":
+                                    user = new LibraryStaff();
+                                    break;
+
+                                case "Member":
+                                    user = new Member();
+                                    break;
+
+                                default:
+                                    throw new Exception("Invalid user role found in database.");
+                            }
+
+                            // Common properties
+                            user.UserID = reader.GetInt32(0);
+                            user.Username = reader.GetString(1);
+                            user.Password = reader.GetString(2);
+                            user.FirstName = reader.GetString(5);
+                            user.LastName = reader.GetString(6);
+                            user.Status = reader.GetString(4);
                         }
                     }
                 }

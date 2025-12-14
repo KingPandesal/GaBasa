@@ -35,7 +35,6 @@ namespace LMS.BusinessLogic.Managers
                 byte[] bytes = Encoding.UTF8.GetBytes(password);
                 byte[] hash = sha256.ComputeHash(bytes);
 
-                // Convert to HEX string (same as SQL Server style)
                 StringBuilder sb = new StringBuilder();
                 foreach (byte b in hash)
                     sb.Append(b.ToString("X2"));
