@@ -8,7 +8,14 @@ namespace LMS.Model.Models.Users
 {
     public class Member : User
     {
-        public override string Role => "Member";
+        public override Role Role => Role.Member;
+
+        // update: obsolete methods moved to RolePermissionService
+        //public override bool CanManageUsers() => false;
+        //public override bool CanManageCatalog() => false;
+        //public override bool CanCirculateBooks() => false;
+        //public override bool CanViewReports() => false;
+
     }
 
 }

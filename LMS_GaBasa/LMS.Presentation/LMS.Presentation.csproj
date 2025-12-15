@@ -121,6 +121,10 @@
       <Project>{6f8e3d39-0820-4084-9242-6dea1cab1ef1}</Project>
       <Name>LMS.BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LMS.DataAccess\LMS.DataAccess.csproj">
+      <Project>{c9f33a9a-e578-4965-bf55-f5615736a17c}</Project>
+      <Name>LMS.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LMS.Model\LMS.Model.csproj">
       <Project>{1a39a60e-34f4-4e5e-8719-b8aea4299f5d}</Project>
       <Name>LMS.Model</Name>

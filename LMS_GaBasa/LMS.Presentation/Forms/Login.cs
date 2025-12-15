@@ -1,4 +1,5 @@
 ﻿using LMS.BusinessLogic.Managers;
+using LMS.Model.Models.Users;
 using LMS.Presentation.Forms.Librarian;
 using LMS.Presentation.Forms.LibraryMember;
 using LMS.Presentation.Forms.LibraryStaff;
@@ -23,6 +24,7 @@ namespace LMS.Presentation.Forms
             // aron dli focused ang TxtUsername sa sugod
             this.ActiveControl = lblH1;
             lblH1.Focus();
+            LoadRoles();
         }
 
         public Login(IUserManager userManager)
@@ -66,54 +68,7 @@ namespace LMS.Presentation.Forms
             };
         }
 
-        // ========== EVENT HANDLERS UI ==========
-
-        private void BtnLogin_Click(object sender, EventArgs e)
-        {
-            string username = TxtUsername.Text.Trim();
-            string password = TxtPassword.Text;
-            string selectedRole = GetSelectedRole();
-
-            if (string.IsNullOrEmpty(selectedRole))
-            {
-                MessageBox.Show("Please select a role.");
-                return;
-            }
-
-            var user = _userManager.Authenticate(username, password);
-
-            if (user == null)
-            {
-                MessageBox.Show("Invalid credentials or inactive account.");
-                return;
-            }
-
-            // 🔒 Role validation
-            if (!user.Role.Equals(selectedRole, StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show("Selected role does not match your account role.");
-                return;
-            }
-
-            // ✅ Role-based redirect
-            switch (user.Role)
-            {
-                case "Admin":
-                    new DashboardLibrarian(user).Show();
-                    break;
-
-                case "Staff":
-                    new DashboardStaff(user).Show();
-                    break;
-
-                case "Member":
-                    new DashboardMember(user).Show();
-                    break;
-            }
-
-            this.Hide();
-        }
-
+        // ========== ChkbxShowPassword ==========
         private void ChkbxShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             // If placeholder is showing, do nothing
@@ -123,7 +78,103 @@ namespace LMS.Presentation.Forms
             TxtPassword.UseSystemPasswordChar = !ChkbxShowPassword.Checked;
         }
 
-        // ========== NOT RELATED TO UI ==========
+        // para lang ni sa combobox
+        // kay dli mn match ang enums ug ang options sa cmbbx
+        // -ken:>
+        // update: obsolete
+        private string GetSelectedRole()
+        {
+            switch (CmbbxSelectUserType.SelectedItem?.ToString())
+            {
+                case "Librarian / Admin":
+                    return "Admin";
+                case "Library Staff":
+                    return "Staff";
+                case "Library Member":
+                    return "Member";
+                default:
+                    return null;
+            }
+        }
+
+        // ========== BtnLogin ==========
+        private void BtnLogin_Click(object sender, EventArgs e)
+        {
+            string username = TxtUsername.Text.Trim();
+            string password = TxtPassword.Text;
+
+            if (CmbbxSelectUserType.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a role.");
+                return;
+            }
+
+            var user = _userManager.Authenticate(username, password);
+
+            if (user == null)
+            {
+                MessageBox.Show("Invalid username or password.");
+                return;
+            }
+
+            Role selectedRole =
+                ((KeyValuePair<string, Role>)CmbbxSelectUserType.SelectedItem).Value;
+
+            if (user.Role != selectedRole)
+            {
+                MessageBox.Show("Selected role does not match your account.");
+                return;
+            }
+
+            OpenDashboard(user);
+            this.Hide();
+        }
+
+
+        private void OpenDashboard(User user)
+        {
+            Form dashboard;
+
+            switch (user.Role)
+            {
+                case Role.Librarian:
+                    dashboard = new DashboardLibrarian(user);
+                    break;
+
+                case Role.Staff:
+                    dashboard = new DashboardStaff(user);
+                    break;
+
+                case Role.Member:
+                    dashboard = new DashboardMember(user);
+                    break;
+
+                default:
+                    throw new InvalidOperationException("Unknown user role.");
+            }
+
+            dashboard.Show();
+        }
+
+        private void LoadRoles()
+        {
+            CmbbxSelectUserType.Items.Clear();
+
+            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
+                "Librarian / Admin", Role.Librarian));
+
+            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
+                "Library Staff", Role.Staff));
+
+            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
+                "Library Member", Role.Member));
+
+            CmbbxSelectUserType.DisplayMember = "Key";
+            CmbbxSelectUserType.ValueMember = "Value";
+            CmbbxSelectUserType.SelectedIndex = -1;
+        }
+
+        // ========== NOT UI ==========
         // delete or comment ni after testing
         // para lang this test if naka-konek sa datavis
         private void BtnTestConnection_Click(object sender, EventArgs e)
@@ -140,21 +191,6 @@ namespace LMS.Presentation.Forms
                 {
                     MessageBox.Show("Failed: " + ex.Message);
                 }
-            }
-        }
-
-        private string GetSelectedRole()
-        {
-            switch (CmbbxSelectUserType.SelectedItem?.ToString())
-            {
-                case "Librarian / Admin":
-                    return "Admin";
-                case "Library Staff":
-                    return "Staff";
-                case "Library Member":
-                    return "Member";
-                default:
-                    return null;
             }
         }
 

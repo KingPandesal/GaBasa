@@ -11,18 +11,42 @@ namespace LMS.Model.Models.Users
     {
         public int UserID { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; } // hashed
+        protected string PasswordHash { get; private set; } // hashed
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string ContactNumber { get; set; }
         public string Status { get; set; }
-        // Enum: Active, Inactive
+        // Enum (Database): Active, Inactive
+        // Maybe daw magbuhat na pud ug enum jud for status
 
-        public abstract string Role { get; }
-        // Enum: Admin, Staff, Member
+        public abstract Role Role { get; }
+        // Enum (Db): Admin, Staff, Member
         // abstract
-        // dli ma-set na property -ken:>
+
+        // ========== PERMISSIONS ==========
+        // obsolete -ken:>
+        //public abstract bool CanManageUsers();
+        //public abstract bool CanManageCatalog();
+        //public abstract bool CanCirculateBooks();
+        //public abstract bool CanViewReports();
+
+        // ========== PASSWORD HANDLING ==========
+        public void SetPasswordHash(string passwordHash)
+        {
+            PasswordHash = passwordHash;
+        }
+
+        public bool VerifyPasswordHash(string hashedInput)
+        {
+            return PasswordHash == hashedInput;
+        }
+
+        // ========== COMMON BEHAVIOR ==========
+        public string GetFullName()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 
 }

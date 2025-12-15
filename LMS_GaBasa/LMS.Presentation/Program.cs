@@ -1,4 +1,6 @@
 ﻿using LMS.BusinessLogic.Managers;
+using LMS.BusinessLogic.Security;
+using LMS.DataAccess.Repositories;
 using LMS.Presentation.Forms;
 using System;
 using System.Collections.Generic;
@@ -19,8 +21,10 @@ namespace LMS.Presentation
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Presentation only knows about UserManager (BLL)
-            IUserManager userManager = new UserManager(); // UserManager internally creates UserRepository
+            IUserRepository userRepo = new UserRepository();
+            IPasswordHasher hasher = new Sha256PasswordHasher();
+            IUserManager userManager = new UserManager(userRepo, hasher);
+
             Application.Run(new Login(userManager));
         }
     }

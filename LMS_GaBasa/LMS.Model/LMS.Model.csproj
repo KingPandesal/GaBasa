@@ -55,6 +55,7 @@
     <Compile Include="Models\Users\Librarian.cs" />
     <Compile Include="Models\Users\LibraryStaff.cs" />
     <Compile Include="Models\Users\Member.cs" />
+    <Compile Include="Models\Enums\Role.cs" />
     <Compile Include="Models\Users\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
