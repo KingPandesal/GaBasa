@@ -100,6 +100,7 @@ namespace LMS.Presentation.Forms
         // ========== BtnLogin ==========
         private void BtnLogin_Click(object sender, EventArgs e)
         {
+            // Dungagi handling para sa wa na match na creds -ken:>
             string username = TxtUsername.Text.Trim();
             string password = TxtPassword.Text;
 

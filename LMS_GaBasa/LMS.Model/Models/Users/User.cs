@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.Model.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,15 @@ namespace LMS.Model.Models.Users
 {
     public abstract class User
     {
-        public int UserID { get; set; }
-        public string Username { get; set; }
+        public int UserID { get; internal set; }
+        public string Username { get; internal  set; }
         protected string PasswordHash { get; private set; } // hashed
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string ContactNumber { get; set; }
-        public string Status { get; set; }
+        public string FirstName { get; internal set; }
+        public string LastName { get; internal set; }
+        public string Email { get; internal set; }
+        public string ContactNumber { get; internal set; }
+        public UserStatus Status { get; internal set; }
         // Enum (Database): Active, Inactive
-        // Maybe daw magbuhat na pud ug enum jud for status
 
         public abstract Role Role { get; }
         // Enum (Db): Admin, Staff, Member
@@ -37,7 +37,7 @@ namespace LMS.Model.Models.Users
             PasswordHash = passwordHash;
         }
 
-        public bool VerifyPasswordHash(string hashedInput)
+        public bool HashPasswordHash(string hashedInput)
         {
             return PasswordHash == hashedInput;
         }

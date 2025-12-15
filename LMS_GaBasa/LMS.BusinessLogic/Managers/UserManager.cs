@@ -1,4 +1,5 @@
 ﻿using LMS.DataAccess.Repositories;
+using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -28,13 +29,14 @@ namespace LMS.BusinessLogic.Managers
             if (user == null)
                 return null;
 
-            if (user.Status != "Active")
+            // compare against enum now
+            if (user.Status != UserStatus.Active)
                 return null;
 
             // Hash input with injected hasher then verify against stored hash
             string hashedInput = _passwordHasher.Hash(password);
 
-            if (!user.VerifyPasswordHash(hashedInput))
+            if (!user.HashPasswordHash(hashedInput))
                 return null;
 
             return user;

@@ -46,6 +46,7 @@
     <Compile Include="Models\Catalog\BookCopy.cs" />
     <Compile Include="Models\Catalog\Category.cs" />
     <Compile Include="Models\Catalog\Publisher.cs" />
+    <Compile Include="Models\Enums\UserStatus.cs" />
     <Compile Include="Models\Members\Member.cs" />
     <Compile Include="Models\Members\MemberType.cs" />
     <Compile Include="Models\Transactions\BorrowingTransaction.cs" />

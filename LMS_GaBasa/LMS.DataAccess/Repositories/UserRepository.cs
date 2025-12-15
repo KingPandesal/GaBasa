@@ -1,4 +1,5 @@
 ﻿using LMS.DataAccess.Database;
+using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,17 @@ namespace LMS.DataAccess.Repositories
                         user.SetPasswordHash(passwordHash);
                     user.FirstName = firstName;
                     user.LastName = lastName;
-                    user.Status = status;
+
+                    // Map status string to UserStatus enum (case-insensitive).
+                    // Default to Inactive if unknown.
+                    if (!string.IsNullOrEmpty(status) && Enum.TryParse<UserStatus>(status, true, out var parsedStatus))
+                    {
+                        user.Status = parsedStatus;
+                    }
+                    else
+                    {
+                        user.Status = UserStatus.Inactive;
+                    }
                 }
             }
 
