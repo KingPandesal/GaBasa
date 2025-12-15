@@ -4,14 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace LMS.DataAccess.Database
 {
     public class DbConnection
     {
-        private const string connectionString = @"Server=LAPTOP-40FGBKCR\SQLEXPRESS;Database=LibraryDB;Trusted_Connection=True;";
-        // If using SQL Authentication, use:
-        // private string connectionString = @"Server=localhost\SQLEXPRESS;Database=LibraryDB;User Id=sa;Password=yourPassword;";
+
+        private readonly string connectionString;
+        // ga-use ako ng Windows Auth, tingkyu -ken:>
+        public DbConnection()
+        {
+            connectionString = ConfigurationManager
+                .ConnectionStrings["LibraryDb"]
+                .ConnectionString;
+        }
+
 
         public SqlConnection GetConnection()
         {
