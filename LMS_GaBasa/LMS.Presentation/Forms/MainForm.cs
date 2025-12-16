@@ -74,74 +74,42 @@ namespace LMS.Presentation.Forms
             }
         };
 
-        // Generates sidebar based on role and categories
+        // ========== SIDEBAR ==========
         private void InitializeSidebar(Role role)
         {
             PnlSidebar.Controls.Clear();
-            PnlSidebar.Dock = DockStyle.None;
-            PnlSidebar.AutoScroll = true;
 
-            // Logout FIRST (Dock.Bottom rule)
+            // pabaliktad kay ambot
+            // 1️ Logout — BOTTOM
             var logoutBtn = new Button
             {
-                Text = "  Logout",
-                Font = new Font("Microsoft Sans Serif", 13, FontStyle.Bold),
-                ForeColor = Color.White,
+                Text = "               Logout", // 15 spaces, reserved for icons
                 Height = 40,
                 Dock = DockStyle.Bottom,
                 FlatStyle = FlatStyle.Flat,
+                Font = new Font("Microsoft Sans Serif, ", 11),
+                ForeColor = Color.White,
                 TextAlign = ContentAlignment.MiddleLeft
             };
             logoutBtn.FlatAppearance.BorderSize = 0;
             logoutBtn.Click += LogoutButton_Click;
             PnlSidebar.Controls.Add(logoutBtn);
 
-            // Build categories top-down
-            foreach (var category in _sidebarItems[role].Reverse())
+            // 2️ Modules panel — FILL (ADD THIS BEFORE PROFILE)
+            var modulesPanel = new Panel
             {
-                var categoryPanel = new Panel
-                {
-                    Dock = DockStyle.Top,
-                    AutoSize = true
-                };
+                Dock = DockStyle.Fill,
+                AutoScroll = true
+            };
+            BuildModules(modulesPanel, role);
+            PnlSidebar.Controls.Add(modulesPanel);
 
-                // Add buttons (reverse so visual order is correct)
-                foreach (var module in category.Value.Reverse())
-                {
-                    var btn = new Button
-                    {
-                        Text = "  " + module,
-                        Height = 40,
-                        Dock = DockStyle.Top,
-                        FlatStyle = FlatStyle.Flat,
-                        Font = new Font("Microsoft Sans Serif", 13, FontStyle.Bold),
-                        TextAlign = ContentAlignment.MiddleLeft,
-                        Tag = module,
-                        ForeColor = Color.White
-                    };
-                    btn.FlatAppearance.BorderSize = 0;
-                    btn.Click += SidebarButton_Click;
-
-                    categoryPanel.Controls.Add(btn);
-                }
-
-                // Add catgegory label LAST (so it appears on top)
-                var lbl = new Label
-                {
-                    Text = category.Key,
-                    Height = 25,
-                    Dock = DockStyle.Top,
-                    Font = new Font("Microsoft Sans Serif", 10),
-                    Padding = new Padding(10, 0, 0, 0),
-                    ForeColor = Color.White
-                };
-
-                categoryPanel.Controls.Add(lbl);
-                PnlSidebar.Controls.Add(categoryPanel);
-            }
+            // 3️ Profile header — TOP (ADD LAST)
+            var profileHeader = CreateProfileHeader();
+            profileHeader.Dock = DockStyle.Top;
+            PnlSidebar.Controls.Add(profileHeader);
         }
-
-
+        
         // Handles sidebar button clicks
         private void SidebarButton_Click(object sender, EventArgs e)
         {
@@ -149,22 +117,6 @@ namespace LMS.Presentation.Forms
             {
                 LoadContentByName(moduleName);
             }
-        }
-
-        // Logout click handler
-        private void LogoutButton_Click(object sender, EventArgs e)
-        {
-            var confirm = MessageBox.Show("Are you sure you want to log out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirm != DialogResult.Yes)
-                return;
-
-            // restart app so startup/login flow runs again.
-            Application.Restart();
-
-            // this.Hide();
-            // var login = new Login(yourUserManagerInstanceHere);
-            // login.Show();
-            // this.Close();
         }
 
         private UserControl GetDashboardByRole()
@@ -185,6 +137,119 @@ namespace LMS.Presentation.Forms
             }
         }
 
+        // ========== PROFILE MODULE ==========
+        private Panel CreateProfileHeader()
+        {
+            // Profile panel
+            var panel = new Panel
+            {
+                Height = 80,
+                Dock = DockStyle.Top,
+                Padding = new Padding(10)
+            };
+
+            // Profile pic
+            var pic = new PictureBox
+            {
+                Size = new Size(60, 60),
+                Location = new Point(10, 10),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+
+            // Full Name
+            var lblName = new Label
+            {
+                Text = "Zy Manti",
+                Location = new Point(80, 20),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.White
+            };
+
+            // Role
+            var lblRole = new Label
+            {
+                Text = _currentRole.ToString(),
+                Location = new Point(80, 45),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 9),
+                ForeColor = Color.White
+            };
+
+            panel.Controls.Add(pic);
+            panel.Controls.Add(lblName);
+            panel.Controls.Add(lblRole);
+
+            // If click: load profile module
+            panel.Cursor = Cursors.Hand;
+            panel.Click += (s, e) => LoadContentByName("Profile");
+
+            return panel;
+        }
+
+        // ========== ALL MODULES OF CURRENT USER'S ROLE ==========
+        private void BuildModules(Panel container, Role role)
+        {
+            foreach (var category in _sidebarItems[role].Reverse())
+            {
+                var categoryPanel = new Panel
+                {
+                    Dock = DockStyle.Top,
+                    AutoSize = true
+                };
+
+                foreach (var module in category.Value.Reverse())
+                {
+                    var btn = new Button
+                    {
+                        Text = "              " + module, // 15 spaces, reserved for icons
+                        Height = 40,
+                        Font = new Font("Microsoft Sans Serif, ", 11),
+                        ForeColor = Color.White,
+                        Dock = DockStyle.Top,
+                        FlatStyle = FlatStyle.Flat,
+                        TextAlign = ContentAlignment.MiddleLeft,
+                        Tag = module
+                    };
+                    btn.FlatAppearance.BorderSize = 0;
+                    btn.Click += SidebarButton_Click;
+
+                    categoryPanel.Controls.Add(btn);
+                }
+
+                var lbl = new Label
+                {
+                    Text = category.Key,
+                    Height = 15,
+                    Dock = DockStyle.Top,
+                    Padding = new Padding(10, 0, 0, 0),
+                    Font = new Font("Microsoft Sans Serif, ", 7),
+                    ForeColor = Color.White
+                };
+
+                categoryPanel.Controls.Add(lbl);
+                container.Controls.Add(categoryPanel);
+            }
+        }
+
+        // ========== LOGOUT ==========
+        // Logout click handler
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show("Are you sure you want to log out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm != DialogResult.Yes)
+                return;
+
+            // restart app so startup/login flow runs again.
+            Application.Restart();
+
+            // this.Hide();
+            // var login = new Login(yourUserManagerInstanceHere);
+            // login.Show();
+            // this.Close();
+        }
+
+        // ========== MORE ==========
         private void BuildModuleFactories()
         {
             _moduleFactories.Clear();
@@ -244,5 +309,6 @@ namespace LMS.Presentation.Forms
             return uc;
         }
 
+        // end code
     }
 }
