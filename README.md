@@ -5,7 +5,7 @@ A Windows Desktop Application built with **C# .NET Framework WinForms** for mana
 This project follows a **3-layer architecture**:
 
 - 🥙**LMS.Presentation** → WinForms UI  
-- 🥪**LMS.BusinessLogic** → Business Logic Layer (Managers, core classes)  
+- 🥪**LMS.BusinessLogic** → Business Logic Layer (Managers)  
 - 🍔**LMS.DataAccess** → Data Access Layer (Repositories, DB connection)  
 
 ---
