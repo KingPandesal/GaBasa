@@ -37,10 +37,10 @@ namespace LMS.Presentation.Forms
         {
             { Role.Librarian, new Dictionary<string, string[]>
                 {
-                    { "MAIN", new string[] { "Dashboard" } },
+                    { "MAIN", new string[] { "Dashboard",
+                                             "Catalog" } },
                     { "MANAGEMENT", new string[] { "Users",
                                                     "Members",
-                                                    "Catalog",
                                                     "Circulation",
                                                     "Reservations",
                                                     "Inventory",
@@ -51,9 +51,9 @@ namespace LMS.Presentation.Forms
             },
             { Role.Staff, new Dictionary<string, string[]>
                 {
-                    { "MAIN", new string[] { "Dashboard" } },
+                    { "MAIN", new string[] { "Dashboard",
+                                             "Catalog" } },
                     { "MANAGEMENT", new string[] { "Members", 
-                                                    "Catalog", 
                                                     "Transactions", 
                                                     "Fines", 
                                                     "Inventory" } },
@@ -62,9 +62,9 @@ namespace LMS.Presentation.Forms
             },
             { Role.Member, new Dictionary<string, string[]>
                 {
-                    { "MAIN", new string[] { "Dashboard" } },
-                    { "MANAGEMENT", new string[] { "Books", 
-                                                    "Borrowed", 
+                    { "MAIN", new string[] { "Dashboard", 
+                                             "Catalog" } },
+                    { "MANAGEMENT", new string[] { "Borrowed", 
                                                     "Overdue", 
                                                     "Reserve", 
                                                     "Wishlist", 
@@ -258,7 +258,9 @@ namespace LMS.Presentation.Forms
         {
             _moduleFactories.Clear();
             _moduleFactories["Dashboard"] = () => GetDashboardByRole();
-            _moduleFactories["Users"] = () => new UserControl();
+            _moduleFactories["Users"] = () => new UserControls.Management.UCUsers();
+            _moduleFactories["Members"] = () => new UserControls.Management.UCMembers();
+            _moduleFactories["Catalog"] = () => new UserControls.UCCatalog();
 
             // Add Profile factory so clicking the profile header shows UCProfile for all roles
             _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);

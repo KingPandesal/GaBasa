@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -173,6 +173,7 @@
             this.lostBorderPanel4.ShowText = true;
             this.lostBorderPanel4.Size = new System.Drawing.Size(346, 221);
             this.lostBorderPanel4.TabIndex = 11;
+            this.lostBorderPanel4.Click += new System.EventHandler(this.lostBorderPanel4_Click);
             // 
             // label9
             // 
@@ -299,16 +300,16 @@
             // 
             // ChartBorrowingTrend
             // 
-            chartArea7.Name = "ChartArea1";
-            this.ChartBorrowingTrend.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.ChartBorrowingTrend.Legends.Add(legend7);
+            chartArea9.Name = "ChartArea1";
+            this.ChartBorrowingTrend.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.ChartBorrowingTrend.Legends.Add(legend9);
             this.ChartBorrowingTrend.Location = new System.Drawing.Point(3, 48);
             this.ChartBorrowingTrend.Name = "ChartBorrowingTrend";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.ChartBorrowingTrend.Series.Add(series7);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.ChartBorrowingTrend.Series.Add(series9);
             this.ChartBorrowingTrend.Size = new System.Drawing.Size(692, 170);
             this.ChartBorrowingTrend.TabIndex = 0;
             this.ChartBorrowingTrend.Text = "chart1";
@@ -330,16 +331,16 @@
             // 
             // ChartLibraryCompletion
             // 
-            chartArea8.Name = "ChartArea1";
-            this.ChartLibraryCompletion.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.ChartLibraryCompletion.Legends.Add(legend8);
+            chartArea10.Name = "ChartArea1";
+            this.ChartLibraryCompletion.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.ChartLibraryCompletion.Legends.Add(legend10);
             this.ChartLibraryCompletion.Location = new System.Drawing.Point(3, 45);
             this.ChartLibraryCompletion.Name = "ChartLibraryCompletion";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.ChartLibraryCompletion.Series.Add(series8);
+            series10.ChartArea = "ChartArea1";
+            series10.Legend = "Legend1";
+            series10.Name = "Series1";
+            this.ChartLibraryCompletion.Series.Add(series10);
             this.ChartLibraryCompletion.Size = new System.Drawing.Size(340, 173);
             this.ChartLibraryCompletion.TabIndex = 0;
             this.ChartLibraryCompletion.Text = "chart1";
