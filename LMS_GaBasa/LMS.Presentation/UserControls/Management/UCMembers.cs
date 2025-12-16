@@ -4,9 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
-
-using LMS.DataAccess.Database;              
+using LMS.DataAccess.Database;
 
 namespace LMS.Presentation.UserControls.Management
 {
@@ -15,7 +13,7 @@ namespace LMS.Presentation.UserControls.Management
         private readonly DbConnection _db = new DbConnection();
         private readonly Sha256PasswordHasher _hasher = new Sha256PasswordHasher();
 
-        public UCMembers()
+        public UCMembers()  
         {
             InitializeComponent();
 
@@ -35,20 +33,24 @@ namespace LMS.Presentation.UserControls.Management
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (var form = new RegistrationForm())
+            using (var form = new RegistrationForm(_db))
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        RegisterUser(
+                        RegisterUserWithMember(
                             form.Username,
                             form.Password,
                             form.FirstName,
                             form.LastName,
-                            form.Role,         // database role string: "Admin"/"Staff"/"Member"
+                            form.Role,         // "Admin"/"Staff"/"Member"
                             form.Email,
-                            form.ContactNumber);
+                            form.ContactNumber,
+                            form.MemberTypeId,
+                            form.Address,
+                            form.PhotoPath,
+                            form.ValidIdPath);
                         MessageBox.Show("Member registered successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // refresh grid after insertion
@@ -67,106 +69,119 @@ namespace LMS.Presentation.UserControls.Management
             }
         }
 
-        private void RegisterUser(string username, string password, string firstName, string lastName, string role, string email, string contactNumber)
+        /// <summary>
+        /// Inserts a user row and its corresponding member row inside a DB transaction.
+        /// RegistrationDate is set to today; ExpirationDate defaults to 1 year from registration (adjust as needed).
+        /// </summary>
+        private void RegisterUserWithMember(
+            string username,
+            string password,
+            string firstName,
+            string lastName,
+            string role,
+            string email,
+            string contactNumber,
+            int memberTypeId,
+            string address,
+            string photoPath,
+            string validIdPath)
         {
             if (string.IsNullOrWhiteSpace(username)) throw new ArgumentException("Username is required", nameof(username));
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Password is required", nameof(password));
             if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name is required", nameof(firstName));
             if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name is required", nameof(lastName));
+            //if (memberTypeId <= 0) throw new ArgumentException("MemberType is required", nameof(memberTypeId));
 
-            // Hash with SHA256 (existing hasher)
             string passwordHash = _hasher.Hash(password);
 
             using (var conn = _db.GetConnection())
-            using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-
-                cmd.CommandText = @"
+                using (var tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Insert into [User] and get the generated UserID
+                        int newUserId;
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = tran;
+                            cmd.CommandText = @"
 INSERT INTO [User] (Username, [Password], FirstName, LastName, [Role], Email, ContactNumber, [Status])
 VALUES (@Username, @Password, @FirstName, @LastName, @Role, @Email, @ContactNumber, @Status);
+SELECT CAST(SCOPE_IDENTITY() AS INT);
 ";
-                var p = cmd.CreateParameter();
-                p.ParameterName = "@Username";
-                p.DbType = DbType.String;
-                p.Size = 50;
-                p.Value = username.Trim();
-                cmd.Parameters.Add(p);
+                            cmd.Parameters.AddWithValue("@Username", username.Trim());
+                            cmd.Parameters.AddWithValue("@Password", passwordHash);
+                            cmd.Parameters.AddWithValue("@FirstName", firstName.Trim());
+                            cmd.Parameters.AddWithValue("@LastName", lastName.Trim());
+                            cmd.Parameters.AddWithValue("@Role", string.IsNullOrWhiteSpace(role) ? "Member" : role);
+                            cmd.Parameters.AddWithValue("@Email", string.IsNullOrWhiteSpace(email) ? (object)DBNull.Value : email.Trim());
+                            cmd.Parameters.AddWithValue("@ContactNumber", string.IsNullOrWhiteSpace(contactNumber) ? (object)DBNull.Value : contactNumber.Trim());
+                            cmd.Parameters.AddWithValue("@Status", "Active");
 
-                p = cmd.CreateParameter();
-                p.ParameterName = "@Password";
-                p.DbType = DbType.String;
-                p.Size = 255;
-                p.Value = passwordHash;
-                cmd.Parameters.Add(p);
+                            object scalar = cmd.ExecuteScalar();
+                            newUserId = Convert.ToInt32(scalar);
+                        }
 
-                p = cmd.CreateParameter();
-                p.ParameterName = "@FirstName";
-                p.DbType = DbType.String;
-                p.Size = 50;
-                p.Value = firstName.Trim();
-                cmd.Parameters.Add(p);
+                        // Insert into Member table
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = tran;
+                            cmd.CommandText = @"
+INSERT INTO Member (UserID, MemberTypeID, Address, RegistrationDate, ExpirationDate, Photo, ValidID, [Status])
+VALUES (@UserID, @MemberTypeID, @Address, @RegistrationDate, @ExpirationDate, @Photo, @ValidID, @Status);
+";
+                            cmd.Parameters.AddWithValue("@UserID", newUserId);
+                            cmd.Parameters.AddWithValue("@MemberTypeID", memberTypeId);
+                            cmd.Parameters.AddWithValue("@Address", string.IsNullOrWhiteSpace(address) ? (object)DBNull.Value : address.Trim());
 
-                p = cmd.CreateParameter();
-                p.ParameterName = "@LastName";
-                p.DbType = DbType.String;
-                p.Size = 50;
-                p.Value = lastName.Trim();
-                cmd.Parameters.Add(p);
+                            DateTime regDate = DateTime.Today;
+                            DateTime expDate = regDate.AddYears(1); // default 1 year membership; adjust if you want member-type based expiry
 
-                p = cmd.CreateParameter();
-                p.ParameterName = "@Role";
-                p.DbType = DbType.String;
-                p.Size = 20;
-                p.Value = string.IsNullOrWhiteSpace(role) ? "Member" : role;
-                cmd.Parameters.Add(p);
+                            cmd.Parameters.AddWithValue("@RegistrationDate", regDate.Date);
+                            cmd.Parameters.AddWithValue("@ExpirationDate", expDate.Date);
+                            cmd.Parameters.AddWithValue("@Photo", string.IsNullOrWhiteSpace(photoPath) ? (object)DBNull.Value : photoPath.Trim());
+                            cmd.Parameters.AddWithValue("@ValidID", string.IsNullOrWhiteSpace(validIdPath) ? (object)DBNull.Value : validIdPath.Trim());
+                            cmd.Parameters.AddWithValue("@Status", "Active");
 
-                // Properly set DBNull when empty
-                p = cmd.CreateParameter();
-                p.ParameterName = "@Email";
-                p.DbType = DbType.String;
-                p.Size = 255;
-                p.Value = string.IsNullOrWhiteSpace(email) ? (object)DBNull.Value : email.Trim();
-                cmd.Parameters.Add(p);
+                            cmd.ExecuteNonQuery();
+                        }
 
-                p = cmd.CreateParameter();
-                p.ParameterName = "@ContactNumber";
-                p.DbType = DbType.String;
-                p.Size = 20;
-                p.Value = string.IsNullOrWhiteSpace(contactNumber) ? (object)DBNull.Value : contactNumber.Trim();
-                cmd.Parameters.Add(p);
-
-                p = cmd.CreateParameter();
-                p.ParameterName = "@Status";
-                p.DbType = DbType.String;
-                p.Size = 20;
-                p.Value = "Active";
-                cmd.Parameters.Add(p);
-
-                cmd.ExecuteNonQuery();
+                        tran.Commit();
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { /* ignore rollback errors */ }
+                        throw;
+                    }
+                }
             }
         }
 
         /// <summary>
         /// Load all users with Role = 'Member' and display them in the DataGridView.
-        /// The designer grid has 8 columns (Full Name, Email, Contact Number, Address, Registration Date,
-        /// Expiration Date, Membership Type, Status). We populate the fields we have from [User]
-        /// and leave the rest empty.
+        /// This also joins the Member and MemberType tables when available to populate address, registration/expiration and membership type.
         /// </summary>
         private void LoadMembers()
         {
-            // Clear existing rows first
             dataGridView1.Rows.Clear();
 
             using (var conn = _db.GetConnection())
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
+
+                // Join with Member (left) and MemberType (left) to get more member-specific columns when present
                 cmd.CommandText = @"
-SELECT FirstName, LastName, Email, ContactNumber, [Status]
-FROM [User]
-WHERE [Role] = @Role
-ORDER BY LastName, FirstName;
+SELECT u.FirstName, u.LastName, u.Email, u.ContactNumber,
+       m.Address, m.RegistrationDate, m.ExpirationDate,
+       mt.TypeName, u.[Status]
+FROM [User] u
+LEFT JOIN Member m ON m.UserID = u.UserID
+LEFT JOIN MemberType mt ON mt.MemberTypeID = m.MemberTypeID
+WHERE u.[Role] = @Role
+ORDER BY u.LastName, u.FirstName;
 ";
                 var p = cmd.CreateParameter();
                 p.ParameterName = "@Role";
@@ -183,22 +198,26 @@ ORDER BY LastName, FirstName;
                         string lastName = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
                         string email = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
                         string contact = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
-                        string status = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                        string address = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                        string registrationDate = reader.IsDBNull(5) ? string.Empty : Convert.ToDateTime(reader.GetValue(5)).ToString("yyyy-MM-dd");
+                        string expirationDate = reader.IsDBNull(6) ? string.Empty : Convert.ToDateTime(reader.GetValue(6)).ToString("yyyy-MM-dd");
+                        string memberType = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
+                        string status = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
 
                         string fullName = $"{firstName} {lastName}".Trim();
 
-                        // The designer grid has 8 columns; fill known columns and leave others empty.
-                        // Column mapping (from Designer): 
+                        object[] row = new object[dataGridView1.Columns.Count];
+
+                        // Designer columns:
                         // 0 Full Name, 1 Email, 2 Contact Number, 3 Address, 4 Registration Date,
                         // 5 Expiration Date, 6 Membership Type, 7 Status
-                        object[] row = new object[dataGridView1.Columns.Count];
                         row[0] = fullName;
                         row[1] = email;
                         row[2] = contact;
-                        row[3] = string.Empty; // Address not in User table
-                        row[4] = string.Empty; // Registration Date (could come from Members table)
-                        row[5] = string.Empty; // Expiration Date
-                        row[6] = string.Empty; // Membership Type
+                        row[3] = address;
+                        row[4] = registrationDate;
+                        row[5] = expirationDate;
+                        row[6] = memberType;
                         row[7] = status;
 
                         dataGridView1.Rows.Add(row);
@@ -208,8 +227,10 @@ ORDER BY LastName, FirstName;
         }
 
         // Lightweight registration form created at runtime so no designer changes are required.
+        // It now loads MemberType options from the database (MemberTypeID + TypeName).
         private class RegistrationForm : Form
         {
+            // Exposed properties to caller
             public string Username => txtUsername.Text.Trim();
             public string Password => txtPassword.Text;
             public string FirstName => txtFirstName.Text.Trim();
@@ -217,7 +238,13 @@ ORDER BY LastName, FirstName;
             public string Role => cmbRole.SelectedItem != null ? cmbRole.SelectedItem.ToString() : "Member";
             public string Email => txtEmail.Text.Trim();
             public string ContactNumber => txtContact.Text.Trim();
+            // Use MemberTypeItem and safe cast
+            public int MemberTypeId => (cmbMemberType.SelectedItem as MemberTypeItem)?.Id ?? 0;
+            public string Address => txtAddress.Text.Trim();
+            public string PhotoPath => txtPhoto.Text.Trim();
+            public string ValidIdPath => txtValidId.Text.Trim();
 
+            // Controls
             private TextBox txtUsername;
             private TextBox txtPassword;
             private TextBox txtFirstName;
@@ -225,24 +252,41 @@ ORDER BY LastName, FirstName;
             private ComboBox cmbRole;
             private TextBox txtEmail;
             private TextBox txtContact;
+            private ComboBox cmbMemberType;
+            private TextBox txtAddress;
+            private TextBox txtPhoto;
+            private TextBox txtValidId;
             private Button btnOk;
             private Button btnCancel;
+            private Button btnBrowsePhoto;
+            private Button btnBrowseValidId;
 
-            public RegistrationForm()
+            // simple helper type to avoid KeyValuePair boxing/unboxing issues
+            private class MemberTypeItem
             {
+                public int Id { get; }
+                public string Name { get; }
+                public MemberTypeItem(int id, string name) { Id = id; Name = name ?? string.Empty; }
+                public override string ToString() => Name;
+            }
+
+            public RegistrationForm(DbConnection db)
+            {
+                if (db == null) throw new ArgumentNullException(nameof(db));
+
                 Text = "Register Member";
                 FormBorderStyle = FormBorderStyle.FixedDialog;
                 StartPosition = FormStartPosition.CenterParent;
                 MaximizeBox = false;
                 MinimizeBox = false;
-                ClientSize = new Size(420, 360);
+                ClientSize = new Size(520, 520);
 
                 var lblX = 15;
-                var ctrlX = 130;
+                var ctrlX = 160;
                 var y = 20;
                 var gap = 36;
-                var labelWidth = 110;
-                var controlWidth = 260;
+                var labelWidth = 140;
+                var controlWidth = 300;
 
                 // Username
                 Controls.Add(new Label { Text = "Username:", Location = new Point(lblX, y), Size = new Size(labelWidth, 24) });
@@ -286,10 +330,40 @@ ORDER BY LastName, FirstName;
                 Controls.Add(new Label { Text = "Contact No. (optional):", Location = new Point(lblX, y), Size = new Size(labelWidth, 24) });
                 txtContact = new TextBox { Location = new Point(ctrlX, y), Size = new Size(controlWidth, 24) };
                 Controls.Add(txtContact);
+                y += gap;
+
+                // Member Type (loaded from DB)
+                Controls.Add(new Label { Text = "Membership Type:", Location = new Point(lblX, y), Size = new Size(labelWidth, 24) });
+                cmbMemberType = new ComboBox { Location = new Point(ctrlX, y), Size = new Size(controlWidth, 24), DropDownStyle = ComboBoxStyle.DropDownList };
+                Controls.Add(cmbMemberType);
+                y += gap;
+
+                // Address
+                Controls.Add(new Label { Text = "Address (optional):", Location = new Point(lblX, y), Size = new Size(labelWidth, 24) });
+                txtAddress = new TextBox { Location = new Point(ctrlX, y), Size = new Size(controlWidth, 24) };
+                Controls.Add(txtAddress);
+                y += gap;
+
+                // Photo path (optional)
+                Controls.Add(new Label { Text = "Photo (optional):", Location = new Point(lblX, y), Size = new Size(labelWidth, 24) });
+                txtPhoto = new TextBox { Location = new Point(ctrlX, y), Size = new Size(controlWidth - 90, 24) };
+                btnBrowsePhoto = new Button { Text = "Browse...", Location = new Point(ctrlX + controlWidth - 80, y - 1), Size = new Size(80, 26) };
+                btnBrowsePhoto.Click += (s, e) => BrowseFile(txtPhoto);
+                Controls.Add(txtPhoto);
+                Controls.Add(btnBrowsePhoto);
                 y += gap + 6;
 
-                btnOk = new Button { Text = "OK", DialogResult = DialogResult.OK, Location = new Point(220, y), Size = new Size(80, 30) };
-                btnCancel = new Button { Text = "Cancel", DialogResult = DialogResult.Cancel, Location = new Point(310, y), Size = new Size(80, 30) };
+                // Valid ID path (optional)
+                Controls.Add(new Label { Text = "Valid ID (optional):", Location = new Point(lblX, y), Size = new Size(labelWidth, 24) });
+                txtValidId = new TextBox { Location = new Point(ctrlX, y), Size = new Size(controlWidth - 90, 24) };
+                btnBrowseValidId = new Button { Text = "Browse...", Location = new Point(ctrlX + controlWidth - 80, y - 1), Size = new Size(80, 26) };
+                btnBrowseValidId.Click += (s, e) => BrowseFile(txtValidId);
+                Controls.Add(txtValidId);
+                Controls.Add(btnBrowseValidId);
+                y += gap + 10;
+
+                btnOk = new Button { Text = "OK", DialogResult = DialogResult.OK, Location = new Point(ctrlX + 80, y), Size = new Size(80, 30) };
+                btnCancel = new Button { Text = "Cancel", DialogResult = DialogResult.Cancel, Location = new Point(ctrlX + 170, y), Size = new Size(80, 30) };
 
                 btnOk.Click += BtnOk_Click;
 
@@ -298,6 +372,67 @@ ORDER BY LastName, FirstName;
 
                 AcceptButton = btnOk;
                 CancelButton = btnCancel;
+
+                // Load MemberType options from DB
+                LoadMemberTypes(db);
+            }
+
+            private void BrowseFile(TextBox target)
+            {
+                using (var dlg = new OpenFileDialog())
+                {
+                    dlg.Filter = "Image files|*.jpg;*.jpeg;*.png;*.bmp|All files|*.*";
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        target.Text = dlg.FileName;
+                    }
+                }
+            }
+
+            private void LoadMemberTypes(DbConnection db)
+            {
+                try
+                {
+                    cmbMemberType.Items.Clear();
+
+                    using (var conn = db.GetConnection())
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "SELECT MemberTypeID, TypeName FROM MemberType ORDER BY TypeName";
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int id = reader.GetInt32(0);
+                                string name = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                                // add MemberTypeItem which overrides ToString() so ComboBox displays name
+                                cmbMemberType.Items.Add(new MemberTypeItem(id, name));
+                            }
+                        }
+                    }
+
+                    if (cmbMemberType.Items.Count == 0)
+                    {
+                        // helpful placeholder so the combobox isn't empty — also informs user to create member types
+                        cmbMemberType.Items.Add(new MemberTypeItem(0, "-- No member types defined --"));
+                        cmbMemberType.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        // insert prompt at top so user deliberately selects
+                        cmbMemberType.Items.Insert(0, new MemberTypeItem(0, "-- Select membership type --"));
+                        cmbMemberType.SelectedIndex = 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Surface the error so you can diagnose DB/connectivity/schema problems
+                    MessageBox.Show("Failed to load membership types: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cmbMemberType.Items.Clear();
+                    cmbMemberType.Items.Add(new MemberTypeItem(0, "-- Error loading types --"));
+                    cmbMemberType.SelectedIndex = 0;
+                }
             }
 
             private void BtnOk_Click(object sender, EventArgs e)
@@ -331,8 +466,15 @@ ORDER BY LastName, FirstName;
                     return;
                 }
 
-                // Role already constrained by combo box selection.
-                // If all good, form will close with OK.
+                // ensure valid membership selection (Id > 0)
+                if ((cmbMemberType.SelectedItem as MemberTypeItem)?.Id <= 0)
+                {
+                    MessageBox.Show("Please select a valid membership type.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DialogResult = DialogResult.None;
+                    return;
+                }
+
+                // All good -> form will close with OK
             }
         }
     }
