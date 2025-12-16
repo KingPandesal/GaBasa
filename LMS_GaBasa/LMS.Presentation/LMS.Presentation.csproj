@@ -84,6 +84,12 @@
     <Compile Include="UserControls\Dashboards\UCDashboardStaff.Designer.cs">
       <DependentUpon>UCDashboardStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UCProfile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UCProfile.Designer.cs">
+      <DependentUpon>UCProfile.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Dashboards\UCDashboardStaff.resx">
       <DependentUpon>UCDashboardStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UCProfile.resx">
+      <DependentUpon>UCProfile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

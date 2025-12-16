@@ -183,6 +183,10 @@ namespace LMS.Presentation.Forms
             // If click: load profile module
             panel.Cursor = Cursors.Hand;
             panel.Click += (s, e) => LoadContentByName("Profile");
+            lblName.Cursor = Cursors.Hand;
+            lblName.Click += (s, e) => LoadContentByName("Profile");
+            lblRole.Cursor = Cursors.Hand;
+            lblRole.Click += (s, e) => LoadContentByName("Profile");
 
             return panel;
         }
@@ -255,6 +259,9 @@ namespace LMS.Presentation.Forms
             _moduleFactories.Clear();
             _moduleFactories["Dashboard"] = () => GetDashboardByRole();
             _moduleFactories["Users"] = () => new UserControl();
+
+            // Add Profile factory so clicking the profile header shows UCProfile for all roles
+            _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);
 
             var knownModules = new[]
             {
