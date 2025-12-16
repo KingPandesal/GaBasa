@@ -1,8 +1,5 @@
 ﻿using LMS.BusinessLogic.Managers;
 using LMS.Model.Models.Users;
-using LMS.Presentation.Forms.Librarian;
-using LMS.Presentation.Forms.LibraryMember;
-using LMS.Presentation.Forms.LibraryStaff;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -81,20 +78,22 @@ namespace LMS.Presentation.Forms
         // para lang ni sa combobox
         // kay dli mn match ang enums ug ang options sa cmbbx
         // -ken:>
-        // update: obsolete
-        private string GetSelectedRole()
+        private void LoadRoles()
         {
-            switch (CmbbxSelectUserType.SelectedItem?.ToString())
-            {
-                case "Librarian / Admin":
-                    return "Admin";
-                case "Library Staff":
-                    return "Staff";
-                case "Library Member":
-                    return "Member";
-                default:
-                    return null;
-            }
+            CmbbxSelectUserType.Items.Clear();
+
+            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
+                "Librarian / Admin", Role.Librarian));
+
+            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
+                "Library Staff", Role.Staff));
+
+            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
+                "Library Member", Role.Member));
+
+            CmbbxSelectUserType.DisplayMember = "Key";
+            CmbbxSelectUserType.ValueMember = "Value";
+            CmbbxSelectUserType.SelectedIndex = -1;
         }
 
         // ========== BtnLogin ==========
@@ -131,48 +130,14 @@ namespace LMS.Presentation.Forms
             this.Hide();
         }
 
-
         private void OpenDashboard(User user)
         {
-            Form dashboard;
+            // Open main form (contains sidebar + content area)
+            // wla na tong dashboard forms, usercontrols na sila
+            var main = new MainForm(user);
+            main.Show();
 
-            switch (user.Role)
-            {
-                case Role.Librarian:
-                    dashboard = new DashboardLibrarian(user);
-                    break;
-
-                case Role.Staff:
-                    dashboard = new DashboardStaff(user);
-                    break;
-
-                case Role.Member:
-                    dashboard = new DashboardMember(user);
-                    break;
-
-                default:
-                    throw new InvalidOperationException("Unknown user role.");
-            }
-
-            dashboard.Show();
-        }
-
-        private void LoadRoles()
-        {
-            CmbbxSelectUserType.Items.Clear();
-
-            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
-                "Librarian / Admin", Role.Librarian));
-
-            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
-                "Library Staff", Role.Staff));
-
-            CmbbxSelectUserType.Items.Add(new KeyValuePair<string, Role>(
-                "Library Member", Role.Member));
-
-            CmbbxSelectUserType.DisplayMember = "Key";
-            CmbbxSelectUserType.ValueMember = "Value";
-            CmbbxSelectUserType.SelectedIndex = -1;
+            // this.Close();
         }
 
         // ========== NOT UI ==========

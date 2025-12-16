@@ -20,7 +20,6 @@ namespace LMS.DataAccess.Database
                 .ConnectionString;
         }
 
-
         public SqlConnection GetConnection()
         {
             return new SqlConnection(connectionString);
@@ -44,5 +43,6 @@ namespace LMS.DataAccess.Database
             }
         }
 
+        // end code
     }
 }
