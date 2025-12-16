@@ -178,7 +178,7 @@
             this.TxtSearchBar.ReadOnly = false;
             this.TxtSearchBar.Size = new System.Drawing.Size(1311, 60);
             this.TxtSearchBar.TabIndex = 14;
-            this.TxtSearchBar.Text = "Search Users...";
+            this.TxtSearchBar.Text = "Search Members...";
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
             // 
