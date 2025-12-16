@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCCatalog));
-            this.button1 = new ReaLTaiizor.Controls.Button();
-            this.BtnAnnouncement = new ReaLTaiizor.Controls.Button();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -84,44 +82,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button1.Image = null;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.InactiveColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(1475, 36);
-            this.button1.Name = "button1";
-            this.button1.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Size = new System.Drawing.Size(70, 60);
-            this.button1.TabIndex = 16;
-            this.button1.TextAlignment = System.Drawing.StringAlignment.Center;
-            // 
-            // BtnAnnouncement
-            // 
-            this.BtnAnnouncement.BackColor = System.Drawing.Color.White;
-            this.BtnAnnouncement.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAnnouncement.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.BtnAnnouncement.Image = null;
-            this.BtnAnnouncement.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnAnnouncement.InactiveColor = System.Drawing.Color.White;
-            this.BtnAnnouncement.Location = new System.Drawing.Point(1375, 36);
-            this.BtnAnnouncement.Name = "BtnAnnouncement";
-            this.BtnAnnouncement.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Size = new System.Drawing.Size(70, 60);
-            this.BtnAnnouncement.TabIndex = 15;
-            this.BtnAnnouncement.TextAlignment = System.Drawing.StringAlignment.Center;
-            // 
             // TxtSearchBar
             // 
             this.TxtSearchBar.BackColor = System.Drawing.Color.White;
@@ -134,7 +94,7 @@
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1311, 60);
+            this.TxtSearchBar.Size = new System.Drawing.Size(1509, 60);
             this.TxtSearchBar.TabIndex = 14;
             this.TxtSearchBar.Text = "Search title, author, or ISBN...";
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
@@ -699,8 +659,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.BtnAnnouncement);
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCCatalog";
             this.Size = new System.Drawing.Size(1580, 936);
@@ -718,8 +676,6 @@
         }
 
         #endregion
-        private ReaLTaiizor.Controls.Button button1;
-        private ReaLTaiizor.Controls.Button BtnAnnouncement;
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

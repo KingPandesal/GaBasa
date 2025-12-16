@@ -84,6 +84,12 @@
     <Compile Include="UserControls\Dashboards\UCDashboardStaff.Designer.cs">
       <DependentUpon>UCDashboardStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Management\UCFines.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Management\UCFines.Designer.cs">
+      <DependentUpon>UCFines.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Management\UCMembers.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Dashboards\UCDashboardStaff.resx">
       <DependentUpon>UCDashboardStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Management\UCFines.resx">
+      <DependentUpon>UCFines.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Management\UCMembers.resx">
       <DependentUpon>UCMembers.cs</DependentUpon>

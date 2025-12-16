@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
-            this.button1 = new ReaLTaiizor.Controls.Button();
-            this.BtnAnnouncement = new ReaLTaiizor.Controls.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button2 = new ReaLTaiizor.Controls.Button();
             this.button3 = new ReaLTaiizor.Controls.Button();
@@ -55,49 +53,11 @@
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1311, 60);
+            this.TxtSearchBar.Size = new System.Drawing.Size(1509, 60);
             this.TxtSearchBar.TabIndex = 4;
             this.TxtSearchBar.Text = "Search Users...";
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button1.Image = null;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.InactiveColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(1471, 31);
-            this.button1.Name = "button1";
-            this.button1.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Size = new System.Drawing.Size(70, 60);
-            this.button1.TabIndex = 8;
-            this.button1.TextAlignment = System.Drawing.StringAlignment.Center;
-            // 
-            // BtnAnnouncement
-            // 
-            this.BtnAnnouncement.BackColor = System.Drawing.Color.White;
-            this.BtnAnnouncement.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAnnouncement.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.BtnAnnouncement.Image = null;
-            this.BtnAnnouncement.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnAnnouncement.InactiveColor = System.Drawing.Color.White;
-            this.BtnAnnouncement.Location = new System.Drawing.Point(1371, 31);
-            this.BtnAnnouncement.Name = "BtnAnnouncement";
-            this.BtnAnnouncement.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Size = new System.Drawing.Size(70, 60);
-            this.BtnAnnouncement.TabIndex = 7;
-            this.BtnAnnouncement.TextAlignment = System.Drawing.StringAlignment.Center;
             // 
             // dataGridView1
             // 
@@ -221,8 +181,6 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.BtnAnnouncement);
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCUsers";
             this.Size = new System.Drawing.Size(1580, 936);
@@ -234,8 +192,6 @@
         #endregion
 
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
-        private ReaLTaiizor.Controls.Button button1;
-        private ReaLTaiizor.Controls.Button BtnAnnouncement;
         private System.Windows.Forms.DataGridView dataGridView1;
         private ReaLTaiizor.Controls.Button button2;
         private ReaLTaiizor.Controls.Button button3;

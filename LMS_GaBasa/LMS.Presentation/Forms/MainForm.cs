@@ -45,8 +45,8 @@ namespace LMS.Presentation.Forms
                                                     "Reservations",
                                                     "Inventory",
                                                     "Fines" } },
-                    { "INSIGHTS", new string[] { "Reports" } },
-                    { "CONFIGURATION", new string[] { "Settings" } }
+                    { "INSIGHTS", new string[] { "Reports" } }
+                    //{ "CONFIGURATION", new string[] { "Settings" } }
                 }
             },
             { Role.Staff, new Dictionary<string, string[]>
@@ -67,8 +67,8 @@ namespace LMS.Presentation.Forms
                     { "MANAGEMENT", new string[] { "Borrowed", 
                                                     "Overdue", 
                                                     "Reserve", 
-                                                    "Wishlist", 
-                                                    "Fines", 
+                                                    //"Wishlist", 
+                                                    "Fines & Penalty", 
                                                     "History" } }
                 }
             }
@@ -261,6 +261,7 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Users"] = () => new UserControls.Management.UCUsers();
             _moduleFactories["Members"] = () => new UserControls.Management.UCMembers();
             _moduleFactories["Catalog"] = () => new UserControls.UCCatalog();
+            _moduleFactories["Fines"] = () => new UserControls.Management.UCFines();
 
             // Add Profile factory so clicking the profile header shows UCProfile for all roles
             _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);

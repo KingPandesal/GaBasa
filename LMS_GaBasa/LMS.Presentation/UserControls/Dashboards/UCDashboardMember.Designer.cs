@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,8 +56,6 @@
             this.ChartLibraryCompletion = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lostBorderPanel6 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.button1 = new ReaLTaiizor.Controls.Button();
-            this.BtnAnnouncement = new ReaLTaiizor.Controls.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.lostBorderPanel8 = new ReaLTaiizor.Controls.LostBorderPanel();
@@ -90,7 +88,7 @@
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1311, 60);
+            this.TxtSearchBar.Size = new System.Drawing.Size(1513, 60);
             this.TxtSearchBar.TabIndex = 3;
             this.TxtSearchBar.Text = "Search title, author, or ISBN...";
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
@@ -300,16 +298,16 @@
             // 
             // ChartBorrowingTrend
             // 
-            chartArea9.Name = "ChartArea1";
-            this.ChartBorrowingTrend.ChartAreas.Add(chartArea9);
-            legend9.Name = "Legend1";
-            this.ChartBorrowingTrend.Legends.Add(legend9);
+            chartArea11.Name = "ChartArea1";
+            this.ChartBorrowingTrend.ChartAreas.Add(chartArea11);
+            legend11.Name = "Legend1";
+            this.ChartBorrowingTrend.Legends.Add(legend11);
             this.ChartBorrowingTrend.Location = new System.Drawing.Point(3, 48);
             this.ChartBorrowingTrend.Name = "ChartBorrowingTrend";
-            series9.ChartArea = "ChartArea1";
-            series9.Legend = "Legend1";
-            series9.Name = "Series1";
-            this.ChartBorrowingTrend.Series.Add(series9);
+            series11.ChartArea = "ChartArea1";
+            series11.Legend = "Legend1";
+            series11.Name = "Series1";
+            this.ChartBorrowingTrend.Series.Add(series11);
             this.ChartBorrowingTrend.Size = new System.Drawing.Size(692, 170);
             this.ChartBorrowingTrend.TabIndex = 0;
             this.ChartBorrowingTrend.Text = "chart1";
@@ -331,16 +329,16 @@
             // 
             // ChartLibraryCompletion
             // 
-            chartArea10.Name = "ChartArea1";
-            this.ChartLibraryCompletion.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            this.ChartLibraryCompletion.Legends.Add(legend10);
+            chartArea12.Name = "ChartArea1";
+            this.ChartLibraryCompletion.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.ChartLibraryCompletion.Legends.Add(legend12);
             this.ChartLibraryCompletion.Location = new System.Drawing.Point(3, 45);
             this.ChartLibraryCompletion.Name = "ChartLibraryCompletion";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "Series1";
-            this.ChartLibraryCompletion.Series.Add(series10);
+            series12.ChartArea = "ChartArea1";
+            series12.Legend = "Legend1";
+            series12.Name = "Series1";
+            this.ChartLibraryCompletion.Series.Add(series12);
             this.ChartLibraryCompletion.Size = new System.Drawing.Size(340, 173);
             this.ChartLibraryCompletion.TabIndex = 0;
             this.ChartLibraryCompletion.Text = "chart1";
@@ -365,44 +363,6 @@
             this.monthCalendar1.Location = new System.Drawing.Point(1233, 118);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 7;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button1.Image = null;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.InactiveColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(1475, 31);
-            this.button1.Name = "button1";
-            this.button1.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Size = new System.Drawing.Size(70, 60);
-            this.button1.TabIndex = 6;
-            this.button1.TextAlignment = System.Drawing.StringAlignment.Center;
-            // 
-            // BtnAnnouncement
-            // 
-            this.BtnAnnouncement.BackColor = System.Drawing.Color.White;
-            this.BtnAnnouncement.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAnnouncement.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.BtnAnnouncement.Image = null;
-            this.BtnAnnouncement.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnAnnouncement.InactiveColor = System.Drawing.Color.White;
-            this.BtnAnnouncement.Location = new System.Drawing.Point(1375, 31);
-            this.BtnAnnouncement.Name = "BtnAnnouncement";
-            this.BtnAnnouncement.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAnnouncement.Size = new System.Drawing.Size(70, 60);
-            this.BtnAnnouncement.TabIndex = 5;
-            this.BtnAnnouncement.TextAlignment = System.Drawing.StringAlignment.Center;
             // 
             // label11
             // 
@@ -454,8 +414,6 @@
             this.panel1.Controls.Add(this.lostBorderPanel4);
             this.panel1.Controls.Add(this.lostBorderPanel1);
             this.panel1.Controls.Add(this.monthCalendar1);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.BtnAnnouncement);
             this.panel1.Controls.Add(this.TxtSearchBar);
             this.panel1.Location = new System.Drawing.Point(8, 8);
             this.panel1.Name = "panel1";
@@ -551,8 +509,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart ChartLibraryCompletion;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel6;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
-        private ReaLTaiizor.Controls.Button button1;
-        private ReaLTaiizor.Controls.Button BtnAnnouncement;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel8;
