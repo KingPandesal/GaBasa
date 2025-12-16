@@ -21,10 +21,5 @@ namespace LMS.Presentation.UserControls.Dashboards
         {
 
         }
-
-        private void bigLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

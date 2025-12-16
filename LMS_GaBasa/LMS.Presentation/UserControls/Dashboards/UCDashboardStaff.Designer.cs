@@ -28,27 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
+            this.BigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             this.SuspendLayout();
             // 
-            // bigLabel1
+            // BigLabel1
             // 
-            this.bigLabel1.AutoSize = true;
-            this.bigLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.bigLabel1.Font = new System.Drawing.Font("Segoe UI", 25F);
-            this.bigLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.bigLabel1.Location = new System.Drawing.Point(114, 103);
-            this.bigLabel1.Name = "bigLabel1";
-            this.bigLabel1.Size = new System.Drawing.Size(128, 67);
-            this.bigLabel1.TabIndex = 1;
-            this.bigLabel1.Text = "Staff";
-            this.bigLabel1.Click += new System.EventHandler(this.bigLabel1_Click);
+            this.BigLabel1.AutoSize = true;
+            this.BigLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.BigLabel1.Font = new System.Drawing.Font("Segoe UI", 25F);
+            this.BigLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.BigLabel1.Location = new System.Drawing.Point(114, 103);
+            this.BigLabel1.Name = "BigLabel1";
+            this.BigLabel1.Size = new System.Drawing.Size(128, 67);
+            this.BigLabel1.TabIndex = 1;
+            this.BigLabel1.Text = "Staff";
             // 
             // UCDashboardStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.bigLabel1);
+            this.Controls.Add(this.BigLabel1);
             this.Name = "UCDashboardStaff";
             this.Size = new System.Drawing.Size(358, 274);
             this.ResumeLayout(false);
@@ -58,6 +57,6 @@
 
         #endregion
 
-        private ReaLTaiizor.Controls.BigLabel bigLabel1;
+        private ReaLTaiizor.Controls.BigLabel BigLabel1;
     }
 }

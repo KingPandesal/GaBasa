@@ -14,9 +14,8 @@ namespace LMS.Presentation.Forms
     public partial class MainForm : Form
     {
 
-        // add this field near the existing private Role _currentRole;
-        private User _currentUser;
-        private Role _currentRole;
+        private readonly User _currentUser;
+        private readonly Role _currentRole;
 
         public MainForm(User currentUser)
         {
@@ -30,7 +29,6 @@ namespace LMS.Presentation.Forms
             LoadContentByName("Dashboard"); // default
         }
 
-        // Factory map for creating UserControls by module name
         private readonly Dictionary<string, Func<UserControl>> _moduleFactories = new Dictionary<string, Func<UserControl>>(StringComparer.OrdinalIgnoreCase);
 
         // Sidebar mapping: Role -> Categories -> Modules
@@ -40,79 +38,133 @@ namespace LMS.Presentation.Forms
             { Role.Librarian, new Dictionary<string, string[]>
                 {
                     { "MAIN", new string[] { "Dashboard" } },
-                    { "MANAGEMENT", new string[] { "Users", "Catalog", "Transactions", "Fines", "Inventory" } },
+                    { "MANAGEMENT", new string[] { "Users",
+                                                    "Members",
+                                                    "Catalog",
+                                                    "Circulation",
+                                                    "Reservations",
+                                                    "Inventory",
+                                                    "Fines" } },
                     { "INSIGHTS", new string[] { "Reports" } },
-                    { "CONFIGURATION", new string[] { "Settings", "Announcements", "Notifications" } }
+                    { "CONFIGURATION", new string[] { "Settings" } }
                 }
             },
             { Role.Staff, new Dictionary<string, string[]>
                 {
                     { "MAIN", new string[] { "Dashboard" } },
-                    { "MANAGEMENT", new string[] { "Members", "Catalog", "Transactions", "Fines", "Inventory" } },
+                    { "MANAGEMENT", new string[] { "Members", 
+                                                    "Catalog", 
+                                                    "Transactions", 
+                                                    "Fines", 
+                                                    "Inventory" } },
                     { "INSIGHTS", new string[] { "Reports" } }
                 }
             },
             { Role.Member, new Dictionary<string, string[]>
                 {
                     { "MAIN", new string[] { "Dashboard" } },
-                    { "MANAGEMENT", new string[] { "Books", "Borrowed", "Overdue", "Reserve", "Wishlist", "Fines", "History" } }
+                    { "MANAGEMENT", new string[] { "Books", 
+                                                    "Borrowed", 
+                                                    "Overdue", 
+                                                    "Reserve", 
+                                                    "Wishlist", 
+                                                    "Fines", 
+                                                    "History" } }
                 }
             }
         };
 
-
-        /// <summary>
-        /// Generates sidebar dynamically based on role and categories
-        /// </summary>
+        // Generates sidebar based on role and categories
         private void InitializeSidebar(Role role)
         {
             PnlSidebar.Controls.Clear();
+            PnlSidebar.Dock = DockStyle.None;
+            PnlSidebar.AutoScroll = true;
 
-            foreach (var category in _sidebarItems[role])
+            // Logout FIRST (Dock.Bottom rule)
+            var logoutBtn = new Button
             {
-                // Category label
-                Label lbl = new Label
-                {
-                    Text = category.Key,
-                    ForeColor = Color.Gray,
-                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                    AutoSize = false,
-                    Height = 25,
-                    Dock = DockStyle.Top,
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    Padding = new Padding(10, 0, 0, 0)
-                };
-                PnlSidebar.Controls.Add(lbl);
+                Text = "  Logout",
+                Font = new Font("Microsoft Sans Serif", 13, FontStyle.Bold),
+                ForeColor = Color.White,
+                Height = 40,
+                Dock = DockStyle.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            logoutBtn.FlatAppearance.BorderSize = 0;
+            logoutBtn.Click += LogoutButton_Click;
+            PnlSidebar.Controls.Add(logoutBtn);
 
-                // Buttons
-                foreach (var module in category.Value.Reverse()) // reverse so top button is first
+            // Build categories top-down
+            foreach (var category in _sidebarItems[role].Reverse())
+            {
+                var categoryPanel = new Panel
                 {
-                    Button btn = new Button
+                    Dock = DockStyle.Top,
+                    AutoSize = true
+                };
+
+                // Add buttons (reverse so visual order is correct)
+                foreach (var module in category.Value.Reverse())
+                {
+                    var btn = new Button
                     {
-                        Text = "  " + module, // extra space for icon alignment
+                        Text = "  " + module,
                         Height = 40,
                         Dock = DockStyle.Top,
                         FlatStyle = FlatStyle.Flat,
+                        Font = new Font("Microsoft Sans Serif", 13, FontStyle.Bold),
                         TextAlign = ContentAlignment.MiddleLeft,
-                        Tag = module // store module name for click handler
+                        Tag = module,
+                        ForeColor = Color.White
                     };
                     btn.FlatAppearance.BorderSize = 0;
                     btn.Click += SidebarButton_Click;
 
-                    PnlSidebar.Controls.Add(btn);
+                    categoryPanel.Controls.Add(btn);
                 }
+
+                // Add catgegory label LAST (so it appears on top)
+                var lbl = new Label
+                {
+                    Text = category.Key,
+                    Height = 25,
+                    Dock = DockStyle.Top,
+                    Font = new Font("Microsoft Sans Serif", 10),
+                    Padding = new Padding(10, 0, 0, 0),
+                    ForeColor = Color.White
+                };
+
+                categoryPanel.Controls.Add(lbl);
+                PnlSidebar.Controls.Add(categoryPanel);
             }
         }
 
-        /// <summary>
-        /// Handles sidebar button clicks
-        /// </summary>
+
+        // Handles sidebar button clicks
         private void SidebarButton_Click(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.Tag is string moduleName)
             {
                 LoadContentByName(moduleName);
             }
+        }
+
+        // Logout click handler
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show("Are you sure you want to log out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm != DialogResult.Yes)
+                return;
+
+            // restart app so startup/login flow runs again.
+            Application.Restart();
+
+            // this.Hide();
+            // var login = new Login(yourUserManagerInstanceHere);
+            // login.Show();
+            // this.Close();
         }
 
         private UserControl GetDashboardByRole()
@@ -123,7 +175,6 @@ namespace LMS.Presentation.Forms
                     return new UserControls.Dashboards.UCDashboardLibrarian();
 
                 case Role.Staff:
-                    // there is an existing form DashboardStaff; prefer a UserControl. If you have a UC version use it.
                     return new UserControls.Dashboards.UCDashboardStaff();
 
                 case Role.Member:
@@ -134,21 +185,12 @@ namespace LMS.Presentation.Forms
             }
         }
 
-        /// <summary>
-        /// Build factory map for modules. Keeps module creation centralized and testable.
-        /// </summary>
         private void BuildModuleFactories()
         {
             _moduleFactories.Clear();
-
-            // Dashboard is role-specific
             _moduleFactories["Dashboard"] = () => GetDashboardByRole();
-
-            // Wire modules that exist in the project (leave others as "not implemented" placeholders)
-            // Keep names consistent with sidebar module strings.
             _moduleFactories["Users"] = () => new UserControl();
 
-            // If you have concrete UserControls for these modules, replace the CreateNotImplementedControl entries with constructors.
             var knownModules = new[]
             {
                 "Members", "Catalog", "Transactions", "Fines", "Inventory",
@@ -163,10 +205,6 @@ namespace LMS.Presentation.Forms
             }
         }
 
-        /// <summary>
-        /// Loads the UserControl corresponding to the module name into the content panel
-        /// Uses the factory map to create controls so creation is centralized (OCP, SRP).
-        /// </summary>
         private void LoadContentByName(string name)
         {
             PnlContent.Controls.Clear();
@@ -191,10 +229,6 @@ namespace LMS.Presentation.Forms
             PnlContent.Controls.Add(placeholder);
         }
 
-        /// <summary>
-        /// Small runtime placeholder so UI doesn't break when a module UC is not yet implemented.
-        /// Keeps code safe while you incrementally convert forms to UserControls.
-        /// </summary>
         private UserControl CreateNotImplementedControl(string name)
         {
             var uc = new UserControl();

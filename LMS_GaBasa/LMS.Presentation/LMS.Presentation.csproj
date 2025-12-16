@@ -127,6 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\logos\" />
+    <Folder Include="UserControls\Configurations\" />
+    <Folder Include="UserControls\Insights\" />
+    <Folder Include="UserControls\Management\" />
+    <Folder Include="UserControls\MemberFeatures\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LMS.BusinessLogic\LMS.BusinessLogic.csproj">
