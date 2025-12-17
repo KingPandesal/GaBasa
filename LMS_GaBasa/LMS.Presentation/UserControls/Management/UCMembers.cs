@@ -20,6 +20,9 @@ namespace LMS.Presentation.UserControls.Management
             // wire Add button (button2) to open registration dialog
             this.button2.Click += button2_Click;
 
+            // wire Edit button (button3) to open edit dialog (UI only)
+            this.button3.Click += button3_Click;
+
             // Load members into grid on control initialization
             try
             {
@@ -66,6 +69,17 @@ namespace LMS.Presentation.UserControls.Management
                         MessageBox.Show("Failed to register member: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        // Edit button click - show a modal identical to Add (UI only, no functionality yet)
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Show the same form UI but with the title "Edit Member".
+            // No loading/saving of data is performed yet per request.
+            using (var form = new RegistrationForm(_db, "Edit Member"))
+            {
+                form.ShowDialog();
             }
         }
 
@@ -270,11 +284,12 @@ ORDER BY u.LastName, u.FirstName;
                 public override string ToString() => Name;
             }
 
-            public RegistrationForm(DbConnection db)
+            // Modified constructor: optional title so we can reuse the same UI for Edit mode
+            public RegistrationForm(DbConnection db, string title = "Register Member")
             {
                 if (db == null) throw new ArgumentNullException(nameof(db));
 
-                Text = "Register Member";
+                Text = title;
                 FormBorderStyle = FormBorderStyle.FixedDialog;
                 StartPosition = FormStartPosition.CenterParent;
                 MaximizeBox = false;
@@ -476,6 +491,16 @@ ORDER BY u.LastName, u.FirstName;
 
                 // All good -> form will close with OK
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UCMembers_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

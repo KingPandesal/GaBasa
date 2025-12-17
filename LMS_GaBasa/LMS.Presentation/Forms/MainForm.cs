@@ -45,8 +45,8 @@ namespace LMS.Presentation.Forms
                                                     "Reservations",
                                                     "Inventory",
                                                     "Fines" } },
-                    { "INSIGHTS", new string[] { "Reports" } }
-                    //{ "CONFIGURATION", new string[] { "Settings" } }
+                    { "INSIGHTS", new string[] { "Reports" } },
+                    { "CONFIGURATION", new string[] { "Settings" } }
                 }
             },
             { Role.Staff, new Dictionary<string, string[]>
@@ -55,7 +55,8 @@ namespace LMS.Presentation.Forms
                                              "Catalog" } },
                     { "MANAGEMENT", new string[] { "Members", 
                                                     "Transactions", 
-                                                    "Fines", 
+                                                    "Fines",
+                                                    "Reservations",
                                                     "Inventory" } },
                     { "INSIGHTS", new string[] { "Reports" } }
                 }
@@ -68,7 +69,7 @@ namespace LMS.Presentation.Forms
                                                     "Overdue", 
                                                     "Reserve", 
                                                     //"Wishlist", 
-                                                    "Fines & Penalty", 
+                                                    "Fines", 
                                                     "History" } }
                 }
             }
@@ -262,6 +263,16 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Members"] = () => new UserControls.Management.UCMembers();
             _moduleFactories["Catalog"] = () => new UserControls.UCCatalog();
             _moduleFactories["Fines"] = () => new UserControls.Management.UCFines();
+            _moduleFactories["Reservations"] = () => new UserControls.Management.UCReservation();
+            _moduleFactories["Inventory"] = () => new UserControls.Management.UCInventory();
+            _moduleFactories["Settings"] = () => new UserControls.Configurations.UCSettings();
+            _moduleFactories["Circulation"] = () => new UserControls.Management.UCCirculation();
+            _moduleFactories["Reports"] = () => new UserControls.Insights.UCReports();
+
+            // members only
+            _moduleFactories["Borrowed"] = () => new UserControls.MemberFeatures.UCBorrowed();
+            _moduleFactories["Overdue"] = () => new UserControls.MemberFeatures.UCOverdue();
+            _moduleFactories["Reserve"] = () => new UserControls.MemberFeatures.UCReserve();
 
             // Add Profile factory so clicking the profile header shows UCProfile for all roles
             _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);

@@ -66,6 +66,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\Configurations\UCSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Configurations\UCSettings.Designer.cs">
+      <DependentUpon>UCSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Dashboards\UCDashboardLibrarian.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -84,11 +90,29 @@
     <Compile Include="UserControls\Dashboards\UCDashboardStaff.Designer.cs">
       <DependentUpon>UCDashboardStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Insights\UCReports.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Insights\UCReports.Designer.cs">
+      <DependentUpon>UCReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Management\UCCirculation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Management\UCCirculation.Designer.cs">
+      <DependentUpon>UCCirculation.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Management\UCFines.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\Management\UCFines.Designer.cs">
       <DependentUpon>UCFines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Management\UCInventory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Management\UCInventory.Designer.cs">
+      <DependentUpon>UCInventory.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Management\UCMembers.cs">
       <SubType>UserControl</SubType>
@@ -96,11 +120,47 @@
     <Compile Include="UserControls\Management\UCMembers.Designer.cs">
       <DependentUpon>UCMembers.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Management\UCReservation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Management\UCReservation.Designer.cs">
+      <DependentUpon>UCReservation.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Management\UCUsers.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\Management\UCUsers.Designer.cs">
       <DependentUpon>UCUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCBorrowed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCBorrowed.Designer.cs">
+      <DependentUpon>UCBorrowed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCFines.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCFines.Designer.cs">
+      <DependentUpon>UCFines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCHistory.Designer.cs">
+      <DependentUpon>UCHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCOverdue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCOverdue.Designer.cs">
+      <DependentUpon>UCOverdue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCReserve.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MemberFeatures\UCReserve.Designer.cs">
+      <DependentUpon>UCReserve.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UCCatalog.cs">
       <SubType>UserControl</SubType>
@@ -125,6 +185,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Configurations\UCSettings.resx">
+      <DependentUpon>UCSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Dashboards\UCDashboardLibrarian.resx">
       <DependentUpon>UCDashboardLibrarian.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,14 +197,38 @@
     <EmbeddedResource Include="UserControls\Dashboards\UCDashboardStaff.resx">
       <DependentUpon>UCDashboardStaff.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Insights\UCReports.resx">
+      <DependentUpon>UCReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Management\UCCirculation.resx">
+      <DependentUpon>UCCirculation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Management\UCFines.resx">
       <DependentUpon>UCFines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Management\UCInventory.resx">
+      <DependentUpon>UCInventory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Management\UCMembers.resx">
       <DependentUpon>UCMembers.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Management\UCReservation.resx">
+      <DependentUpon>UCReservation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Management\UCUsers.resx">
       <DependentUpon>UCUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MemberFeatures\UCBorrowed.resx">
+      <DependentUpon>UCBorrowed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MemberFeatures\UCHistory.resx">
+      <DependentUpon>UCHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MemberFeatures\UCOverdue.resx">
+      <DependentUpon>UCOverdue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MemberFeatures\UCReserve.resx">
+      <DependentUpon>UCReserve.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UCCatalog.resx">
       <DependentUpon>UCCatalog.cs</DependentUpon>
@@ -173,9 +260,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\logos\" />
-    <Folder Include="UserControls\Configurations\" />
-    <Folder Include="UserControls\Insights\" />
-    <Folder Include="UserControls\MemberFeatures\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LMS.BusinessLogic\LMS.BusinessLogic.csproj">
