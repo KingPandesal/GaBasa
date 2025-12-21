@@ -40,6 +40,8 @@ This project follows a **3-layer architecture**:
 
 ### 1. Clone the repository
 ```bash
+D: (if you want to put it on drive D, ignore if on drive C)
+cd (where you want to place project folder, ex: D:Programs/LMS_Gabasa)
 git clone https://github.com/SixxCodes/GaBasa.git
 ```
 
