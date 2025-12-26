@@ -16,5 +16,10 @@ namespace LMS.Presentation.UserControls.Management
         {
             InitializeComponent();
         }
+
+        private void TxtSearchBar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

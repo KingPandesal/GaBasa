@@ -162,7 +162,6 @@
             this.TxtSearchBar.Text = "Search Members...";
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
-            this.TxtSearchBar.TextChanged += new System.EventHandler(this.TxtSearchBar_TextChanged);
             // 
             // label1
             // 
@@ -197,6 +196,7 @@
             this.label2.Size = new System.Drawing.Size(70, 28);
             this.label2.TabIndex = 22;
             this.label2.Text = "entries";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -269,8 +269,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCMembers";
-            this.Size = new System.Drawing.Size(1580, 936);
-            this.Load += new System.EventHandler(this.UCMembers_Load);
+            this.Size = new System.Drawing.Size(1580, 832);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

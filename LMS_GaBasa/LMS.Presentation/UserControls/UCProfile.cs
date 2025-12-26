@@ -31,7 +31,6 @@ namespace LMS.Presentation.UserControls
         {
             //LblFullname.Text = _currentUser.FullName;
             LblRole.Text = _currentUser.Role.ToString();
-            // Optional: picProfile.Image = _currentUser.ProfilePicture;
 
             // Role-specific UI
             ConfigureRoleSpecificUI();
@@ -63,6 +62,11 @@ namespace LMS.Presentation.UserControls
         }
 
         private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

@@ -60,11 +60,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -458,6 +458,19 @@
             this.panel1.Size = new System.Drawing.Size(1509, 299);
             this.panel1.TabIndex = 43;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.OrangeRed;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(245, 59);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(4);
+            this.label4.Size = new System.Drawing.Size(79, 33);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Thesis";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -477,6 +490,7 @@
             this.label3.Size = new System.Drawing.Size(380, 36);
             this.label3.TabIndex = 1;
             this.label3.Text = "Inspirational Women Leaders...";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // TxtSearchBar
             // 
@@ -505,19 +519,6 @@
             this.label1.Size = new System.Drawing.Size(197, 36);
             this.label1.TabIndex = 42;
             this.label1.Text = "Overdue Books";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.OrangeRed;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(245, 59);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(4);
-            this.label4.Size = new System.Drawing.Size(79, 33);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Thesis";
             // 
             // UCOverdue
             // 

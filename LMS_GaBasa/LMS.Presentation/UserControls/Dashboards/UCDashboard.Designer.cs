@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCDashboard));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lostBorderPanel24 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.label43 = new System.Windows.Forms.Label();
@@ -168,6 +168,7 @@
             this.button1.Text = "View Catalog";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label41
             // 
@@ -408,16 +409,16 @@
             // 
             // chartBorrowingsByUserTypes
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartBorrowingsByUserTypes.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartBorrowingsByUserTypes.Legends.Add(legend3);
+            chartArea5.Name = "ChartArea1";
+            this.chartBorrowingsByUserTypes.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chartBorrowingsByUserTypes.Legends.Add(legend5);
             this.chartBorrowingsByUserTypes.Location = new System.Drawing.Point(3, 45);
             this.chartBorrowingsByUserTypes.Name = "chartBorrowingsByUserTypes";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartBorrowingsByUserTypes.Series.Add(series3);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chartBorrowingsByUserTypes.Series.Add(series5);
             this.chartBorrowingsByUserTypes.Size = new System.Drawing.Size(298, 173);
             this.chartBorrowingsByUserTypes.TabIndex = 0;
             this.chartBorrowingsByUserTypes.Text = "chart1";
@@ -500,16 +501,16 @@
             // 
             // ChartBorrowingTrends
             // 
-            chartArea4.Name = "ChartArea1";
-            this.ChartBorrowingTrends.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.ChartBorrowingTrends.Legends.Add(legend4);
+            chartArea6.Name = "ChartArea1";
+            this.ChartBorrowingTrends.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.ChartBorrowingTrends.Legends.Add(legend6);
             this.ChartBorrowingTrends.Location = new System.Drawing.Point(3, 48);
             this.ChartBorrowingTrends.Name = "ChartBorrowingTrends";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.ChartBorrowingTrends.Series.Add(series4);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.ChartBorrowingTrends.Series.Add(series6);
             this.ChartBorrowingTrends.Size = new System.Drawing.Size(692, 170);
             this.ChartBorrowingTrends.TabIndex = 0;
             this.ChartBorrowingTrends.Text = "chart1";

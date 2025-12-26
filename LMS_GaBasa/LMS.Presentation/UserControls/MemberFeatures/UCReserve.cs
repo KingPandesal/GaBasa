@@ -16,5 +16,10 @@ namespace LMS.Presentation.UserControls.MemberFeatures
         {
             InitializeComponent();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

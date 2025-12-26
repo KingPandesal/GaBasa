@@ -121,6 +121,7 @@
             this.label3.Size = new System.Drawing.Size(380, 36);
             this.label3.TabIndex = 1;
             this.label3.Text = "Inspirational Women Leaders...";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // pictureBox1
             // 
