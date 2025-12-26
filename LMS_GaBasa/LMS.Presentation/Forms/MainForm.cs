@@ -39,13 +39,13 @@ namespace LMS.Presentation.Forms
                 {
                     { "MAIN", new string[] { "Dashboard",
                                              "Catalog" } },
+                    { "INSIGHTS", new string[] { "Reports" } },
                     { "MANAGEMENT", new string[] { "Users",
                                                     "Members",
-                                                    "Circulation",
-                                                    "Reservations",
                                                     "Inventory",
+                                                    "Reservations",
+                                                    "Circulation",
                                                     "Fines" } },
-                    { "INSIGHTS", new string[] { "Reports" } },
                     { "CONFIGURATION", new string[] { "Settings" } }
                 }
             },
@@ -54,20 +54,20 @@ namespace LMS.Presentation.Forms
                     { "MAIN", new string[] { "Dashboard",
                                              "Catalog" } },
                     { "MANAGEMENT", new string[] { "Members",
-                                                    "Circulation",
-                                                    "Fines",
+                                                    "Inventory",
                                                     "Reservations",
-                                                    "Inventory" } }
+                                                    "Circulation",
+                                                    "Fines" } }
                 }
             },
             { Role.Member, new Dictionary<string, string[]>
                 {
                     { "MAIN", new string[] { "Dashboard", 
                                              "Catalog" } },
-                    { "MANAGEMENT", new string[] { "Borrowed", 
+                    { "MANAGEMENT", new string[] { "Wishlist",
+                                                    "Borrowed", 
                                                     "Overdue", 
-                                                    "Reserve", 
-                                                    //"Wishlist", 
+                                                    "Reserve",
                                                     "Fines", 
                                                     "History" } }
                 }
@@ -104,10 +104,6 @@ namespace LMS.Presentation.Forms
             BuildModules(modulesPanel, role);
             PnlSidebar.Controls.Add(modulesPanel);
 
-            // 3️ Profile header — TOP (ADD LAST)
-            var profileHeader = CreateProfileHeader();
-            profileHeader.Dock = DockStyle.Top;
-            PnlSidebar.Controls.Add(profileHeader);
         }
         
         // Handles sidebar button clicks
@@ -137,60 +133,6 @@ namespace LMS.Presentation.Forms
                 default:
                     throw new InvalidOperationException("Unsupported role");
             }
-        }
-
-        // ========== PROFILE MODULE ==========
-        private Panel CreateProfileHeader()
-        {
-            // Profile panel
-            var panel = new Panel
-            {
-                Height = 80,
-                Dock = DockStyle.Top,
-                Padding = new Padding(10)
-            };
-
-            // Profile pic
-            var pic = new PictureBox
-            {
-                Size = new Size(60, 60),
-                Location = new Point(10, 10),
-                SizeMode = PictureBoxSizeMode.Zoom
-            };
-
-            // Full Name
-            var lblName = new Label
-            {
-                Text = "Zy Manti",
-                Location = new Point(80, 20),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                ForeColor = Color.White
-            };
-
-            // Role
-            var lblRole = new Label
-            {
-                Text = _currentRole.ToString(),
-                Location = new Point(80, 45),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 9),
-                ForeColor = Color.White
-            };
-
-            panel.Controls.Add(pic);
-            panel.Controls.Add(lblName);
-            panel.Controls.Add(lblRole);
-
-            // If click: load profile module
-            panel.Cursor = Cursors.Hand;
-            panel.Click += (s, e) => LoadContentByName("Profile");
-            lblName.Cursor = Cursors.Hand;
-            lblName.Click += (s, e) => LoadContentByName("Profile");
-            lblRole.Cursor = Cursors.Hand;
-            lblRole.Click += (s, e) => LoadContentByName("Profile");
-
-            return panel;
         }
 
         // ========== ALL MODULES OF CURRENT USER'S ROLE ==========

@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PnlContent = new System.Windows.Forms.Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PnlSidebar = new System.Windows.Forms.Panel();
-            this.PnlModules = new System.Windows.Forms.Panel();
             this.button10 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -41,48 +40,44 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.LblProfileName = new System.Windows.Forms.Label();
+            this.LblProfileRole = new System.Windows.Forms.Label();
             this.PnlProfileHeader = new System.Windows.Forms.Panel();
-            this.LblProfileHeaderRole = new System.Windows.Forms.Label();
-            this.LblProfileHeaderName = new System.Windows.Forms.Label();
+            this.PnlLogo = new System.Windows.Forms.Panel();
+            this.LblTitle = new System.Windows.Forms.Label();
+            this.PicBxLogo = new System.Windows.Forms.PictureBox();
+            this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
+            this.PnlModuleName = new System.Windows.Forms.Panel();
+            this.PicBxModuleIcon = new System.Windows.Forms.PictureBox();
+            this.LblModuleName = new System.Windows.Forms.Label();
+            this.PnlTopBar = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.PnlContent = new System.Windows.Forms.Panel();
             this.PnlSidebar.SuspendLayout();
-            this.PnlModules.SuspendLayout();
             this.PnlProfileHeader.SuspendLayout();
+            this.PnlLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
+            this.PnlModuleName.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxModuleIcon)).BeginInit();
+            this.PnlTopBar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // PnlContent
-            // 
-            this.PnlContent.BackColor = System.Drawing.Color.White;
-            this.PnlContent.Location = new System.Drawing.Point(291, 38);
-            this.PnlContent.Name = "PnlContent";
-            this.PnlContent.Size = new System.Drawing.Size(1580, 936);
-            this.PnlContent.TabIndex = 4;
             // 
             // PnlSidebar
             // 
-            this.PnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.PnlSidebar.Controls.Add(this.PnlModules);
-            this.PnlSidebar.Controls.Add(this.PnlProfileHeader);
-            this.PnlSidebar.Location = new System.Drawing.Point(2, 52);
+            this.PnlSidebar.Controls.Add(this.button10);
+            this.PnlSidebar.Controls.Add(this.button8);
+            this.PnlSidebar.Controls.Add(this.button9);
+            this.PnlSidebar.Controls.Add(this.label6);
+            this.PnlSidebar.Controls.Add(this.label5);
+            this.PnlSidebar.Controls.Add(this.button7);
+            this.PnlSidebar.Controls.Add(this.button2);
+            this.PnlSidebar.Controls.Add(this.button6);
+            this.PnlSidebar.Controls.Add(this.button4);
+            this.PnlSidebar.Controls.Add(this.button5);
+            this.PnlSidebar.Location = new System.Drawing.Point(2, 189);
             this.PnlSidebar.Name = "PnlSidebar";
-            this.PnlSidebar.Size = new System.Drawing.Size(283, 922);
-            this.PnlSidebar.TabIndex = 3;
-            // 
-            // PnlModules
-            // 
-            this.PnlModules.Controls.Add(this.button10);
-            this.PnlModules.Controls.Add(this.button8);
-            this.PnlModules.Controls.Add(this.button9);
-            this.PnlModules.Controls.Add(this.label6);
-            this.PnlModules.Controls.Add(this.label5);
-            this.PnlModules.Controls.Add(this.button7);
-            this.PnlModules.Controls.Add(this.button2);
-            this.PnlModules.Controls.Add(this.button6);
-            this.PnlModules.Controls.Add(this.button4);
-            this.PnlModules.Controls.Add(this.button5);
-            this.PnlModules.Location = new System.Drawing.Point(0, 90);
-            this.PnlModules.Name = "PnlModules";
-            this.PnlModules.Size = new System.Drawing.Size(283, 843);
-            this.PnlModules.TabIndex = 27;
+            this.PnlSidebar.Size = new System.Drawing.Size(283, 785);
+            this.PnlSidebar.TabIndex = 27;
             // 
             // button10
             // 
@@ -232,37 +227,131 @@
             this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button5.UseVisualStyleBackColor = false;
             // 
+            // LblProfileName
+            // 
+            this.LblProfileName.AutoSize = true;
+            this.LblProfileName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblProfileName.ForeColor = System.Drawing.Color.Black;
+            this.LblProfileName.Location = new System.Drawing.Point(92, 16);
+            this.LblProfileName.Name = "LblProfileName";
+            this.LblProfileName.Size = new System.Drawing.Size(81, 32);
+            this.LblProfileName.TabIndex = 0;
+            this.LblProfileName.Text = "Name";
+            this.LblProfileName.Click += new System.EventHandler(this.LblProfileHeaderName_Click);
+            // 
+            // LblProfileRole
+            // 
+            this.LblProfileRole.AutoSize = true;
+            this.LblProfileRole.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblProfileRole.ForeColor = System.Drawing.Color.Black;
+            this.LblProfileRole.Location = new System.Drawing.Point(93, 43);
+            this.LblProfileRole.Name = "LblProfileRole";
+            this.LblProfileRole.Size = new System.Drawing.Size(50, 28);
+            this.LblProfileRole.TabIndex = 1;
+            this.LblProfileRole.Text = "Role";
+            // 
             // PnlProfileHeader
             // 
-            this.PnlProfileHeader.Controls.Add(this.LblProfileHeaderRole);
-            this.PnlProfileHeader.Controls.Add(this.LblProfileHeaderName);
-            this.PnlProfileHeader.Location = new System.Drawing.Point(0, 1);
+            this.PnlProfileHeader.BackColor = System.Drawing.Color.Transparent;
+            this.PnlProfileHeader.Controls.Add(this.PicBxProfilePic);
+            this.PnlProfileHeader.Controls.Add(this.LblProfileName);
+            this.PnlProfileHeader.Controls.Add(this.LblProfileRole);
+            this.PnlProfileHeader.Location = new System.Drawing.Point(1232, 3);
             this.PnlProfileHeader.Name = "PnlProfileHeader";
-            this.PnlProfileHeader.Size = new System.Drawing.Size(283, 83);
+            this.PnlProfileHeader.Size = new System.Drawing.Size(345, 83);
             this.PnlProfileHeader.TabIndex = 0;
             // 
-            // LblProfileHeaderRole
+            // PnlLogo
             // 
-            this.LblProfileHeaderRole.AutoSize = true;
-            this.LblProfileHeaderRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.LblProfileHeaderRole.ForeColor = System.Drawing.Color.White;
-            this.LblProfileHeaderRole.Location = new System.Drawing.Point(88, 48);
-            this.LblProfileHeaderRole.Name = "LblProfileHeaderRole";
-            this.LblProfileHeaderRole.Size = new System.Drawing.Size(51, 25);
-            this.LblProfileHeaderRole.TabIndex = 1;
-            this.LblProfileHeaderRole.Text = "Role";
+            this.PnlLogo.Controls.Add(this.PicBxLogo);
+            this.PnlLogo.Controls.Add(this.LblTitle);
+            this.PnlLogo.Location = new System.Drawing.Point(2, 53);
+            this.PnlLogo.Name = "PnlLogo";
+            this.PnlLogo.Size = new System.Drawing.Size(283, 91);
+            this.PnlLogo.TabIndex = 28;
             // 
-            // LblProfileHeaderName
+            // LblTitle
             // 
-            this.LblProfileHeaderName.AutoSize = true;
-            this.LblProfileHeaderName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblProfileHeaderName.ForeColor = System.Drawing.Color.White;
-            this.LblProfileHeaderName.Location = new System.Drawing.Point(87, 12);
-            this.LblProfileHeaderName.Name = "LblProfileHeaderName";
-            this.LblProfileHeaderName.Size = new System.Drawing.Size(96, 36);
-            this.LblProfileHeaderName.TabIndex = 0;
-            this.LblProfileHeaderName.Text = "Name";
-            this.LblProfileHeaderName.Click += new System.EventHandler(this.LblProfileHeaderName_Click);
+            this.LblTitle.AutoSize = true;
+            this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTitle.ForeColor = System.Drawing.Color.White;
+            this.LblTitle.Location = new System.Drawing.Point(99, 22);
+            this.LblTitle.Name = "LblTitle";
+            this.LblTitle.Size = new System.Drawing.Size(143, 48);
+            this.LblTitle.TabIndex = 0;
+            this.LblTitle.Text = "GaBasa.";
+            // 
+            // PicBxLogo
+            // 
+            this.PicBxLogo.Image = ((System.Drawing.Image)(resources.GetObject("PicBxLogo.Image")));
+            this.PicBxLogo.Location = new System.Drawing.Point(33, 12);
+            this.PicBxLogo.Name = "PicBxLogo";
+            this.PicBxLogo.Size = new System.Drawing.Size(67, 68);
+            this.PicBxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxLogo.TabIndex = 1;
+            this.PicBxLogo.TabStop = false;
+            // 
+            // PicBxProfilePic
+            // 
+            this.PicBxProfilePic.BackColor = System.Drawing.Color.IndianRed;
+            this.PicBxProfilePic.Location = new System.Drawing.Point(18, 16);
+            this.PicBxProfilePic.Name = "PicBxProfilePic";
+            this.PicBxProfilePic.Size = new System.Drawing.Size(64, 57);
+            this.PicBxProfilePic.TabIndex = 2;
+            this.PicBxProfilePic.TabStop = false;
+            // 
+            // PnlModuleName
+            // 
+            this.PnlModuleName.Controls.Add(this.PicBxModuleIcon);
+            this.PnlModuleName.Controls.Add(this.LblModuleName);
+            this.PnlModuleName.Location = new System.Drawing.Point(12, 2);
+            this.PnlModuleName.Name = "PnlModuleName";
+            this.PnlModuleName.Size = new System.Drawing.Size(587, 88);
+            this.PnlModuleName.TabIndex = 29;
+            // 
+            // PicBxModuleIcon
+            // 
+            this.PicBxModuleIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxModuleIcon.Image")));
+            this.PicBxModuleIcon.Location = new System.Drawing.Point(24, 14);
+            this.PicBxModuleIcon.Name = "PicBxModuleIcon";
+            this.PicBxModuleIcon.Size = new System.Drawing.Size(76, 60);
+            this.PicBxModuleIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxModuleIcon.TabIndex = 1;
+            this.PicBxModuleIcon.TabStop = false;
+            // 
+            // LblModuleName
+            // 
+            this.LblModuleName.AutoSize = true;
+            this.LblModuleName.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblModuleName.ForeColor = System.Drawing.Color.Black;
+            this.LblModuleName.Location = new System.Drawing.Point(103, 19);
+            this.LblModuleName.Name = "LblModuleName";
+            this.LblModuleName.Size = new System.Drawing.Size(247, 48);
+            this.LblModuleName.TabIndex = 0;
+            this.LblModuleName.Text = "Module Name";
+            // 
+            // PnlTopBar
+            // 
+            this.PnlTopBar.BackColor = System.Drawing.Color.White;
+            this.PnlTopBar.BorderColor = System.Drawing.Color.White;
+            this.PnlTopBar.Controls.Add(this.PnlProfileHeader);
+            this.PnlTopBar.Controls.Add(this.PnlModuleName);
+            this.PnlTopBar.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.PnlTopBar.ForeColor = System.Drawing.Color.Black;
+            this.PnlTopBar.Location = new System.Drawing.Point(291, 53);
+            this.PnlTopBar.Name = "PnlTopBar";
+            this.PnlTopBar.Padding = new System.Windows.Forms.Padding(5);
+            this.PnlTopBar.ShowText = true;
+            this.PnlTopBar.Size = new System.Drawing.Size(1580, 91);
+            this.PnlTopBar.TabIndex = 10;
+            // 
+            // PnlContent
+            // 
+            this.PnlContent.BackColor = System.Drawing.SystemColors.Control;
+            this.PnlContent.Location = new System.Drawing.Point(291, 142);
+            this.PnlContent.Name = "PnlContent";
+            this.PnlContent.Size = new System.Drawing.Size(1580, 832);
+            this.PnlContent.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -270,8 +359,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1898, 1024);
-            this.Controls.Add(this.PnlContent);
+            this.Controls.Add(this.PnlTopBar);
+            this.Controls.Add(this.PnlLogo);
             this.Controls.Add(this.PnlSidebar);
+            this.Controls.Add(this.PnlContent);
             this.MaximumSize = new System.Drawing.Size(1920, 1080);
             this.MinimumSize = new System.Drawing.Size(1918, 1006);
             this.Name = "MainForm";
@@ -279,18 +370,22 @@
             this.Text = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.PnlSidebar.ResumeLayout(false);
-            this.PnlModules.ResumeLayout(false);
-            this.PnlModules.PerformLayout();
+            this.PnlSidebar.PerformLayout();
             this.PnlProfileHeader.ResumeLayout(false);
             this.PnlProfileHeader.PerformLayout();
+            this.PnlLogo.ResumeLayout(false);
+            this.PnlLogo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
+            this.PnlModuleName.ResumeLayout(false);
+            this.PnlModuleName.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxModuleIcon)).EndInit();
+            this.PnlTopBar.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel PnlContent;
-        private System.Windows.Forms.Panel PnlSidebar;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
@@ -301,9 +396,18 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel PnlModules;
+        private System.Windows.Forms.Panel PnlSidebar;
         private System.Windows.Forms.Panel PnlProfileHeader;
-        private System.Windows.Forms.Label LblProfileHeaderRole;
-        private System.Windows.Forms.Label LblProfileHeaderName;
+        private System.Windows.Forms.Label LblProfileRole;
+        private System.Windows.Forms.Label LblProfileName;
+        private System.Windows.Forms.PictureBox PicBxProfilePic;
+        private System.Windows.Forms.Panel PnlLogo;
+        private System.Windows.Forms.PictureBox PicBxLogo;
+        private System.Windows.Forms.Label LblTitle;
+        private System.Windows.Forms.Panel PnlModuleName;
+        private System.Windows.Forms.PictureBox PicBxModuleIcon;
+        private System.Windows.Forms.Label LblModuleName;
+        private ReaLTaiizor.Controls.LostBorderPanel PnlTopBar;
+        private System.Windows.Forms.Panel PnlContent;
     }
 }
