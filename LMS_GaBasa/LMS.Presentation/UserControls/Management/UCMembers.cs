@@ -502,5 +502,10 @@ ORDER BY u.LastName, u.FirstName;
         {
 
         }
+
+        private void TxtSearchBar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

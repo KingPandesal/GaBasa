@@ -11,9 +11,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace LMS.Presentation.UserControls.Dashboards
 {
-    public partial class UCDashboardLibrarian : UserControl
+    public partial class UCDashboard : UserControl
     {
-        public UCDashboardLibrarian()
+        public UCDashboard()
         {
             InitializeComponent();
             LoadBorrowingTrendChart();
@@ -23,10 +23,10 @@ namespace LMS.Presentation.UserControls.Dashboards
         // Line Graph: Borrowing Trend (Last 7 Days)
         private void LoadBorrowingTrendChart()
         {
-            ChartBorrowingTrend.Series.Clear();
-            ChartBorrowingTrend.ChartAreas.Clear();
-            ChartBorrowingTrend.Legends.Clear();
-            ChartBorrowingTrend.Titles.Clear();
+            ChartBorrowingTrends.Series.Clear();
+            ChartBorrowingTrends.ChartAreas.Clear();
+            ChartBorrowingTrends.Legends.Clear();
+            ChartBorrowingTrends.Titles.Clear();
 
             // Chart Area
             ChartArea area = new ChartArea("MainArea");
@@ -34,7 +34,7 @@ namespace LMS.Presentation.UserControls.Dashboards
             area.AxisY.Title = "No. of Borrows";
             area.AxisX.Interval = 1;
             area.BackColor = Color.Transparent;
-            ChartBorrowingTrend.ChartAreas.Add(area);
+            ChartBorrowingTrends.ChartAreas.Add(area);
 
             // Series
             Series series = new Series("Borrowings")
@@ -54,7 +54,7 @@ namespace LMS.Presentation.UserControls.Dashboards
             series.Points.AddXY("Sat", 10);
             series.Points.AddXY("Sun", 8);
 
-            ChartBorrowingTrend.Series.Add(series);
+            ChartBorrowingTrends.Series.Add(series);
 
             // Title
             //ChartBorrowingTrend.Titles.Add("Borrowing Trend (Last 7 Days)");
@@ -68,19 +68,19 @@ namespace LMS.Presentation.UserControls.Dashboards
         // Pie Chart: Borrowings by User Type
         private void LoadBorrowingsByUserTypeChart()
         {
-            chartBorrowingsByUserType.Series.Clear();
-            chartBorrowingsByUserType.ChartAreas.Clear();
-            chartBorrowingsByUserType.Legends.Clear();
+            chartBorrowingsByUserTypes.Series.Clear();
+            chartBorrowingsByUserTypes.ChartAreas.Clear();
+            chartBorrowingsByUserTypes.Legends.Clear();
 
             // Chart Area
             ChartArea area = new ChartArea();
             area.BackColor = Color.Transparent;
-            chartBorrowingsByUserType.ChartAreas.Add(area);
+            chartBorrowingsByUserTypes.ChartAreas.Add(area);
 
             // Legend
             Legend legend = new Legend();
             legend.Docking = Docking.Right;
-            chartBorrowingsByUserType.Legends.Add(legend);
+            chartBorrowingsByUserTypes.Legends.Add(legend);
 
             // Series
             Series series = new Series("Borrowings")
@@ -96,7 +96,7 @@ namespace LMS.Presentation.UserControls.Dashboards
             series.Points.AddXY("Staff", 12);
             series.Points.AddXY("Guest", 8);
 
-            chartBorrowingsByUserType.Series.Add(series);
+            chartBorrowingsByUserTypes.Series.Add(series);
 
             // Optional: style labels
             foreach (DataPoint point in series.Points)
@@ -117,6 +117,21 @@ namespace LMS.Presentation.UserControls.Dashboards
         }
 
         private void lostBorderPanel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label28_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lostBorderPanel15_Click(object sender, EventArgs e)
         {
 
         }

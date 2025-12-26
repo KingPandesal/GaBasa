@@ -72,11 +72,11 @@
     <Compile Include="UserControls\Configurations\UCSettings.Designer.cs">
       <DependentUpon>UCSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Dashboards\UCDashboardLibrarian.cs">
+    <Compile Include="UserControls\Dashboards\UCDashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\Dashboards\UCDashboardLibrarian.Designer.cs">
-      <DependentUpon>UCDashboardLibrarian.cs</DependentUpon>
+    <Compile Include="UserControls\Dashboards\UCDashboard.Designer.cs">
+      <DependentUpon>UCDashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Dashboards\UCDashboardMember.cs">
       <SubType>UserControl</SubType>
@@ -188,8 +188,8 @@
     <EmbeddedResource Include="UserControls\Configurations\UCSettings.resx">
       <DependentUpon>UCSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\Dashboards\UCDashboardLibrarian.resx">
-      <DependentUpon>UCDashboardLibrarian.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\Dashboards\UCDashboard.resx">
+      <DependentUpon>UCDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Dashboards\UCDashboardMember.resx">
       <DependentUpon>UCDashboardMember.cs</DependentUpon>

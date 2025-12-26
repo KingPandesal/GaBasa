@@ -262,6 +262,7 @@
             this.LblProfileHeaderName.Size = new System.Drawing.Size(96, 36);
             this.LblProfileHeaderName.TabIndex = 0;
             this.LblProfileHeaderName.Text = "Name";
+            this.LblProfileHeaderName.Click += new System.EventHandler(this.LblProfileHeaderName_Click);
             // 
             // MainForm
             // 

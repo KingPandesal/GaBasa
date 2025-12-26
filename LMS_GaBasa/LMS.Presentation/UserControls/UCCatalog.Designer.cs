@@ -35,32 +35,26 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button2 = new ReaLTaiizor.Controls.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.button3 = new ReaLTaiizor.Controls.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button2 = new ReaLTaiizor.Controls.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.button4 = new ReaLTaiizor.Controls.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -69,8 +63,6 @@
             this.button5 = new ReaLTaiizor.Controls.Button();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label34 = new System.Windows.Forms.Label();
@@ -147,8 +139,6 @@
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label14);
-            this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.label16);
             this.panel1.Controls.Add(this.label17);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.label18);
@@ -157,8 +147,6 @@
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label3);
@@ -166,105 +154,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1509, 299);
             this.panel1.TabIndex = 21;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.OrangeRed;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(245, 59);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(4);
-            this.label4.Size = new System.Drawing.Size(79, 33);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Thesis";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Chocolate;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(341, 59);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(4);
-            this.label5.Size = new System.Drawing.Size(116, 33);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Philosophy";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Teal;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(477, 59);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(4);
-            this.label6.Size = new System.Drawing.Size(122, 33);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "Educational";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label7.Location = new System.Drawing.Point(237, 113);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(262, 25);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Author: Just Kidding Rowling";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label8.Location = new System.Drawing.Point(237, 140);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(270, 25);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Availability: 3 copies available";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.BorderColor = System.Drawing.Color.White;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button2.Image = null;
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.InactiveColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(242, 255);
-            this.button2.Name = "button2";
-            this.button2.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Size = new System.Drawing.Size(289, 28);
-            this.button2.TabIndex = 22;
-            this.button2.Text = "View more details...";
-            this.button2.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label9.Location = new System.Drawing.Point(237, 191);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(441, 25);
-            this.label9.TabIndex = 23;
-            this.label9.Text = "Discover the journeys of remarkable women who  ";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label10.Location = new System.Drawing.Point(237, 219);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(552, 25);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "broke barriers and reshaped leadership around the world that...";
             // 
             // label11
             // 
@@ -326,32 +215,6 @@
             this.label14.TabIndex = 30;
             this.label14.Text = "Author: Just Kidding Rowling";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Teal;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(1287, 56);
-            this.label15.Name = "label15";
-            this.label15.Padding = new System.Windows.Forms.Padding(4);
-            this.label15.Size = new System.Drawing.Size(122, 33);
-            this.label15.TabIndex = 29;
-            this.label15.Text = "Educational";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.BackColor = System.Drawing.Color.Chocolate;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(1151, 56);
-            this.label16.Name = "label16";
-            this.label16.Padding = new System.Windows.Forms.Padding(4);
-            this.label16.Size = new System.Drawing.Size(116, 33);
-            this.label16.TabIndex = 28;
-            this.label16.Text = "Philosophy";
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -385,6 +248,79 @@
             this.label18.TabIndex = 26;
             this.label18.Text = "Inspirational Women Leaders...";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label10.Location = new System.Drawing.Point(237, 219);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(552, 25);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "broke barriers and reshaped leadership around the world that...";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label9.Location = new System.Drawing.Point(237, 191);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(441, 25);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "Discover the journeys of remarkable women who  ";
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.BorderColor = System.Drawing.Color.White;
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.button2.Image = null;
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.InactiveColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(242, 255);
+            this.button2.Name = "button2";
+            this.button2.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.Size = new System.Drawing.Size(289, 28);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "View more details...";
+            this.button2.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label8.Location = new System.Drawing.Point(237, 140);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(270, 25);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Availability: 3 copies available";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label7.Location = new System.Drawing.Point(237, 113);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(262, 25);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Author: Just Kidding Rowling";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.OrangeRed;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(245, 59);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(4);
+            this.label4.Size = new System.Drawing.Size(79, 33);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Thesis";
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label19);
@@ -392,8 +328,6 @@
             this.panel2.Controls.Add(this.button4);
             this.panel2.Controls.Add(this.label21);
             this.panel2.Controls.Add(this.label22);
-            this.panel2.Controls.Add(this.label23);
-            this.panel2.Controls.Add(this.label24);
             this.panel2.Controls.Add(this.label25);
             this.panel2.Controls.Add(this.pictureBox3);
             this.panel2.Controls.Add(this.label26);
@@ -402,8 +336,6 @@
             this.panel2.Controls.Add(this.button5);
             this.panel2.Controls.Add(this.label29);
             this.panel2.Controls.Add(this.label30);
-            this.panel2.Controls.Add(this.label31);
-            this.panel2.Controls.Add(this.label32);
             this.panel2.Controls.Add(this.label33);
             this.panel2.Controls.Add(this.pictureBox4);
             this.panel2.Controls.Add(this.label34);
@@ -471,32 +403,6 @@
             this.label22.Size = new System.Drawing.Size(262, 25);
             this.label22.TabIndex = 30;
             this.label22.Text = "Author: Just Kidding Rowling";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.BackColor = System.Drawing.Color.Teal;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label23.ForeColor = System.Drawing.Color.White;
-            this.label23.Location = new System.Drawing.Point(1287, 56);
-            this.label23.Name = "label23";
-            this.label23.Padding = new System.Windows.Forms.Padding(4);
-            this.label23.Size = new System.Drawing.Size(122, 33);
-            this.label23.TabIndex = 29;
-            this.label23.Text = "Educational";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.BackColor = System.Drawing.Color.Chocolate;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(1151, 56);
-            this.label24.Name = "label24";
-            this.label24.Padding = new System.Windows.Forms.Padding(4);
-            this.label24.Size = new System.Drawing.Size(116, 33);
-            this.label24.TabIndex = 28;
-            this.label24.Text = "Philosophy";
             // 
             // label25
             // 
@@ -591,32 +497,6 @@
             this.label30.TabIndex = 5;
             this.label30.Text = "Author: Just Kidding Rowling";
             // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.BackColor = System.Drawing.Color.Teal;
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label31.ForeColor = System.Drawing.Color.White;
-            this.label31.Location = new System.Drawing.Point(477, 59);
-            this.label31.Name = "label31";
-            this.label31.Padding = new System.Windows.Forms.Padding(4);
-            this.label31.Size = new System.Drawing.Size(122, 33);
-            this.label31.TabIndex = 4;
-            this.label31.Text = "Educational";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.BackColor = System.Drawing.Color.Chocolate;
-            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label32.ForeColor = System.Drawing.Color.White;
-            this.label32.Location = new System.Drawing.Point(341, 59);
-            this.label32.Name = "label32";
-            this.label32.Padding = new System.Windows.Forms.Padding(4);
-            this.label32.Size = new System.Drawing.Size(116, 33);
-            this.label32.TabIndex = 3;
-            this.label32.Text = "Philosophy";
-            // 
             // label33
             // 
             this.label33.AutoSize = true;
@@ -685,15 +565,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private ReaLTaiizor.Controls.Button button3;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label18;
@@ -706,8 +582,6 @@
         private ReaLTaiizor.Controls.Button button4;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label26;
@@ -716,8 +590,6 @@
         private ReaLTaiizor.Controls.Button button5;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label34;

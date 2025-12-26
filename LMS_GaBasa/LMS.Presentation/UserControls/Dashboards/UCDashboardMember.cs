@@ -69,10 +69,10 @@ namespace LMS.Presentation.UserControls.Dashboards
 
         private void LoadWeeklyBorrowingTrend()
         {
-            ChartBorrowingTrend.Series.Clear();
-            ChartBorrowingTrend.ChartAreas.Clear();
-            ChartBorrowingTrend.Legends.Clear();
-            ChartBorrowingTrend.Titles.Clear();
+            ChartBorrowingTrends.Series.Clear();
+            ChartBorrowingTrends.ChartAreas.Clear();
+            ChartBorrowingTrends.Legends.Clear();
+            ChartBorrowingTrends.Titles.Clear();
 
             // Chart Area
             ChartArea area = new ChartArea("MainArea");
@@ -80,7 +80,7 @@ namespace LMS.Presentation.UserControls.Dashboards
             area.AxisY.Title = "Number of Borrowings";
             area.AxisX.Interval = 1;
             area.BackColor = Color.Transparent;
-            ChartBorrowingTrend.ChartAreas.Add(area);
+            ChartBorrowingTrends.ChartAreas.Add(area);
 
             // Series
             Series series = new Series("Borrowings")
@@ -99,7 +99,7 @@ namespace LMS.Presentation.UserControls.Dashboards
             series.Points.AddXY("Week 5", 4);
             series.Points.AddXY("Week 6", 7);
 
-            ChartBorrowingTrend.Series.Add(series);
+            ChartBorrowingTrends.Series.Add(series);
 
             // Optional: smooth line
             series["LineTension"] = "0.3";
@@ -109,7 +109,7 @@ namespace LMS.Presentation.UserControls.Dashboards
             //ChartBorrowingTrend.Titles[0].Font = new Font("Segoe UI", 12, FontStyle.Bold);
 
             // Remove legend if only one series
-            ChartBorrowingTrend.Legends.Clear();
+            ChartBorrowingTrends.Legends.Clear();
 
             // Grid styling
             area.AxisX.MajorGrid.Enabled = false;
@@ -133,6 +133,31 @@ namespace LMS.Presentation.UserControls.Dashboards
         }
 
         private void lostBorderPanel4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bigLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lostBorderPanel15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ChartLibraryCompletion_Click(object sender, EventArgs e)
         {
 
         }

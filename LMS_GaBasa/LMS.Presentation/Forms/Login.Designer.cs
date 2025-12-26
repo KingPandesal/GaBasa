@@ -64,7 +64,7 @@
             this.lbl3.BackColor = System.Drawing.Color.Transparent;
             this.lbl3.Font = new System.Drawing.Font("Arial Unicode MS", 20F);
             this.lbl3.ForeColor = System.Drawing.Color.White;
-            this.lbl3.Location = new System.Drawing.Point(41, 209);
+            this.lbl3.Location = new System.Drawing.Point(41, 208);
             this.lbl3.Name = "lbl3";
             this.lbl3.Size = new System.Drawing.Size(467, 54);
             this.lbl3.TabIndex = 16;
@@ -84,7 +84,7 @@
             // 
             // TxtUsername
             // 
-            this.TxtUsername.Location = new System.Drawing.Point(49, 324);
+            this.TxtUsername.Location = new System.Drawing.Point(49, 362);
             this.TxtUsername.Margin = new System.Windows.Forms.Padding(4);
             this.TxtUsername.Name = "TxtUsername";
             this.TxtUsername.Size = new System.Drawing.Size(304, 26);
@@ -93,7 +93,7 @@
             // 
             // TxtPassword
             // 
-            this.TxtPassword.Location = new System.Drawing.Point(49, 391);
+            this.TxtPassword.Location = new System.Drawing.Point(49, 413);
             this.TxtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPassword.Name = "TxtPassword";
             this.TxtPassword.Size = new System.Drawing.Size(275, 26);
@@ -107,7 +107,7 @@
             "Librarian / Admin",
             "Library Staff",
             "Library Member"});
-            this.CmbbxSelectUserType.Location = new System.Drawing.Point(49, 457);
+            this.CmbbxSelectUserType.Location = new System.Drawing.Point(49, 462);
             this.CmbbxSelectUserType.Margin = new System.Windows.Forms.Padding(4);
             this.CmbbxSelectUserType.Name = "CmbbxSelectUserType";
             this.CmbbxSelectUserType.Size = new System.Drawing.Size(304, 28);
@@ -116,11 +116,11 @@
             // 
             // BtnLogin
             // 
-            this.BtnLogin.BackColor = System.Drawing.Color.Maroon;
+            this.BtnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnLogin.FlatAppearance.BorderSize = 0;
             this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnLogin.ForeColor = System.Drawing.Color.White;
-            this.BtnLogin.Location = new System.Drawing.Point(49, 529);
+            this.BtnLogin.Location = new System.Drawing.Point(49, 517);
             this.BtnLogin.Margin = new System.Windows.Forms.Padding(4);
             this.BtnLogin.Name = "BtnLogin";
             this.BtnLogin.Size = new System.Drawing.Size(305, 43);
@@ -164,9 +164,9 @@
             // 
             // BtnTestConnection
             // 
-            this.BtnTestConnection.Location = new System.Drawing.Point(49, 630);
+            this.BtnTestConnection.Location = new System.Drawing.Point(943, 517);
             this.BtnTestConnection.Name = "BtnTestConnection";
-            this.BtnTestConnection.Size = new System.Drawing.Size(219, 37);
+            this.BtnTestConnection.Size = new System.Drawing.Size(67, 37);
             this.BtnTestConnection.TabIndex = 21;
             this.BtnTestConnection.Text = "Test Connection";
             this.BtnTestConnection.UseVisualStyleBackColor = true;
@@ -176,7 +176,7 @@
             // 
             this.ChkbxShowPassword.AutoSize = true;
             this.ChkbxShowPassword.BackColor = System.Drawing.Color.Transparent;
-            this.ChkbxShowPassword.Location = new System.Drawing.Point(331, 395);
+            this.ChkbxShowPassword.Location = new System.Drawing.Point(331, 417);
             this.ChkbxShowPassword.Name = "ChkbxShowPassword";
             this.ChkbxShowPassword.Size = new System.Drawing.Size(22, 21);
             this.ChkbxShowPassword.TabIndex = 22;

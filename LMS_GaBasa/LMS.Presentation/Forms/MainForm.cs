@@ -53,12 +53,11 @@ namespace LMS.Presentation.Forms
                 {
                     { "MAIN", new string[] { "Dashboard",
                                              "Catalog" } },
-                    { "MANAGEMENT", new string[] { "Members", 
-                                                    "Transactions", 
+                    { "MANAGEMENT", new string[] { "Members",
+                                                    "Circulation",
                                                     "Fines",
                                                     "Reservations",
-                                                    "Inventory" } },
-                    { "INSIGHTS", new string[] { "Reports" } }
+                                                    "Inventory" } }
                 }
             },
             { Role.Member, new Dictionary<string, string[]>
@@ -125,10 +124,12 @@ namespace LMS.Presentation.Forms
             switch (_currentRole)
             {
                 case Role.Librarian:
-                    return new UserControls.Dashboards.UCDashboardLibrarian();
+                    return new UserControls.Dashboards.UCDashboard();
 
+                // shared dashbaords na ang librarian and staff
+                // obsolete: UCDashboardStaff
                 case Role.Staff:
-                    return new UserControls.Dashboards.UCDashboardStaff();
+                    return new UserControls.Dashboards.UCDashboard();
 
                 case Role.Member:
                     return new UserControls.Dashboards.UCDashboardMember();
@@ -268,6 +269,7 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Settings"] = () => new UserControls.Configurations.UCSettings();
             _moduleFactories["Circulation"] = () => new UserControls.Management.UCCirculation();
             _moduleFactories["Reports"] = () => new UserControls.Insights.UCReports();
+            _moduleFactories["History"] = () => new UserControls.MemberFeatures.UCHistory();
 
             // members only
             _moduleFactories["Borrowed"] = () => new UserControls.MemberFeatures.UCBorrowed();
@@ -328,6 +330,11 @@ namespace LMS.Presentation.Forms
             };
             uc.Controls.Add(lbl);
             return uc;
+        }
+
+        private void LblProfileHeaderName_Click(object sender, EventArgs e)
+        {
+
         }
 
         // end code
