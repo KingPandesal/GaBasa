@@ -1,6 +1,7 @@
 # 📚Library Management System (LMS)📚
 
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
+Take a look at our **Wiki** here on github to understand more about GaBasa: The Library Management System.
 
 This project follows a **3-layer architecture**:
 
@@ -40,6 +41,8 @@ This project follows a **3-layer architecture**:
 
 ### 1. Clone the repository
 ```bash
+D: (if you want to put it on drive D, ignore if on drive C)
+cd (where you want to place project folder, ex: D:Programs/LMS_Gabasa)
 git clone https://github.com/SixxCodes/GaBasa.git
 ```
 
