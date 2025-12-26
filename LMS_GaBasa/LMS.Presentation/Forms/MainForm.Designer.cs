@@ -112,7 +112,7 @@
             // 
             // PicBxProfilePic
             // 
-            this.PicBxProfilePic.BackColor = System.Drawing.Color.IndianRed;
+            this.PicBxProfilePic.BackColor = System.Drawing.Color.Transparent;
             this.PicBxProfilePic.Location = new System.Drawing.Point(18, 16);
             this.PicBxProfilePic.Name = "PicBxProfilePic";
             this.PicBxProfilePic.Size = new System.Drawing.Size(64, 57);

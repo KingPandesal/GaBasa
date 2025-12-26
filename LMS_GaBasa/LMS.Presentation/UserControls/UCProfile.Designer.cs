@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCProfile));
-            this.label1 = new System.Windows.Forms.Label();
             this.lostBorderPanel3 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.PnlRegExpDate = new ReaLTaiizor.Controls.Panel();
             this.label11 = new System.Windows.Forms.Label();
@@ -69,16 +68,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(32, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(291, 54);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Profile Settings";
-            // 
             // lostBorderPanel3
             // 
             this.lostBorderPanel3.BackColor = System.Drawing.Color.White;
@@ -98,7 +87,7 @@
             this.lostBorderPanel3.Controls.Add(this.LblFullname);
             this.lostBorderPanel3.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel3.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel3.Location = new System.Drawing.Point(41, 124);
+            this.lostBorderPanel3.Location = new System.Drawing.Point(50, 38);
             this.lostBorderPanel3.Name = "lostBorderPanel3";
             this.lostBorderPanel3.Padding = new System.Windows.Forms.Padding(5);
             this.lostBorderPanel3.ShowText = true;
@@ -113,7 +102,7 @@
             this.PnlRegExpDate.Controls.Add(this.label10);
             this.PnlRegExpDate.Controls.Add(this.label9);
             this.PnlRegExpDate.EdgeColor = System.Drawing.Color.White;
-            this.PnlRegExpDate.Location = new System.Drawing.Point(56, 581);
+            this.PnlRegExpDate.Location = new System.Drawing.Point(59, 584);
             this.PnlRegExpDate.Name = "PnlRegExpDate";
             this.PnlRegExpDate.Padding = new System.Windows.Forms.Padding(5);
             this.PnlRegExpDate.Size = new System.Drawing.Size(637, 129);
@@ -174,7 +163,7 @@
             this.PnlMemberPrivilege.Controls.Add(this.label13);
             this.PnlMemberPrivilege.Controls.Add(this.label5);
             this.PnlMemberPrivilege.Controls.Add(this.label2);
-            this.PnlMemberPrivilege.Location = new System.Drawing.Point(814, 314);
+            this.PnlMemberPrivilege.Location = new System.Drawing.Point(817, 317);
             this.PnlMemberPrivilege.Name = "PnlMemberPrivilege";
             this.PnlMemberPrivilege.Size = new System.Drawing.Size(624, 382);
             this.PnlMemberPrivilege.TabIndex = 18;
@@ -317,7 +306,7 @@
             this.hopeRichTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
             this.hopeRichTextBox2.Hint = "";
             this.hopeRichTextBox2.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
-            this.hopeRichTextBox2.Location = new System.Drawing.Point(82, 502);
+            this.hopeRichTextBox2.Location = new System.Drawing.Point(85, 505);
             this.hopeRichTextBox2.MaxLength = 32767;
             this.hopeRichTextBox2.Multiline = true;
             this.hopeRichTextBox2.Name = "hopeRichTextBox2";
@@ -335,7 +324,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(63, 467);
+            this.label8.Location = new System.Drawing.Point(66, 470);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(96, 32);
             this.label8.TabIndex = 12;
@@ -348,7 +337,7 @@
             this.hopeRichTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
             this.hopeRichTextBox1.Hint = "";
             this.hopeRichTextBox1.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
-            this.hopeRichTextBox1.Location = new System.Drawing.Point(82, 377);
+            this.hopeRichTextBox1.Location = new System.Drawing.Point(85, 380);
             this.hopeRichTextBox1.MaxLength = 32767;
             this.hopeRichTextBox1.Multiline = true;
             this.hopeRichTextBox1.Name = "hopeRichTextBox1";
@@ -366,7 +355,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(63, 342);
+            this.label7.Location = new System.Drawing.Point(66, 345);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(98, 32);
             this.label7.TabIndex = 10;
@@ -376,7 +365,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Location = new System.Drawing.Point(69, 52);
+            this.panel2.Location = new System.Drawing.Point(72, 55);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(238, 232);
             this.panel2.TabIndex = 0;
@@ -405,7 +394,7 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.LimeGreen;
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(615, 157);
+            this.label6.Location = new System.Drawing.Point(618, 160);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 32);
             this.label6.TabIndex = 6;
@@ -416,7 +405,7 @@
             this.LblRole.AutoSize = true;
             this.LblRole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.LblRole.ForeColor = System.Drawing.Color.White;
-            this.LblRole.Location = new System.Drawing.Point(498, 157);
+            this.LblRole.Location = new System.Drawing.Point(501, 160);
             this.LblRole.Name = "LblRole";
             this.LblRole.Size = new System.Drawing.Size(105, 32);
             this.LblRole.TabIndex = 5;
@@ -425,7 +414,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(313, 231);
+            this.label4.Location = new System.Drawing.Point(316, 234);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(457, 32);
             this.label4.TabIndex = 3;
@@ -434,7 +423,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(313, 199);
+            this.label3.Location = new System.Drawing.Point(316, 202);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 32);
             this.label3.TabIndex = 2;
@@ -444,7 +433,7 @@
             // 
             this.LblFullname.AutoSize = true;
             this.LblFullname.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.LblFullname.Location = new System.Drawing.Point(310, 145);
+            this.LblFullname.Location = new System.Drawing.Point(313, 148);
             this.LblFullname.Name = "LblFullname";
             this.LblFullname.Size = new System.Drawing.Size(190, 54);
             this.LblFullname.TabIndex = 1;
@@ -454,11 +443,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.lostBorderPanel3);
-            this.Controls.Add(this.label1);
             this.Name = "UCProfile";
-            this.Size = new System.Drawing.Size(1580, 936);
+            this.Size = new System.Drawing.Size(1580, 832);
             this.Load += new System.EventHandler(this.UCProfile_Load);
             this.lostBorderPanel3.ResumeLayout(false);
             this.lostBorderPanel3.PerformLayout();
@@ -469,13 +457,10 @@
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label6;

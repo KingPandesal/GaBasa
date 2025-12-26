@@ -13,10 +13,14 @@ namespace LMS.Presentation.Forms
 {
     public partial class MainForm : Form
     {
+        // MOSTLY PARA SA SET-UP NI SYA SA SIDEBAR AND TOPBAR KAY DRI IBUTANG ANG TANAN USERCONTROLS
 
         // ===== 1: Fields =====
         private readonly User _currentUser;
         private readonly Role _currentRole;
+
+        // cached placeholder icons for modules
+        private readonly Dictionary<string, Image> _moduleIcons = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
 
         // ===== 2: Data mappings =====
         private readonly Dictionary<string, Func<UserControl>> _moduleFactories = new Dictionary<string, Func<UserControl>>(StringComparer.OrdinalIgnoreCase);
@@ -64,10 +68,6 @@ namespace LMS.Presentation.Forms
             }
         };
 
-
-
-
-
         // ===== 3: Constructor =====
         public MainForm(User currentUser)
         {
@@ -78,12 +78,12 @@ namespace LMS.Presentation.Forms
 
             InitializeSidebar(_currentRole);
             BuildModuleFactories();
+
+            // initialize topbar/profile controls (labels, picture, click)
+            InitializeTopBarProfile();
+
             LoadContentByName("Dashboard"); // default
         }
-
-
-
-
 
         // ===== 4: Initialization =====
         private void InitializeSidebar(Role role)
@@ -94,7 +94,7 @@ namespace LMS.Presentation.Forms
             // 1️ Logout — BOTTOM
             var logoutBtn = new Button
             {
-                Text = "               Logout", // 15 spaces, reserved for icons
+                Text = "Logout",
                 Height = 40,
                 Dock = DockStyle.Bottom,
                 FlatStyle = FlatStyle.Flat,
@@ -104,6 +104,13 @@ namespace LMS.Presentation.Forms
             };
             logoutBtn.FlatAppearance.BorderSize = 0;
             logoutBtn.Click += LogoutButton_Click;
+
+            // add placeholder icon to logout
+            logoutBtn.Image = CreatePlaceholderIcon("Logout");
+            logoutBtn.ImageAlign = ContentAlignment.MiddleLeft;
+            logoutBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            logoutBtn.Padding = new Padding(10, 0, 0, 0);
+
             PnlSidebar.Controls.Add(logoutBtn);
 
             // 2️ Modules panel — FILL (ADD THIS BEFORE PROFILE)
@@ -117,8 +124,111 @@ namespace LMS.Presentation.Forms
 
         }
 
+        // ===== New: TopBar / Profile initialization =====
+        // Makes LblProfileName, LblProfileRole and PicBxProfilePic functional.
+        private void InitializeTopBarProfile()
+        {
+            try
+            {
+                // set name (prefer GetFullName if available)
+                string displayName = null;
+                try { displayName = _currentUser?.GetFullName(); } catch { /* ignore */ }
+                if (string.IsNullOrWhiteSpace(displayName))
+                {
+                    var first = _currentUser?.FirstName ?? string.Empty;
+                    var last = _currentUser?.LastName ?? string.Empty;
+                    displayName = (first + " " + last).Trim();
+                }
+                if (string.IsNullOrWhiteSpace(displayName))
+                    displayName = _currentUser?.Username ?? "User";
 
+                LblProfileName.Text = displayName;
+                LblProfileRole.Text = _currentRole.ToString();
 
+                // set profile picture (use user-provided image if available, otherwise placeholder)
+                PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
+                Image userImage = TryGetUserImage();
+                if (userImage != null)
+                {
+                    PicBxProfilePic.Image = userImage;
+                }
+                else
+                {
+                    PicBxProfilePic.Image = CreateProfilePlaceholderImage(displayName, PicBxProfilePic.Width, PicBxProfilePic.Height);
+                }
+
+                // visual affordance + click
+                PicBxProfilePic.Cursor = Cursors.Hand;
+                // remove duplicated handler if designer already hooked it
+                PicBxProfilePic.Click -= PicBxProfilePic_Click;
+                PicBxProfilePic.Click += PicBxProfilePic_Click;
+
+                // optionally allow clicking the header panel or name to open profile too
+                PnlProfileHeader.Cursor = Cursors.Hand;
+                PnlProfileHeader.Click -= PicBxProfilePic_Click;
+                PnlProfileHeader.Click += PicBxProfilePic_Click;
+                LblProfileName.Click -= PicBxProfilePic_Click;
+                LblProfileName.Click += PicBxProfilePic_Click;
+                LblProfileRole.Click -= PicBxProfilePic_Click;
+                LblProfileRole.Click += PicBxProfilePic_Click;
+
+                // small tooltip
+                var tt = new ToolTip();
+                tt.SetToolTip(PicBxProfilePic, "Open profile");
+                tt.SetToolTip(PnlProfileHeader, "Open profile");
+            }
+            catch
+            {
+                // fail silently - profile is decorative if something goes wrong
+            }
+        }
+
+        // If your User model had an image property, return it here.
+        // This stub returns null because the current User signature doesn't include an image.
+        private Image TryGetUserImage()
+        {
+            // Example if you later add Image or byte[] to User:
+            // if (_currentUser?.PhotoBytes != null) { using (var ms = new MemoryStream(_currentUser.PhotoBytes)) return Image.FromStream(ms); }
+            return null;
+        }
+
+        // Create a circular placeholder sized for the profile picture box.
+        private Image CreateProfilePlaceholderImage(string key, int width, int height)
+        {
+            if (string.IsNullOrEmpty(key))
+                key = "?";
+
+            var size = Math.Max(32, Math.Min(Math.Max(width, height), 128)); // reasonable bounds
+            var bmp = new Bitmap(size, size);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                var h = Math.Abs(key.GetHashCode());
+                var r = (byte)(h % 200 + 20);
+                var gr = (byte)((h / 31) % 200 + 20);
+                var b = (byte)((h / 17) % 200 + 20);
+                var bg = Color.FromArgb(r, gr, b);
+
+                g.Clear(Color.Transparent);
+                using (var brush = new SolidBrush(bg))
+                {
+                    g.FillEllipse(brush, 0, 0, size - 1, size - 1);
+                }
+
+                var letter = char.ToUpperInvariant(key[0]).ToString();
+                using (var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                {
+                    // scale font based on size
+                    float fontSize = Math.Max(10f, size / 2.5f);
+                    using (var fnt = new Font("Segoe UI", fontSize, FontStyle.Bold))
+                    using (var brush = new SolidBrush(Color.White))
+                    {
+                        g.DrawString(letter, fnt, brush, new RectangleF(0, 0, size, size), sf);
+                    }
+                }
+            }
+            return bmp;
+        }
 
         // ===== 5: Event handlers =====
         // Handles sidebar button clicks
@@ -145,9 +255,12 @@ namespace LMS.Presentation.Forms
             // this.Close();
         }
 
-
-
-
+        // When the profile picture (or header) is clicked, open the Profile module
+        private void PicBxProfilePic_Click(object sender, EventArgs e)
+        {
+            // the module factory already provides UCProfile that expects the current user
+            LoadContentByName("Profile");
+        }
 
         // ===== 6: Role-based logic =====
         // KAKINSA NGA DASHBOARD ANG IPAKITA
@@ -171,10 +284,6 @@ namespace LMS.Presentation.Forms
             }
         }
 
-
-
-
-
         // ===== 7: Sidebar construction logic =====
         // ========== ALL MODULES OF CURRENT USER'S ROLE ==========
         private void BuildModules(Panel container, Role role)
@@ -191,7 +300,7 @@ namespace LMS.Presentation.Forms
                 {
                     var btn = new Button
                     {
-                        Text = "              " + module, // 15 spaces, reserved for icons
+                        Text = module,
                         Height = 40,
                         Font = new Font("Microsoft Sans Serif, ", 11),
                         ForeColor = Color.White,
@@ -203,6 +312,12 @@ namespace LMS.Presentation.Forms
                     btn.FlatAppearance.BorderSize = 0;
                     btn.Click += SidebarButton_Click;
 
+                    // placeholder icon and layout adjustments
+                    btn.Image = CreatePlaceholderIcon(module);
+                    btn.ImageAlign = ContentAlignment.MiddleLeft;
+                    btn.TextImageRelation = TextImageRelation.ImageBeforeText;
+                    btn.Padding = new Padding(10, 0, 0, 0);
+
                     categoryPanel.Controls.Add(btn);
                 }
 
@@ -212,7 +327,7 @@ namespace LMS.Presentation.Forms
                     Height = 15,
                     Dock = DockStyle.Top,
                     Padding = new Padding(10, 0, 0, 0),
-                    Font = new Font("Microsoft Sans Serif, ", 7),
+                    Font = new Font("Microsoft Sans Serif", 7),
                     ForeColor = Color.White
                 };
 
@@ -220,10 +335,6 @@ namespace LMS.Presentation.Forms
                 container.Controls.Add(categoryPanel);
             }
         }
-
-
-
-
 
         // ===== 8: Module navigation system =====
         private void BuildModuleFactories()
@@ -275,6 +386,9 @@ namespace LMS.Presentation.Forms
             if (string.IsNullOrWhiteSpace(name))
                 return;
 
+            // update the topbar/title label
+            UpdateModuleTitle(name);
+
             if (_moduleFactories.TryGetValue(name, out var factory))
             {
                 var uc = factory?.Invoke();
@@ -292,10 +406,6 @@ namespace LMS.Presentation.Forms
             PnlContent.Controls.Add(placeholder);
         }
 
-
-
-
-
         // ===== 9: Fallback helpers =====
         private UserControl CreateNotImplementedControl(string name)
         {
@@ -312,6 +422,91 @@ namespace LMS.Presentation.Forms
             return uc;
         }
 
+        // ===== 10: Module title updater =====
+        private void UpdateModuleTitle(string name)
+        {
+            var display = string.IsNullOrWhiteSpace(name) ? string.Empty : name;
+
+            Label lbl = null;
+
+            // Try common designer names (search recursively)
+            lbl = this.Controls.Find("LblModuleTitle", true).FirstOrDefault() as Label
+               ?? this.Controls.Find("LblModuleName", true).FirstOrDefault() as Label
+               ?? this.Controls.Find("lblModule", true).FirstOrDefault() as Label;
+
+            if (lbl != null)
+            {
+                lbl.Text = display;
+                return;
+            }
+
+            // If you have a top panel named PnlTopBar, add a label there
+            var topBar = this.Controls.Find("PnlTopBar", true).FirstOrDefault() as Control;
+            if (topBar != null)
+            {
+                var newLbl = new Label
+                {
+                    Name = "LblModuleTitle",
+                    Text = display,
+                    AutoSize = false,
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold)
+                };
+                topBar.Controls.Add(newLbl);
+                return;
+            }
+
+            // As a last resort, set the form's Text (window title)
+            this.Text = display;
+        }
+
+        // ===== 11: Placeholder icon generator =====
+        // Creates a small circular colored icon with the module's first letter.
+        // Icons are cached in _moduleIcons to avoid recreating bitmaps repeatedly.
+        private Image CreatePlaceholderIcon(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+                key = "?";
+
+            Image cached;
+            if (_moduleIcons.TryGetValue(key, out cached))
+                return cached;
+
+            const int size = 24;
+            var bmp = new Bitmap(size, size);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                // determine color from stable hash
+                var h = Math.Abs(key.GetHashCode());
+                var r = (byte)(h % 200 + 20);
+                var gr = (byte)((h / 31) % 200 + 20);
+                var b = (byte)((h / 17) % 200 + 20);
+                var bg = Color.FromArgb(r, gr, b);
+
+                g.Clear(Color.Transparent);
+                using (var brush = new SolidBrush(bg))
+                {
+                    g.FillEllipse(brush, 0, 0, size - 1, size - 1);
+                }
+
+                // draw first letter
+                var letter = char.ToUpperInvariant(key[0]).ToString();
+                using (var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                using (var fnt = new Font("Segoe UI", 10, FontStyle.Bold))
+                using (var brush = new SolidBrush(Color.White))
+                {
+                    g.DrawString(letter, fnt, brush, new RectangleF(0, 0, size, size), sf);
+                }
+            }
+
+            _moduleIcons[key] = bmp;
+            return bmp;
+        }
+
         // end code
+        
     }
 }
