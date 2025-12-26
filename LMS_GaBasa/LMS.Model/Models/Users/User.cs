@@ -37,9 +37,10 @@ namespace LMS.Model.Models.Users
             PasswordHash = passwordHash;
         }
 
-        public bool HashPasswordHash(string hashedInput)
+        // INTERNAL ACCESS for auth only
+        internal string GetPasswordHash()
         {
-            return PasswordHash == hashedInput;
+            return PasswordHash;
         }
 
         // ========== COMMON BEHAVIOR ==========

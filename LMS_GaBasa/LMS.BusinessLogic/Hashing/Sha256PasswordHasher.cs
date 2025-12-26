@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LMS.BusinessLogic.Security
 {
-    public class Sha256PasswordHasher : IPasswordHasher
+    public class Sha256PasswordHasher
     {
         public string Hash(string plainPassword)
         {
@@ -49,6 +49,6 @@ namespace LMS.BusinessLogic.Security
             return diff == 0;
         }
 
-        // end code
+        //end code
     }
 }

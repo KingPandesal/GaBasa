@@ -1,6 +1,9 @@
-﻿using LMS.BusinessLogic.Managers;
+﻿using LMS.BusinessLogic.Hashing;
+using LMS.BusinessLogic.Managers;
 using LMS.BusinessLogic.Security;
 using LMS.DataAccess.Repositories;
+using LMS.Model.Models.Enums;
+using LMS.Model.Models.Users;
 using LMS.Presentation.Forms;
 using System;
 using System.Collections.Generic;
@@ -22,7 +25,7 @@ namespace LMS.Presentation
             Application.SetCompatibleTextRenderingDefault(false);
 
             IUserRepository userRepo = new UserRepository();
-            IPasswordHasher hasher = new Sha256PasswordHasher();
+            IPasswordHasher hasher = new BcryptPasswordHasher(12);
             IUserManager userManager = new UserManager(userRepo, hasher);
 
             Application.Run(new Login(userManager));

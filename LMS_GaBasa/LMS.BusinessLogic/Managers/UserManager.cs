@@ -33,10 +33,7 @@ namespace LMS.BusinessLogic.Managers
             if (user.Status != UserStatus.Active)
                 return null;
 
-            // Hash input with injected hasher then verify against stored hash
-            string hashedInput = _passwordHasher.Hash(password);
-
-            if (!user.HashPasswordHash(hashedInput))
+            if (!_passwordHasher.Verify(user.GetPasswordHash(), password))
                 return null;
 
             return user;

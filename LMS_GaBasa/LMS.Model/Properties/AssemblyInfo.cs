@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: InternalsVisibleTo("LMS.DataAccess")]
 [assembly: AssemblyTitle("LMS.Model")]
+[assembly: InternalsVisibleTo("LMS.BusinessLogic")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HP")]

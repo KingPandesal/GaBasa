@@ -39,6 +39,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lbl1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.BtnTestConnection = new System.Windows.Forms.Button();
             this.ChkbxShowPassword = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -161,6 +162,16 @@
             this.pictureBox1.TabIndex = 18;
             this.pictureBox1.TabStop = false;
             // 
+            // BtnTestConnection
+            // 
+            this.BtnTestConnection.Location = new System.Drawing.Point(943, 517);
+            this.BtnTestConnection.Name = "BtnTestConnection";
+            this.BtnTestConnection.Size = new System.Drawing.Size(67, 37);
+            this.BtnTestConnection.TabIndex = 21;
+            this.BtnTestConnection.Text = "Test Connection";
+            this.BtnTestConnection.UseVisualStyleBackColor = true;
+            this.BtnTestConnection.Click += new System.EventHandler(this.BtnTestConnection_Click);
+            // 
             // ChkbxShowPassword
             // 
             this.ChkbxShowPassword.AutoSize = true;
@@ -181,6 +192,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1058, 744);
             this.Controls.Add(this.ChkbxShowPassword);
+            this.Controls.Add(this.BtnTestConnection);
             this.Controls.Add(this.lbl1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -218,6 +230,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label lbl1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button BtnTestConnection;
         private System.Windows.Forms.CheckBox ChkbxShowPassword;
     }
 }
