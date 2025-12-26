@@ -14,21 +14,11 @@ namespace LMS.Presentation.Forms
     public partial class MainForm : Form
     {
 
+        // ===== 1: Fields =====
         private readonly User _currentUser;
         private readonly Role _currentRole;
 
-        public MainForm(User currentUser)
-        {
-            InitializeComponent();
-
-            _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-            _currentRole = _currentUser.Role;
-
-            InitializeSidebar(_currentRole);
-            BuildModuleFactories();
-            LoadContentByName("Dashboard"); // default
-        }
-
+        // ===== 2: Data mappings =====
         private readonly Dictionary<string, Func<UserControl>> _moduleFactories = new Dictionary<string, Func<UserControl>>(StringComparer.OrdinalIgnoreCase);
 
         // Sidebar mapping: Role -> Categories -> Modules
@@ -74,7 +64,28 @@ namespace LMS.Presentation.Forms
             }
         };
 
-        // ========== SIDEBAR ==========
+
+
+
+
+        // ===== 3: Constructor =====
+        public MainForm(User currentUser)
+        {
+            InitializeComponent();
+
+            _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
+            _currentRole = _currentUser.Role;
+
+            InitializeSidebar(_currentRole);
+            BuildModuleFactories();
+            LoadContentByName("Dashboard"); // default
+        }
+
+
+
+
+
+        // ===== 4: Initialization =====
         private void InitializeSidebar(Role role)
         {
             PnlSidebar.Controls.Clear();
@@ -105,7 +116,11 @@ namespace LMS.Presentation.Forms
             PnlSidebar.Controls.Add(modulesPanel);
 
         }
-        
+
+
+
+
+        // ===== 5: Event handlers =====
         // Handles sidebar button clicks
         private void SidebarButton_Click(object sender, EventArgs e)
         {
@@ -115,6 +130,27 @@ namespace LMS.Presentation.Forms
             }
         }
 
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show("Are you sure you want to log out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm != DialogResult.Yes)
+                return;
+
+            // restart app so startup/login flow runs again.
+            Application.Restart();
+
+            // this.Hide();
+            // var login = new Login(yourUserManagerInstanceHere);
+            // login.Show();
+            // this.Close();
+        }
+
+
+
+
+
+        // ===== 6: Role-based logic =====
+        // KAKINSA NGA DASHBOARD ANG IPAKITA
         private UserControl GetDashboardByRole()
         {
             switch (_currentRole)
@@ -135,6 +171,11 @@ namespace LMS.Presentation.Forms
             }
         }
 
+
+
+
+
+        // ===== 7: Sidebar construction logic =====
         // ========== ALL MODULES OF CURRENT USER'S ROLE ==========
         private void BuildModules(Panel container, Role role)
         {
@@ -180,37 +221,31 @@ namespace LMS.Presentation.Forms
             }
         }
 
-        // ========== LOGOUT ==========
-        // Logout click handler
-        private void LogoutButton_Click(object sender, EventArgs e)
-        {
-            var confirm = MessageBox.Show("Are you sure you want to log out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirm != DialogResult.Yes)
-                return;
 
-            // restart app so startup/login flow runs again.
-            Application.Restart();
 
-            // this.Hide();
-            // var login = new Login(yourUserManagerInstanceHere);
-            // login.Show();
-            // this.Close();
-        }
 
-        // ========== MORE ==========
+
+        // ===== 8: Module navigation system =====
         private void BuildModuleFactories()
         {
             _moduleFactories.Clear();
+
+            // ALL ROLES
+            _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);
             _moduleFactories["Dashboard"] = () => GetDashboardByRole();
-            _moduleFactories["Users"] = () => new UserControls.Management.UCUsers();
-            _moduleFactories["Members"] = () => new UserControls.Management.UCMembers();
             _moduleFactories["Catalog"] = () => new UserControls.UCCatalog();
+
+            // Librarian only
+            _moduleFactories["Users"] = () => new UserControls.Management.UCUsers();
+            _moduleFactories["Reports"] = () => new UserControls.Insights.UCReports();
+            _moduleFactories["Settings"] = () => new UserControls.Configurations.UCSettings();
+
+            // LIBRARIAN AND STAFF
+            _moduleFactories["Members"] = () => new UserControls.Management.UCMembers();
             _moduleFactories["Fines"] = () => new UserControls.Management.UCFines();
             _moduleFactories["Reservations"] = () => new UserControls.Management.UCReservation();
             _moduleFactories["Inventory"] = () => new UserControls.Management.UCInventory();
-            _moduleFactories["Settings"] = () => new UserControls.Configurations.UCSettings();
             _moduleFactories["Circulation"] = () => new UserControls.Management.UCCirculation();
-            _moduleFactories["Reports"] = () => new UserControls.Insights.UCReports();
             _moduleFactories["History"] = () => new UserControls.MemberFeatures.UCHistory();
 
             // members only
@@ -218,8 +253,6 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Overdue"] = () => new UserControls.MemberFeatures.UCOverdue();
             _moduleFactories["Reserve"] = () => new UserControls.MemberFeatures.UCReserve();
 
-            // Add Profile factory so clicking the profile header shows UCProfile for all roles
-            _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);
 
             var knownModules = new[]
             {
@@ -259,6 +292,11 @@ namespace LMS.Presentation.Forms
             PnlContent.Controls.Add(placeholder);
         }
 
+
+
+
+
+        // ===== 9: Fallback helpers =====
         private UserControl CreateNotImplementedControl(string name)
         {
             var uc = new UserControl();
@@ -272,11 +310,6 @@ namespace LMS.Presentation.Forms
             };
             uc.Controls.Add(lbl);
             return uc;
-        }
-
-        private void LblProfileHeaderName_Click(object sender, EventArgs e)
-        {
-
         }
 
         // end code

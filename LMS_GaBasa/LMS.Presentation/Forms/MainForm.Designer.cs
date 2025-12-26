@@ -34,10 +34,10 @@
             this.LblProfileName = new System.Windows.Forms.Label();
             this.LblProfileRole = new System.Windows.Forms.Label();
             this.PnlProfileHeader = new System.Windows.Forms.Panel();
-            this.PnlLogo = new System.Windows.Forms.Panel();
-            this.LblTitle = new System.Windows.Forms.Label();
-            this.PicBxLogo = new System.Windows.Forms.PictureBox();
             this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
+            this.PnlLogo = new System.Windows.Forms.Panel();
+            this.PicBxLogo = new System.Windows.Forms.PictureBox();
+            this.LblTitle = new System.Windows.Forms.Label();
             this.PnlModuleName = new System.Windows.Forms.Panel();
             this.PicBxModuleIcon = new System.Windows.Forms.PictureBox();
             this.LblModuleName = new System.Windows.Forms.Label();
@@ -45,9 +45,9 @@
             this.PnlContent = new System.Windows.Forms.Panel();
             this.PnlSidebar.SuspendLayout();
             this.PnlProfileHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             this.PnlLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             this.PnlModuleName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxModuleIcon)).BeginInit();
             this.PnlTopBar.SuspendLayout();
@@ -87,7 +87,6 @@
             this.LblProfileName.Size = new System.Drawing.Size(81, 32);
             this.LblProfileName.TabIndex = 0;
             this.LblProfileName.Text = "Name";
-            this.LblProfileName.Click += new System.EventHandler(this.LblProfileHeaderName_Click);
             // 
             // LblProfileRole
             // 
@@ -111,6 +110,15 @@
             this.PnlProfileHeader.Size = new System.Drawing.Size(345, 83);
             this.PnlProfileHeader.TabIndex = 0;
             // 
+            // PicBxProfilePic
+            // 
+            this.PicBxProfilePic.BackColor = System.Drawing.Color.IndianRed;
+            this.PicBxProfilePic.Location = new System.Drawing.Point(18, 16);
+            this.PicBxProfilePic.Name = "PicBxProfilePic";
+            this.PicBxProfilePic.Size = new System.Drawing.Size(64, 57);
+            this.PicBxProfilePic.TabIndex = 2;
+            this.PicBxProfilePic.TabStop = false;
+            // 
             // PnlLogo
             // 
             this.PnlLogo.Controls.Add(this.PicBxLogo);
@@ -119,17 +127,6 @@
             this.PnlLogo.Name = "PnlLogo";
             this.PnlLogo.Size = new System.Drawing.Size(283, 91);
             this.PnlLogo.TabIndex = 28;
-            // 
-            // LblTitle
-            // 
-            this.LblTitle.AutoSize = true;
-            this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblTitle.ForeColor = System.Drawing.Color.White;
-            this.LblTitle.Location = new System.Drawing.Point(99, 22);
-            this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(143, 48);
-            this.LblTitle.TabIndex = 0;
-            this.LblTitle.Text = "GaBasa.";
             // 
             // PicBxLogo
             // 
@@ -141,14 +138,16 @@
             this.PicBxLogo.TabIndex = 1;
             this.PicBxLogo.TabStop = false;
             // 
-            // PicBxProfilePic
+            // LblTitle
             // 
-            this.PicBxProfilePic.BackColor = System.Drawing.Color.IndianRed;
-            this.PicBxProfilePic.Location = new System.Drawing.Point(18, 16);
-            this.PicBxProfilePic.Name = "PicBxProfilePic";
-            this.PicBxProfilePic.Size = new System.Drawing.Size(64, 57);
-            this.PicBxProfilePic.TabIndex = 2;
-            this.PicBxProfilePic.TabStop = false;
+            this.LblTitle.AutoSize = true;
+            this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTitle.ForeColor = System.Drawing.Color.White;
+            this.LblTitle.Location = new System.Drawing.Point(99, 22);
+            this.LblTitle.Name = "LblTitle";
+            this.LblTitle.Size = new System.Drawing.Size(143, 48);
+            this.LblTitle.TabIndex = 0;
+            this.LblTitle.Text = "GaBasa.";
             // 
             // PnlModuleName
             // 
@@ -222,10 +221,10 @@
             this.PnlSidebar.ResumeLayout(false);
             this.PnlProfileHeader.ResumeLayout(false);
             this.PnlProfileHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
             this.PnlLogo.ResumeLayout(false);
             this.PnlLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
             this.PnlModuleName.ResumeLayout(false);
             this.PnlModuleName.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxModuleIcon)).EndInit();
