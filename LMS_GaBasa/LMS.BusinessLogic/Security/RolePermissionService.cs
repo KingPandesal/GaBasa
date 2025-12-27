@@ -9,11 +9,75 @@ namespace LMS.BusinessLogic.Security
 {
     public class RolePermissionService : IPermissionService
     {
+        // ========== MAIN ==========
+        // All roles can view catalog
+        // wla dri ang dashboard
+        public bool CanViewCatalog(User user) => true;
+
+        // ========== INSIGHTS ==========
+        public bool CanGenerateReports(User user)
+            => user.Role == Role.Staff;
+
+        // ========== MANAGEMENT ==========
         public bool CanManageUsers(User user)
             => user.Role == Role.Librarian;
 
+        public bool CanManageMembers(User user)
+            => user.Role == Role.Librarian 
+            || user.Role == Role.Staff;
+
+        public bool CanManageInventory(User user)
+            => user.Role == Role.Librarian
+            || user.Role == Role.Staff;
+
+        public bool CanManageReservations(User user)
+            => user.Role == Role.Librarian
+            || user.Role == Role.Staff;
+
+        public bool CanManageCirculation(User user)
+            => user.Role == Role.Librarian
+            || user.Role == Role.Staff;
+
+        public bool CanManageFines(User user)
+            => user.Role == Role.Librarian
+            || user.Role == Role.Staff;
+
+        // ========== CONFIGURATION ==========
+        public bool CanAccessSettings(User user)
+            => user.Role == Role.Librarian;
+
+        // ========== Members Only ==========
+        // sidebar
+        public bool CanViewWishlist(User user)
+            => user.Role == Role.Member;
+
+        public bool CanViewBorrowed(User user)
+            => user.Role == Role.Member;
+
+        public bool CanViewOverdue(User user)
+            => user.Role == Role.Member;
+
+        public bool CanViewReserved(User user)
+            => user.Role == Role.Member;
+
+        public bool CanViewFines(User user)
+            => user.Role == Role.Member;
+
+        public bool CanViewHistory(User user)
+            => user.Role == Role.Member;
+
+        // member actions
+        public bool CanWishlistBooks(User user)
+            => user.Role == Role.Member;
         public bool CanBorrowBooks(User user)
             => user.Role == Role.Member;
-    }
+        public bool CanReturnBooks(User user)
+            => user.Role == Role.Member;
+        public bool CanReserveBooks(User user)
+            => user.Role == Role.Member;
+        public bool CanCancelReservation(User user)
+            => user.Role == Role.Member;
 
+        // end code
+    }
 }
