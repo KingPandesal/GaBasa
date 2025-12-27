@@ -2,12 +2,7 @@
 using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -15,9 +10,7 @@ namespace LMS.DataAccess.Repositories
     {
         private readonly DbConnection _db;
 
-        public UserRepository() : this(new DbConnection())
-        {
-        }
+        public UserRepository() : this(new DbConnection()) { }
 
         public UserRepository(DbConnection db)
         {
@@ -59,25 +52,10 @@ namespace LMS.DataAccess.Repositories
                     string firstName = reader.IsDBNull(5) ? null : reader.GetString(5);
                     string lastName = reader.IsDBNull(6) ? null : reader.GetString(6);
 
-                    // Map DB role to domain type
-                    switch (role)
-                    {
-                        case "Admin":
-                        case "Librarian":
-                            user = new Librarian();
-                            break;
-
-                        case "Staff":
-                            user = new LibraryStaff();
-                            break;
-
-                        case "Member":
-                            user = new Member();
-                            break;
-
-                        default:
-                            return null;
-                    }
+                    // Centralized role -> User mapping
+                    user = CreateUserFromRoleString(role);
+                    if (user == null)
+                        return null; // unknown role
 
                     user.UserID = userId;
                     user.Username = dbUsername;
@@ -86,9 +64,9 @@ namespace LMS.DataAccess.Repositories
                     user.FirstName = firstName;
                     user.LastName = lastName;
 
-                    // Map status string to UserStatus enum (case-insensitive).
-                    // Default to Inactive if unknown.
-                    if (!string.IsNullOrEmpty(status) && Enum.TryParse<UserStatus>(status, true, out var parsedStatus))
+                    // Map status string to UserStatus enum
+                    if (!string.IsNullOrEmpty(status) &&
+                        Enum.TryParse<UserStatus>(status, true, out var parsedStatus))
                     {
                         user.Status = parsedStatus;
                     }
@@ -100,6 +78,28 @@ namespace LMS.DataAccess.Repositories
             }
 
             return user;
+        }
+
+        // ---------------------------
+        // Private helper: centralized mapping of DB role string → concrete User subclass
+        private User CreateUserFromRoleString(string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+                return null;
+
+            switch (role.Trim())
+            {
+                case "Admin":
+                case "Librarian":
+                    return new Librarian();
+                case "Staff":
+                    return new LibraryStaff();
+                case "Member":
+                    return new Member();
+                default:
+                    //return null;
+                    throw new DataException($"Unknown role '{role}'.");
+            }
         }
 
         // end code

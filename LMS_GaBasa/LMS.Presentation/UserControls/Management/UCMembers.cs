@@ -1,10 +1,6 @@
-﻿using LMS.BusinessLogic.Security;
-using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using LMS.DataAccess.Database;
 
 namespace LMS.Presentation.UserControls.Management
 {
@@ -18,6 +14,16 @@ namespace LMS.Presentation.UserControls.Management
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

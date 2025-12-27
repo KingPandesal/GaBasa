@@ -1,4 +1,5 @@
-﻿using LMS.Model.Models.Users;
+﻿using LMS.BusinessLogic.Security;
+using LMS.Model.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace LMS.Presentation.Forms
         // ===== 1: Fields =====
         private readonly User _currentUser;
         private readonly Role _currentRole;
+        private readonly IPermissionService _permissionService;
 
         // cached placeholder icons for modules
         private readonly Dictionary<string, Image> _moduleIcons = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
@@ -75,6 +77,8 @@ namespace LMS.Presentation.Forms
 
             _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
             _currentRole = _currentUser.Role;
+
+            _permissionService = new RolePermissionService();
 
             InitializeSidebar(_currentRole);
             BuildModuleFactories();
@@ -342,7 +346,7 @@ namespace LMS.Presentation.Forms
             _moduleFactories.Clear();
 
             // ALL ROLES
-            _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser);
+            _moduleFactories["Profile"] = () => new UserControls.UCProfile(_currentUser, _permissionService);
             _moduleFactories["Dashboard"] = () => GetDashboardByRole();
             _moduleFactories["Catalog"] = () => new UserControls.UCCatalog();
 
@@ -357,13 +361,12 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Reservations"] = () => new UserControls.Management.UCReservation();
             _moduleFactories["Inventory"] = () => new UserControls.Management.UCInventory();
             _moduleFactories["Circulation"] = () => new UserControls.Management.UCCirculation();
-            _moduleFactories["History"] = () => new UserControls.MemberFeatures.UCHistory();
 
             // members only
             _moduleFactories["Borrowed"] = () => new UserControls.MemberFeatures.UCBorrowed();
             _moduleFactories["Overdue"] = () => new UserControls.MemberFeatures.UCOverdue();
             _moduleFactories["Reserve"] = () => new UserControls.MemberFeatures.UCReserve();
-
+            _moduleFactories["History"] = () => new UserControls.MemberFeatures.UCHistory();
 
             var knownModules = new[]
             {
@@ -427,16 +430,16 @@ namespace LMS.Presentation.Forms
         {
             var display = string.IsNullOrWhiteSpace(name) ? string.Empty : name;
 
-            Label lbl = null;
+            Label Lbl = null;
 
             // Try common designer names (search recursively)
-            lbl = this.Controls.Find("LblModuleTitle", true).FirstOrDefault() as Label
+            Lbl = this.Controls.Find("LblModuleTitle", true).FirstOrDefault() as Label
                ?? this.Controls.Find("LblModuleName", true).FirstOrDefault() as Label
                ?? this.Controls.Find("lblModule", true).FirstOrDefault() as Label;
 
-            if (lbl != null)
+            if (Lbl != null)
             {
-                lbl.Text = display;
+                Lbl.Text = display;
                 return;
             }
 
@@ -507,6 +510,5 @@ namespace LMS.Presentation.Forms
         }
 
         // end code
-        
     }
 }
