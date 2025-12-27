@@ -18,69 +18,37 @@ namespace LMS.Presentation.Forms
 
         // ===== 1: Fields =====
         private readonly User _currentUser;
-        private readonly Role _currentRole;
         private readonly IPermissionService _permissionService;
 
-        // cached placeholder icons for modules
         private readonly Dictionary<string, Image> _moduleIcons = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
 
         // ===== 2: Data mappings =====
         private readonly Dictionary<string, Func<UserControl>> _moduleFactories = new Dictionary<string, Func<UserControl>>(StringComparer.OrdinalIgnoreCase);
 
-        // Sidebar mapping: Role -> Categories -> Modules
-        private readonly Dictionary<Role, Dictionary<string, string[]>> _sidebarItems
-            = new Dictionary<Role, Dictionary<string, string[]>>()
+        // Static sidebar layout: Category -> Modules
+        private readonly Dictionary<string, string[]> _sidebarLayout = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
         {
-            { Role.Librarian, new Dictionary<string, string[]>
-                {
-                    { "MAIN", new string[] { "Dashboard",
-                                             "Catalog" } },
-                    { "INSIGHTS", new string[] { "Reports" } },
-                    { "MANAGEMENT", new string[] { "Users",
-                                                    "Members",
-                                                    "Inventory",
-                                                    "Reservations",
-                                                    "Circulation",
-                                                    "Fines" } },
-                    { "CONFIGURATION", new string[] { "Settings" } }
-                }
-            },
-            { Role.Staff, new Dictionary<string, string[]>
-                {
-                    { "MAIN", new string[] { "Dashboard",
-                                             "Catalog" } },
-                    { "MANAGEMENT", new string[] { "Members",
-                                                    "Inventory",
-                                                    "Reservations",
-                                                    "Circulation",
-                                                    "Fines" } }
-                }
-            },
-            { Role.Member, new Dictionary<string, string[]>
-                {
-                    { "MAIN", new string[] { "Dashboard", 
-                                             "Catalog" } },
-                    { "MANAGEMENT", new string[] { "Wishlist",
-                                                    "Borrowed", 
-                                                    "Overdue", 
-                                                    "Reserve",
-                                                    "Fines", 
-                                                    "History" } }
-                }
-            }
+            { "MAIN", new string[] { "Dashboard", "Catalog" } },
+            { "INSIGHTS", new string[] { "Reports" } },
+            { "MANAGEMENT", new string[] { "Users", "Members", "Inventory", "Reservations", "Circulation", "Fines" } },
+            { "CONFIGURATION", new string[] { "Settings" } },
+            { "MEMBERS", new string[] { "My Wishlist", "My Borrowed", "My Overdue", "My Reserve", "My Fines", "My History" } }
         };
 
-        // ===== 3: Constructor =====
+        // ===== 3: Constructors =====
         public MainForm(User currentUser)
+            : this(currentUser, new RolePermissionService())
+        {
+        }
+
+        public MainForm(User currentUser, IPermissionService permissionService)
         {
             InitializeComponent();
 
             _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-            _currentRole = _currentUser.Role;
+            _permissionService = permissionService ?? throw new ArgumentNullException(nameof(permissionService));
 
-            _permissionService = new RolePermissionService();
-
-            InitializeSidebar(_currentRole);
+            InitializeSidebar();
             BuildModuleFactories();
 
             // initialize topbar/profile controls (labels, picture, click)
@@ -90,7 +58,7 @@ namespace LMS.Presentation.Forms
         }
 
         // ===== 4: Initialization =====
-        private void InitializeSidebar(Role role)
+        private void InitializeSidebar()
         {
             PnlSidebar.Controls.Clear();
 
@@ -123,18 +91,16 @@ namespace LMS.Presentation.Forms
                 Dock = DockStyle.Fill,
                 AutoScroll = true
             };
-            BuildModules(modulesPanel, role);
+            BuildModules(modulesPanel);
             PnlSidebar.Controls.Add(modulesPanel);
 
         }
 
-        // ===== New: TopBar / Profile initialization =====
-        // Makes LblProfileName, LblProfileRole and PicBxProfilePic functional.
+        // ===== TopBar / Profile / Role initialization =====
         private void InitializeTopBarProfile()
         {
             try
             {
-                // set name (prefer GetFullName if available)
                 string displayName = null;
                 try { displayName = _currentUser?.GetFullName(); } catch { /* ignore */ }
                 if (string.IsNullOrWhiteSpace(displayName))
@@ -147,7 +113,9 @@ namespace LMS.Presentation.Forms
                     displayName = _currentUser?.Username ?? "User";
 
                 LblProfileName.Text = displayName;
-                LblProfileRole.Text = _currentRole.ToString();
+
+                if (this.Controls.Find("LblProfileRole", true).FirstOrDefault() is Label roleLbl)
+                    roleLbl.Text = _currentUser.Role.ToString();
 
                 // set profile picture (use user-provided image if available, otherwise placeholder)
                 PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
@@ -161,20 +129,20 @@ namespace LMS.Presentation.Forms
                     PicBxProfilePic.Image = CreateProfilePlaceholderImage(displayName, PicBxProfilePic.Width, PicBxProfilePic.Height);
                 }
 
-                // visual affordance + click
                 PicBxProfilePic.Cursor = Cursors.Hand;
-                // remove duplicated handler if designer already hooked it
                 PicBxProfilePic.Click -= PicBxProfilePic_Click;
                 PicBxProfilePic.Click += PicBxProfilePic_Click;
 
-                // optionally allow clicking the header panel or name to open profile too
                 PnlProfileHeader.Cursor = Cursors.Hand;
                 PnlProfileHeader.Click -= PicBxProfilePic_Click;
                 PnlProfileHeader.Click += PicBxProfilePic_Click;
                 LblProfileName.Click -= PicBxProfilePic_Click;
                 LblProfileName.Click += PicBxProfilePic_Click;
-                LblProfileRole.Click -= PicBxProfilePic_Click;
-                LblProfileRole.Click += PicBxProfilePic_Click;
+                if (this.Controls.Find("LblProfileRole", true).FirstOrDefault() is Label lblRole)
+                {
+                    lblRole.Click -= PicBxProfilePic_Click;
+                    lblRole.Click += PicBxProfilePic_Click;
+                }
 
                 // small tooltip
                 var tt = new ToolTip();
@@ -183,15 +151,13 @@ namespace LMS.Presentation.Forms
             }
             catch
             {
-                // fail silently - profile is decorative if something goes wrong
+                // fail silently
             }
         }
 
-        // If your User model had an image property, return it here.
-        // This stub returns null because the current User signature doesn't include an image.
         private Image TryGetUserImage()
         {
-            // Example if you later add Image or byte[] to User:
+            // add Image or byte[] to User:
             // if (_currentUser?.PhotoBytes != null) { using (var ms = new MemoryStream(_currentUser.PhotoBytes)) return Image.FromStream(ms); }
             return null;
         }
@@ -266,41 +232,114 @@ namespace LMS.Presentation.Forms
             LoadContentByName("Profile");
         }
 
-        // ===== 6: Role-based logic =====
-        // KAKINSA NGA DASHBOARD ANG IPAKITA
         private UserControl GetDashboardByRole()
         {
-            switch (_currentRole)
+            if (_permissionService.CanGenerateReports(_currentUser) || _permissionService.CanManageUsers(_currentUser))
             {
-                case Role.Librarian:
-                    return new UserControls.Dashboards.UCDashboard();
-
-                // shared dashbaords na ang librarian and staff
-                // obsolete: UCDashboardStaff
-                case Role.Staff:
-                    return new UserControls.Dashboards.UCDashboard();
-
-                case Role.Member:
-                    return new UserControls.Dashboards.UCDashboardMember();
-
-                default:
-                    throw new InvalidOperationException("Unsupported role");
+                // staff / librarian view
+                return new UserControls.Dashboards.UCDashboard();
             }
+
+            if (_permissionService.CanBorrowBooks(_currentUser) || _permissionService.CanViewBorrowed(_currentUser))
+            {
+                // member view
+                return new UserControls.Dashboards.UCDashboardMember();
+            }
+
+            // default fallback dashboard
+            return new UserControls.Dashboards.UCDashboard();
+        }
+
+        // ===== helper to check permissions for modules (UI-driven) =====
+        private bool IsModuleAllowed(string moduleName)
+        {
+            if (string.IsNullOrWhiteSpace(moduleName))
+                return false;
+
+            // normalize once
+            var mod = moduleName.Trim();
+
+            // map module names to permission checks
+            // Member-facing modules
+            if (string.Equals(mod, "My Borrowed", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewBorrowed(_currentUser);
+
+            if (string.Equals(mod, "My Overdue", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewOverdue(_currentUser);
+
+            if (string.Equals(mod, "My Reserve", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewReserved(_currentUser);
+
+            if (string.Equals(mod, "My Wishlist", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewWishlist(_currentUser);
+
+            if (string.Equals(mod, "My History", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewHistory(_currentUser);
+
+            if (string.Equals(mod, "My Fines", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewFines(_currentUser);
+
+            // Management / staff modules
+            if (string.Equals(mod, "Users", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanManageUsers(_currentUser);
+
+            if (string.Equals(mod, "Members", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanManageMembers(_currentUser);
+
+            if (string.Equals(mod, "Inventory", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanManageInventory(_currentUser);
+
+            if (string.Equals(mod, "Reservations", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanManageReservations(_currentUser);
+
+            if (string.Equals(mod, "Circulation", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanManageCirculation(_currentUser);
+
+            if (string.Equals(mod, "Fines", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanManageFines(_currentUser);
+
+            // Insights / reports
+            if (string.Equals(mod, "Reports", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanGenerateReports(_currentUser);
+
+            // Configuration
+            if (string.Equals(mod, "Settings", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanAccessSettings(_currentUser);
+
+            // Catalog
+            if (string.Equals(mod, "Catalog", StringComparison.OrdinalIgnoreCase))
+                return _permissionService.CanViewCatalog(_currentUser);
+
+            // Dashboard and Profile are always available (UI chooses content based on permissions)
+            if (string.Equals(mod, "Dashboard", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (string.Equals(mod, "Profile", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            // Default: allow module (UI will show fallback content if not implemented)
+            return true;
         }
 
         // ===== 7: Sidebar construction logic =====
-        // ========== ALL MODULES OF CURRENT USER'S ROLE ==========
-        private void BuildModules(Panel container, Role role)
+        private void BuildModules(Panel container)
         {
-            foreach (var category in _sidebarItems[role].Reverse())
+            foreach (var category in _sidebarLayout.Reverse())
             {
+                var allowedModules = category.Value.Reverse()
+                    .Where(module => IsModuleAllowed(module))
+                    .ToList();
+
+                if (!allowedModules.Any())
+                    continue;
+
                 var categoryPanel = new Panel
                 {
                     Dock = DockStyle.Top,
                     AutoSize = true
                 };
 
-                foreach (var module in category.Value.Reverse())
+                foreach (var module in allowedModules)
                 {
                     var btn = new Button
                     {
@@ -350,7 +389,7 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Dashboard"] = () => GetDashboardByRole();
             _moduleFactories["Catalog"] = () => new UserControls.UCCatalog();
 
-            // Librarian only
+            // Librarian only / staff-managed modules (UI will hide if not allowed)
             _moduleFactories["Users"] = () => new UserControls.Management.UCUsers();
             _moduleFactories["Reports"] = () => new UserControls.Insights.UCReports();
             _moduleFactories["Settings"] = () => new UserControls.Configurations.UCSettings();
@@ -363,10 +402,11 @@ namespace LMS.Presentation.Forms
             _moduleFactories["Circulation"] = () => new UserControls.Management.UCCirculation();
 
             // members only
-            _moduleFactories["Borrowed"] = () => new UserControls.MemberFeatures.UCBorrowed();
-            _moduleFactories["Overdue"] = () => new UserControls.MemberFeatures.UCOverdue();
-            _moduleFactories["Reserve"] = () => new UserControls.MemberFeatures.UCReserve();
-            _moduleFactories["History"] = () => new UserControls.MemberFeatures.UCHistory();
+            _moduleFactories["My Borrowed"] = () => new UserControls.MemberFeatures.UCBorrowed();
+            _moduleFactories["My Overdue"] = () => new UserControls.MemberFeatures.UCOverdue();
+            _moduleFactories["My Reserve"] = () => new UserControls.MemberFeatures.UCReserve();
+            _moduleFactories["My History"] = () => new UserControls.MemberFeatures.UCHistory();
+            _moduleFactories["My Fines"] = () => new UserControls.MemberFeatures.UCMyFines();
 
             var knownModules = new[]
             {
@@ -432,7 +472,6 @@ namespace LMS.Presentation.Forms
 
             Label Lbl = null;
 
-            // Try common designer names (search recursively)
             Lbl = this.Controls.Find("LblModuleTitle", true).FirstOrDefault() as Label
                ?? this.Controls.Find("LblModuleName", true).FirstOrDefault() as Label
                ?? this.Controls.Find("lblModule", true).FirstOrDefault() as Label;
@@ -443,7 +482,6 @@ namespace LMS.Presentation.Forms
                 return;
             }
 
-            // If you have a top panel named PnlTopBar, add a label there
             var topBar = this.Controls.Find("PnlTopBar", true).FirstOrDefault() as Control;
             if (topBar != null)
             {
@@ -467,7 +505,6 @@ namespace LMS.Presentation.Forms
 
         // ===== 11: Placeholder icon generator =====
         // Creates a small circular colored icon with the module's first letter.
-        // Icons are cached in _moduleIcons to avoid recreating bitmaps repeatedly.
         private Image CreatePlaceholderIcon(string key)
         {
             if (string.IsNullOrEmpty(key))

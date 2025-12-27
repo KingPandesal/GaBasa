@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace LMS.Presentation.UserControls.MemberFeatures
 {
-    public partial class UCFines : UserControl
+    public partial class UCMyFines : UserControl
     {
-        public UCFines()
+        public UCMyFines()
         {
             InitializeComponent();
         }

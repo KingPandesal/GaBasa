@@ -16,7 +16,7 @@ namespace LMS.BusinessLogic.Security
 
         // ========== INSIGHTS ==========
         public bool CanGenerateReports(User user)
-            => user.Role == Role.Staff;
+            => user.Role == Role.Librarian;
 
         // ========== MANAGEMENT ==========
         public bool CanManageUsers(User user)

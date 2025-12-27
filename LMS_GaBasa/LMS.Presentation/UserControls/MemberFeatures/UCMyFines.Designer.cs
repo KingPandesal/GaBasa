@@ -1,6 +1,6 @@
 ﻿namespace LMS.Presentation.UserControls.MemberFeatures
 {
-    partial class UCFines
+    partial class UCMyFines
     {
         /// <summary> 
         /// Required designer variable.

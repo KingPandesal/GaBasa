@@ -132,11 +132,11 @@
     <Compile Include="UserControls\MemberFeatures\UCBorrowed.Designer.cs">
       <DependentUpon>UCBorrowed.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MemberFeatures\UCFines.cs">
+    <Compile Include="UserControls\MemberFeatures\UCMyFines.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\MemberFeatures\UCFines.Designer.cs">
-      <DependentUpon>UCFines.cs</DependentUpon>
+    <Compile Include="UserControls\MemberFeatures\UCMyFines.Designer.cs">
+      <DependentUpon>UCMyFines.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MemberFeatures\UCHistory.cs">
       <SubType>UserControl</SubType>
