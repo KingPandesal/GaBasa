@@ -15,6 +15,15 @@ namespace LMS.Presentation.Forms
     public partial class MainForm : Form
     {
         // MOSTLY PARA SA SET-UP NI SYA SA SIDEBAR AND TOPBAR KAY DRI IBUTANG ANG TANAN USERCONTROLS
+        /* MainForm.cs Responsibility (UI):
+         * 1. UI composition and hosting (PnlSidebar, PnlContent, TopBar, Profile)
+         * 2. Sidebar construction and layout
+         * 3. Permission-driven visibility
+         * 4. Navigation / module activation
+         * 5. Fallback helpers & UI polish
+         * 6. Event handling and lifecycle
+         * Summary: kini sya ang responsible ug unsay makita ni user na module depende sa iyahang role.
+         */
 
         // ===== 1: Fields =====
         private readonly User _currentUser;
@@ -85,7 +94,7 @@ namespace LMS.Presentation.Forms
 
             PnlSidebar.Controls.Add(logoutBtn);
 
-            // 2️ Modules panel — FILL (ADD THIS BEFORE PROFILE)
+            // 2️ Modules panel — FILL
             var modulesPanel = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -155,11 +164,12 @@ namespace LMS.Presentation.Forms
             }
         }
 
+        // para sa image
         private Image TryGetUserImage()
         {
             // add Image or byte[] to User:
             // if (_currentUser?.PhotoBytes != null) { using (var ms = new MemoryStream(_currentUser.PhotoBytes)) return Image.FromStream(ms); }
-            return null;
+            return null; // placeholder lang sa, no logic pa for image
         }
 
         // Create a circular placeholder sized for the profile picture box.
