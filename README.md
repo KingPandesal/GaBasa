@@ -1,4 +1,4 @@
-# 📚Library Management System (LMS)📚:GaBasa
+# 📚GaBasa: Library Management System (LMS)📚
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
 Take a look at our **Wiki** here on github to understand more about GaBasa: The Library Management System.
 
@@ -52,5 +52,22 @@ git clone https://github.com/SixxCodes/GaBasa.git
 ### 3. Set Startup Project
 - Right-click LMS.Presentation → Set as Startup Project.
 
-### 4. Build and Run
+### 4. Restore NuGet Packages / Install Dependencies
+This project uses the following NuGet packages:
+
+- **ReaLTaiizor** (for modern UI components)
+   - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes.
+- **BCrypt.Net-Next** (for password hashing)
+
+Visual Studio should restore them automatically when you build the solution.  
+You can also install them manually via NuGet Package Manager.
+
+To get a clearer view of all dependencies and their relationships, you can use the **Dependency Graph**:
+
+1. In Visual Studio, go to **Architecture → Generate Dependency Graph → For Solution**.
+2. Explore the diagram to see how projects and packages relate.
+
+Or go to **Insights** of this repository and click the **Dependency Graph** tab to view all packages installed in this project.
+
+### 5. Build and Run
 - Press F5 to build and run the application.
