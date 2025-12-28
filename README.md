@@ -53,6 +53,10 @@ git clone https://github.com/SixxCodes/GaBasa.git
 - Right-click LMS.Presentation → Set as Startup Project.
 
 ### 4. Restore NuGet Packages / Install Dependencies
+This project uses the following NuGet packages:
+
+- **ReaLTaiizor** (for modern UI components)
+- **BCrypt.Net-Next** (for password hashing)
 
 ### Build and Run
 - Press F5 to build and run the application.
