@@ -58,5 +58,7 @@ This project uses the following NuGet packages:
 - **ReaLTaiizor** (for modern UI components)
 - **BCrypt.Net-Next** (for password hashing)
 
+If not already installed, Visual Studio should restore them automatically when you build the solution. You can also install them manually via NuGet Package Manager.
+
 ### Build and Run
 - Press F5 to build and run the application.
