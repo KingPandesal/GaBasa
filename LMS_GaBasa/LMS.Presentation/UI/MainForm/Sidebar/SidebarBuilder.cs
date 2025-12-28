@@ -104,6 +104,8 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                     };
                     btn.FlatAppearance.BorderSize = 0;
 
+
+
                     // add to dictionary for later state updates
                     moduleButtons[mod] = btn;
 
@@ -167,6 +169,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                 {
                     var key = kv.Key;
                     var b = kv.Value;
+
                     if (string.Equals(key, moduleName, StringComparison.OrdinalIgnoreCase))
                     {
                         b.BackColor = selectedBack;

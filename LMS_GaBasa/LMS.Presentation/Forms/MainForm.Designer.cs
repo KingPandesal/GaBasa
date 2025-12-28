@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PnlSidebar = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.description = new System.Windows.Forms.Button();
             this.LblProfileName = new System.Windows.Forms.Label();
             this.LblProfileRole = new System.Windows.Forms.Label();
             this.PnlProfileHeader = new System.Windows.Forms.Panel();
@@ -55,27 +55,27 @@
             // 
             // PnlSidebar
             // 
-            this.PnlSidebar.Controls.Add(this.button2);
+            this.PnlSidebar.Controls.Add(this.description);
             this.PnlSidebar.Location = new System.Drawing.Point(12, 189);
             this.PnlSidebar.Name = "PnlSidebar";
             this.PnlSidebar.Size = new System.Drawing.Size(279, 785);
             this.PnlSidebar.TabIndex = 27;
             // 
-            // button2
+            // description
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(77, 193);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 133);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Sidebar (modules appear here";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.UseVisualStyleBackColor = false;
+            this.description.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.description.FlatAppearance.BorderSize = 0;
+            this.description.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.description.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.description.ForeColor = System.Drawing.Color.White;
+            this.description.Location = new System.Drawing.Point(77, 193);
+            this.description.Margin = new System.Windows.Forms.Padding(4);
+            this.description.Name = "description";
+            this.description.Size = new System.Drawing.Size(136, 133);
+            this.description.TabIndex = 18;
+            this.description.Text = "Sidebar (modules appear here";
+            this.description.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.description.UseVisualStyleBackColor = false;
             // 
             // LblProfileName
             // 
@@ -234,7 +234,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button description;
         private System.Windows.Forms.Panel PnlSidebar;
         private System.Windows.Forms.Panel PnlProfileHeader;
         private System.Windows.Forms.Label LblProfileRole;

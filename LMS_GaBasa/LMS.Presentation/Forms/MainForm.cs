@@ -1,5 +1,6 @@
 ﻿using LMS.BusinessLogic.Security;
 using LMS.Model.Models.Users;
+using LMS.Presentation.UI.MainForm.ModuleIcon;
 using LMS.Presentation.UI.MainForm.Navigation;
 using LMS.Presentation.UI.MainForm.Sidebar;
 using LMS.Presentation.UI.MainForm.TopBar;
@@ -56,6 +57,8 @@ namespace LMS.Presentation.Forms
 
             // topbar controller either injected or default
             _topBarController = topBarController ?? new TopBarController();
+
+            ModuleIcons.LoadIcons();
 
             // Build sidebar (delegated to SidebarBuilder)
             _sidebarBuilder.BuildSidebar(
