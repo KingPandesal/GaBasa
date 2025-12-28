@@ -56,6 +56,7 @@ git clone https://github.com/SixxCodes/GaBasa.git
 This project uses the following NuGet packages:
 
 - **ReaLTaiizor** (for modern UI components)
+   - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes.
 - **BCrypt.Net-Next** (for password hashing)
 
 Visual Studio should restore them automatically when you build the solution.  
