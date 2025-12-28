@@ -59,12 +59,14 @@ This project uses the following NuGet packages:
 - **BCrypt.Net-Next** (for password hashing)
 
 Visual Studio should restore them automatically when you build the solution.  
+You can also install them manually via NuGet Package Manager.
+
 To get a clearer view of all dependencies and their relationships, you can use the **Dependency Graph**:
 
 1. In Visual Studio, go to **Architecture → Generate Dependency Graph → For Solution**.
 2. Explore the diagram to see how projects and packages relate.
 
-Or 
+Or go to **Insights** of this repository and click the **Dependency Graph** tab to view all packages installed in this project.
 
 ### Build and Run
 - Press F5 to build and run the application.
