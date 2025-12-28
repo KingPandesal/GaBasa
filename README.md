@@ -1,5 +1,4 @@
-# 📚Library Management System (LMS)📚
-
+# 📚Library Management System (LMS)📚:GaBasa
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
 Take a look at our **Wiki** here on github to understand more about GaBasa: The Library Management System.
 
