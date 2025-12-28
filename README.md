@@ -52,5 +52,7 @@ git clone https://github.com/SixxCodes/GaBasa.git
 ### 3. Set Startup Project
 - Right-click LMS.Presentation → Set as Startup Project.
 
-### 4. Build and Run
+### 4. Restore NuGet Packages / Install Dependencies
+
+### Build and Run
 - Press F5 to build and run the application.
