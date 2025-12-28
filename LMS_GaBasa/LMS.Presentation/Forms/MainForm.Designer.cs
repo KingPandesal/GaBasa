@@ -131,9 +131,9 @@
             // PicBxLogo
             // 
             this.PicBxLogo.Image = ((System.Drawing.Image)(resources.GetObject("PicBxLogo.Image")));
-            this.PicBxLogo.Location = new System.Drawing.Point(33, 12);
+            this.PicBxLogo.Location = new System.Drawing.Point(21, 1);
             this.PicBxLogo.Name = "PicBxLogo";
-            this.PicBxLogo.Size = new System.Drawing.Size(67, 68);
+            this.PicBxLogo.Size = new System.Drawing.Size(88, 90);
             this.PicBxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxLogo.TabIndex = 1;
             this.PicBxLogo.TabStop = false;
@@ -143,7 +143,7 @@
             this.LblTitle.AutoSize = true;
             this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTitle.ForeColor = System.Drawing.Color.White;
-            this.LblTitle.Location = new System.Drawing.Point(99, 22);
+            this.LblTitle.Location = new System.Drawing.Point(103, 22);
             this.LblTitle.Name = "LblTitle";
             this.LblTitle.Size = new System.Drawing.Size(143, 48);
             this.LblTitle.TabIndex = 0;

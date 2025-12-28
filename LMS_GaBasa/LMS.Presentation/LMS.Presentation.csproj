@@ -66,6 +66,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\MainForm\Navigation\IModuleNavigator.cs" />
+    <Compile Include="UI\MainForm\Navigation\ModuleNavigator.cs" />
+    <Compile Include="UI\MainForm\Sidebar\ISidebarBuilder.cs" />
+    <Compile Include="UI\MainForm\Sidebar\SidebarBuilder.cs" />
+    <Compile Include="UI\MainForm\TopBar\ITopBarController.cs" />
+    <Compile Include="UI\MainForm\TopBar\TopBarController.cs" />
     <Compile Include="UserControls\Configurations\UCSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
