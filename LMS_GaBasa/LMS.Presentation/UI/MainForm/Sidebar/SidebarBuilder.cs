@@ -12,6 +12,8 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
     {
         private readonly IModuleNavigator _navigator;
         private readonly Dictionary<string, Image> _moduleIcons = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
+        // cache for scaled (zoomed) variants: key format "module|useRed|size"
+        private readonly Dictionary<string, Image> _scaledIconCache = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
 
         public SidebarBuilder(IModuleNavigator navigator)
         {
@@ -54,7 +56,10 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             };
             logoutBtn.FlatAppearance.BorderSize = 0;
             logoutBtn.Click += (s, e) => onLogout();
-            logoutBtn.Image = GetModuleIcon("Logout");
+
+            // compute icon size to fit the button and preserve aspect (zoom)
+            var logoutIconSize = Math.Max(16, logoutBtn.Height - 8);
+            logoutBtn.Image = GetScaledIconImage("Logout", useRed: false, logoutIconSize);
             logoutBtn.ImageAlign = ContentAlignment.MiddleLeft;
             logoutBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
 
@@ -104,8 +109,6 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                     };
                     btn.FlatAppearance.BorderSize = 0;
 
-
-
                     // add to dictionary for later state updates
                     moduleButtons[mod] = btn;
 
@@ -134,7 +137,9 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         }
                     };
 
-                    btn.Image = GetModuleIcon(mod);
+                    // default (not-selected) state: show the white icon so it contrasts with the sidebar background
+                    var iconSize = Math.Max(16, btn.Height - 8); // zoom target size based on button height
+                    btn.Image = GetScaledIconImage(mod, useRed: false, iconSize);
                     btn.ImageAlign = ContentAlignment.MiddleLeft;
                     btn.TextImageRelation = TextImageRelation.ImageBeforeText;
 
@@ -174,11 +179,17 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                     {
                         b.BackColor = selectedBack;
                         b.ForeColor = selectedFore;
+                        // selected button sits on white -> use red icon (scaled)
+                        var selectedIconSize = Math.Max(16, b.Height - 8);
+                        b.Image = GetScaledIconImage(key, useRed: true, selectedIconSize);
                     }
                     else
                     {
                         b.BackColor = defaultBack;
                         b.ForeColor = defaultFore;
+                        // non-selected button sits on colored sidebar -> use white icon (scaled)
+                        var normalIconSize = Math.Max(16, b.Height - 8);
+                        b.Image = GetScaledIconImage(key, useRed: false, normalIconSize);
                     }
                 }
             }
@@ -190,14 +201,66 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             }
         }
 
-        private Image GetModuleIcon(string key)
+        private Image GetModuleIconImage(string key, bool useRed)
         {
             if (string.IsNullOrEmpty(key)) return null;
 
-            if (ModuleIcons.Icons.TryGetValue(key, out var img))
-                return img;
+            if (ModuleIcons.Icons.TryGetValue(key, out var set))
+            {
+                if (useRed)
+                    return set.Red ?? set.White;
+                return set.White ?? set.Red;
+            }
 
-            return CreatePlaceholderIcon(key); // fallback
+            // fallback: create a placeholder (single variant used for both states)
+            return CreatePlaceholderIcon(key);
+        }
+
+        // Returns a scaled copy of the icon preserving aspect ratio (zoom). Results are cached.
+        private Image GetScaledIconImage(string key, bool useRed, int targetMaxEdge)
+        {
+            if (string.IsNullOrEmpty(key)) return null;
+            var cacheKey = $"{key}|{useRed}|{targetMaxEdge}";
+            if (_scaledIconCache.TryGetValue(cacheKey, out var cached))
+                return cached;
+
+            var src = GetModuleIconImage(key, useRed);
+            if (src == null)
+                return null;
+
+            var scaled = ScaleImagePreserveAspect(src, targetMaxEdge, targetMaxEdge);
+            _scaledIconCache[cacheKey] = scaled;
+            return scaled;
+        }
+
+        // High-quality scaling while preserving aspect ratio (acts like PictureBoxSizeMode.Zoom)
+        private static Image ScaleImagePreserveAspect(Image src, int maxWidth, int maxHeight)
+        {
+            if (src == null) return null;
+            // if source already fits, return a clone to avoid accidental shared-dispose issues
+            if (src.Width <= maxWidth && src.Height <= maxHeight)
+                return new Bitmap(src);
+
+            double ratioX = (double)maxWidth / src.Width;
+            double ratioY = (double)maxHeight / src.Height;
+            double ratio = Math.Min(ratioX, ratioY);
+
+            int newWidth = (int)Math.Round(src.Width * ratio);
+            int newHeight = (int)Math.Round(src.Height * ratio);
+
+            var bmp = new Bitmap(newWidth, newHeight);
+            bmp.SetResolution(src.HorizontalResolution, src.VerticalResolution);
+
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.Clear(Color.Transparent);
+                g.DrawImage(src, 0, 0, newWidth, newHeight);
+            }
+
+            return bmp;
         }
 
         private Image CreatePlaceholderIcon(string key)

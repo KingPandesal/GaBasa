@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
-using System.IO;
+using System.Windows.Forms;
 
 namespace LMS.Presentation.UI.MainForm.ModuleIcon
 {
@@ -16,28 +17,37 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
 
         public static void LoadIcons()
         {
+            // modulename, filename (without extension)
             // ===== ALL ROLES =====
-            AddAllRole("Dashboard", "dashboard");
-            AddAllRole("Catalog", "catalog");
-            AddAllRole("Logout", "logout");
+            AddAllRole("Dashboard", "Dashboard");
+            AddAllRole("Catalog", "Catalog");
+            AddAllRole("Logout", "LogOut");
 
             // ===== LIBRARIAN & STAFF =====
-            AddLibrarianStaff("Reports", "reports");
-            AddLibrarianStaff("Users", "users");
-            AddLibrarianStaff("Settings", "settings");
-            AddLibrarianStaff("Members", "members");
-            AddLibrarianStaff("Inventory", "inventory");
-            AddLibrarianStaff("Reservations", "reservations");
-            AddLibrarianStaff("Circulation", "circulation");
-            AddLibrarianStaff("Fines", "fines");
+            AddLibrarianStaff("Reports", "Reports");
+            AddLibrarianStaff("Users", "User");
+            AddLibrarianStaff("Settings", "Settings");
+            AddLibrarianStaff("Members", "Members");
+            AddLibrarianStaff("Inventory", "Inventory");
+            AddLibrarianStaff("Reservations", "Reservations");
+            AddLibrarianStaff("Circulation", "Circulation");
+            AddLibrarianStaff("Fines", "Fines");
 
             // ===== MEMBER ONLY =====
-            AddMember("My Wishlist", "wishlist");
-            AddMember("My Borrowed", "borrowed");
-            AddMember("My Overdue", "overdue");
-            AddMember("My Reserve", "reserve");
-            AddMember("My Fines", "myfines");
-            AddMember("My History", "history");
+            AddMember("My Wishlist", "Wishlist");
+            AddMember("My Borrowed", "Borrowed");
+            AddMember("My Overdue", "Overdue");
+            AddMember("My Reserve", "Reserve");
+            AddMember("My Fines", "MyFines");
+            AddMember("My History", "History");
+
+            // Test icon loading (temporary and testing only)
+            MessageBox.Show(
+                File.Exists("Assets/icons/ModuleIcons/AllRoleIcons/White/Dashboard.png")
+                    ? "ICON FOUND"
+                    : "ICON NOT FOUND"
+            );
+
         }
 
         // ---------- Helpers ----------
@@ -45,7 +55,7 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
         {
             Add(
                 moduleName,
-                $"Resources/icons/ModuleIcons/AllRoleIcons",
+                $"Assets/icons/ModuleIcons/AllRoleIcons",
                 fileName
             );
         }
@@ -54,7 +64,7 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
         {
             Add(
                 moduleName,
-                $"Resources/icons/ModuleIcons/LibrarianStaffIcons",
+                $"Assets/icons/ModuleIcons/LibrarianStaffIcons",
                 fileName
             );
         }
@@ -63,7 +73,7 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
         {
             Add(
                 moduleName,
-                $"Resources/icons/ModuleIcons/MemberIcons",
+                $"Assets/icons/ModuleIcons/MemberIcons",
                 fileName
             );
         }
@@ -76,9 +86,14 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
             );
         }
 
-        private static Image LoadImage(string path)
+        private static Image LoadImage(string relativePath)
         {
-            return File.Exists(path) ? Image.FromFile(path) : null;
+            var fullPath = Path.Combine(Application.StartupPath, relativePath.Replace("/", "\\"));
+            if (File.Exists(fullPath))
+                return Image.FromFile(fullPath);
+
+            MessageBox.Show($"Icon not found: {fullPath}");
+            return null;
         }
 
         // end code

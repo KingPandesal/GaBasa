@@ -142,9 +142,10 @@ namespace LMS.Presentation.UI.MainForm.TopBar
                 return;
             }
 
-            if (ModuleIcons.Icons.TryGetValue(moduleName, out var img))
+            // Topbar sits on white background — always use the red icon variant if available.
+            if (ModuleIcons.Icons.TryGetValue(moduleName, out var set))
             {
-                moduleIconPictureBox.Image = img;
+                moduleIconPictureBox.Image = set.Red ?? set.White;
                 moduleIconPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else

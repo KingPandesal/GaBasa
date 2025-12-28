@@ -46,6 +46,8 @@ namespace LMS.Presentation.Forms
         {
             InitializeComponent();
 
+            ModuleIcons.LoadIcons();
+
             _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
             _moduleNavigator = moduleNavigator ?? throw new ArgumentNullException(nameof(moduleNavigator));
 
@@ -57,8 +59,6 @@ namespace LMS.Presentation.Forms
 
             // topbar controller either injected or default
             _topBarController = topBarController ?? new TopBarController();
-
-            ModuleIcons.LoadIcons();
 
             // Build sidebar (delegated to SidebarBuilder)
             _sidebarBuilder.BuildSidebar(
