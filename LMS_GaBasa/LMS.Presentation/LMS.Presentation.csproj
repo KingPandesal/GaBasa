@@ -67,6 +67,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\MainForm\ModuleIcon\ModuleIcon.cs" />
+    <Compile Include="UI\MainForm\ModuleIcon\ModuleIconSet.cs" />
     <Compile Include="UI\MainForm\Navigation\IModuleNavigator.cs" />
     <Compile Include="UI\MainForm\Navigation\ModuleNavigator.cs" />
     <Compile Include="UI\MainForm\Sidebar\ISidebarBuilder.cs" />

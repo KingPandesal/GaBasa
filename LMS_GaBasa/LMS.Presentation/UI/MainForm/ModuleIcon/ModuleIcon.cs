@@ -11,40 +11,51 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
     internal static class ModuleIcons
     {
         // Key: module name (must match sidebar button names exactly)
-        public static readonly Dictionary<string, Image> Icons = new Dictionary<string, Image>(System.StringComparer.OrdinalIgnoreCase);
+        public static readonly Dictionary<string, ModuleIconSet> Icons =
+                    new Dictionary<string, ModuleIconSet>(System.StringComparer.OrdinalIgnoreCase);
 
         public static void LoadIcons()
         {
             // All roles
-            Icons["Dashboard"] = LoadImage("Resources/icons/ModuleIcons/Red/Dashboard.png");
-            Icons["Catalog"] = LoadImage("Resources/icons/ModuleIcons/Red/catalog.png");
-            Icons["Logout"] = LoadImage("Resources/icons/ModuleIcons/Red/logout.png");
+            Add("Dashboard", "dashboard");
+            Add("Catalog", "catalog");
+            Add("Logout", "logout");
 
             // Librarian only
-            Icons["Reports"] = LoadImage("Resources/icons/ModuleIcons/Red/settings.png");
-            Icons["Users"] = LoadImage("Resources/icons/ModuleIcons/Red/users.png");
-            Icons["Settings"] = LoadImage("Resources/icons/ModuleIcons/Red/settings.png");
+            Add("Reports", "reports");
+            Add("Users", "users");
+            Add("Settings", "settings");
 
             // Librarian and Staff
-            Icons["Members"] = LoadImage("Resources/icons/ModuleIcons/Red/members.png");
-            Icons["Inventory"] = LoadImage("Resources/icons/ModuleIcons/Red/inventory.png");
-            Icons["Reservations"] = LoadImage("Resources/icons/ModuleIcons/Red/reservations.png");
-            Icons["Circulation"] = LoadImage("Resources/icons/ModuleIcons/Red/circulation.png");
-            Icons["Fines"] = LoadImage("Resources/icons/ModuleIcons/Red/fines.png");
+            Add("Members", "members");
+            Add("Inventory", "inventory");
+            Add("Reservations", "reservations");
+            Add("Circulation", "circulation");
+            Add("Fines", "fines");
 
             // Member only
-            Icons["My Wishlist"] = LoadImage("Resources/icons/ModuleIcons/Red/wishlist.png");
-            Icons["My Borrowed"] = LoadImage("Resources/icons/ModuleIcons/Red/borrowed.png");
-            Icons["My Overdue"] = LoadImage("Resources/icons/ModuleIcons/Red/overdue.png");
-            Icons["My Reserve"] = LoadImage("Resources/icons/ModuleIcons/Red/reserve.png");
-            Icons["My Fines"] = LoadImage("Resources/icons/ModuleIcons/Red/myfines.png");
-            Icons["My History"] = LoadImage("Resources/icons/ModuleIcons/Red/history.png");
+            Add("My Wishlist", "wishlist");
+            Add("My Borrowed", "borrowed");
+            Add("My Overdue", "overdue");
+            Add("My Reserve", "reserve");
+            Add("My Fines", "myfines");
+            Add("My History", "history");
+
+        }
+
+        private static void Add(string moduleName, string fileName)
+        {
+            Icons[moduleName] = new ModuleIconSet(
+                LoadImage($"Resources/icons/ModuleIcons/White/{fileName}.png"),
+                LoadImage($"Resources/icons/ModuleIcons/Red/{fileName}.png")
+            );
         }
 
         private static Image LoadImage(string path)
         {
             return File.Exists(path) ? Image.FromFile(path) : null;
         }
-    }
 
+        // end code
+    }
 }
