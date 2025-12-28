@@ -69,5 +69,5 @@ To get a clearer view of all dependencies and their relationships, you can use t
 
 Or go to **Insights** of this repository and click the **Dependency Graph** tab to view all packages installed in this project.
 
-### Build and Run
+### 5. Build and Run
 - Press F5 to build and run the application.
