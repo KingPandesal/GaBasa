@@ -101,6 +101,8 @@ namespace LMS.Presentation.Forms
             // update the topbar/title label via controller
             _topBarController.UpdateModuleTitle(name, this);
 
+            _topBarController.UpdateModuleIcon(name, PicBxModuleIcon);
+
             var uc = _moduleNavigator.CreateModule(name);
             if (uc != null)
             {

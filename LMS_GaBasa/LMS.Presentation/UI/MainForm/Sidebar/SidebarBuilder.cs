@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LMS.Presentation.UI.MainForm.ModuleIcon;
+using LMS.Presentation.UI.MainForm.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LMS.Presentation.UI.MainForm.Navigation;
 
 namespace LMS.Presentation.UI.MainForm.Sidebar
 {
@@ -53,7 +54,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             };
             logoutBtn.FlatAppearance.BorderSize = 0;
             logoutBtn.Click += (s, e) => onLogout();
-            logoutBtn.Image = CreatePlaceholderIcon("Logout");
+            logoutBtn.Image = GetModuleIcon("Logout");
             logoutBtn.ImageAlign = ContentAlignment.MiddleLeft;
             logoutBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
 
@@ -131,7 +132,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         }
                     };
 
-                    btn.Image = CreatePlaceholderIcon(mod);
+                    btn.Image = GetModuleIcon(mod);
                     btn.ImageAlign = ContentAlignment.MiddleLeft;
                     btn.TextImageRelation = TextImageRelation.ImageBeforeText;
 
@@ -184,6 +185,16 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             {
                 SetSelected(initialSelectedModule);
             }
+        }
+
+        private Image GetModuleIcon(string key)
+        {
+            if (string.IsNullOrEmpty(key)) return null;
+
+            if (ModuleIcons.Icons.TryGetValue(key, out var img))
+                return img;
+
+            return CreatePlaceholderIcon(key); // fallback
         }
 
         private Image CreatePlaceholderIcon(string key)

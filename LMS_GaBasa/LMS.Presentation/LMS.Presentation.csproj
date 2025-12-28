@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\MainForm\ModuleIcon\ModuleIcon.cs" />
     <Compile Include="UI\MainForm\Navigation\IModuleNavigator.cs" />
     <Compile Include="UI\MainForm\Navigation\ModuleNavigator.cs" />
     <Compile Include="UI\MainForm\Sidebar\ISidebarBuilder.cs" />
@@ -255,9 +256,7 @@
   <ItemGroup>
     <None Include="Resources\pictures\BG-login.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\logos\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\LMS.BusinessLogic\LMS.BusinessLogic.csproj">
       <Project>{6f8e3d39-0820-4084-9242-6dea1cab1ef1}</Project>
@@ -273,8 +272,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\book.png" />
-    <Content Include="Resources\icons\book.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Catalog.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Circulation.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Dashboard.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Fines.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Inventory.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Members.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Reports.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Reservation.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\Setting.png" />
+    <Content Include="Resources\icons\ModuleIcons\Red\User.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Catalog.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Circulation.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Dashboard.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Fines.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Inventory.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Members.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Reports.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Reservations.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Settings.png" />
+    <Content Include="Resources\icons\ModuleIcons\White\Users.png" />
+    <Content Include="Resources\logos\gabasa-logo-transparent-zoom.png" />
+    <Content Include="Resources\logos\gabasa-logo-transparent.png" />
+    <Content Include="Resources\logos\gabasa-logo-zoom.png" />
+    <Content Include="Resources\logos\gabasa-logo.png" />
+    <Content Include="Resources\logos\logo-zoom-transparent - Copy.png" />
+    <Content Include="Resources\logos\logo-zoom-transparent.png" />
+    <Content Include="Resources\logos\logo-zoom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

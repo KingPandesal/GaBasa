@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LMS.BusinessLogic.Security;
+using LMS.Model.Models.Users;
+using LMS.Presentation.UI.MainForm.ModuleIcon;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using LMS.BusinessLogic.Security;
-using LMS.Model.Models.Users;
 
 namespace LMS.Presentation.UI.MainForm.TopBar
 {
@@ -131,6 +132,27 @@ namespace LMS.Presentation.UI.MainForm.TopBar
             }
         }
 
+        public void UpdateModuleIcon(string moduleName, PictureBox moduleIconPictureBox)
+        {
+            if (moduleIconPictureBox == null) return;
+
+            if (string.IsNullOrWhiteSpace(moduleName))
+            {
+                moduleIconPictureBox.Image = null;
+                return;
+            }
+
+            if (ModuleIcons.Icons.TryGetValue(moduleName, out var img))
+            {
+                moduleIconPictureBox.Image = img;
+                moduleIconPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                moduleIconPictureBox.Image = null; // fallback
+            }
+        }
+
         // Try to obtain an image for the user; here we keep behavior simple and non-failing.
         // If User had bytes (e.g., PhotoBytes), this could be extended.
         private Image TryGetUserImage(User user)
@@ -181,5 +203,7 @@ namespace LMS.Presentation.UI.MainForm.TopBar
             }
             return bmp;
         }
+
+        // end code
     }
 }

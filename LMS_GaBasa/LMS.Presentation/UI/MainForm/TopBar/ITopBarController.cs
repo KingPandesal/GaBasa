@@ -23,5 +23,9 @@ namespace LMS.Presentation.UI.MainForm.TopBar
         /// Update the visible module title in the top bar (or window title as fallback).
         /// </summary>
         void UpdateModuleTitle(string title, Control topBarContainer);
+
+        void UpdateModuleIcon(string moduleName, PictureBox moduleIconPictureBox);
+
+        // end code
     }
 }
