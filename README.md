@@ -14,7 +14,7 @@ This project follows a **3-layer architecture**:
 
 ## 🥗Features
 
-- User Management (Librarian, Library Staff, Member)  
+- User Management (Librarian / Admin, Library Staff, Member)  
 - Book Cataloging & Inventory  
 - Borrowing, Returns, Renewals  
 - Fines and Penalty Management  
