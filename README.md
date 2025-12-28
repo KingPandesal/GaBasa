@@ -12,6 +12,11 @@ This project follows a **3-layer architecture**:
 
 ---
 
+## 🤝 Contributors
+[![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
+
+---
+
 ## ✨ Features
 
 - 👥 User Management (Librarian / Admin, Library Staff, Member)  
