@@ -17,7 +17,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             _navigator = navigator ?? throw new ArgumentNullException(nameof(navigator));
         }
 
-        public void BuildSidebar(Panel container, IReadOnlyDictionary<string, string[]> sidebarLayout, Action<string> onModuleSelected, Action onLogout)
+        public void BuildSidebar(Panel container, IReadOnlyDictionary<string, string[]> sidebarLayout, Action<string> onModuleSelected, Action onLogout, string initialSelectedModule)
         {
             if (container == null) throw new ArgumentNullException(nameof(container));
             if (sidebarLayout == null) throw new ArgumentNullException(nameof(sidebarLayout));
@@ -25,6 +25,18 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             if (onLogout == null) throw new ArgumentNullException(nameof(onLogout));
 
             container.Controls.Clear();
+
+            // color definitions for selected / default / hover states
+            var selectedBack = Color.White;
+            var selectedFore = Color.FromArgb(161, 0, 11);
+            var defaultBack = Color.Transparent;
+            var defaultFore = Color.White;
+            var hoverBack = Color.FromArgb(134, 33, 42); // hover background requested
+            var hoverFore = Color.White;                // ensure contrast on hover
+
+            // store module buttons so we can update selection styling
+            var moduleButtons = new Dictionary<string, Button>(StringComparer.OrdinalIgnoreCase);
+            string currentSelected = null;
 
             // Logout button at bottom
             var logoutBtn = new Button
@@ -34,7 +46,8 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                 Dock = DockStyle.Bottom,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Microsoft Sans Serif", 11),
-                ForeColor = Color.White,
+                ForeColor = defaultFore,
+                BackColor = defaultBack,
                 TextAlign = ContentAlignment.MiddleLeft,
                 Padding = new Padding(10, 0, 0, 0)
             };
@@ -43,6 +56,18 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             logoutBtn.Image = CreatePlaceholderIcon("Logout");
             logoutBtn.ImageAlign = ContentAlignment.MiddleLeft;
             logoutBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            // hover behavior for logout as well
+            logoutBtn.MouseEnter += (s, e) =>
+            {
+                logoutBtn.BackColor = hoverBack;
+                logoutBtn.ForeColor = hoverFore;
+            };
+            logoutBtn.MouseLeave += (s, e) =>
+            {
+                logoutBtn.BackColor = defaultBack;
+                logoutBtn.ForeColor = defaultFore;
+            };
 
             container.Controls.Add(logoutBtn);
 
@@ -68,7 +93,8 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         Text = mod,
                         Height = 40,
                         Font = new Font("Microsoft Sans Serif", 11),
-                        ForeColor = Color.White,
+                        ForeColor = defaultFore,
+                        BackColor = defaultBack,
                         Dock = DockStyle.Top,
                         FlatStyle = FlatStyle.Flat,
                         TextAlign = ContentAlignment.MiddleLeft,
@@ -76,7 +102,34 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         Padding = new Padding(10, 0, 0, 0)
                     };
                     btn.FlatAppearance.BorderSize = 0;
-                    btn.Click += (s, e) => onModuleSelected(mod);
+
+                    // add to dictionary for later state updates
+                    moduleButtons[mod] = btn;
+
+                    // click handler: update selection visual then invoke callback
+                    btn.Click += (s, e) =>
+                    {
+                        SetSelected(mod);
+                        onModuleSelected(mod);
+                    };
+
+                    // hover handlers: apply hover style only when the button is not the currently selected one
+                    btn.MouseEnter += (s, e) =>
+                    {
+                        if (!string.Equals(currentSelected, mod, StringComparison.OrdinalIgnoreCase))
+                        {
+                            btn.BackColor = hoverBack;
+                            btn.ForeColor = hoverFore;
+                        }
+                    };
+                    btn.MouseLeave += (s, e) =>
+                    {
+                        if (!string.Equals(currentSelected, mod, StringComparison.OrdinalIgnoreCase))
+                        {
+                            btn.BackColor = defaultBack;
+                            btn.ForeColor = defaultFore;
+                        }
+                    };
 
                     btn.Image = CreatePlaceholderIcon(mod);
                     btn.ImageAlign = ContentAlignment.MiddleLeft;
@@ -100,6 +153,37 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             }
 
             container.Controls.Add(modulesPanel);
+
+            // Helper to set selected visual state
+            void SetSelected(string moduleName)
+            {
+                if (string.IsNullOrWhiteSpace(moduleName))
+                    moduleName = null;
+
+                currentSelected = moduleName;
+
+                foreach (var kv in moduleButtons)
+                {
+                    var key = kv.Key;
+                    var b = kv.Value;
+                    if (string.Equals(key, moduleName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        b.BackColor = selectedBack;
+                        b.ForeColor = selectedFore;
+                    }
+                    else
+                    {
+                        b.BackColor = defaultBack;
+                        b.ForeColor = defaultFore;
+                    }
+                }
+            }
+
+            // Apply initial selection if provided
+            if (!string.IsNullOrWhiteSpace(initialSelectedModule))
+            {
+                SetSelected(initialSelectedModule);
+            }
         }
 
         private Image CreatePlaceholderIcon(string key)

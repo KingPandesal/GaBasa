@@ -58,7 +58,7 @@
             this.PnlSidebar.Controls.Add(this.button2);
             this.PnlSidebar.Location = new System.Drawing.Point(12, 189);
             this.PnlSidebar.Name = "PnlSidebar";
-            this.PnlSidebar.Size = new System.Drawing.Size(273, 785);
+            this.PnlSidebar.Size = new System.Drawing.Size(279, 785);
             this.PnlSidebar.TabIndex = 27;
             // 
             // button2

@@ -62,7 +62,8 @@ namespace LMS.Presentation.Forms
                 PnlSidebar,
                 _sidebarLayout,
                 moduleName => LoadContentByName(moduleName),
-                () => LogoutButton_Click(this, EventArgs.Empty));
+                () => LogoutButton_Click(this, EventArgs.Empty),
+                "Dashboard"); // default selected module
 
             // initialize topbar/profile controls via controller
             _topBarController.InitializeProfile(

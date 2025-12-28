@@ -14,10 +14,12 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
         /// <param name="sidebarLayout">Category -> modules layout.</param>
         /// <param name="onModuleSelected">Callback invoked with module name when a module button is clicked.</param>
         /// <param name="onLogout">Callback invoked when the logout control is clicked.</param>
+        /// <param name="initialSelectedModule">Optional module name that should be shown as selected after build.</param>
         void BuildSidebar(
             Panel container,
             IReadOnlyDictionary<string, string[]> sidebarLayout,
             Action<string> onModuleSelected,
-            Action onLogout);
+            Action onLogout,
+            string initialSelectedModule);
     }
 }
