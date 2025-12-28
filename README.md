@@ -13,6 +13,12 @@ This project follows a **3-layer architecture**:
 ---
 
 ## 🤝 Contributors
+| Name        | Role             | GitHub                                         |
+| ----------- | ---------------- | ---------------------------------------------- |
+| Ken Madayag | Lead Developer   | [@SixxCodes](https://github.com/SixxCodes)     |
+| Mauitypings | Database Manager | [@Mauitypings](https://github.com/Mauitypings) |
+
+
 [![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
 [![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
 [![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
