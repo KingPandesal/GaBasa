@@ -41,26 +41,26 @@ This project follows a **3-layer architecture**:
 
 ## 🚀 Getting Started
 
-### 1. Clone the repository
+### 1️⃣ Clone the repository
 ```bash
 D: (if you want to put it on drive D, ignore if on drive C)
 cd (where you want to place project folder, ex: D:Programs/LMS_Gabasa)
 git clone https://github.com/SixxCodes/GaBasa.git
 ```
 
-### 2. Open in Visual Studio
+### 2️⃣ Open in Visual Studio
 - Open LMS_GaBasa.sln in Visual Studio 2022.
 - Ensure all three projects (Presentation, BusinessLogic, DataAccess) are loaded.
 
-### 3. Set Startup Project
+### 3️⃣ Set Startup Project
 - Right-click LMS.Presentation → Set as Startup Project.
 
-### 4. Restore NuGet Packages / Install Dependencies
+### 4️⃣ Restore NuGet Packages / Install Dependencies
 This project uses the following NuGet packages:
 
-- **ReaLTaiizor** (for modern UI components)
+- 🖌️ **ReaLTaiizor** (for modern UI components)
    - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes.
-- **BCrypt.Net-Next** (for password hashing)
+- 🔒 **BCrypt.Net-Next** (for password hashing)
 
 Visual Studio should restore them automatically when you build the solution.  
 You can also install them manually via NuGet Package Manager.
@@ -72,5 +72,5 @@ To get a clearer view of all dependencies and their relationships, you can use t
 
 Or go to **Insights** of this repository and click the **Dependency Graph** tab to view all packages installed in this project.
 
-### 5. Build and Run
+### 5️⃣ Build and Run
 - Press F5 to build and run the application.
