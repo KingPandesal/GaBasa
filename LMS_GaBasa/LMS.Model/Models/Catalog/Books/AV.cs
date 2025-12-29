@@ -11,7 +11,7 @@ namespace LMS.Model.Models.Catalog.Books
     {
         public AV()
         {
-            ResourceType = ResourceType.EBook;
+            ResourceType = ResourceType.AV;
         }
     }
 }

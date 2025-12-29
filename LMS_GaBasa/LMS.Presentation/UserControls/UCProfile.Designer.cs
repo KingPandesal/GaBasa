@@ -29,78 +29,78 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCProfile));
-            this.lostBorderPanel3 = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.PnlRegExpDate = new ReaLTaiizor.Controls.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.LblActualExpDate = new System.Windows.Forms.Label();
+            this.LblExpDate = new System.Windows.Forms.Label();
+            this.LblActualRegDate = new System.Windows.Forms.Label();
+            this.LblRegDate = new System.Windows.Forms.Label();
             this.PnlMemberPrivilege = new System.Windows.Forms.Panel();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.hopeRichTextBox2 = new ReaLTaiizor.Controls.HopeRichTextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.hopeRichTextBox1 = new ReaLTaiizor.Controls.HopeRichTextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.LblNumberFineRate = new System.Windows.Forms.Label();
+            this.LblBoolReservationPrivilege = new System.Windows.Forms.Label();
+            this.LblNumberRenewalLimit = new System.Windows.Forms.Label();
+            this.LblNumberBorrowingPeriod = new System.Windows.Forms.Label();
+            this.LblNumberMaxBooksAllowed = new System.Windows.Forms.Label();
+            this.LblActualAccountStanding = new System.Windows.Forms.Label();
+            this.LblAccontStanding = new System.Windows.Forms.Label();
+            this.LblFineRate = new System.Windows.Forms.Label();
+            this.LblReservationPrivilege = new System.Windows.Forms.Label();
+            this.LblRenewalLimit = new System.Windows.Forms.Label();
+            this.LblBorrowingPeriod = new System.Windows.Forms.Label();
+            this.LblMaxBooksAllowed = new System.Windows.Forms.Label();
+            this.LblMemberPrevileges = new System.Windows.Forms.Label();
+            this.TxtContact = new ReaLTaiizor.Controls.HopeRichTextBox();
+            this.LblContact = new System.Windows.Forms.Label();
+            this.TxtAddress = new ReaLTaiizor.Controls.HopeRichTextBox();
+            this.LblAdress = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
+            this.Design1 = new System.Windows.Forms.Panel();
+            this.LblStatus = new System.Windows.Forms.Label();
             this.LblRole = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.LblEmail = new System.Windows.Forms.Label();
+            this.LblIDNumber = new System.Windows.Forms.Label();
             this.LblFullname = new System.Windows.Forms.Label();
-            this.lostBorderPanel3.SuspendLayout();
+            this.Design2.SuspendLayout();
             this.PnlRegExpDate.SuspendLayout();
             this.PnlMemberPrivilege.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             this.SuspendLayout();
             // 
-            // lostBorderPanel3
+            // Design2
             // 
-            this.lostBorderPanel3.BackColor = System.Drawing.Color.White;
-            this.lostBorderPanel3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel3.Controls.Add(this.PnlRegExpDate);
-            this.lostBorderPanel3.Controls.Add(this.PnlMemberPrivilege);
-            this.lostBorderPanel3.Controls.Add(this.hopeRichTextBox2);
-            this.lostBorderPanel3.Controls.Add(this.label8);
-            this.lostBorderPanel3.Controls.Add(this.hopeRichTextBox1);
-            this.lostBorderPanel3.Controls.Add(this.label7);
-            this.lostBorderPanel3.Controls.Add(this.panel2);
-            this.lostBorderPanel3.Controls.Add(this.panel3);
-            this.lostBorderPanel3.Controls.Add(this.label6);
-            this.lostBorderPanel3.Controls.Add(this.LblRole);
-            this.lostBorderPanel3.Controls.Add(this.label4);
-            this.lostBorderPanel3.Controls.Add(this.label3);
-            this.lostBorderPanel3.Controls.Add(this.LblFullname);
-            this.lostBorderPanel3.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lostBorderPanel3.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel3.Location = new System.Drawing.Point(50, 38);
-            this.lostBorderPanel3.Name = "lostBorderPanel3";
-            this.lostBorderPanel3.Padding = new System.Windows.Forms.Padding(5);
-            this.lostBorderPanel3.ShowText = true;
-            this.lostBorderPanel3.Size = new System.Drawing.Size(1480, 758);
-            this.lostBorderPanel3.TabIndex = 13;
+            this.Design2.BackColor = System.Drawing.Color.White;
+            this.Design2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.Design2.Controls.Add(this.PnlRegExpDate);
+            this.Design2.Controls.Add(this.PnlMemberPrivilege);
+            this.Design2.Controls.Add(this.TxtContact);
+            this.Design2.Controls.Add(this.LblContact);
+            this.Design2.Controls.Add(this.TxtAddress);
+            this.Design2.Controls.Add(this.LblAdress);
+            this.Design2.Controls.Add(this.panel2);
+            this.Design2.Controls.Add(this.Design1);
+            this.Design2.Controls.Add(this.LblStatus);
+            this.Design2.Controls.Add(this.LblRole);
+            this.Design2.Controls.Add(this.LblEmail);
+            this.Design2.Controls.Add(this.LblIDNumber);
+            this.Design2.Controls.Add(this.LblFullname);
+            this.Design2.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.Design2.ForeColor = System.Drawing.Color.Black;
+            this.Design2.Location = new System.Drawing.Point(50, 38);
+            this.Design2.Name = "Design2";
+            this.Design2.Padding = new System.Windows.Forms.Padding(5);
+            this.Design2.ShowText = true;
+            this.Design2.Size = new System.Drawing.Size(1480, 758);
+            this.Design2.TabIndex = 13;
             // 
             // PnlRegExpDate
             // 
             this.PnlRegExpDate.BackColor = System.Drawing.Color.White;
-            this.PnlRegExpDate.Controls.Add(this.label11);
-            this.PnlRegExpDate.Controls.Add(this.label12);
-            this.PnlRegExpDate.Controls.Add(this.label10);
-            this.PnlRegExpDate.Controls.Add(this.label9);
+            this.PnlRegExpDate.Controls.Add(this.LblActualExpDate);
+            this.PnlRegExpDate.Controls.Add(this.LblExpDate);
+            this.PnlRegExpDate.Controls.Add(this.LblActualRegDate);
+            this.PnlRegExpDate.Controls.Add(this.LblRegDate);
             this.PnlRegExpDate.EdgeColor = System.Drawing.Color.White;
             this.PnlRegExpDate.Location = new System.Drawing.Point(59, 584);
             this.PnlRegExpDate.Name = "PnlRegExpDate";
@@ -110,295 +110,294 @@
             this.PnlRegExpDate.TabIndex = 19;
             this.PnlRegExpDate.Text = "panel1";
             // 
-            // label11
+            // LblActualExpDate
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label11.Location = new System.Drawing.Point(398, 55);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(203, 30);
-            this.label11.TabIndex = 17;
-            this.label11.Text = "December 19, 2025";
+            this.LblActualExpDate.AutoSize = true;
+            this.LblActualExpDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblActualExpDate.Location = new System.Drawing.Point(398, 55);
+            this.LblActualExpDate.Name = "LblActualExpDate";
+            this.LblActualExpDate.Size = new System.Drawing.Size(203, 30);
+            this.LblActualExpDate.TabIndex = 17;
+            this.LblActualExpDate.Text = "December 19, 2025";
             // 
-            // label12
+            // LblExpDate
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(384, 16);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(176, 32);
-            this.label12.TabIndex = 16;
-            this.label12.Text = "Expiration Date";
+            this.LblExpDate.AutoSize = true;
+            this.LblExpDate.Location = new System.Drawing.Point(384, 16);
+            this.LblExpDate.Name = "LblExpDate";
+            this.LblExpDate.Size = new System.Drawing.Size(176, 32);
+            this.LblExpDate.TabIndex = 16;
+            this.LblExpDate.Text = "Expiration Date";
             // 
-            // label10
+            // LblActualRegDate
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label10.Location = new System.Drawing.Point(21, 55);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(157, 30);
-            this.label10.TabIndex = 15;
-            this.label10.Text = "August 5, 2025";
+            this.LblActualRegDate.AutoSize = true;
+            this.LblActualRegDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblActualRegDate.Location = new System.Drawing.Point(21, 55);
+            this.LblActualRegDate.Name = "LblActualRegDate";
+            this.LblActualRegDate.Size = new System.Drawing.Size(157, 30);
+            this.LblActualRegDate.TabIndex = 15;
+            this.LblActualRegDate.Text = "August 5, 2025";
             // 
-            // label9
+            // LblRegDate
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(197, 32);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Registration Date";
+            this.LblRegDate.AutoSize = true;
+            this.LblRegDate.Location = new System.Drawing.Point(7, 16);
+            this.LblRegDate.Name = "LblRegDate";
+            this.LblRegDate.Size = new System.Drawing.Size(197, 32);
+            this.LblRegDate.TabIndex = 14;
+            this.LblRegDate.Text = "Registration Date";
             // 
             // PnlMemberPrivilege
             // 
-            this.PnlMemberPrivilege.Controls.Add(this.label23);
-            this.PnlMemberPrivilege.Controls.Add(this.label22);
-            this.PnlMemberPrivilege.Controls.Add(this.label21);
-            this.PnlMemberPrivilege.Controls.Add(this.label20);
-            this.PnlMemberPrivilege.Controls.Add(this.label19);
-            this.PnlMemberPrivilege.Controls.Add(this.label18);
-            this.PnlMemberPrivilege.Controls.Add(this.label17);
-            this.PnlMemberPrivilege.Controls.Add(this.label16);
-            this.PnlMemberPrivilege.Controls.Add(this.label15);
-            this.PnlMemberPrivilege.Controls.Add(this.label14);
-            this.PnlMemberPrivilege.Controls.Add(this.label13);
-            this.PnlMemberPrivilege.Controls.Add(this.label5);
-            this.PnlMemberPrivilege.Controls.Add(this.label2);
+            this.PnlMemberPrivilege.Controls.Add(this.LblNumberFineRate);
+            this.PnlMemberPrivilege.Controls.Add(this.LblBoolReservationPrivilege);
+            this.PnlMemberPrivilege.Controls.Add(this.LblNumberRenewalLimit);
+            this.PnlMemberPrivilege.Controls.Add(this.LblNumberBorrowingPeriod);
+            this.PnlMemberPrivilege.Controls.Add(this.LblNumberMaxBooksAllowed);
+            this.PnlMemberPrivilege.Controls.Add(this.LblActualAccountStanding);
+            this.PnlMemberPrivilege.Controls.Add(this.LblAccontStanding);
+            this.PnlMemberPrivilege.Controls.Add(this.LblFineRate);
+            this.PnlMemberPrivilege.Controls.Add(this.LblReservationPrivilege);
+            this.PnlMemberPrivilege.Controls.Add(this.LblRenewalLimit);
+            this.PnlMemberPrivilege.Controls.Add(this.LblBorrowingPeriod);
+            this.PnlMemberPrivilege.Controls.Add(this.LblMaxBooksAllowed);
+            this.PnlMemberPrivilege.Controls.Add(this.LblMemberPrevileges);
             this.PnlMemberPrivilege.Location = new System.Drawing.Point(817, 317);
             this.PnlMemberPrivilege.Name = "PnlMemberPrivilege";
             this.PnlMemberPrivilege.Size = new System.Drawing.Size(624, 382);
             this.PnlMemberPrivilege.TabIndex = 18;
             // 
-            // label23
+            // LblNumberFineRate
             // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label23.Location = new System.Drawing.Point(507, 243);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(100, 28);
-            this.label23.TabIndex = 23;
-            this.label23.Text = "P 10 / day";
+            this.LblNumberFineRate.AutoSize = true;
+            this.LblNumberFineRate.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblNumberFineRate.Location = new System.Drawing.Point(507, 243);
+            this.LblNumberFineRate.Name = "LblNumberFineRate";
+            this.LblNumberFineRate.Size = new System.Drawing.Size(100, 28);
+            this.LblNumberFineRate.TabIndex = 23;
+            this.LblNumberFineRate.Text = "P 10 / day";
             // 
-            // label22
+            // LblBoolReservationPrivilege
             // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label22.Location = new System.Drawing.Point(507, 200);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(39, 28);
-            this.label22.TabIndex = 22;
-            this.label22.Text = "Yes";
+            this.LblBoolReservationPrivilege.AutoSize = true;
+            this.LblBoolReservationPrivilege.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBoolReservationPrivilege.Location = new System.Drawing.Point(507, 200);
+            this.LblBoolReservationPrivilege.Name = "LblBoolReservationPrivilege";
+            this.LblBoolReservationPrivilege.Size = new System.Drawing.Size(39, 28);
+            this.LblBoolReservationPrivilege.TabIndex = 22;
+            this.LblBoolReservationPrivilege.Text = "Yes";
             // 
-            // label21
+            // LblNumberRenewalLimit
             // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label21.Location = new System.Drawing.Point(507, 158);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(82, 28);
-            this.label21.TabIndex = 21;
-            this.label21.Text = "2 books";
+            this.LblNumberRenewalLimit.AutoSize = true;
+            this.LblNumberRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblNumberRenewalLimit.Location = new System.Drawing.Point(507, 158);
+            this.LblNumberRenewalLimit.Name = "LblNumberRenewalLimit";
+            this.LblNumberRenewalLimit.Size = new System.Drawing.Size(82, 28);
+            this.LblNumberRenewalLimit.TabIndex = 21;
+            this.LblNumberRenewalLimit.Text = "2 books";
             // 
-            // label20
+            // LblNumberBorrowingPeriod
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label20.Location = new System.Drawing.Point(507, 115);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(68, 28);
-            this.label20.TabIndex = 20;
-            this.label20.Text = "5 days";
+            this.LblNumberBorrowingPeriod.AutoSize = true;
+            this.LblNumberBorrowingPeriod.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblNumberBorrowingPeriod.Location = new System.Drawing.Point(507, 115);
+            this.LblNumberBorrowingPeriod.Name = "LblNumberBorrowingPeriod";
+            this.LblNumberBorrowingPeriod.Size = new System.Drawing.Size(68, 28);
+            this.LblNumberBorrowingPeriod.TabIndex = 20;
+            this.LblNumberBorrowingPeriod.Text = "5 days";
             // 
-            // label19
+            // LblNumberMaxBooksAllowed
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label19.Location = new System.Drawing.Point(507, 73);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(82, 28);
-            this.label19.TabIndex = 19;
-            this.label19.Text = "5 books";
+            this.LblNumberMaxBooksAllowed.AutoSize = true;
+            this.LblNumberMaxBooksAllowed.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblNumberMaxBooksAllowed.Location = new System.Drawing.Point(507, 73);
+            this.LblNumberMaxBooksAllowed.Name = "LblNumberMaxBooksAllowed";
+            this.LblNumberMaxBooksAllowed.Size = new System.Drawing.Size(82, 28);
+            this.LblNumberMaxBooksAllowed.TabIndex = 19;
+            this.LblNumberMaxBooksAllowed.Text = "5 books";
             // 
-            // label18
+            // LblActualAccountStanding
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.label18.Location = new System.Drawing.Point(204, 279);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(88, 38);
-            this.label18.TabIndex = 18;
-            this.label18.Text = "Good";
+            this.LblActualAccountStanding.AutoSize = true;
+            this.LblActualAccountStanding.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblActualAccountStanding.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.LblActualAccountStanding.Location = new System.Drawing.Point(204, 279);
+            this.LblActualAccountStanding.Name = "LblActualAccountStanding";
+            this.LblActualAccountStanding.Size = new System.Drawing.Size(88, 38);
+            this.LblActualAccountStanding.TabIndex = 18;
+            this.LblActualAccountStanding.Text = "Good";
             // 
-            // label17
+            // LblAccontStanding
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(3, 283);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(207, 32);
-            this.label17.TabIndex = 17;
-            this.label17.Text = "Account Standing:";
+            this.LblAccontStanding.AutoSize = true;
+            this.LblAccontStanding.Location = new System.Drawing.Point(3, 283);
+            this.LblAccontStanding.Name = "LblAccontStanding";
+            this.LblAccontStanding.Size = new System.Drawing.Size(207, 32);
+            this.LblAccontStanding.TabIndex = 17;
+            this.LblAccontStanding.Text = "Account Standing:";
             // 
-            // label16
+            // LblFineRate
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label16.Location = new System.Drawing.Point(33, 243);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(92, 28);
-            this.label16.TabIndex = 16;
-            this.label16.Text = "Fine Rate";
-            this.label16.Click += new System.EventHandler(this.label16_Click);
+            this.LblFineRate.AutoSize = true;
+            this.LblFineRate.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblFineRate.Location = new System.Drawing.Point(33, 243);
+            this.LblFineRate.Name = "LblFineRate";
+            this.LblFineRate.Size = new System.Drawing.Size(92, 28);
+            this.LblFineRate.TabIndex = 16;
+            this.LblFineRate.Text = "Fine Rate";
+            this.LblFineRate.Click += new System.EventHandler(this.label16_Click);
             // 
-            // label15
+            // LblReservationPrivilege
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label15.Location = new System.Drawing.Point(33, 200);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(193, 28);
-            this.label15.TabIndex = 15;
-            this.label15.Text = "Reservation Privilege";
+            this.LblReservationPrivilege.AutoSize = true;
+            this.LblReservationPrivilege.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReservationPrivilege.Location = new System.Drawing.Point(33, 200);
+            this.LblReservationPrivilege.Name = "LblReservationPrivilege";
+            this.LblReservationPrivilege.Size = new System.Drawing.Size(193, 28);
+            this.LblReservationPrivilege.TabIndex = 15;
+            this.LblReservationPrivilege.Text = "Reservation Privilege";
             // 
-            // label14
+            // LblRenewalLimit
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label14.Location = new System.Drawing.Point(33, 158);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(131, 28);
-            this.label14.TabIndex = 14;
-            this.label14.Text = "Renewal Limit";
+            this.LblRenewalLimit.AutoSize = true;
+            this.LblRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblRenewalLimit.Location = new System.Drawing.Point(33, 158);
+            this.LblRenewalLimit.Name = "LblRenewalLimit";
+            this.LblRenewalLimit.Size = new System.Drawing.Size(131, 28);
+            this.LblRenewalLimit.TabIndex = 14;
+            this.LblRenewalLimit.Text = "Renewal Limit";
             // 
-            // label13
+            // LblBorrowingPeriod
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label13.Location = new System.Drawing.Point(33, 115);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(164, 28);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "Borrowing Period";
+            this.LblBorrowingPeriod.AutoSize = true;
+            this.LblBorrowingPeriod.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBorrowingPeriod.Location = new System.Drawing.Point(33, 115);
+            this.LblBorrowingPeriod.Name = "LblBorrowingPeriod";
+            this.LblBorrowingPeriod.Size = new System.Drawing.Size(164, 28);
+            this.LblBorrowingPeriod.TabIndex = 13;
+            this.LblBorrowingPeriod.Text = "Borrowing Period";
             // 
-            // label5
+            // LblMaxBooksAllowed
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label5.Location = new System.Drawing.Point(33, 73);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(183, 28);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Max Books Allowed";
+            this.LblMaxBooksAllowed.AutoSize = true;
+            this.LblMaxBooksAllowed.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblMaxBooksAllowed.Location = new System.Drawing.Point(33, 73);
+            this.LblMaxBooksAllowed.Name = "LblMaxBooksAllowed";
+            this.LblMaxBooksAllowed.Size = new System.Drawing.Size(183, 28);
+            this.LblMaxBooksAllowed.TabIndex = 12;
+            this.LblMaxBooksAllowed.Text = "Max Books Allowed";
             // 
-            // label2
+            // LblMemberPrevileges
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(213, 32);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Member Privileges";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.LblMemberPrevileges.AutoSize = true;
+            this.LblMemberPrevileges.Location = new System.Drawing.Point(3, 28);
+            this.LblMemberPrevileges.Name = "LblMemberPrevileges";
+            this.LblMemberPrevileges.Size = new System.Drawing.Size(213, 32);
+            this.LblMemberPrevileges.TabIndex = 11;
+            this.LblMemberPrevileges.Text = "Member Privileges";
+            this.LblMemberPrevileges.Click += new System.EventHandler(this.label2_Click);
             // 
-            // hopeRichTextBox2
+            // TxtContact
             // 
-            this.hopeRichTextBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(223)))), ((int)(((byte)(230)))));
-            this.hopeRichTextBox2.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.hopeRichTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
-            this.hopeRichTextBox2.Hint = "";
-            this.hopeRichTextBox2.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
-            this.hopeRichTextBox2.Location = new System.Drawing.Point(85, 505);
-            this.hopeRichTextBox2.MaxLength = 32767;
-            this.hopeRichTextBox2.Multiline = true;
-            this.hopeRichTextBox2.Name = "hopeRichTextBox2";
-            this.hopeRichTextBox2.PasswordChar = '\0';
-            this.hopeRichTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.hopeRichTextBox2.SelectedText = "";
-            this.hopeRichTextBox2.SelectionLength = 0;
-            this.hopeRichTextBox2.SelectionStart = 0;
-            this.hopeRichTextBox2.Size = new System.Drawing.Size(269, 52);
-            this.hopeRichTextBox2.TabIndex = 13;
-            this.hopeRichTextBox2.TabStop = false;
-            this.hopeRichTextBox2.Text = "0929 211  9698";
-            this.hopeRichTextBox2.UseSystemPasswordChar = false;
+            this.TxtContact.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(223)))), ((int)(((byte)(230)))));
+            this.TxtContact.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.TxtContact.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
+            this.TxtContact.Hint = "";
+            this.TxtContact.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
+            this.TxtContact.Location = new System.Drawing.Point(85, 505);
+            this.TxtContact.MaxLength = 32767;
+            this.TxtContact.Multiline = true;
+            this.TxtContact.Name = "TxtContact";
+            this.TxtContact.PasswordChar = '\0';
+            this.TxtContact.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.TxtContact.SelectedText = "";
+            this.TxtContact.SelectionLength = 0;
+            this.TxtContact.SelectionStart = 0;
+            this.TxtContact.Size = new System.Drawing.Size(269, 52);
+            this.TxtContact.TabIndex = 13;
+            this.TxtContact.TabStop = false;
+            this.TxtContact.Text = "0929 211  9698";
+            this.TxtContact.UseSystemPasswordChar = false;
             // 
-            // label8
+            // LblContact
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(66, 470);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 32);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Contact";
+            this.LblContact.AutoSize = true;
+            this.LblContact.Location = new System.Drawing.Point(66, 470);
+            this.LblContact.Name = "LblContact";
+            this.LblContact.Size = new System.Drawing.Size(96, 32);
+            this.LblContact.TabIndex = 12;
+            this.LblContact.Text = "Contact";
             // 
-            // hopeRichTextBox1
+            // TxtAddress
             // 
-            this.hopeRichTextBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(223)))), ((int)(((byte)(230)))));
-            this.hopeRichTextBox1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.hopeRichTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
-            this.hopeRichTextBox1.Hint = "";
-            this.hopeRichTextBox1.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
-            this.hopeRichTextBox1.Location = new System.Drawing.Point(85, 380);
-            this.hopeRichTextBox1.MaxLength = 32767;
-            this.hopeRichTextBox1.Multiline = true;
-            this.hopeRichTextBox1.Name = "hopeRichTextBox1";
-            this.hopeRichTextBox1.PasswordChar = '\0';
-            this.hopeRichTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.hopeRichTextBox1.SelectedText = "";
-            this.hopeRichTextBox1.SelectionLength = 0;
-            this.hopeRichTextBox1.SelectionStart = 0;
-            this.hopeRichTextBox1.Size = new System.Drawing.Size(612, 54);
-            this.hopeRichTextBox1.TabIndex = 11;
-            this.hopeRichTextBox1.TabStop = false;
-            this.hopeRichTextBox1.Text = "Prk. Makugihon, Brgy. Cuambog, Mabini, DDO";
-            this.hopeRichTextBox1.UseSystemPasswordChar = false;
+            this.TxtAddress.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(223)))), ((int)(((byte)(230)))));
+            this.TxtAddress.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.TxtAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
+            this.TxtAddress.Hint = "";
+            this.TxtAddress.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
+            this.TxtAddress.Location = new System.Drawing.Point(85, 380);
+            this.TxtAddress.MaxLength = 32767;
+            this.TxtAddress.Multiline = true;
+            this.TxtAddress.Name = "TxtAddress";
+            this.TxtAddress.PasswordChar = '\0';
+            this.TxtAddress.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.TxtAddress.SelectedText = "";
+            this.TxtAddress.SelectionLength = 0;
+            this.TxtAddress.SelectionStart = 0;
+            this.TxtAddress.Size = new System.Drawing.Size(612, 54);
+            this.TxtAddress.TabIndex = 11;
+            this.TxtAddress.TabStop = false;
+            this.TxtAddress.Text = "Prk. Makugihon, Brgy. Cuambog, Mabini, DDO";
+            this.TxtAddress.UseSystemPasswordChar = false;
             // 
-            // label7
+            // LblAdress
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(66, 345);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(98, 32);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Address";
+            this.LblAdress.AutoSize = true;
+            this.LblAdress.Location = new System.Drawing.Point(66, 345);
+            this.LblAdress.Name = "LblAdress";
+            this.LblAdress.Size = new System.Drawing.Size(98, 32);
+            this.LblAdress.TabIndex = 10;
+            this.LblAdress.Text = "Address";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.PicBxProfilePic);
             this.panel2.Location = new System.Drawing.Point(72, 55);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(238, 232);
             this.panel2.TabIndex = 0;
             // 
-            // pictureBox1
+            // PicBxProfilePic
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(13, 15);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(212, 206);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.PicBxProfilePic.Image = ((System.Drawing.Image)(resources.GetObject("PicBxProfilePic.Image")));
+            this.PicBxProfilePic.Location = new System.Drawing.Point(13, 15);
+            this.PicBxProfilePic.Name = "PicBxProfilePic";
+            this.PicBxProfilePic.Size = new System.Drawing.Size(212, 206);
+            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxProfilePic.TabIndex = 0;
+            this.PicBxProfilePic.TabStop = false;
             // 
-            // panel3
+            // Design1
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1480, 112);
-            this.panel3.TabIndex = 9;
+            this.Design1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.Design1.Location = new System.Drawing.Point(0, 0);
+            this.Design1.Name = "Design1";
+            this.Design1.Size = new System.Drawing.Size(1480, 112);
+            this.Design1.TabIndex = 9;
             // 
-            // label6
+            // LblStatus
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.LimeGreen;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(618, 160);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(79, 32);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Active";
+            this.LblStatus.AutoSize = true;
+            this.LblStatus.BackColor = System.Drawing.Color.LimeGreen;
+            this.LblStatus.ForeColor = System.Drawing.Color.White;
+            this.LblStatus.Location = new System.Drawing.Point(618, 160);
+            this.LblStatus.Name = "LblStatus";
+            this.LblStatus.Size = new System.Drawing.Size(79, 32);
+            this.LblStatus.TabIndex = 6;
+            this.LblStatus.Text = "Active";
             // 
             // LblRole
             // 
@@ -411,23 +410,23 @@
             this.LblRole.TabIndex = 5;
             this.LblRole.Text = "Librarian";
             // 
-            // label4
+            // LblEmail
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(316, 234);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(457, 32);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "z.madayag.141776.tc@umindanao.edu.ph";
+            this.LblEmail.AutoSize = true;
+            this.LblEmail.Location = new System.Drawing.Point(316, 234);
+            this.LblEmail.Name = "LblEmail";
+            this.LblEmail.Size = new System.Drawing.Size(457, 32);
+            this.LblEmail.TabIndex = 3;
+            this.LblEmail.Text = "z.madayag.141776.tc@umindanao.edu.ph";
             // 
-            // label3
+            // LblIDNumber
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(316, 202);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 32);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "141776";
+            this.LblIDNumber.AutoSize = true;
+            this.LblIDNumber.Location = new System.Drawing.Point(316, 202);
+            this.LblIDNumber.Name = "LblIDNumber";
+            this.LblIDNumber.Size = new System.Drawing.Size(92, 32);
+            this.LblIDNumber.TabIndex = 2;
+            this.LblIDNumber.Text = "141776";
             // 
             // LblFullname
             // 
@@ -444,54 +443,54 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.lostBorderPanel3);
+            this.Controls.Add(this.Design2);
             this.Name = "UCProfile";
             this.Size = new System.Drawing.Size(1580, 832);
             this.Load += new System.EventHandler(this.UCProfile_Load);
-            this.lostBorderPanel3.ResumeLayout(false);
-            this.lostBorderPanel3.PerformLayout();
+            this.Design2.ResumeLayout(false);
+            this.Design2.PerformLayout();
             this.PnlRegExpDate.ResumeLayout(false);
             this.PnlRegExpDate.PerformLayout();
             this.PnlMemberPrivilege.ResumeLayout(false);
             this.PnlMemberPrivilege.PerformLayout();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel3;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label6;
+        private ReaLTaiizor.Controls.LostBorderPanel Design2;
+        private System.Windows.Forms.PictureBox PicBxProfilePic;
+        private System.Windows.Forms.Label LblStatus;
         private System.Windows.Forms.Label LblRole;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label LblEmail;
+        private System.Windows.Forms.Label LblIDNumber;
         private System.Windows.Forms.Label LblFullname;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel Design1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private ReaLTaiizor.Controls.HopeRichTextBox hopeRichTextBox2;
-        private System.Windows.Forms.Label label8;
-        private ReaLTaiizor.Controls.HopeRichTextBox hopeRichTextBox1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label LblActualRegDate;
+        private System.Windows.Forms.Label LblRegDate;
+        private ReaLTaiizor.Controls.HopeRichTextBox TxtContact;
+        private System.Windows.Forms.Label LblContact;
+        private ReaLTaiizor.Controls.HopeRichTextBox TxtAddress;
+        private System.Windows.Forms.Label LblAdress;
+        private System.Windows.Forms.Label LblActualExpDate;
+        private System.Windows.Forms.Label LblExpDate;
         private System.Windows.Forms.Panel PnlMemberPrivilege;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label LblMemberPrevileges;
+        private System.Windows.Forms.Label LblRenewalLimit;
+        private System.Windows.Forms.Label LblBorrowingPeriod;
+        private System.Windows.Forms.Label LblMaxBooksAllowed;
+        private System.Windows.Forms.Label LblActualAccountStanding;
+        private System.Windows.Forms.Label LblAccontStanding;
+        private System.Windows.Forms.Label LblFineRate;
+        private System.Windows.Forms.Label LblReservationPrivilege;
+        private System.Windows.Forms.Label LblNumberFineRate;
+        private System.Windows.Forms.Label LblBoolReservationPrivilege;
+        private System.Windows.Forms.Label LblNumberRenewalLimit;
+        private System.Windows.Forms.Label LblNumberBorrowingPeriod;
+        private System.Windows.Forms.Label LblNumberMaxBooksAllowed;
         private ReaLTaiizor.Controls.Panel PnlRegExpDate;
     }
 }
