@@ -74,10 +74,10 @@ This project uses the following NuGet packages:
    - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes. (Make sure you're installing the correct package! Look at the package title, description, and authors to make sure.)
 - 🔒 **BCrypt.Net-Next** (for password hashing)
 
-Visual Studio should restore them automatically when you build the solution.  
-You can also install them manually via NuGet Package Manager.
-
-**Note**: Additional packages like **System.Buffers, System.Memory, System.Numerics.Vectors, and System.Runtime.CompilerServices.Unsafe** will automatically be installed as dependencies required by **BCrypt.Net-Next**.
+**Note**:
+- Visual Studio should restore them automatically when you build the solution.  
+- You can also install them manually via NuGet Package Manager.
+- Additional packages will automatically be installed as dependencies required by **BCrypt.Net-Next**.
 
 To get a clearer view of all dependencies and their relationships:
 
