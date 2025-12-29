@@ -6,9 +6,9 @@ Take a look at our **Wiki** here on github to understand more about GaBasa: The 
 
 This project follows a **3-layer architecture**:
 
-- 🖥️**LMS.Presentation** → WinForms UI  
-- ⚙️**LMS.BusinessLogic** → Business Logic Layer (Managers)  
-- 💾**LMS.DataAccess** → Data Access Layer (Repositories, DB connection)  
+- 🖥️ **LMS.Presentation** → WinForms UI  
+- ⚙️ **LMS.BusinessLogic** → Business Logic Layer (Managers)  
+- 💾 **LMS.DataAccess** → Data Access Layer (Repositories, DB connection)  
 
 ---
 
@@ -77,7 +77,7 @@ This project uses the following NuGet packages:
 Visual Studio should restore them automatically when you build the solution.  
 You can also install them manually via NuGet Package Manager.
 
-To get a clearer view of all dependencies and their relationships, you can use the **Dependency Graph**:
+To get a clearer view of all dependencies and their relationships:
 
 1. In Visual Studio, go to **Architecture → Generate Dependency Graph → For Solution**.
 2. Explore the diagram to see how projects and packages relate.
