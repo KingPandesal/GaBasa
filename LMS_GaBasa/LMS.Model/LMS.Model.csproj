@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Catalog\Author.cs" />
+    <Compile Include="Models\Catalog\Books\AV.cs" />
     <Compile Include="Models\Catalog\Books\Book.cs" />
     <Compile Include="Models\Catalog\BookCopy.cs" />
     <Compile Include="Models\Catalog\Books\EBook.cs" />

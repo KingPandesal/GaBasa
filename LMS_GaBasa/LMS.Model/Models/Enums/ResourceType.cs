@@ -11,6 +11,7 @@ namespace LMS.Model.Models.Enums
         PhysicalBook,
         EBook,
         Periodical,
-        Thesis
+        Thesis,
+        AV
     }
 }
