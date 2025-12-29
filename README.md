@@ -62,7 +62,7 @@ git clone https://github.com/SixxCodes/GaBasa.git
 
 ### 2️⃣ Open in Visual Studio
 - Open LMS_GaBasa.sln in Visual Studio 2022 or on File Explorer.
-- Ensure all three projects (Presentation, BusinessLogic, DataAccess) are loaded.
+- Ensure all three projects **(Presentation, BusinessLogic, DataAccess)** are loaded.
 
 ### 3️⃣ Set Startup Project
 - Right-click LMS.Presentation → Set as Startup Project.
@@ -77,7 +77,7 @@ This project uses the following NuGet packages:
 Visual Studio should restore them automatically when you build the solution.  
 You can also install them manually via NuGet Package Manager.
 
-**Note**: Additional packages like System.Buffers, System.Memory, System.Numerics.Vectors, and System.Runtime.CompilerServices.Unsafe will automatically be installed as dependencies required by BCrypt.Net-Next.
+**Note**: Additional packages like **System.Buffers, System.Memory, System.Numerics.Vectors, and System.Runtime.CompilerServices.Unsafe** will automatically be installed as dependencies required by **BCrypt.Net-Next**.
 
 To get a clearer view of all dependencies and their relationships:
 
