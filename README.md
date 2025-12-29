@@ -1,7 +1,7 @@
 # 📚 *GaBasa: Library Management System (LMS)* 📚
 *Built with care, so every book finds a reader — and every reader finds a story.*
 
-<img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-logo-zoom.png" width="180" />
+<img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-logo-zoom.png" width="400" />
 
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
 
