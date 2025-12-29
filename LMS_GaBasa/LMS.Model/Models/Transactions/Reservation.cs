@@ -15,7 +15,7 @@ namespace LMS.Model.Models.Transactions
         public int CopyID { get; set; }
         public BookCopy BookCopy { get; set; } // navigation: FK
         public int MemberID { get; set; }
-        public Member Member { get; set; } // navigation: FK
+        public MemberProfile Member { get; set; } // navigation: FK
         public DateTime ReservationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string Status { get; set; } 

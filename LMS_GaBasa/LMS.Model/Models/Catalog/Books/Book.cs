@@ -1,12 +1,13 @@
 ﻿using System;
+using LMS.Model.Models.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMS.Model.Models.Catalog
+namespace LMS.Model.Models.Catalog.Books
 {
-    public class Book
+    public abstract class Book
     {
         public int BookID { get; set; }
         public string ISBN { get; set; }
@@ -22,7 +23,8 @@ namespace LMS.Model.Models.Catalog
         public string Edition { get; set; }
         public int PublicationYear { get; set; }
         public string PhysicalDescription { get; set; }
-        public string ResourceType { get; set; } // Enum: Book, Periodical, Thesis, AV, E-Book
+        public ResourceType ResourceType { get; set; }
+        // Enum: Book, Periodical, Thesis, AV, E-Book
         public string CoverImage { get; set; }
 
         public List<Author> Authors { get; set; } = new List<Author>();

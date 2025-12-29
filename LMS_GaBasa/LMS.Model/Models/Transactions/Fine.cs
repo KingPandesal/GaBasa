@@ -12,7 +12,7 @@ namespace LMS.Model.Models.Transactions
     {
         public int FineID { get; set; }
         public int MemberID { get; set; }
-        public Member Member { get; set; } // navigation: FK
+        public MemberProfile Member { get; set; } // navigation: FK
         public int TransactionID { get; set; }
         public BorrowingTransaction Transaction { get; set; } // navigation: FK
         public decimal FineAmount { get; set; }

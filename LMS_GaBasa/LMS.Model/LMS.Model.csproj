@@ -42,12 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Catalog\Author.cs" />
-    <Compile Include="Models\Catalog\Book.cs" />
+    <Compile Include="Models\Catalog\Books\Book.cs" />
     <Compile Include="Models\Catalog\BookCopy.cs" />
+    <Compile Include="Models\Catalog\Books\EBook.cs" />
+    <Compile Include="Models\Catalog\Books\Periodical.cs" />
+    <Compile Include="Models\Catalog\Books\PhysicalBook.cs" />
+    <Compile Include="Models\Catalog\Books\Thesis.cs" />
     <Compile Include="Models\Catalog\Category.cs" />
     <Compile Include="Models\Catalog\Publisher.cs" />
+    <Compile Include="Models\Enums\MemberStatus.cs" />
+    <Compile Include="Models\Enums\ResourceType.cs" />
     <Compile Include="Models\Enums\UserStatus.cs" />
-    <Compile Include="Models\Members\Member.cs" />
+    <Compile Include="Models\Members\MemberProfile.cs" />
     <Compile Include="Models\Members\MemberType.cs" />
     <Compile Include="Models\Transactions\BorrowingTransaction.cs" />
     <Compile Include="Models\Transactions\Fine.cs" />

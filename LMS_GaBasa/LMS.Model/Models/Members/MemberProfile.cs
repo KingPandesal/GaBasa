@@ -1,14 +1,14 @@
-﻿using System;
+﻿using LMS.Model.Models.Enums;
+using LMS.Model.Models.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using LMS.Model.Models.Users;
-
 namespace LMS.Model.Models.Members
 {
-    public class Member
+    public class MemberProfile
     {
         public int MemberID { get; set; }
         public int UserID { get; set; }
@@ -20,7 +20,7 @@ namespace LMS.Model.Models.Members
         public DateTime ExpirationDate { get; set; }
         public string Photo { get; set; }
         public string ValidID { get; set; }
-        public string Status { get; set; }
+        public MemberStatus Status { get; set; }
         // Enum: Active, Inactive, Suspended, Expired
     }
 
