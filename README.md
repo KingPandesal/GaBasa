@@ -77,6 +77,8 @@ This project uses the following NuGet packages:
 Visual Studio should restore them automatically when you build the solution.  
 You can also install them manually via NuGet Package Manager.
 
+**Note**: Additional packages like System.Buffers, System.Memory, System.Numerics.Vectors, and System.Runtime.CompilerServices.Unsafe will automatically be installed as dependencies required by BCrypt.Net-Next.
+
 To get a clearer view of all dependencies and their relationships:
 
 1. In Visual Studio, go to **Architecture → Generate Dependency Graph → For Solution**.
