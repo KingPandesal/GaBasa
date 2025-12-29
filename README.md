@@ -12,20 +12,6 @@ This project follows a **3-layer architecture**:
 
 ---
 
-## 🤝 Contributors
-| Name        | Role             | GitHub                                         |
-| ----------- | ---------------- | ---------------------------------------------- |
-| Ken Madayag | Lead Developer   | [@SixxCodes](https://github.com/SixxCodes)     |
-| Mauitypings | Database Manager | [@Mauitypings](https://github.com/Mauitypings) |
-
-
-[![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
-[![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
-[![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
-[![Contributors](https://contrib.rocks/image?repo=SixxCodes/GaBasa)](https://github.com/SixxCodes/GaBasa/graphs/contributors)
-
----
-
 ## ✨ Features
 
 - 👥 User Management (Librarian / Admin, Library Staff, Member)  
@@ -43,6 +29,18 @@ This project follows a **3-layer architecture**:
 - 🛠️ **Visual Studio 2022** (Community)  
 - ⚡ **.NET Framework 4.8**  
 - 🗄️ **SQL Server** for database
+
+---
+
+## 🤝 Contributors
+Thanks to everyone who contributed to GaBasa!
+
+| Name        | Role             | GitHub                                         |
+| ----------- | ---------------- | ---------------------------------------------- |
+| Ken Madayag | Lead Developer   | [@SixxCodes](https://github.com/SixxCodes)     |
+| Merry Guisihan | Database Manager | [@Mauitypings](https://github.com/Mauitypings) |
+| Vien Ugay | UI Design | [@viensed](https://github.com/viensed) |
+| Jerard Lavilla | UI Design | [@viensed](https://github.com/viensed) |
 
 ---
 
