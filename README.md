@@ -61,7 +61,7 @@ git clone https://github.com/SixxCodes/GaBasa.git
 ```
 
 ### 2️⃣ Open in Visual Studio
-- Open LMS_GaBasa.sln in Visual Studio 2022.
+- Open LMS_GaBasa.sln in Visual Studio 2022 or on File Explorer.
 - Ensure all three projects (Presentation, BusinessLogic, DataAccess) are loaded.
 
 ### 3️⃣ Set Startup Project
@@ -71,7 +71,7 @@ git clone https://github.com/SixxCodes/GaBasa.git
 This project uses the following NuGet packages:
 
 - 🖌️ **ReaLTaiizor** (for modern UI components)
-   - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes.
+   - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes. (Make sure you're installing the correct package! Look at the package title, description, and authors to make sure.)
 - 🔒 **BCrypt.Net-Next** (for password hashing)
 
 Visual Studio should restore them automatically when you build the solution.  
