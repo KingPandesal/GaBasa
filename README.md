@@ -88,3 +88,8 @@ Or go to **Insights** of this repository and click the **Dependency Graph** tab 
 
 ### 5️⃣ Build and Run
 - Press F5 to build and run the application.
+
+--- 
+
+## ✨ Thank you for exploring GaBasa! ✨
+Developed with best practices, collaboration, and a passion for building meaningful systems.
