@@ -1,5 +1,5 @@
 
-<h1 align="center">📚 GaBasa: Library Management System</h1>
+<h1 align="center">📚 GaBasa: Library Management System 📚 </h1>
 
 <p align="center">
    <img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-logo-zoom.png" width="200" /> 
