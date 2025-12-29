@@ -4,7 +4,7 @@
 <p align="center">
    <img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-logo-zoom.png" width="200" /> 
    <br/>
-   *Built with care, so every book finds a reader — and every reader finds a story.*
+   <i>Built with care, so every book finds a reader — and every reader finds a story.<i/>
 </p>
 
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
