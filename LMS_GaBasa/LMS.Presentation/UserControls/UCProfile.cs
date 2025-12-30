@@ -44,5 +44,10 @@ namespace LMS.Presentation.UserControls
         private void UCProfile_Load(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label16_Click(object sender, EventArgs e) { }
+
+        private void PicBxProfilePic_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

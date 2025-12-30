@@ -158,6 +158,24 @@
     <Compile Include="UserControls\MemberFeatures\UCOverdue.Designer.cs">
       <DependentUpon>UCOverdue.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Profile\UCLibrarianStaff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Profile\UCLibrarianStaff.Designer.cs">
+      <DependentUpon>UCLibrarianStaff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Profile\UCMemberProfile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Profile\UCMemberProfile.Designer.cs">
+      <DependentUpon>UCMemberProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCProfile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UCProfile.Designer.cs">
+      <DependentUpon>UCProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MemberFeatures\UCReserve.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,12 +187,6 @@
     </Compile>
     <Compile Include="UserControls\UCCatalog.Designer.cs">
       <DependentUpon>UCCatalog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\UCProfile.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\UCProfile.Designer.cs">
-      <DependentUpon>UCProfile.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -226,14 +238,20 @@
     <EmbeddedResource Include="UserControls\MemberFeatures\UCOverdue.resx">
       <DependentUpon>UCOverdue.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Profile\UCLibrarianStaff.resx">
+      <DependentUpon>UCLibrarianStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Profile\UCMemberProfile.resx">
+      <DependentUpon>UCMemberProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UCProfile.resx">
+      <DependentUpon>UCProfile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MemberFeatures\UCReserve.resx">
       <DependentUpon>UCReserve.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UCCatalog.resx">
       <DependentUpon>UCCatalog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UCProfile.resx">
-      <DependentUpon>UCProfile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -1,6 +1,6 @@
-﻿namespace LMS.Presentation.UserControls
+﻿namespace LMS.Presentation.UserControls.Profile
 {
-    partial class UCProfile
+    partial class UCLibrarianStaff
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCProfile));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCLibrarianStaff));
             this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.LblMemberStatus = new System.Windows.Forms.Label();
             this.LblMemberType = new System.Windows.Forms.Label();
@@ -96,7 +96,7 @@
             this.Design2.Padding = new System.Windows.Forms.Padding(5);
             this.Design2.ShowText = true;
             this.Design2.Size = new System.Drawing.Size(1480, 758);
-            this.Design2.TabIndex = 13;
+            this.Design2.TabIndex = 14;
             // 
             // LblMemberStatus
             // 
@@ -403,7 +403,6 @@
             this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PicBxProfilePic.TabIndex = 0;
             this.PicBxProfilePic.TabStop = false;
-            this.PicBxProfilePic.Click += new System.EventHandler(this.PicBxProfilePic_Click);
             // 
             // Design1
             // 
@@ -463,13 +462,13 @@
             this.LblFullname.TabIndex = 1;
             this.LblFullname.Text = "Zy Manti";
             // 
-            // UCProfile
+            // UCLibrarianStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.Design2);
-            this.Name = "UCProfile";
+            this.Name = "UCLibrarianStaff";
             this.Size = new System.Drawing.Size(1580, 832);
             this.Design2.ResumeLayout(false);
             this.Design2.PerformLayout();
@@ -484,39 +483,40 @@
         }
 
         #endregion
+
         private ReaLTaiizor.Controls.LostBorderPanel Design2;
-        private System.Windows.Forms.PictureBox PicBxProfilePic;
-        private System.Windows.Forms.Label LblStatus;
-        private System.Windows.Forms.Label LblRole;
-        private System.Windows.Forms.Label LblEmail;
-        private System.Windows.Forms.Label LblIDNumber;
-        private System.Windows.Forms.Label LblFullname;
-        private System.Windows.Forms.Panel Design1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label LblActualRegDate;
-        private System.Windows.Forms.Label LblRegDate;
-        private ReaLTaiizor.Controls.HopeRichTextBox TxtContact;
-        private System.Windows.Forms.Label LblContact;
-        private ReaLTaiizor.Controls.HopeRichTextBox TxtAddress;
-        private System.Windows.Forms.Label LblAddress;
+        private System.Windows.Forms.Label LblMemberStatus;
+        private System.Windows.Forms.Label LblMemberType;
+        private ReaLTaiizor.Controls.Panel PnlRegExpDate;
         private System.Windows.Forms.Label LblActualExpDate;
         private System.Windows.Forms.Label LblExpDate;
+        private System.Windows.Forms.Label LblActualRegDate;
+        private System.Windows.Forms.Label LblRegDate;
         private System.Windows.Forms.Panel PnlMemberPrivilege;
-        private System.Windows.Forms.Label LblMemberPrevileges;
-        private System.Windows.Forms.Label LblRenewalLimit;
-        private System.Windows.Forms.Label LblBorrowingPeriod;
-        private System.Windows.Forms.Label LblMaxBooksAllowed;
-        private System.Windows.Forms.Label LblActualAccountStanding;
-        private System.Windows.Forms.Label LblAccontStanding;
-        private System.Windows.Forms.Label LblFineRate;
-        private System.Windows.Forms.Label LblReservationPrivilege;
         private System.Windows.Forms.Label LblNumberFineRate;
         private System.Windows.Forms.Label LblBoolReservationPrivilege;
         private System.Windows.Forms.Label LblNumberRenewalLimit;
         private System.Windows.Forms.Label LblNumberBorrowingPeriod;
         private System.Windows.Forms.Label LblNumberMaxBooksAllowed;
-        private ReaLTaiizor.Controls.Panel PnlRegExpDate;
-        private System.Windows.Forms.Label LblMemberType;
-        private System.Windows.Forms.Label LblMemberStatus;
+        private System.Windows.Forms.Label LblActualAccountStanding;
+        private System.Windows.Forms.Label LblAccontStanding;
+        private System.Windows.Forms.Label LblFineRate;
+        private System.Windows.Forms.Label LblReservationPrivilege;
+        private System.Windows.Forms.Label LblRenewalLimit;
+        private System.Windows.Forms.Label LblBorrowingPeriod;
+        private System.Windows.Forms.Label LblMaxBooksAllowed;
+        private System.Windows.Forms.Label LblMemberPrevileges;
+        private ReaLTaiizor.Controls.HopeRichTextBox TxtContact;
+        private System.Windows.Forms.Label LblContact;
+        private ReaLTaiizor.Controls.HopeRichTextBox TxtAddress;
+        private System.Windows.Forms.Label LblAddress;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.PictureBox PicBxProfilePic;
+        private System.Windows.Forms.Panel Design1;
+        private System.Windows.Forms.Label LblStatus;
+        private System.Windows.Forms.Label LblRole;
+        private System.Windows.Forms.Label LblEmail;
+        private System.Windows.Forms.Label LblIDNumber;
+        private System.Windows.Forms.Label LblFullname;
     }
 }
