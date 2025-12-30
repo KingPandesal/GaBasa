@@ -23,10 +23,12 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
             AddAllRole("Catalog", "Catalog");
             AddAllRole("Logout", "LogOut");
 
+            // Librarian Only
+            AddLibrarianStaff("Users", "Users");
+            AddLibrarianStaff("Settings", "Settings");
+
             // ===== LIBRARIAN & STAFF =====
             AddLibrarianStaff("Reports", "Reports");
-            AddLibrarianStaff("Users", "User");
-            AddLibrarianStaff("Settings", "Settings");
             AddLibrarianStaff("Members", "Members");
             AddLibrarianStaff("Inventory", "Inventory");
             AddLibrarianStaff("Reservations", "Reservations");
@@ -34,19 +36,19 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
             AddLibrarianStaff("Fines", "Fines");
 
             // ===== MEMBER ONLY =====
-            AddMember("My Wishlist", "Wishlist");
-            AddMember("My Borrowed", "Borrowed");
-            AddMember("My Overdue", "Overdue");
-            AddMember("My Reserve", "Reserve");
+            AddMember("My Wishlist", "MyWishlist");
+            AddMember("My Borrowed", "MyBorrowed");
+            AddMember("My Overdue", "MyOverdue");
+            AddMember("My Reserve", "MyReserve");
             AddMember("My Fines", "MyFines");
-            AddMember("My History", "History");
+            AddMember("My History", "MyHistory");
 
             // Test icon loading (temporary and testing only)
-            MessageBox.Show(
-                File.Exists("Assets/icons/ModuleIcons/AllRoleIcons/White/Dashboard.png")
-                    ? "ICON FOUND"
-                    : "ICON NOT FOUND"
-            );
+            //MessageBox.Show(
+            //    File.Exists("Assets/icons/ModuleIcons/AllRoleIcons/White/Dashboard.png")
+            //        ? "ICON FOUND"
+            //        : "ICON NOT FOUND"
+            //);
 
         }
 

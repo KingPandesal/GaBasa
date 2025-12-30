@@ -15,6 +15,9 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
         // cache for scaled (zoomed) variants: key format "module|useRed|size"
         private readonly Dictionary<string, Image> _scaledIconCache = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
 
+        // Fixed icon edge size (px). Change this value to make icons larger/smaller.
+        private const int IconEdge = 26;
+
         public SidebarBuilder(IModuleNavigator navigator)
         {
             _navigator = navigator ?? throw new ArgumentNullException(nameof(navigator));
@@ -44,7 +47,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             // Logout button at bottom
             var logoutBtn = new Button
             {
-                Text = "Logout",
+                Text = "  Logout",
                 Height = 40,
                 Dock = DockStyle.Bottom,
                 FlatStyle = FlatStyle.Flat,
@@ -52,18 +55,18 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                 ForeColor = defaultFore,
                 BackColor = defaultBack,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(10, 0, 0, 0)
+                Padding = new Padding(15, 0, 0, 0)
             };
             logoutBtn.FlatAppearance.BorderSize = 0;
             logoutBtn.Click += (s, e) => onLogout();
 
-            // compute icon size to fit the button and preserve aspect (zoom)
-            var logoutIconSize = Math.Max(16, logoutBtn.Height - 8);
+            // use fixed icon size
+            var logoutIconSize = IconEdge;
             logoutBtn.Image = GetScaledIconImage("Logout", useRed: false, logoutIconSize);
             logoutBtn.ImageAlign = ContentAlignment.MiddleLeft;
             logoutBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
 
-            // hover behavior for logout as well
+            // hover behavior for logout
             logoutBtn.MouseEnter += (s, e) =>
             {
                 logoutBtn.BackColor = hoverBack;
@@ -93,10 +96,10 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
 
                 foreach (var module in allowedModules)
                 {
-                    var mod = module; // capture for lambda
+                    var mod = module;
                     var btn = new Button
                     {
-                        Text = mod,
+                        Text = "  " + mod,
                         Height = 40,
                         Font = new Font("Microsoft Sans Serif", 11),
                         ForeColor = defaultFore,
@@ -105,7 +108,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         FlatStyle = FlatStyle.Flat,
                         TextAlign = ContentAlignment.MiddleLeft,
                         Tag = mod,
-                        Padding = new Padding(10, 0, 0, 0)
+                        Padding = new Padding(15, 0, 0, 0)
                     };
                     btn.FlatAppearance.BorderSize = 0;
 
@@ -137,8 +140,8 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         }
                     };
 
-                    // default (not-selected) state: show the white icon so it contrasts with the sidebar background
-                    var iconSize = Math.Max(16, btn.Height - 8); // zoom target size based on button height
+                    // use fixed icon size
+                    var iconSize = IconEdge;
                     btn.Image = GetScaledIconImage(mod, useRed: false, iconSize);
                     btn.ImageAlign = ContentAlignment.MiddleLeft;
                     btn.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -180,7 +183,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         b.BackColor = selectedBack;
                         b.ForeColor = selectedFore;
                         // selected button sits on white -> use red icon (scaled)
-                        var selectedIconSize = Math.Max(16, b.Height - 8);
+                        var selectedIconSize = IconEdge;
                         b.Image = GetScaledIconImage(key, useRed: true, selectedIconSize);
                     }
                     else
@@ -188,7 +191,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
                         b.BackColor = defaultBack;
                         b.ForeColor = defaultFore;
                         // non-selected button sits on colored sidebar -> use white icon (scaled)
-                        var normalIconSize = Math.Max(16, b.Height - 8);
+                        var normalIconSize = IconEdge;
                         b.Image = GetScaledIconImage(key, useRed: false, normalIconSize);
                     }
                 }
@@ -270,7 +273,7 @@ namespace LMS.Presentation.UI.MainForm.Sidebar
             if (_moduleIcons.TryGetValue(key, out var cached))
                 return cached;
 
-            const int size = 24;
+            const int size = IconEdge;
             var bmp = new Bitmap(size, size);
             using (var g = Graphics.FromImage(bmp))
             {

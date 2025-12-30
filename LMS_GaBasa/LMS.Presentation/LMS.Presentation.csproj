@@ -276,16 +276,22 @@
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Catalog.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Dashboard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\LogOut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Catalog.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Dashboard.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\LogOut.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\Red\Circulation.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Dashboard.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\Red\Fines.png">
@@ -306,16 +312,10 @@
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\Red\Settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\Red\User.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Catalog.png">
+    <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\Red\Users.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\White\Circulation.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Dashboard.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\White\Fines.png">
@@ -336,43 +336,43 @@
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\White\Settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\White\User.png">
+    <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\White\Users.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\Borrowed.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\MyBorrowed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\MyFines.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\History.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\MyHistory.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\Overdue.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\MyOverdue.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\Reserve.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\MyReserve.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\Wishlist.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\Red\MyWishlist.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\Borrowed.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyBorrowed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyFines.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\History.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyHistory.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\Overdue.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyOverdue.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\Reserve.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyReserve.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\Wishlist.png">
+    <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyWishlist.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\logos\gabasa-logo-transparent-zoom.png" />
