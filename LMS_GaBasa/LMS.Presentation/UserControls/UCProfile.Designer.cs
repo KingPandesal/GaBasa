@@ -52,7 +52,7 @@
             this.TxtContact = new ReaLTaiizor.Controls.HopeRichTextBox();
             this.LblContact = new System.Windows.Forms.Label();
             this.TxtAddress = new ReaLTaiizor.Controls.HopeRichTextBox();
-            this.LblAdress = new System.Windows.Forms.Label();
+            this.LblAddress = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
             this.Design1 = new System.Windows.Forms.Panel();
@@ -61,6 +61,8 @@
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblIDNumber = new System.Windows.Forms.Label();
             this.LblFullname = new System.Windows.Forms.Label();
+            this.LblMemberType = new System.Windows.Forms.Label();
+            this.LblMemberStatus = new System.Windows.Forms.Label();
             this.Design2.SuspendLayout();
             this.PnlRegExpDate.SuspendLayout();
             this.PnlMemberPrivilege.SuspendLayout();
@@ -72,12 +74,14 @@
             // 
             this.Design2.BackColor = System.Drawing.Color.White;
             this.Design2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.Design2.Controls.Add(this.LblMemberStatus);
+            this.Design2.Controls.Add(this.LblMemberType);
             this.Design2.Controls.Add(this.PnlRegExpDate);
             this.Design2.Controls.Add(this.PnlMemberPrivilege);
             this.Design2.Controls.Add(this.TxtContact);
             this.Design2.Controls.Add(this.LblContact);
             this.Design2.Controls.Add(this.TxtAddress);
-            this.Design2.Controls.Add(this.LblAdress);
+            this.Design2.Controls.Add(this.LblAddress);
             this.Design2.Controls.Add(this.panel2);
             this.Design2.Controls.Add(this.Design1);
             this.Design2.Controls.Add(this.LblStatus);
@@ -247,7 +251,6 @@
             this.LblFineRate.Size = new System.Drawing.Size(92, 28);
             this.LblFineRate.TabIndex = 16;
             this.LblFineRate.Text = "Fine Rate";
-            this.LblFineRate.Click += new System.EventHandler(this.label16_Click);
             // 
             // LblReservationPrivilege
             // 
@@ -297,7 +300,6 @@
             this.LblMemberPrevileges.Size = new System.Drawing.Size(213, 32);
             this.LblMemberPrevileges.TabIndex = 11;
             this.LblMemberPrevileges.Text = "Member Privileges";
-            this.LblMemberPrevileges.Click += new System.EventHandler(this.label2_Click);
             // 
             // TxtContact
             // 
@@ -352,14 +354,14 @@
             this.TxtAddress.Text = "Prk. Makugihon, Brgy. Cuambog, Mabini, DDO";
             this.TxtAddress.UseSystemPasswordChar = false;
             // 
-            // LblAdress
+            // LblAddress
             // 
-            this.LblAdress.AutoSize = true;
-            this.LblAdress.Location = new System.Drawing.Point(66, 345);
-            this.LblAdress.Name = "LblAdress";
-            this.LblAdress.Size = new System.Drawing.Size(98, 32);
-            this.LblAdress.TabIndex = 10;
-            this.LblAdress.Text = "Address";
+            this.LblAddress.AutoSize = true;
+            this.LblAddress.Location = new System.Drawing.Point(66, 345);
+            this.LblAddress.Name = "LblAddress";
+            this.LblAddress.Size = new System.Drawing.Size(98, 32);
+            this.LblAddress.TabIndex = 10;
+            this.LblAddress.Text = "Address";
             // 
             // panel2
             // 
@@ -393,7 +395,7 @@
             this.LblStatus.AutoSize = true;
             this.LblStatus.BackColor = System.Drawing.Color.LimeGreen;
             this.LblStatus.ForeColor = System.Drawing.Color.White;
-            this.LblStatus.Location = new System.Drawing.Point(618, 160);
+            this.LblStatus.Location = new System.Drawing.Point(734, 160);
             this.LblStatus.Name = "LblStatus";
             this.LblStatus.Size = new System.Drawing.Size(79, 32);
             this.LblStatus.TabIndex = 6;
@@ -438,6 +440,28 @@
             this.LblFullname.TabIndex = 1;
             this.LblFullname.Text = "Zy Manti";
             // 
+            // LblMemberType
+            // 
+            this.LblMemberType.AutoSize = true;
+            this.LblMemberType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.LblMemberType.ForeColor = System.Drawing.Color.White;
+            this.LblMemberType.Location = new System.Drawing.Point(617, 160);
+            this.LblMemberType.Name = "LblMemberType";
+            this.LblMemberType.Size = new System.Drawing.Size(105, 32);
+            this.LblMemberType.TabIndex = 20;
+            this.LblMemberType.Text = "Librarian";
+            // 
+            // LblMemberStatus
+            // 
+            this.LblMemberStatus.AutoSize = true;
+            this.LblMemberStatus.BackColor = System.Drawing.Color.LimeGreen;
+            this.LblMemberStatus.ForeColor = System.Drawing.Color.White;
+            this.LblMemberStatus.Location = new System.Drawing.Point(829, 160);
+            this.LblMemberStatus.Name = "LblMemberStatus";
+            this.LblMemberStatus.Size = new System.Drawing.Size(79, 32);
+            this.LblMemberStatus.TabIndex = 21;
+            this.LblMemberStatus.Text = "Active";
+            // 
             // UCProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -446,7 +470,6 @@
             this.Controls.Add(this.Design2);
             this.Name = "UCProfile";
             this.Size = new System.Drawing.Size(1580, 832);
-            this.Load += new System.EventHandler(this.UCProfile_Load);
             this.Design2.ResumeLayout(false);
             this.Design2.PerformLayout();
             this.PnlRegExpDate.ResumeLayout(false);
@@ -474,7 +497,7 @@
         private ReaLTaiizor.Controls.HopeRichTextBox TxtContact;
         private System.Windows.Forms.Label LblContact;
         private ReaLTaiizor.Controls.HopeRichTextBox TxtAddress;
-        private System.Windows.Forms.Label LblAdress;
+        private System.Windows.Forms.Label LblAddress;
         private System.Windows.Forms.Label LblActualExpDate;
         private System.Windows.Forms.Label LblExpDate;
         private System.Windows.Forms.Panel PnlMemberPrivilege;
@@ -492,5 +515,7 @@
         private System.Windows.Forms.Label LblNumberBorrowingPeriod;
         private System.Windows.Forms.Label LblNumberMaxBooksAllowed;
         private ReaLTaiizor.Controls.Panel PnlRegExpDate;
+        private System.Windows.Forms.Label LblMemberType;
+        private System.Windows.Forms.Label LblMemberStatus;
     }
 }

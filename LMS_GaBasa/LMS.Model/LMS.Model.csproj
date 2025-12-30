@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\DTOProfile.cs" />
     <Compile Include="Models\Catalog\Author.cs" />
     <Compile Include="Models\Catalog\Books\AV.cs" />
     <Compile Include="Models\Catalog\Books\Book.cs" />
