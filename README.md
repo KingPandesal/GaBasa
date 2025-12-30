@@ -1,14 +1,21 @@
-# 📚GaBasa: Library Management System (LMS)📚
+
+<h1 align="center">📚 GaBasa: Library Management System 📚 </h1>
+
+<p align="center">
+   <img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-logo-zoom.png" width="200" /> 
+   <br/>
+   <i>Built with care, so every book finds a reader — and every reader finds a story.</i>
+</p>
 
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
 
-Take a look at our **Wiki** here on github to understand more about GaBasa: The Library Management System.
+Take a look at our **Wiki** here on github to understand more about <i><strong>GaBasa: The Library Management System.</strong></i>
 
 This project follows a **3-layer architecture**:
 
-- 🖥️**LMS.Presentation** → WinForms UI  
-- ⚙️**LMS.BusinessLogic** → Business Logic Layer (Managers)  
-- 💾**LMS.DataAccess** → Data Access Layer (Repositories, DB connection)  
+- 🖥️ **LMS.Presentation** → WinForms UI  
+- ⚙️ **LMS.BusinessLogic** → Business Logic Layer (Managers)  
+- 💾 **LMS.DataAccess** → Data Access Layer (Repositories, DB connection)  
 
 ---
 
@@ -61,8 +68,8 @@ git clone https://github.com/SixxCodes/GaBasa.git
 ```
 
 ### 2️⃣ Open in Visual Studio
-- Open LMS_GaBasa.sln in Visual Studio 2022.
-- Ensure all three projects (Presentation, BusinessLogic, DataAccess) are loaded.
+- Open LMS_GaBasa.sln in Visual Studio 2022 or on File Explorer.
+- Ensure all three projects **(Presentation, BusinessLogic, DataAccess)** are loaded.
 
 ### 3️⃣ Set Startup Project
 - Right-click LMS.Presentation → Set as Startup Project.
@@ -71,13 +78,15 @@ git clone https://github.com/SixxCodes/GaBasa.git
 This project uses the following NuGet packages:
 
 - 🖌️ **ReaLTaiizor** (for modern UI components)
-   - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes.
+   - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes. (Make sure you're installing the correct package! Look at the package title, description, and authors to make sure.)
 - 🔒 **BCrypt.Net-Next** (for password hashing)
 
-Visual Studio should restore them automatically when you build the solution.  
-You can also install them manually via NuGet Package Manager.
+**Note**:
+- Visual Studio should restore them automatically when you build the solution.  
+- You can also install them manually via NuGet Package Manager.
+- Additional packages will automatically be installed as dependencies required by **BCrypt.Net-Next**.
 
-To get a clearer view of all dependencies and their relationships, you can use the **Dependency Graph**:
+To get a clearer view of all dependencies and their relationships:
 
 1. In Visual Studio, go to **Architecture → Generate Dependency Graph → For Solution**.
 2. Explore the diagram to see how projects and packages relate.
@@ -86,3 +95,8 @@ Or go to **Insights** of this repository and click the **Dependency Graph** tab 
 
 ### 5️⃣ Build and Run
 - Press F5 to build and run the application.
+
+--- 
+
+## ✨ Thank you for exploring GaBasa! ✨
+Developed with best practices, collaboration, and a passion for building meaningful systems.
