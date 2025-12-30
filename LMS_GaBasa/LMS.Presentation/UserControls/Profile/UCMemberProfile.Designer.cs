@@ -403,6 +403,7 @@
             this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PicBxProfilePic.TabIndex = 0;
             this.PicBxProfilePic.TabStop = false;
+            this.PicBxProfilePic.Click += new System.EventHandler(this.PicBxProfilePic_Click);
             // 
             // Design1
             // 

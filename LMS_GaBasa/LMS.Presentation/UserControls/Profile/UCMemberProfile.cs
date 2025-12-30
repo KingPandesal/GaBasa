@@ -16,5 +16,10 @@ namespace LMS.Presentation.UserControls.Profile
         {
             InitializeComponent();
         }
+
+        private void PicBxProfilePic_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
