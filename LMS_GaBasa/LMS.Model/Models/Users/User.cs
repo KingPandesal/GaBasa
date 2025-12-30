@@ -17,6 +17,7 @@ namespace LMS.Model.Models.Users
         public string LastName { get; internal set; }
         public string Email { get; internal set; }
         public string ContactNumber { get; internal set; }
+        public string PhotoPath { get; internal set; }
         public UserStatus Status { get; internal set; }
         // Enum (Database): Active, Inactive
 

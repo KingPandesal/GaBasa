@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCLibrarianStaff));
             this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.LblMemberStatus = new System.Windows.Forms.Label();
-            this.LblMemberType = new System.Windows.Forms.Label();
             this.TxtContact = new ReaLTaiizor.Controls.HopeRichTextBox();
             this.LblContact = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -51,8 +49,6 @@
             // 
             this.Design2.BackColor = System.Drawing.Color.White;
             this.Design2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Design2.Controls.Add(this.LblMemberStatus);
-            this.Design2.Controls.Add(this.LblMemberType);
             this.Design2.Controls.Add(this.TxtContact);
             this.Design2.Controls.Add(this.LblContact);
             this.Design2.Controls.Add(this.panel2);
@@ -70,28 +66,6 @@
             this.Design2.ShowText = true;
             this.Design2.Size = new System.Drawing.Size(1480, 758);
             this.Design2.TabIndex = 14;
-            // 
-            // LblMemberStatus
-            // 
-            this.LblMemberStatus.AutoSize = true;
-            this.LblMemberStatus.BackColor = System.Drawing.Color.LimeGreen;
-            this.LblMemberStatus.ForeColor = System.Drawing.Color.White;
-            this.LblMemberStatus.Location = new System.Drawing.Point(829, 160);
-            this.LblMemberStatus.Name = "LblMemberStatus";
-            this.LblMemberStatus.Size = new System.Drawing.Size(79, 32);
-            this.LblMemberStatus.TabIndex = 21;
-            this.LblMemberStatus.Text = "Active";
-            // 
-            // LblMemberType
-            // 
-            this.LblMemberType.AutoSize = true;
-            this.LblMemberType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.LblMemberType.ForeColor = System.Drawing.Color.White;
-            this.LblMemberType.Location = new System.Drawing.Point(617, 160);
-            this.LblMemberType.Name = "LblMemberType";
-            this.LblMemberType.Size = new System.Drawing.Size(105, 32);
-            this.LblMemberType.TabIndex = 20;
-            this.LblMemberType.Text = "Librarian";
             // 
             // TxtContact
             // 
@@ -156,7 +130,7 @@
             this.LblStatus.AutoSize = true;
             this.LblStatus.BackColor = System.Drawing.Color.LimeGreen;
             this.LblStatus.ForeColor = System.Drawing.Color.White;
-            this.LblStatus.Location = new System.Drawing.Point(734, 160);
+            this.LblStatus.Location = new System.Drawing.Point(622, 160);
             this.LblStatus.Name = "LblStatus";
             this.LblStatus.Size = new System.Drawing.Size(79, 32);
             this.LblStatus.TabIndex = 6;
@@ -220,8 +194,6 @@
         #endregion
 
         private ReaLTaiizor.Controls.LostBorderPanel Design2;
-        private System.Windows.Forms.Label LblMemberStatus;
-        private System.Windows.Forms.Label LblMemberType;
         private ReaLTaiizor.Controls.HopeRichTextBox TxtContact;
         private System.Windows.Forms.Label LblContact;
         private System.Windows.Forms.Panel panel2;

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Hashing\BcryptPasswordHasher.cs" />
     <Compile Include="Hashing\IPasswordHasher.cs" />
+    <Compile Include="Services\IUserProfileService.cs" />
     <Compile Include="Managers\IMemberManager.cs" />
     <Compile Include="Managers\IUserManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Security\IPermissionService.cs" />
     <Compile Include="Hashing\Sha256PasswordHasher.cs" />
     <Compile Include="Security\RolePermissionService.cs" />
+    <Compile Include="Services\UserProfileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LMS.DataAccess\LMS.DataAccess.csproj">

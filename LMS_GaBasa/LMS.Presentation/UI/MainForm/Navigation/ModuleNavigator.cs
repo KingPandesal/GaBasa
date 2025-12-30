@@ -198,7 +198,9 @@ namespace LMS.Presentation.UI.MainForm.Navigation
                 case Role.Librarian:
                 case Role.Staff:
                     // Librarian and Staff share the librarian/staff profile control
-                    return new UserControls.Profile.UCLibrarianStaff();
+                    var ucLibrarianStaff = new UserControls.Profile.UCLibrarianStaff();
+                    ucLibrarianStaff.LoadUserProfile(_currentUser.UserID);
+                    return ucLibrarianStaff;
 
                 case Role.Member:
                     // Members get the member profile control

@@ -11,5 +11,8 @@ namespace LMS.DataAccess.Repositories
     {
         // Fetch a user by username
         User GetByUsername(string username);
+
+        // Fetch a user by ID
+        User GetById(int userId);
     }
 }

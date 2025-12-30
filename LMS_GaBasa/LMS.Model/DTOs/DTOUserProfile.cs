@@ -9,7 +9,7 @@ namespace LMS.Model.DTOs
     public class DTOUserProfile
     {
         // Common user info
-        public string UserID { get; set; }
+        public int UserID { get; set; }
         public string Username { get; set; }
         public string FullName { get; set; }
         public string Role { get; set; }

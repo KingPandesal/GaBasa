@@ -1,20 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
+using LMS.BusinessLogic.Services;
+using LMS.DataAccess.Repositories;
+using LMS.Model.DTOs;
 
 namespace LMS.Presentation.UserControls.Profile
 {
     public partial class UCLibrarianStaff : UserControl
     {
+        private readonly IUserProfileService _userProfileService;
+
         public UCLibrarianStaff()
         {
             InitializeComponent();
+            _userProfileService = new UserProfileService(new UserRepository());
+        }
+
+        public void LoadUserProfile(int userId)
+        {
+            DTOUserProfile profile = _userProfileService.GetUserProfile(userId);
+
+            if (profile == null)
+            {
+                MessageBox.Show("User profile not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Populate UI controls
+            LblFullname.Text = profile.FullName;
+            LblIDNumber.Text = profile.UserID.ToString();
+            LblEmail.Text = profile.Email;
+            LblRole.Text = profile.Role;
+            LblStatus.Text = profile.Status;
+            TxtContact.Text = profile.ContactNumber;
+
+            // Load profile photo if exists
+            if (!string.IsNullOrEmpty(profile.PhotoPath) && File.Exists(profile.PhotoPath))
+            {
+                PicBxProfilePic.Image = Image.FromFile(profile.PhotoPath);
+            }
         }
     }
 }
