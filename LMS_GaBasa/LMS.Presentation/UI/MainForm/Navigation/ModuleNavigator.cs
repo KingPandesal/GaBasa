@@ -127,7 +127,7 @@ namespace LMS.Presentation.UI.MainForm.Navigation
             _factories.Clear();
 
             // ALL ROLES
-            _factories["Profile"] = () => new UserControls.UCProfile(_currentUser, _permissionService);
+            _factories["Profile"] = () => GetProfileByRole();
             _factories["Dashboard"] = () => GetDashboardByRole();
             _factories["Catalog"] = () => new UserControls.UCCatalog();
 
@@ -183,6 +183,31 @@ namespace LMS.Presentation.UI.MainForm.Navigation
 
             // default fallback dashboard
             return new UserControls.Dashboards.UCDashboard();
+        }
+
+        // Updated: return profile control based on the user's Role (no dependency on deleted UCProfile)
+        private UserControl GetProfileByRole()
+        {
+            // If we don't have a user, return a fallback placeholder.
+            if (_currentUser == null)
+                return CreateNotImplementedControl("Profile");
+
+            // Use the explicit Role to choose the profile control.
+            switch (_currentUser.Role)
+            {
+                case Role.Librarian:
+                case Role.Staff:
+                    // Librarian and Staff share the librarian/staff profile control
+                    return new UserControls.Profile.UCLibrarianStaff();
+
+                case Role.Member:
+                    // Members get the member profile control
+                    return new UserControls.Profile.UCMemberProfile();
+
+                default:
+                    // Unknown role — return placeholder
+                    return CreateNotImplementedControl("Profile");
+            }
         }
 
         private UserControl CreateNotImplementedControl(string name)

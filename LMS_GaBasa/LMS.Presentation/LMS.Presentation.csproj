@@ -170,12 +170,6 @@
     <Compile Include="UserControls\Profile\UCMemberProfile.Designer.cs">
       <DependentUpon>UCMemberProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UCProfile.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\UCProfile.Designer.cs">
-      <DependentUpon>UCProfile.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\MemberFeatures\UCReserve.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -243,9 +237,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Profile\UCMemberProfile.resx">
       <DependentUpon>UCMemberProfile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UCProfile.resx">
-      <DependentUpon>UCProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MemberFeatures\UCReserve.resx">
       <DependentUpon>UCReserve.cs</DependentUpon>
