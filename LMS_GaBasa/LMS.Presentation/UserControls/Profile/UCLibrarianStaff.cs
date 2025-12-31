@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using LMS.BusinessLogic.Services;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs;
+using LMS.Presentation.Popup.Profile;
 
 namespace LMS.Presentation.UserControls.Profile
 {
@@ -34,7 +35,7 @@ namespace LMS.Presentation.UserControls.Profile
             LblEmail.Text = profile.Email;
             LblRole.Text = profile.Role;
             LblStatus.Text = profile.Status;
-            TxtContact.Text = profile.ContactNumber;
+            LblContactNumber.Text = profile.ContactNumber;
 
             // Load profile photo if exists
             if (!string.IsNullOrEmpty(profile.PhotoPath) && File.Exists(profile.PhotoPath))
@@ -57,7 +58,16 @@ namespace LMS.Presentation.UserControls.Profile
                     PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
-
         }
+
+        private void BtnEditProfile_Click(object sender, EventArgs e)
+        {
+            using (EditProfile editProfileForm = new EditProfile())
+            {
+                editProfileForm.ShowDialog(); // modal popup
+            }
+        }
+
+        // end code
     }
 }

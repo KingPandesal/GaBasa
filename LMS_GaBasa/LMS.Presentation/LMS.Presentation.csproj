@@ -64,6 +64,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Profile\EditProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Profile\EditProfile.Designer.cs">
+      <DependentUpon>EditProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\MainForm\ModuleIcon\ModuleIcon.cs" />
@@ -188,6 +194,9 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Profile\EditProfile.resx">
+      <DependentUpon>EditProfile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -282,22 +291,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\LogOut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\LogOut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Catalog.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Dashboard.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\LogOut.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Catalog.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Dashboard.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\LogOut.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Profile.png">
@@ -390,6 +399,7 @@
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Profile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\logos\gabasa-banner.jpg" />
     <Content Include="Assets\logos\gabasa-logo-transparent-zoom.png" />
     <Content Include="Assets\logos\gabasa-logo-transparent.png" />
     <Content Include="Assets\logos\gabasa-logo-zoom.png" />
