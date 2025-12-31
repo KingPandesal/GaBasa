@@ -19,6 +19,7 @@ namespace LMS.Presentation.UI.MainForm.ModuleIcon
         {
             // modulename, filename (without extension)
             // ===== ALL ROLES =====
+            AddAllRole("Profile", "Profile");
             AddAllRole("Dashboard", "Dashboard");
             AddAllRole("Catalog", "Catalog");
             AddAllRole("Logout", "LogOut");

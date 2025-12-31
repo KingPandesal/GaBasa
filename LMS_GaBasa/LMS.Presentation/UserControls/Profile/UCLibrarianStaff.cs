@@ -42,5 +42,22 @@ namespace LMS.Presentation.UserControls.Profile
                 PicBxProfilePic.Image = Image.FromFile(profile.PhotoPath);
             }
         }
+
+        private void PicBxProfilePic_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Title = "Select an image";
+                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                PicBxProfilePic.Cursor = Cursors.Hand;
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    PicBxProfilePic.Image = Image.FromFile(ofd.FileName);
+                    PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+            }
+
+        }
     }
 }

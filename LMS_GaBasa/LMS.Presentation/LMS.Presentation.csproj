@@ -300,6 +300,9 @@
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\LogOut.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\White\Profile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\icons\ModuleIcons\LibrarianStaffIcons\Red\Circulation.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -382,6 +385,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\icons\ModuleIcons\MemberIcons\White\MyWishlist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Profile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\logos\gabasa-logo-transparent-zoom.png" />
