@@ -2,7 +2,7 @@
 <h1 align="center">📚 GaBasa: Library Management System 📚 </h1>
 
 <p align="center">
-   <img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-banner.jpg" width="200" /> 
+   <img src="LMS_GaBasa/LMS.Presentation/Assets/logos/gabasa-banner.jpg" width="700" /> 
    <br/>
    <i>Built with care, so every book finds a reader — and every reader finds a story.</i>
 </p>
