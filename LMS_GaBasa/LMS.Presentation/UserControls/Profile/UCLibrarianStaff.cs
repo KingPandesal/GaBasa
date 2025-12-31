@@ -44,8 +44,24 @@ namespace LMS.Presentation.UserControls.Profile
             LblStatus.Text = profile.Status;
             LblActualContactNumber.Text = profile.ContactNumber;
 
+            // Reposition Role and Status labels after the name
+            RepositionRoleAndStatusLabels();
+
             // Load profile photo - PhotoPath is now absolute (converted by service)
             LoadProfileImage(profile.PhotoPath);
+        }
+
+        private void RepositionRoleAndStatusLabels()
+        {
+            const int spacing = 10; // Gap between labels
+
+            // Position LblRole right after LblFullname
+            int roleX = LblFullname.Right + spacing;
+            LblRole.Location = new Point(roleX, LblRole.Location.Y);
+
+            // Position LblStatus right after LblRole
+            int statusX = LblRole.Right + spacing;
+            LblStatus.Location = new Point(statusX, LblStatus.Location.Y);
         }
 
         private void LoadProfileImage(string photoPath)
