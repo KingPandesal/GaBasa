@@ -6,7 +6,7 @@ using LMS.Model.DTOs.User;
 
 namespace LMS.Presentation.Popup.Profile
 {
-    public partial class EditProfile : Form
+    public partial class EditLibrarianStaffProfile : Form
     {
         private readonly IUserProfileService _userProfileService;
         private int _userId;
@@ -15,7 +15,7 @@ namespace LMS.Presentation.Popup.Profile
         // Event to notify when profile is updated
         public event Action<DTOUpdateUserProfile> ProfileUpdated;
 
-        public EditProfile(IUserProfileService userProfileService)
+        public EditLibrarianStaffProfile(IUserProfileService userProfileService)
         {
             InitializeComponent();
             _userProfileService = userProfileService;

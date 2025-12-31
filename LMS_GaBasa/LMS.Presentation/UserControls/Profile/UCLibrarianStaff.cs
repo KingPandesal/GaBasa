@@ -95,7 +95,7 @@ namespace LMS.Presentation.UserControls.Profile
                 return;
             }
 
-            var editForm = new EditProfile(_userProfileService);
+            var editForm = new EditLibrarianStaffProfile(_userProfileService);
             editForm.LoadProfile(currentProfile);
 
             editForm.ProfileUpdated += (updatedProfile) =>

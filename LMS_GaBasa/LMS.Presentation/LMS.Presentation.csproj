@@ -64,11 +64,17 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Popup\Profile\EditProfile.cs">
+    <Compile Include="Popup\Profile\EditLibrarianStaffProfile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Popup\Profile\EditProfile.Designer.cs">
-      <DependentUpon>EditProfile.cs</DependentUpon>
+    <Compile Include="Popup\Profile\EditLibrarianStaffProfile.Designer.cs">
+      <DependentUpon>EditLibrarianStaffProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\Profile\EditMemberProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Profile\EditMemberProfile.Designer.cs">
+      <DependentUpon>EditMemberProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -194,8 +200,11 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Popup\Profile\EditProfile.resx">
-      <DependentUpon>EditProfile.cs</DependentUpon>
+    <EmbeddedResource Include="Popup\Profile\EditLibrarianStaffProfile.resx">
+      <DependentUpon>EditLibrarianStaffProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Profile\EditMemberProfile.resx">
+      <DependentUpon>EditMemberProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

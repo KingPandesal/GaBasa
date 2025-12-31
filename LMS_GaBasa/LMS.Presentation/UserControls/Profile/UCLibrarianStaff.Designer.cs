@@ -119,7 +119,7 @@
             this.LblStatus.AutoSize = true;
             this.LblStatus.BackColor = System.Drawing.Color.LimeGreen;
             this.LblStatus.ForeColor = System.Drawing.Color.White;
-            this.LblStatus.Location = new System.Drawing.Point(305, 12);
+            this.LblStatus.Location = new System.Drawing.Point(305, 15);
             this.LblStatus.Name = "LblStatus";
             this.LblStatus.Size = new System.Drawing.Size(79, 32);
             this.LblStatus.TabIndex = 6;
@@ -130,7 +130,7 @@
             this.LblRole.AutoSize = true;
             this.LblRole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.LblRole.ForeColor = System.Drawing.Color.White;
-            this.LblRole.Location = new System.Drawing.Point(187, 12);
+            this.LblRole.Location = new System.Drawing.Point(187, 15);
             this.LblRole.Name = "LblRole";
             this.LblRole.Size = new System.Drawing.Size(105, 32);
             this.LblRole.TabIndex = 5;

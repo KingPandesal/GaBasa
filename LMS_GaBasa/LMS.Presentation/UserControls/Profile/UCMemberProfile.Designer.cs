@@ -30,8 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCMemberProfile));
             this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.LblMemberStatus = new System.Windows.Forms.Label();
+            this.PnlNameRoleStatus = new System.Windows.Forms.Panel();
             this.LblMemberType = new System.Windows.Forms.Label();
+            this.LblFullname = new System.Windows.Forms.Label();
+            this.LblMemberStatus = new System.Windows.Forms.Label();
+            this.LblRole = new System.Windows.Forms.Label();
+            this.BtnEditProfile = new System.Windows.Forms.Button();
             this.PnlRegExpDate = new ReaLTaiizor.Controls.Panel();
             this.LblActualExpDate = new System.Windows.Forms.Label();
             this.LblExpDate = new System.Windows.Forms.Label();
@@ -51,19 +55,17 @@
             this.LblBorrowingPeriod = new System.Windows.Forms.Label();
             this.LblMaxBooksAllowed = new System.Windows.Forms.Label();
             this.LblMemberPrevileges = new System.Windows.Forms.Label();
-            this.TxtContact = new ReaLTaiizor.Controls.HopeRichTextBox();
             this.LblContact = new System.Windows.Forms.Label();
-            this.TxtAddress = new ReaLTaiizor.Controls.HopeRichTextBox();
             this.LblAddress = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
             this.Design1 = new System.Windows.Forms.Panel();
-            this.LblStatus = new System.Windows.Forms.Label();
-            this.LblRole = new System.Windows.Forms.Label();
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblIDNumber = new System.Windows.Forms.Label();
-            this.LblFullname = new System.Windows.Forms.Label();
+            this.LblActualAddress = new System.Windows.Forms.Label();
+            this.LblActualContact = new System.Windows.Forms.Label();
             this.Design2.SuspendLayout();
+            this.PnlNameRoleStatus.SuspendLayout();
             this.PnlRegExpDate.SuspendLayout();
             this.PnlMemberPrivilege.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -74,21 +76,18 @@
             // 
             this.Design2.BackColor = System.Drawing.Color.White;
             this.Design2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Design2.Controls.Add(this.LblMemberStatus);
-            this.Design2.Controls.Add(this.LblMemberType);
+            this.Design2.Controls.Add(this.LblActualContact);
+            this.Design2.Controls.Add(this.LblActualAddress);
+            this.Design2.Controls.Add(this.PnlNameRoleStatus);
+            this.Design2.Controls.Add(this.BtnEditProfile);
             this.Design2.Controls.Add(this.PnlRegExpDate);
             this.Design2.Controls.Add(this.PnlMemberPrivilege);
-            this.Design2.Controls.Add(this.TxtContact);
             this.Design2.Controls.Add(this.LblContact);
-            this.Design2.Controls.Add(this.TxtAddress);
             this.Design2.Controls.Add(this.LblAddress);
             this.Design2.Controls.Add(this.panel2);
             this.Design2.Controls.Add(this.Design1);
-            this.Design2.Controls.Add(this.LblStatus);
-            this.Design2.Controls.Add(this.LblRole);
             this.Design2.Controls.Add(this.LblEmail);
             this.Design2.Controls.Add(this.LblIDNumber);
-            this.Design2.Controls.Add(this.LblFullname);
             this.Design2.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.Design2.ForeColor = System.Drawing.Color.Black;
             this.Design2.Location = new System.Drawing.Point(50, 38);
@@ -98,27 +97,75 @@
             this.Design2.Size = new System.Drawing.Size(1480, 758);
             this.Design2.TabIndex = 14;
             // 
+            // PnlNameRoleStatus
+            // 
+            this.PnlNameRoleStatus.Controls.Add(this.LblMemberType);
+            this.PnlNameRoleStatus.Controls.Add(this.LblFullname);
+            this.PnlNameRoleStatus.Controls.Add(this.LblMemberStatus);
+            this.PnlNameRoleStatus.Controls.Add(this.LblRole);
+            this.PnlNameRoleStatus.Location = new System.Drawing.Point(322, 146);
+            this.PnlNameRoleStatus.Name = "PnlNameRoleStatus";
+            this.PnlNameRoleStatus.Size = new System.Drawing.Size(958, 53);
+            this.PnlNameRoleStatus.TabIndex = 41;
+            // 
+            // LblMemberType
+            // 
+            this.LblMemberType.AutoSize = true;
+            this.LblMemberType.BackColor = System.Drawing.Color.DarkOrchid;
+            this.LblMemberType.ForeColor = System.Drawing.Color.White;
+            this.LblMemberType.Location = new System.Drawing.Point(306, 15);
+            this.LblMemberType.Name = "LblMemberType";
+            this.LblMemberType.Size = new System.Drawing.Size(97, 32);
+            this.LblMemberType.TabIndex = 7;
+            this.LblMemberType.Text = "Student";
+            // 
+            // LblFullname
+            // 
+            this.LblFullname.AutoSize = true;
+            this.LblFullname.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.LblFullname.Location = new System.Drawing.Point(-9, -1);
+            this.LblFullname.Name = "LblFullname";
+            this.LblFullname.Size = new System.Drawing.Size(190, 54);
+            this.LblFullname.TabIndex = 1;
+            this.LblFullname.Text = "Zy Manti";
+            // 
             // LblMemberStatus
             // 
             this.LblMemberStatus.AutoSize = true;
             this.LblMemberStatus.BackColor = System.Drawing.Color.LimeGreen;
             this.LblMemberStatus.ForeColor = System.Drawing.Color.White;
-            this.LblMemberStatus.Location = new System.Drawing.Point(829, 160);
+            this.LblMemberStatus.Location = new System.Drawing.Point(423, 15);
             this.LblMemberStatus.Name = "LblMemberStatus";
             this.LblMemberStatus.Size = new System.Drawing.Size(79, 32);
-            this.LblMemberStatus.TabIndex = 21;
+            this.LblMemberStatus.TabIndex = 6;
             this.LblMemberStatus.Text = "Active";
             // 
-            // LblMemberType
+            // LblRole
             // 
-            this.LblMemberType.AutoSize = true;
-            this.LblMemberType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.LblMemberType.ForeColor = System.Drawing.Color.White;
-            this.LblMemberType.Location = new System.Drawing.Point(617, 160);
-            this.LblMemberType.Name = "LblMemberType";
-            this.LblMemberType.Size = new System.Drawing.Size(105, 32);
-            this.LblMemberType.TabIndex = 20;
-            this.LblMemberType.Text = "Librarian";
+            this.LblRole.AutoSize = true;
+            this.LblRole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.LblRole.ForeColor = System.Drawing.Color.White;
+            this.LblRole.Location = new System.Drawing.Point(187, 15);
+            this.LblRole.Name = "LblRole";
+            this.LblRole.Size = new System.Drawing.Size(105, 32);
+            this.LblRole.TabIndex = 5;
+            this.LblRole.Text = "Member";
+            // 
+            // BtnEditProfile
+            // 
+            this.BtnEditProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnEditProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnEditProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnEditProfile.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnEditProfile.ForeColor = System.Drawing.Color.White;
+            this.BtnEditProfile.Location = new System.Drawing.Point(1307, 146);
+            this.BtnEditProfile.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnEditProfile.Name = "BtnEditProfile";
+            this.BtnEditProfile.Size = new System.Drawing.Size(134, 43);
+            this.BtnEditProfile.TabIndex = 40;
+            this.BtnEditProfile.Text = "Edit Profile";
+            this.BtnEditProfile.UseVisualStyleBackColor = false;
+            this.BtnEditProfile.Click += new System.EventHandler(this.BtnEditProfile_Click);
             // 
             // PnlRegExpDate
             // 
@@ -198,7 +245,7 @@
             // 
             this.LblNumberFineRate.AutoSize = true;
             this.LblNumberFineRate.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblNumberFineRate.Location = new System.Drawing.Point(507, 243);
+            this.LblNumberFineRate.Location = new System.Drawing.Point(463, 243);
             this.LblNumberFineRate.Name = "LblNumberFineRate";
             this.LblNumberFineRate.Size = new System.Drawing.Size(100, 28);
             this.LblNumberFineRate.TabIndex = 23;
@@ -208,7 +255,7 @@
             // 
             this.LblBoolReservationPrivilege.AutoSize = true;
             this.LblBoolReservationPrivilege.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblBoolReservationPrivilege.Location = new System.Drawing.Point(507, 200);
+            this.LblBoolReservationPrivilege.Location = new System.Drawing.Point(463, 200);
             this.LblBoolReservationPrivilege.Name = "LblBoolReservationPrivilege";
             this.LblBoolReservationPrivilege.Size = new System.Drawing.Size(39, 28);
             this.LblBoolReservationPrivilege.TabIndex = 22;
@@ -218,7 +265,7 @@
             // 
             this.LblNumberRenewalLimit.AutoSize = true;
             this.LblNumberRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblNumberRenewalLimit.Location = new System.Drawing.Point(507, 158);
+            this.LblNumberRenewalLimit.Location = new System.Drawing.Point(463, 158);
             this.LblNumberRenewalLimit.Name = "LblNumberRenewalLimit";
             this.LblNumberRenewalLimit.Size = new System.Drawing.Size(82, 28);
             this.LblNumberRenewalLimit.TabIndex = 21;
@@ -228,7 +275,7 @@
             // 
             this.LblNumberBorrowingPeriod.AutoSize = true;
             this.LblNumberBorrowingPeriod.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblNumberBorrowingPeriod.Location = new System.Drawing.Point(507, 115);
+            this.LblNumberBorrowingPeriod.Location = new System.Drawing.Point(463, 115);
             this.LblNumberBorrowingPeriod.Name = "LblNumberBorrowingPeriod";
             this.LblNumberBorrowingPeriod.Size = new System.Drawing.Size(68, 28);
             this.LblNumberBorrowingPeriod.TabIndex = 20;
@@ -238,7 +285,7 @@
             // 
             this.LblNumberMaxBooksAllowed.AutoSize = true;
             this.LblNumberMaxBooksAllowed.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblNumberMaxBooksAllowed.Location = new System.Drawing.Point(507, 73);
+            this.LblNumberMaxBooksAllowed.Location = new System.Drawing.Point(463, 73);
             this.LblNumberMaxBooksAllowed.Name = "LblNumberMaxBooksAllowed";
             this.LblNumberMaxBooksAllowed.Size = new System.Drawing.Size(82, 28);
             this.LblNumberMaxBooksAllowed.TabIndex = 19;
@@ -323,28 +370,6 @@
             this.LblMemberPrevileges.TabIndex = 11;
             this.LblMemberPrevileges.Text = "Member Privileges";
             // 
-            // TxtContact
-            // 
-            this.TxtContact.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(223)))), ((int)(((byte)(230)))));
-            this.TxtContact.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.TxtContact.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
-            this.TxtContact.Hint = "";
-            this.TxtContact.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
-            this.TxtContact.Location = new System.Drawing.Point(85, 505);
-            this.TxtContact.MaxLength = 32767;
-            this.TxtContact.Multiline = true;
-            this.TxtContact.Name = "TxtContact";
-            this.TxtContact.PasswordChar = '\0';
-            this.TxtContact.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.TxtContact.SelectedText = "";
-            this.TxtContact.SelectionLength = 0;
-            this.TxtContact.SelectionStart = 0;
-            this.TxtContact.Size = new System.Drawing.Size(269, 52);
-            this.TxtContact.TabIndex = 13;
-            this.TxtContact.TabStop = false;
-            this.TxtContact.Text = "0929 211  9698";
-            this.TxtContact.UseSystemPasswordChar = false;
-            // 
             // LblContact
             // 
             this.LblContact.AutoSize = true;
@@ -353,28 +378,6 @@
             this.LblContact.Size = new System.Drawing.Size(96, 32);
             this.LblContact.TabIndex = 12;
             this.LblContact.Text = "Contact";
-            // 
-            // TxtAddress
-            // 
-            this.TxtAddress.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(223)))), ((int)(((byte)(230)))));
-            this.TxtAddress.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.TxtAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(49)))), ((int)(((byte)(51)))));
-            this.TxtAddress.Hint = "";
-            this.TxtAddress.HoverBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(158)))), ((int)(((byte)(255)))));
-            this.TxtAddress.Location = new System.Drawing.Point(85, 380);
-            this.TxtAddress.MaxLength = 32767;
-            this.TxtAddress.Multiline = true;
-            this.TxtAddress.Name = "TxtAddress";
-            this.TxtAddress.PasswordChar = '\0';
-            this.TxtAddress.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.TxtAddress.SelectedText = "";
-            this.TxtAddress.SelectionLength = 0;
-            this.TxtAddress.SelectionStart = 0;
-            this.TxtAddress.Size = new System.Drawing.Size(612, 54);
-            this.TxtAddress.TabIndex = 11;
-            this.TxtAddress.TabStop = false;
-            this.TxtAddress.Text = "Prk. Makugihon, Brgy. Cuambog, Mabini, DDO";
-            this.TxtAddress.UseSystemPasswordChar = false;
             // 
             // LblAddress
             // 
@@ -400,10 +403,9 @@
             this.PicBxProfilePic.Location = new System.Drawing.Point(13, 15);
             this.PicBxProfilePic.Name = "PicBxProfilePic";
             this.PicBxProfilePic.Size = new System.Drawing.Size(212, 206);
-            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxProfilePic.TabIndex = 0;
             this.PicBxProfilePic.TabStop = false;
-            this.PicBxProfilePic.Click += new System.EventHandler(this.PicBxProfilePic_Click);
             // 
             // Design1
             // 
@@ -412,28 +414,6 @@
             this.Design1.Name = "Design1";
             this.Design1.Size = new System.Drawing.Size(1480, 112);
             this.Design1.TabIndex = 9;
-            // 
-            // LblStatus
-            // 
-            this.LblStatus.AutoSize = true;
-            this.LblStatus.BackColor = System.Drawing.Color.LimeGreen;
-            this.LblStatus.ForeColor = System.Drawing.Color.White;
-            this.LblStatus.Location = new System.Drawing.Point(734, 160);
-            this.LblStatus.Name = "LblStatus";
-            this.LblStatus.Size = new System.Drawing.Size(79, 32);
-            this.LblStatus.TabIndex = 6;
-            this.LblStatus.Text = "Active";
-            // 
-            // LblRole
-            // 
-            this.LblRole.AutoSize = true;
-            this.LblRole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.LblRole.ForeColor = System.Drawing.Color.White;
-            this.LblRole.Location = new System.Drawing.Point(501, 160);
-            this.LblRole.Name = "LblRole";
-            this.LblRole.Size = new System.Drawing.Size(105, 32);
-            this.LblRole.TabIndex = 5;
-            this.LblRole.Text = "Librarian";
             // 
             // LblEmail
             // 
@@ -453,15 +433,23 @@
             this.LblIDNumber.TabIndex = 2;
             this.LblIDNumber.Text = "141776";
             // 
-            // LblFullname
+            // LblActualAddress
             // 
-            this.LblFullname.AutoSize = true;
-            this.LblFullname.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.LblFullname.Location = new System.Drawing.Point(313, 148);
-            this.LblFullname.Name = "LblFullname";
-            this.LblFullname.Size = new System.Drawing.Size(190, 54);
-            this.LblFullname.TabIndex = 1;
-            this.LblFullname.Text = "Zy Manti";
+            this.LblActualAddress.AutoSize = true;
+            this.LblActualAddress.Location = new System.Drawing.Point(79, 386);
+            this.LblActualAddress.Name = "LblActualAddress";
+            this.LblActualAddress.Size = new System.Drawing.Size(98, 32);
+            this.LblActualAddress.TabIndex = 42;
+            this.LblActualAddress.Text = "Address";
+            // 
+            // LblActualContact
+            // 
+            this.LblActualContact.AutoSize = true;
+            this.LblActualContact.Location = new System.Drawing.Point(81, 513);
+            this.LblActualContact.Name = "LblActualContact";
+            this.LblActualContact.Size = new System.Drawing.Size(96, 32);
+            this.LblActualContact.TabIndex = 43;
+            this.LblActualContact.Text = "Contact";
             // 
             // UCMemberProfile
             // 
@@ -470,9 +458,11 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.Design2);
             this.Name = "UCMemberProfile";
-            this.Size = new System.Drawing.Size(1480, 758);
+            this.Size = new System.Drawing.Size(1580, 832);
             this.Design2.ResumeLayout(false);
             this.Design2.PerformLayout();
+            this.PnlNameRoleStatus.ResumeLayout(false);
+            this.PnlNameRoleStatus.PerformLayout();
             this.PnlRegExpDate.ResumeLayout(false);
             this.PnlRegExpDate.PerformLayout();
             this.PnlMemberPrivilege.ResumeLayout(false);
@@ -486,8 +476,6 @@
         #endregion
 
         private ReaLTaiizor.Controls.LostBorderPanel Design2;
-        private System.Windows.Forms.Label LblMemberStatus;
-        private System.Windows.Forms.Label LblMemberType;
         private ReaLTaiizor.Controls.Panel PnlRegExpDate;
         private System.Windows.Forms.Label LblActualExpDate;
         private System.Windows.Forms.Label LblExpDate;
@@ -507,17 +495,20 @@
         private System.Windows.Forms.Label LblBorrowingPeriod;
         private System.Windows.Forms.Label LblMaxBooksAllowed;
         private System.Windows.Forms.Label LblMemberPrevileges;
-        private ReaLTaiizor.Controls.HopeRichTextBox TxtContact;
         private System.Windows.Forms.Label LblContact;
-        private ReaLTaiizor.Controls.HopeRichTextBox TxtAddress;
         private System.Windows.Forms.Label LblAddress;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox PicBxProfilePic;
         private System.Windows.Forms.Panel Design1;
-        private System.Windows.Forms.Label LblStatus;
-        private System.Windows.Forms.Label LblRole;
         private System.Windows.Forms.Label LblEmail;
         private System.Windows.Forms.Label LblIDNumber;
+        private System.Windows.Forms.Button BtnEditProfile;
+        private System.Windows.Forms.Panel PnlNameRoleStatus;
         private System.Windows.Forms.Label LblFullname;
+        private System.Windows.Forms.Label LblMemberStatus;
+        private System.Windows.Forms.Label LblRole;
+        private System.Windows.Forms.Label LblMemberType;
+        private System.Windows.Forms.Label LblActualAddress;
+        private System.Windows.Forms.Label LblActualContact;
     }
 }

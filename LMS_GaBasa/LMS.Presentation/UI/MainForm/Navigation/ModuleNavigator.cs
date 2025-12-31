@@ -204,7 +204,9 @@ namespace LMS.Presentation.UI.MainForm.Navigation
 
                 case Role.Member:
                     // Members get the member profile control
-                    return new UserControls.Profile.UCMemberProfile();
+                    var ucMemberProfile = new UserControls.Profile.UCMemberProfile();
+                    ucMemberProfile.LoadMemberProfile(_currentUser.UserID);
+                    return ucMemberProfile;
 
                 default:
                     // Unknown role — return placeholder

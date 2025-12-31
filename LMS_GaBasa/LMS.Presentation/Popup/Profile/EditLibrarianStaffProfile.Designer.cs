@@ -1,6 +1,6 @@
 ﻿namespace LMS.Presentation.Popup.Profile
 {
-    partial class EditProfile
+    partial class EditLibrarianStaffProfile
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditProfile));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditLibrarianStaffProfile));
             this.BtnSave = new System.Windows.Forms.Button();
             this.LblCancel = new System.Windows.Forms.Button();
             this.PicBxProfilePicContainer = new System.Windows.Forms.Panel();
@@ -178,7 +178,7 @@
             this.TxtContactNumber.Size = new System.Drawing.Size(339, 26);
             this.TxtContactNumber.TabIndex = 54;
             // 
-            // EditProfile
+            // EditLibrarianStaffProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -199,8 +199,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "EditProfile";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Name = "EditLibrarianStaffProfile";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Profile";
             this.PicBxProfilePicContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
