@@ -137,12 +137,20 @@ namespace LMS.Presentation.Forms
             {
                 uc.Dock = DockStyle.Fill;
 
-                // Subscribe to profile update event if this is the profile module
-                if (uc is UCLibrarianStaff profileUC)
+                // Subscribe to profile update event if this is the Librarian/Staff profile module
+                if (uc is UCLibrarianStaff librarianStaffUC)
                 {
-                    profileUC.ProfileUpdated += () =>
+                    librarianStaffUC.ProfileUpdated += () =>
                     {
-                        // Reload user from DB and refresh top bar
+                        RefreshCurrentUserAndTopBar();
+                    };
+                }
+
+                // Subscribe to profile update event if this is the Member profile module
+                if (uc is UCMemberProfile memberProfileUC)
+                {
+                    memberProfileUC.ProfileUpdated += () =>
+                    {
                         RefreshCurrentUserAndTopBar();
                     };
                 }
