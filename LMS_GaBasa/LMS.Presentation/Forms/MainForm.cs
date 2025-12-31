@@ -4,6 +4,9 @@ using LMS.Presentation.UI.MainForm.ModuleIcon;
 using LMS.Presentation.UI.MainForm.Navigation;
 using LMS.Presentation.UI.MainForm.Sidebar;
 using LMS.Presentation.UI.MainForm.TopBar;
+using LMS.Presentation.UserControls.Profile;
+using LMS.BusinessLogic.Services;
+using LMS.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -68,15 +71,38 @@ namespace LMS.Presentation.Forms
                 () => LogoutButton_Click(this, EventArgs.Empty),
                 "Dashboard"); // default selected module
 
-            // initialize topbar/profile controls via controller
-            _topBarController.InitializeProfile(
-                _currentUser,
-                permissionService,
-                PicBxProfilePic,
-                LblProfileName,
-                this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label,
-                PnlProfileHeader,
-                () => LoadContentByName("Profile"));
+            // Fetch fresh profile from database to get PhotoPath
+            var userService = new UserProfileService(new UserRepository());
+            var profile = userService.GetUserProfile(_currentUser.UserID);
+
+            // Initialize topbar using profile data (includes photo) if available
+            if (profile != null)
+            {
+                _topBarController.InitializeProfile(
+                    _currentUser,
+                    permissionService,
+                    PicBxProfilePic,
+                    LblProfileName,
+                    this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label,
+                    PnlProfileHeader,
+                    () => LoadContentByName("Profile"));
+
+                // Immediately refresh with database profile to load the photo
+                _topBarController.RefreshProfile(profile, PicBxProfilePic, LblProfileName,
+                    this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label);
+            }
+            else
+            {
+                // Fallback to User object if profile fetch fails
+                _topBarController.InitializeProfile(
+                    _currentUser,
+                    permissionService,
+                    PicBxProfilePic,
+                    LblProfileName,
+                    this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label,
+                    PnlProfileHeader,
+                    () => LoadContentByName("Profile"));
+            }
 
             LoadContentByName("Dashboard"); // default
         }
@@ -110,8 +136,32 @@ namespace LMS.Presentation.Forms
             if (uc != null)
             {
                 uc.Dock = DockStyle.Fill;
+
+                // Subscribe to profile update event if this is the profile module
+                if (uc is UCLibrarianStaff profileUC)
+                {
+                    profileUC.ProfileUpdated += () =>
+                    {
+                        // Reload user from DB and refresh top bar
+                        RefreshCurrentUserAndTopBar();
+                    };
+                }
+
                 PnlContent.Controls.Add(uc);
             }
+        }
+
+        private void RefreshCurrentUserAndTopBar()
+        {
+            // Fetch fresh profile from database
+            var userService = new UserProfileService(new UserRepository());
+            var profile = userService.GetUserProfile(_currentUser.UserID);
+
+            if (profile == null) return;
+
+            // Refresh top bar display using profile DTO directly
+            _topBarController.RefreshProfile(profile, PicBxProfilePic, LblProfileName,
+                this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label);
         }
 
         // end code

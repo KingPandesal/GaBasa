@@ -1,6 +1,8 @@
-﻿using LMS.BusinessLogic.Security;
+﻿using LMS.BusinessLogic.Helpers;
+using LMS.BusinessLogic.Security;
 using LMS.Model.Models.Users;
 using LMS.Presentation.UI.MainForm.ModuleIcon;
+using LMS.Model.DTOs.User;
 using System;
 using System.Drawing;
 using System.IO;
@@ -20,33 +22,8 @@ namespace LMS.Presentation.UI.MainForm.TopBar
 
             try
             {
-                string displayName = null;
-                try { displayName = currentUser?.GetFullName(); } catch { /* ignore */ }
-                if (string.IsNullOrWhiteSpace(displayName))
-                {
-                    var first = currentUser?.FirstName ?? string.Empty;
-                    var last = currentUser?.LastName ?? string.Empty;
-                    displayName = (first + " " + last).Trim();
-                }
-                if (string.IsNullOrWhiteSpace(displayName))
-                    displayName = currentUser?.Username ?? "User";
-
-                profileNameLabel.Text = displayName;
-
-                if (profileRoleLabel != null)
-                    profileRoleLabel.Text = currentUser?.Role.ToString();
-
-                // picture
-                profilePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                var userImage = TryGetUserImage(currentUser);
-                if (userImage != null)
-                {
-                    profilePictureBox.Image = userImage;
-                }
-                else
-                {
-                    profilePictureBox.Image = CreateProfilePlaceholderImage(displayName, profilePictureBox.Width, profilePictureBox.Height);
-                }
+                // Set profile display
+                UpdateProfileDisplay(currentUser, profilePictureBox, profileNameLabel, profileRoleLabel);
 
                 profilePictureBox.Cursor = Cursors.Hand;
                 profileHeader.Cursor = Cursors.Hand;
@@ -69,6 +46,116 @@ namespace LMS.Presentation.UI.MainForm.TopBar
             {
                 // swallow UI errors - keep topbar tolerant
             }
+        }
+
+        public void RefreshProfile(User currentUser, PictureBox profilePictureBox,
+            Label profileNameLabel, Label profileRoleLabel)
+        {
+            try
+            {
+                UpdateProfileDisplay(currentUser, profilePictureBox, profileNameLabel, profileRoleLabel);
+            }
+            catch
+            {
+                // swallow UI errors
+            }
+        }
+
+        public void RefreshProfile(DTOUserProfile profile, PictureBox profilePictureBox,
+            Label profileNameLabel, Label profileRoleLabel)
+        {
+            if (profile == null) return;
+
+            try
+            {
+                if (profileNameLabel != null)
+                    profileNameLabel.Text = profile.FullName ?? "User";
+
+                if (profileRoleLabel != null)
+                    profileRoleLabel.Text = profile.Role;
+
+                if (profilePictureBox != null)
+                {
+                    profilePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                    if (profilePictureBox.Image != null)
+                    {
+                        profilePictureBox.Image.Dispose();
+                        profilePictureBox.Image = null;
+                    }
+
+                    if (!string.IsNullOrEmpty(profile.PhotoPath) && File.Exists(profile.PhotoPath))
+                    {
+                        using (var stream = new FileStream(profile.PhotoPath, FileMode.Open, FileAccess.Read))
+                        {
+                            profilePictureBox.Image = Image.FromStream(stream);
+                        }
+                    }
+                    else
+                    {
+                        profilePictureBox.Image = CreateProfilePlaceholderImage(profile.FullName ?? "?",
+                            profilePictureBox.Width, profilePictureBox.Height);
+                    }
+                }
+            }
+            catch
+            {
+                // swallow UI errors
+            }
+        }
+
+        private void UpdateProfileDisplay(User currentUser, PictureBox profilePictureBox,
+            Label profileNameLabel, Label profileRoleLabel)
+        {
+            string displayName = GetDisplayName(currentUser);
+
+            if (profileNameLabel != null)
+                profileNameLabel.Text = displayName;
+
+            if (profileRoleLabel != null)
+                profileRoleLabel.Text = currentUser?.Role.ToString();
+
+            // picture
+            if (profilePictureBox != null)
+            {
+                profilePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                // Dispose previous image to avoid memory leaks
+                if (profilePictureBox.Image != null)
+                {
+                    profilePictureBox.Image.Dispose();
+                    profilePictureBox.Image = null;
+                }
+
+                var userImage = TryGetUserImage(currentUser);
+                if (userImage != null)
+                {
+                    profilePictureBox.Image = userImage;
+                }
+                else
+                {
+                    profilePictureBox.Image = CreateProfilePlaceholderImage(displayName, 
+                        profilePictureBox.Width, profilePictureBox.Height);
+                }
+            }
+        }
+
+        private string GetDisplayName(User currentUser)
+        {
+            string displayName = null;
+            try { displayName = currentUser?.GetFullName(); } catch { /* ignore */ }
+            
+            if (string.IsNullOrWhiteSpace(displayName))
+            {
+                var first = currentUser?.FirstName ?? string.Empty;
+                var last = currentUser?.LastName ?? string.Empty;
+                displayName = (first + " " + last).Trim();
+            }
+            
+            if (string.IsNullOrWhiteSpace(displayName))
+                displayName = currentUser?.Username ?? "User";
+
+            return displayName;
         }
 
         public void UpdateModuleTitle(string title, Control topBarContainer)
@@ -154,19 +241,31 @@ namespace LMS.Presentation.UI.MainForm.TopBar
             }
         }
 
-        // Try to obtain an image for the user; here we keep behavior simple and non-failing.
-        // If User had bytes (e.g., PhotoBytes), this could be extended.
+        // Load user image from PhotoPath (relative path stored in DB)
         private Image TryGetUserImage(User user)
         {
-            // Placeholder: no persisted photo in User model in current codebase.
-            // If you add a byte[] PhotoBytes to User, uncomment example below:
-            /*
-            if (user?.PhotoBytes != null)
+            if (user == null || string.IsNullOrEmpty(user.PhotoPath))
+                return null;
+
+            try
             {
-                using (var ms = new MemoryStream(user.PhotoBytes))
-                    return Image.FromStream(ms);
+                // Convert relative path to absolute path
+                string absolutePath = UserImageHelper.GetAbsolutePath(user.PhotoPath);
+
+                if (!string.IsNullOrEmpty(absolutePath) && File.Exists(absolutePath))
+                {
+                    // Load image without locking the file
+                    using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
+                    {
+                        return Image.FromStream(stream);
+                    }
+                }
             }
-            */
+            catch
+            {
+                // Return null if loading fails
+            }
+
             return null;
         }
 

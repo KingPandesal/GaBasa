@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LMS.Model.Models.Users;
 using LMS.BusinessLogic.Security;
+using LMS.Model.DTOs.User;
 
 namespace LMS.Presentation.UI.MainForm.TopBar
 {
@@ -18,6 +15,18 @@ namespace LMS.Presentation.UI.MainForm.TopBar
         void InitializeProfile(User currentUser, IPermissionService permissionService,
             PictureBox profilePictureBox, Label profileNameLabel, Label profileRoleLabel, Control profileHeader,
             Action onOpenProfile);
+
+        /// <summary>
+        /// Refresh the profile display after changes (e.g., after editing profile).
+        /// </summary>
+        void RefreshProfile(User currentUser, PictureBox profilePictureBox,
+            Label profileNameLabel, Label profileRoleLabel);
+
+        /// <summary>
+        /// Refresh the profile display using updated profile data from the database.
+        /// </summary>
+        void RefreshProfile(DTOUserProfile profile, PictureBox profilePictureBox,
+            Label profileNameLabel, Label profileRoleLabel);
 
         /// <summary>
         /// Update the visible module title in the top bar (or window title as fallback).

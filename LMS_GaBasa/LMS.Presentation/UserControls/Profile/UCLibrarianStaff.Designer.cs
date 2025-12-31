@@ -156,7 +156,7 @@
             // 
             // PicBxProfilePic
             // 
-            this.PicBxProfilePic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxProfilePic.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.PicBxProfilePic.Image = ((System.Drawing.Image)(resources.GetObject("PicBxProfilePic.Image")));
             this.PicBxProfilePic.Location = new System.Drawing.Point(13, 15);
             this.PicBxProfilePic.Name = "PicBxProfilePic";

@@ -14,6 +14,11 @@ namespace LMS.Presentation.UserControls.Profile
         private readonly IUserProfileService _userProfileService;
         private int _currentUserId;
 
+        /// <summary>
+        /// Raised when the user profile has been updated successfully.
+        /// </summary>
+        public event Action ProfileUpdated;
+
         public UCLibrarianStaff()
         {
             InitializeComponent();
@@ -74,16 +79,19 @@ namespace LMS.Presentation.UserControls.Profile
                 return;
             }
 
-            using (EditProfile editProfileForm = new EditProfile(_userProfileService))
-            {
-                editProfileForm.LoadProfile(currentProfile);
+            var editForm = new EditProfile(_userProfileService);
+            editForm.LoadProfile(currentProfile);
 
-                if (editProfileForm.ShowDialog() == DialogResult.OK)
-                {
-                    // Refresh the profile display after successful edit
-                    LoadUserProfile(_currentUserId);
-                }
-            }
+            editForm.ProfileUpdated += (updatedProfile) =>
+            {
+                // Reload this UserControl's display
+                LoadUserProfile(_currentUserId);
+
+                // Notify MainForm to refresh the top bar
+                ProfileUpdated?.Invoke();
+            };
+
+            editForm.ShowDialog();
         }
     }
 }

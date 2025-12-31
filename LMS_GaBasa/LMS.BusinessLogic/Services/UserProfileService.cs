@@ -42,7 +42,7 @@ namespace LMS.BusinessLogic.Services
             string photoPathToStore = profile.PhotoPath;
 
             // If a new image was selected (not already a relative path), copy it
-            if (!string.IsNullOrEmpty(profile.PhotoPath) && 
+            if (!string.IsNullOrEmpty(profile.PhotoPath) &&
                 !UserImageHelper.IsRelativePath(profile.PhotoPath))
             {
                 string relativePath = UserImageHelper.CopyImageToStorage(profile.PhotoPath, profile.UserID);

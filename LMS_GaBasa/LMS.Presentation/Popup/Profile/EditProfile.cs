@@ -12,6 +12,9 @@ namespace LMS.Presentation.Popup.Profile
         private int _userId;
         private string _photoPath;
 
+        // Event to notify when profile is updated
+        public event Action<DTOUpdateUserProfile> ProfileUpdated;
+
         public EditProfile(IUserProfileService userProfileService)
         {
             InitializeComponent();
@@ -88,6 +91,10 @@ namespace LMS.Presentation.Popup.Profile
             {
                 MessageBox.Show("Profile updated successfully.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Raise event to notify listeners
+                ProfileUpdated?.Invoke(updateProfile);
+                
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
