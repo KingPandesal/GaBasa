@@ -22,6 +22,8 @@ namespace LMS.Presentation.Forms
         private readonly IModuleNavigator _moduleNavigator;
         private readonly ISidebarBuilder _sidebarBuilder;
         private readonly ITopBarController _topBarController;
+        private readonly IUserProfileService _userProfileService;
+        private Label _lblProfileRole; // Added field for profile role label
 
         // Static sidebar layout: Category -> Modules
         private readonly Dictionary<string, string[]> _sidebarLayout = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
@@ -35,19 +37,27 @@ namespace LMS.Presentation.Forms
 
         // ===== 3: Constructors =====
         public MainForm(User currentUser)
-            : this(currentUser, new RolePermissionService(), new ModuleNavigator(), null, null)
+            : this(currentUser, new RolePermissionService(), new ModuleNavigator(), null, null, null)
         {
         }
 
         public MainForm(User currentUser, IPermissionService permissionService)
-            : this(currentUser, permissionService, new ModuleNavigator(), null, null)
+            : this(currentUser, permissionService, new ModuleNavigator(), null, null, null)
         {
         }
 
         // internal extended ctor (allows injecting navigator, sidebar builder and topbar controller for testing)
-        internal MainForm(User currentUser, IPermissionService permissionService, IModuleNavigator moduleNavigator, ISidebarBuilder sidebarBuilder, ITopBarController topBarController)
+        internal MainForm(User currentUser, 
+            IPermissionService permissionService, 
+            IModuleNavigator moduleNavigator, 
+            ISidebarBuilder sidebarBuilder, 
+            ITopBarController topBarController,
+            IUserProfileService userProfileService)
         {
             InitializeComponent();
+
+            // Cache the profile role label reference
+            _lblProfileRole = this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label;
 
             ModuleIcons.LoadIcons();
 
@@ -71,9 +81,11 @@ namespace LMS.Presentation.Forms
                 () => LogoutButton_Click(this, EventArgs.Empty),
                 "Dashboard"); // default selected module
 
+            _userProfileService = userProfileService
+                ?? new UserProfileService(new UserRepository());
+
             // Fetch fresh profile from database to get PhotoPath
-            var userService = new UserProfileService(new UserRepository());
-            var profile = userService.GetUserProfile(_currentUser.UserID);
+            var profile = _userProfileService.GetUserProfile(_currentUser.UserID);
 
             // Initialize topbar using profile data (includes photo) if available
             if (profile != null)
@@ -83,13 +95,13 @@ namespace LMS.Presentation.Forms
                     permissionService,
                     PicBxProfilePic,
                     LblProfileName,
-                    this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label,
+                    _lblProfileRole, // Use the field instead of lookup
                     PnlProfileHeader,
                     () => LoadContentByName("Profile"));
 
                 // Immediately refresh with database profile to load the photo
                 _topBarController.RefreshProfile(profile, PicBxProfilePic, LblProfileName,
-                    this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label);
+                    _lblProfileRole);
             }
             else
             {
@@ -99,7 +111,7 @@ namespace LMS.Presentation.Forms
                     permissionService,
                     PicBxProfilePic,
                     LblProfileName,
-                    this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label,
+                    _lblProfileRole,
                     PnlProfileHeader,
                     () => LoadContentByName("Profile"));
             }
@@ -162,14 +174,13 @@ namespace LMS.Presentation.Forms
         private void RefreshCurrentUserAndTopBar()
         {
             // Fetch fresh profile from database
-            var userService = new UserProfileService(new UserRepository());
-            var profile = userService.GetUserProfile(_currentUser.UserID);
+            var profile = _userProfileService.GetUserProfile(_currentUser.UserID);
 
             if (profile == null) return;
 
             // Refresh top bar display using profile DTO directly
             _topBarController.RefreshProfile(profile, PicBxProfilePic, LblProfileName,
-                this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label);
+                _lblProfileRole); // Use the field instead of lookup
         }
 
         // end code

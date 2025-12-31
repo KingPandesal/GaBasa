@@ -19,10 +19,15 @@ namespace LMS.Presentation.UserControls.Profile
         /// </summary>
         public event Action ProfileUpdated;
 
-        public UCMemberProfile()
+        // Designer-required parameterless constructor
+        public UCMemberProfile() : this(null) { }
+
+        // Dependency injection constructor
+        public UCMemberProfile(IMemberProfileService memberProfileService)
         {
             InitializeComponent();
-            _memberProfileService = new MemberProfileService(new MemberRepository());
+            _memberProfileService = memberProfileService
+                ?? new MemberProfileService(new MemberRepository()); // Fallback for designer
         }
 
         public void LoadMemberProfile(int userId)
