@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCLibrarianStaff));
             this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.LblActualContactNumber = new System.Windows.Forms.Label();
+            this.BtnEditProfile = new System.Windows.Forms.Button();
             this.PnlNameRoleStatus = new System.Windows.Forms.Panel();
             this.LblFullname = new System.Windows.Forms.Label();
             this.LblStatus = new System.Windows.Forms.Label();
@@ -42,8 +44,6 @@
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblIDNumber = new System.Windows.Forms.Label();
             this.TipPicBxProfilePic = new System.Windows.Forms.ToolTip(this.components);
-            this.BtnEditProfile = new System.Windows.Forms.Button();
-            this.LblActual = new System.Windows.Forms.Label();
             this.Design2.SuspendLayout();
             this.PnlNameRoleStatus.SuspendLayout();
             this.PicBxProfilePicContainer.SuspendLayout();
@@ -54,7 +54,7 @@
             // 
             this.Design2.BackColor = System.Drawing.Color.White;
             this.Design2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Design2.Controls.Add(this.LblActual);
+            this.Design2.Controls.Add(this.LblActualContactNumber);
             this.Design2.Controls.Add(this.BtnEditProfile);
             this.Design2.Controls.Add(this.PnlNameRoleStatus);
             this.Design2.Controls.Add(this.LblContactNumber);
@@ -70,6 +70,31 @@
             this.Design2.ShowText = true;
             this.Design2.Size = new System.Drawing.Size(1480, 758);
             this.Design2.TabIndex = 14;
+            // 
+            // LblActualContactNumber
+            // 
+            this.LblActualContactNumber.AutoSize = true;
+            this.LblActualContactNumber.Location = new System.Drawing.Point(99, 368);
+            this.LblActualContactNumber.Name = "LblActualContactNumber";
+            this.LblActualContactNumber.Size = new System.Drawing.Size(178, 32);
+            this.LblActualContactNumber.TabIndex = 40;
+            this.LblActualContactNumber.Text = "0929 211  9698";
+            // 
+            // BtnEditProfile
+            // 
+            this.BtnEditProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnEditProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnEditProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnEditProfile.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnEditProfile.ForeColor = System.Drawing.Color.White;
+            this.BtnEditProfile.Location = new System.Drawing.Point(1307, 146);
+            this.BtnEditProfile.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnEditProfile.Name = "BtnEditProfile";
+            this.BtnEditProfile.Size = new System.Drawing.Size(134, 43);
+            this.BtnEditProfile.TabIndex = 39;
+            this.BtnEditProfile.Text = "Edit Profile";
+            this.BtnEditProfile.UseVisualStyleBackColor = false;
+            this.BtnEditProfile.Click += new System.EventHandler(this.BtnEditProfile_Click);
             // 
             // PnlNameRoleStatus
             // 
@@ -170,31 +195,6 @@
             this.LblIDNumber.TabIndex = 2;
             this.LblIDNumber.Text = "141776";
             // 
-            // BtnEditProfile
-            // 
-            this.BtnEditProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnEditProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnEditProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnEditProfile.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnEditProfile.ForeColor = System.Drawing.Color.White;
-            this.BtnEditProfile.Location = new System.Drawing.Point(1307, 146);
-            this.BtnEditProfile.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnEditProfile.Name = "BtnEditProfile";
-            this.BtnEditProfile.Size = new System.Drawing.Size(134, 43);
-            this.BtnEditProfile.TabIndex = 39;
-            this.BtnEditProfile.Text = "Edit Profile";
-            this.BtnEditProfile.UseVisualStyleBackColor = false;
-            this.BtnEditProfile.Click += new System.EventHandler(this.BtnEditProfile_Click);
-            // 
-            // LblActual
-            // 
-            this.LblActual.AutoSize = true;
-            this.LblActual.Location = new System.Drawing.Point(99, 368);
-            this.LblActual.Name = "LblActual";
-            this.LblActual.Size = new System.Drawing.Size(178, 32);
-            this.LblActual.TabIndex = 40;
-            this.LblActual.Text = "0929 211  9698";
-            // 
             // UCLibrarianStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -228,6 +228,6 @@
         private System.Windows.Forms.Panel PnlNameRoleStatus;
         private System.Windows.Forms.ToolTip TipPicBxProfilePic;
         private System.Windows.Forms.Button BtnEditProfile;
-        private System.Windows.Forms.Label LblActual;
+        private System.Windows.Forms.Label LblActualContactNumber;
     }
 }

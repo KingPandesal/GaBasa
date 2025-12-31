@@ -14,5 +14,9 @@ namespace LMS.DataAccess.Repositories
 
         // Fetch a user by ID
         User GetById(int userId);
+
+        // Update user profile
+        bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath);
+
     }
 }

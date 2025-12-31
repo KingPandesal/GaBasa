@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LMS.Model.DTOs;
+using LMS.Model.DTOs.User;
 
 namespace LMS.BusinessLogic.Services
 {
@@ -11,5 +11,7 @@ namespace LMS.BusinessLogic.Services
     {
         DTOUserProfile GetUserProfile(int userId);
         //DTOMemberProfile GetMemberProfile(int userId);
+        bool UpdateUserProfile(DTOUpdateUserProfile profile);
+
     }
 }

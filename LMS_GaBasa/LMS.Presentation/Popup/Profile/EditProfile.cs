@@ -1,20 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using LMS.BusinessLogic.Services;
+using LMS.Model.DTOs.User;
 
 namespace LMS.Presentation.Popup.Profile
 {
     public partial class EditProfile : Form
     {
-        public EditProfile()
+        private readonly IUserProfileService _userProfileService;
+        private int _userId;
+        private string _photoPath;
+
+        public EditProfile(IUserProfileService userProfileService)
         {
             InitializeComponent();
+            _userProfileService = userProfileService;
+        }
+
+        public void LoadProfile(DTOUserProfile profile)
+        {
+            if (profile == null) return;
+
+            _userId = profile.UserID;
+            _photoPath = profile.PhotoPath;
+
+            // Split FullName into First and Last (assuming "FirstName LastName" format)
+            string[] nameParts = profile.FullName?.Split(new[] { ' ' }, 2) ?? new string[0];
+            TxtFirstName.Text = nameParts.Length > 0 ? nameParts[0] : string.Empty;
+            TxtLastName.Text = nameParts.Length > 1 ? nameParts[1] : string.Empty;
+            TxtEmail.Text = profile.Email;
+            TxtContactNumber.Text = profile.ContactNumber;
+
+            if (!string.IsNullOrEmpty(profile.PhotoPath) && System.IO.File.Exists(profile.PhotoPath))
+            {
+                PicBxProfilePic.Image = Image.FromFile(profile.PhotoPath);
+                PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
         private void LblCancel_Click(object sender, EventArgs e)
@@ -33,11 +55,47 @@ namespace LMS.Presentation.Popup.Profile
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
+                    _photoPath = ofd.FileName;
                     PicBxProfilePic.Image = Image.FromFile(ofd.FileName);
                     PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
+        }
 
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            // Basic validation
+            if (string.IsNullOrWhiteSpace(TxtFirstName.Text) || string.IsNullOrWhiteSpace(TxtLastName.Text))
+            {
+                MessageBox.Show("First Name and Last Name are required.", "Validation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var updateProfile = new DTOUpdateUserProfile
+            {
+                UserID = _userId,
+                FirstName = TxtFirstName.Text.Trim(),
+                LastName = TxtLastName.Text.Trim(),
+                Email = TxtEmail.Text.Trim(),
+                ContactNumber = TxtContactNumber.Text.Trim(),
+                PhotoPath = _photoPath
+            };
+
+            bool success = _userProfileService.UpdateUserProfile(updateProfile);
+
+            if (success)
+            {
+                MessageBox.Show("Profile updated successfully.", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Failed to update profile.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

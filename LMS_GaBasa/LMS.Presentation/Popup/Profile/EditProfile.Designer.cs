@@ -40,7 +40,7 @@
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblContactNumber = new System.Windows.Forms.Label();
             this.TxtFirstName = new System.Windows.Forms.TextBox();
-            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.TxtLastName = new System.Windows.Forms.TextBox();
             this.TxtEmail = new System.Windows.Forms.TextBox();
             this.TxtContactNumber = new System.Windows.Forms.TextBox();
             this.TipPicBxProfilePic = new System.Windows.Forms.ToolTip(this.components);
@@ -62,6 +62,7 @@
             this.BtnSave.TabIndex = 40;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = false;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // LblCancel
             // 
@@ -156,12 +157,12 @@
             this.TxtFirstName.Size = new System.Drawing.Size(152, 26);
             this.TxtFirstName.TabIndex = 51;
             // 
-            // txtLastName
+            // TxtLastName
             // 
-            this.txtLastName.Location = new System.Drawing.Point(232, 234);
-            this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(152, 26);
-            this.txtLastName.TabIndex = 52;
+            this.TxtLastName.Location = new System.Drawing.Point(232, 234);
+            this.TxtLastName.Name = "TxtLastName";
+            this.TxtLastName.Size = new System.Drawing.Size(152, 26);
+            this.TxtLastName.TabIndex = 52;
             // 
             // TxtEmail
             // 
@@ -186,7 +187,7 @@
             this.Controls.Add(this.PicBxProfilePicContainer);
             this.Controls.Add(this.TxtContactNumber);
             this.Controls.Add(this.TxtEmail);
-            this.Controls.Add(this.txtLastName);
+            this.Controls.Add(this.TxtLastName);
             this.Controls.Add(this.TxtFirstName);
             this.Controls.Add(this.LblContactNumber);
             this.Controls.Add(this.LblEmail);
@@ -220,7 +221,7 @@
         private System.Windows.Forms.Label LblEmail;
         private System.Windows.Forms.Label LblContactNumber;
         private System.Windows.Forms.TextBox TxtFirstName;
-        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.TextBox TxtLastName;
         private System.Windows.Forms.TextBox TxtEmail;
         private System.Windows.Forms.TextBox TxtContactNumber;
         private System.Windows.Forms.ToolTip TipPicBxProfilePic;

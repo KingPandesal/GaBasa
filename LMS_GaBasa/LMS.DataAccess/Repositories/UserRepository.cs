@@ -146,6 +146,70 @@ namespace LMS.DataAccess.Repositories
             return user;
         }
 
+        public bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"UPDATE [User] 
+                            SET FirstName = @FirstName, 
+                                LastName = @LastName, 
+                                Email = @Email, 
+                                ContactNumber = @ContactNumber, 
+                                Photo = @Photo 
+                            WHERE UserID = @UserID";
+
+                var pUserId = cmd.CreateParameter();
+                pUserId.ParameterName = "@UserID";
+                pUserId.DbType = DbType.Int32;
+                pUserId.Value = userId;
+                cmd.Parameters.Add(pUserId);
+
+                var pFirstName = cmd.CreateParameter();
+                pFirstName.ParameterName = "@FirstName";
+                pFirstName.DbType = DbType.String;
+                pFirstName.Size = 100;
+                pFirstName.Value = (object)firstName ?? DBNull.Value;
+                cmd.Parameters.Add(pFirstName);
+
+                var pLastName = cmd.CreateParameter();
+                pLastName.ParameterName = "@LastName";
+                pLastName.DbType = DbType.String;
+                pLastName.Size = 100;
+                pLastName.Value = (object)lastName ?? DBNull.Value;
+                cmd.Parameters.Add(pLastName);
+
+                var pEmail = cmd.CreateParameter();
+                pEmail.ParameterName = "@Email";
+                pEmail.DbType = DbType.String;
+                pEmail.Size = 256;
+                pEmail.Value = (object)email ?? DBNull.Value;
+                cmd.Parameters.Add(pEmail);
+
+                var pContact = cmd.CreateParameter();
+                pContact.ParameterName = "@ContactNumber";
+                pContact.DbType = DbType.String;
+                pContact.Size = 20;
+                pContact.Value = (object)contactNumber ?? DBNull.Value;
+                cmd.Parameters.Add(pContact);
+
+                var pPhoto = cmd.CreateParameter();
+                pPhoto.ParameterName = "@Photo";
+                pPhoto.DbType = DbType.String;
+                pPhoto.Size = 500;
+                pPhoto.Value = (object)photoPath ?? DBNull.Value;
+                cmd.Parameters.Add(pPhoto);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+        }
+
         // ---------------------------
         // Private helper: centralized mapping of DB role string → concrete User subclass
         private User CreateUserFromRoleString(string role)

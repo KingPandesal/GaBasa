@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMS.Model.DTOs
+namespace LMS.Model.DTOs.User
 {
     public class DTOUserProfile
     {

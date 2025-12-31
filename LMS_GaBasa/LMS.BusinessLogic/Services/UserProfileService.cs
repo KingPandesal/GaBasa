@@ -1,23 +1,23 @@
-﻿using System;
+﻿using LMS.DataAccess.Interfaces;
+using LMS.DataAccess.Repositories;
+using LMS.Model.DTOs;
+using LMS.Model.DTOs.User;
+using LMS.Model.Models.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LMS.DataAccess.Interfaces;
-using LMS.DataAccess.Repositories;
-using LMS.Model.DTOs;
 
 namespace LMS.BusinessLogic.Services
 {
     public class UserProfileService : IUserProfileService
     {
         private readonly IUserRepository _userRepo;
-        //private readonly IMemberRepository _memberRepo;
 
         public UserProfileService(IUserRepository userRepo)
         {
             _userRepo = userRepo;
-            //_memberRepo = memberRepo;
         }
 
         public DTOUserProfile GetUserProfile(int userId)
@@ -35,32 +35,22 @@ namespace LMS.BusinessLogic.Services
                 PhotoPath = user.PhotoPath,
                 Role = user.Role.ToString(),
                 Status = user.Status.ToString()
-
             };
         }
 
-        //public DTOMemberProfile GetMemberProfile(int userId)
-        //{
-        //    var user = _userRepo.GetById(userId);
-        //    var member = _memberRepo.GetByUserId(userId);
-        //    if (user == null || member == null) return null;
+        public bool UpdateUserProfile(DTOUpdateUserProfile profile)
+        {
+            if (profile == null || profile.UserID <= 0)
+                return false;
 
-        //    return new DTOMemberProfile
-        //    {
-        //        UserID = user.UserID,
-        //        Username = user.Username,
-        //        FullName = $"{user.FirstName} {user.LastName}",
-        //        Email = user.Email,
-        //        ContactNumber = user.ContactNumber,
-        //        PhotoPath = user.PhotoPath,
-        //        MemberTypeID = member.MemberTypeID,
-        //        TypeName = member.MemberType.TypeName,
-        //        MaxBooksAllowed = member.MemberType.MaxBooksAllowed,
-        //        BorrowingPeriod = member.MemberType.BorrowingPeriod,
-        //        RenewalLimit = member.MemberType.RenewalLimit,
-        //        ReservationPrivilege = member.MemberType.ReservationPrivilege,
-        //        FineRate = member.MemberType.FineRate
-        //    };
-        //}
+            return _userRepo.UpdateProfile(
+                profile.UserID,
+                profile.FirstName,
+                profile.LastName,
+                profile.Email,
+                profile.ContactNumber,
+                profile.PhotoPath
+            );
+        }
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LMS.Model.DTOs.User;
 
-namespace LMS.Model.DTOs
+namespace LMS.Model.DTOs.Member
 {
     public class MemberProfileDto : DTOUserProfile
     {

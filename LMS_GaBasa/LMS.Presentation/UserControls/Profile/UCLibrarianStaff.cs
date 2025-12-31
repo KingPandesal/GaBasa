@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using LMS.BusinessLogic.Services;
 using LMS.DataAccess.Repositories;
-using LMS.Model.DTOs;
+using LMS.Model.DTOs.User;
 using LMS.Presentation.Popup.Profile;
 
 namespace LMS.Presentation.UserControls.Profile
@@ -12,6 +12,7 @@ namespace LMS.Presentation.UserControls.Profile
     public partial class UCLibrarianStaff : UserControl
     {
         private readonly IUserProfileService _userProfileService;
+        private int _currentUserId;
 
         public UCLibrarianStaff()
         {
@@ -21,6 +22,7 @@ namespace LMS.Presentation.UserControls.Profile
 
         public void LoadUserProfile(int userId)
         {
+            _currentUserId = userId;
             DTOUserProfile profile = _userProfileService.GetUserProfile(userId);
 
             if (profile == null)
@@ -35,7 +37,7 @@ namespace LMS.Presentation.UserControls.Profile
             LblEmail.Text = profile.Email;
             LblRole.Text = profile.Role;
             LblStatus.Text = profile.Status;
-            LblContactNumber.Text = profile.ContactNumber;
+            LblActualContactNumber.Text = profile.ContactNumber;
 
             // Load profile photo if exists
             if (!string.IsNullOrEmpty(profile.PhotoPath) && File.Exists(profile.PhotoPath))
@@ -62,12 +64,25 @@ namespace LMS.Presentation.UserControls.Profile
 
         private void BtnEditProfile_Click(object sender, EventArgs e)
         {
-            using (EditProfile editProfileForm = new EditProfile())
+            DTOUserProfile currentProfile = _userProfileService.GetUserProfile(_currentUserId);
+
+            if (currentProfile == null)
             {
-                editProfileForm.ShowDialog(); // modal popup
+                MessageBox.Show("Could not load profile for editing.", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (EditProfile editProfileForm = new EditProfile(_userProfileService))
+            {
+                editProfileForm.LoadProfile(currentProfile);
+
+                if (editProfileForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Refresh the profile display after successful edit
+                    LoadUserProfile(_currentUserId);
+                }
             }
         }
-
-        // end code
     }
 }
