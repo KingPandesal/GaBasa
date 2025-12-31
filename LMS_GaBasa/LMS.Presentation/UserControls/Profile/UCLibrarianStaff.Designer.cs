@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCLibrarianStaff));
             this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.LblActualContactNumber = new System.Windows.Forms.Label();
@@ -43,7 +42,6 @@
             this.Design1 = new System.Windows.Forms.Panel();
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblIDNumber = new System.Windows.Forms.Label();
-            this.TipPicBxProfilePic = new System.Windows.Forms.ToolTip(this.components);
             this.Design2.SuspendLayout();
             this.PnlNameRoleStatus.SuspendLayout();
             this.PicBxProfilePicContainer.SuspendLayout();
@@ -166,8 +164,6 @@
             this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PicBxProfilePic.TabIndex = 0;
             this.PicBxProfilePic.TabStop = false;
-            this.TipPicBxProfilePic.SetToolTip(this.PicBxProfilePic, "Click to edit photo");
-            this.PicBxProfilePic.Click += new System.EventHandler(this.PicBxProfilePic_Click);
             // 
             // Design1
             // 
@@ -226,7 +222,6 @@
         private System.Windows.Forms.Label LblIDNumber;
         private System.Windows.Forms.Label LblFullname;
         private System.Windows.Forms.Panel PnlNameRoleStatus;
-        private System.Windows.Forms.ToolTip TipPicBxProfilePic;
         private System.Windows.Forms.Button BtnEditProfile;
         private System.Windows.Forms.Label LblActualContactNumber;
     }

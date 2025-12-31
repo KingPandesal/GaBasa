@@ -1,13 +1,6 @@
-﻿using LMS.DataAccess.Interfaces;
+﻿using LMS.BusinessLogic.Helpers;
 using LMS.DataAccess.Repositories;
-using LMS.Model.DTOs;
 using LMS.Model.DTOs.User;
-using LMS.Model.Models.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.BusinessLogic.Services
 {
@@ -25,6 +18,9 @@ namespace LMS.BusinessLogic.Services
             var user = _userRepo.GetById(userId);
             if (user == null) return null;
 
+            // Convert relative path to absolute for display
+            string absolutePhotoPath = UserImageHelper.GetAbsolutePath(user.PhotoPath);
+
             return new DTOUserProfile
             {
                 UserID = user.UserID,
@@ -32,7 +28,7 @@ namespace LMS.BusinessLogic.Services
                 FullName = $"{user.FirstName} {user.LastName}",
                 Email = user.Email,
                 ContactNumber = user.ContactNumber,
-                PhotoPath = user.PhotoPath,
+                PhotoPath = absolutePhotoPath, // Return absolute path for UI
                 Role = user.Role.ToString(),
                 Status = user.Status.ToString()
             };
@@ -43,13 +39,26 @@ namespace LMS.BusinessLogic.Services
             if (profile == null || profile.UserID <= 0)
                 return false;
 
+            string photoPathToStore = profile.PhotoPath;
+
+            // If a new image was selected (not already a relative path), copy it
+            if (!string.IsNullOrEmpty(profile.PhotoPath) && 
+                !UserImageHelper.IsRelativePath(profile.PhotoPath))
+            {
+                string relativePath = UserImageHelper.CopyImageToStorage(profile.PhotoPath, profile.UserID);
+                if (relativePath != null)
+                {
+                    photoPathToStore = relativePath;
+                }
+            }
+
             return _userRepo.UpdateProfile(
                 profile.UserID,
                 profile.FirstName,
                 profile.LastName,
                 profile.Email,
                 profile.ContactNumber,
-                profile.PhotoPath
+                photoPathToStore // Store relative path in DB
             );
         }
     }

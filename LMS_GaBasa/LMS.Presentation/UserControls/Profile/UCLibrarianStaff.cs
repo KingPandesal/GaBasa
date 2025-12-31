@@ -39,26 +39,27 @@ namespace LMS.Presentation.UserControls.Profile
             LblStatus.Text = profile.Status;
             LblActualContactNumber.Text = profile.ContactNumber;
 
-            // Load profile photo if exists
-            if (!string.IsNullOrEmpty(profile.PhotoPath) && File.Exists(profile.PhotoPath))
-            {
-                PicBxProfilePic.Image = Image.FromFile(profile.PhotoPath);
-            }
+            // Load profile photo - PhotoPath is now absolute (converted by service)
+            LoadProfileImage(profile.PhotoPath);
         }
 
-        private void PicBxProfilePic_Click(object sender, EventArgs e)
+        private void LoadProfileImage(string photoPath)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            // Dispose previous image to avoid file locking
+            if (PicBxProfilePic.Image != null)
             {
-                ofd.Title = "Select an image";
-                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-                PicBxProfilePic.Cursor = Cursors.Hand;
+                PicBxProfilePic.Image.Dispose();
+                PicBxProfilePic.Image = null;
+            }
 
-                if (ofd.ShowDialog() == DialogResult.OK)
+            if (!string.IsNullOrEmpty(photoPath) && File.Exists(photoPath))
+            {
+                // Load image without locking the file
+                using (var stream = new FileStream(photoPath, FileMode.Open, FileAccess.Read))
                 {
-                    PicBxProfilePic.Image = Image.FromFile(ofd.FileName);
-                    PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
+                    PicBxProfilePic.Image = Image.FromStream(stream);
                 }
+                PicBxProfilePic.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
 

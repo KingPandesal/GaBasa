@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Hashing\BcryptPasswordHasher.cs" />
     <Compile Include="Hashing\IPasswordHasher.cs" />
+    <Compile Include="Helpers\UserImageHelper.cs" />
     <Compile Include="Services\IUserProfileService.cs" />
     <Compile Include="Managers\IMemberManager.cs" />
     <Compile Include="Managers\IUserManager.cs" />
