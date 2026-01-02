@@ -34,12 +34,26 @@ namespace LMS.Presentation.UserControls.Management
             {
                 DgwUsers.Rows.Clear();
 
+                // Add # column at the beginning if it doesn't exist
+                if (DgwUsers.Columns["ColumnRowNum"] == null)
+                {
+                    var rowNumColumn = new DataGridViewTextBoxColumn
+                    {
+                        Name = "ColumnRowNum",
+                        HeaderText = "#",
+                        Width = 40
+                    };
+                    DgwUsers.Columns.Insert(0, rowNumColumn);  // Insert at position 0
+                }
+
                 var users = _userListService.GetAllStaffUsers();
 
+                int rowNumber = 1;
                 foreach (var user in users)
                 {
                     DgwUsers.Rows.Add(
-                        user.UserID,
+                        rowNumber++,        // # (row number)
+                        user.UserID,        // ID
                         user.FullName,
                         user.Role,
                         user.Username,
@@ -61,22 +75,20 @@ namespace LMS.Presentation.UserControls.Management
             if (e.RowIndex < 0)
                 return;
 
-            // Get the UserID from the first column
-            int userId = Convert.ToInt32(DgwUsers.Rows[e.RowIndex].Cells[0].Value);
+            // Get the UserID from column index 1 (ID column, after #)
+            int userId = Convert.ToInt32(DgwUsers.Rows[e.RowIndex].Cells[1].Value);
 
-            // Edit button clicked (column index 7)
-            if (e.ColumnIndex == 7)
+            // Edit button clicked (column index 8, shifted by 1)
+            if (e.ColumnIndex == 8)
             {
-                // TODO: Implement edit functionality
                 MessageBox.Show($"Edit user ID: {userId}");
             }
-            // Delete button clicked (column index 8)
-            else if (e.ColumnIndex == 8)
+            // Delete button clicked (column index 9, shifted by 1)
+            else if (e.ColumnIndex == 9)
             {
-                // TODO: Implement delete functionality
-                var result = MessageBox.Show("Are you sure you want to delete this user?", 
+                var result = MessageBox.Show("Are you sure you want to delete this user?",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                
+
                 if (result == DialogResult.Yes)
                 {
                     // TODO: Call delete service

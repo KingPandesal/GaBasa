@@ -31,6 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCUsers));
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.DgwUsers = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.BtnLogin = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.BtnAddUser = new System.Windows.Forms.Button();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,13 +47,6 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Delete = new System.Windows.Forms.DataGridViewImageColumn();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.BtnLogin = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.BtnAddUser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,77 +91,6 @@
             this.DgwUsers.Size = new System.Drawing.Size(1509, 317);
             this.DgwUsers.TabIndex = 10;
             this.DgwUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwUsers_CellContentClick);
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "ID";
-            this.Column7.MinimumWidth = 8;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 40;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Full Name";
-            this.Column1.MinimumWidth = 20;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Role";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Username";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Email";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 150;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Contact Number";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 200;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Status";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
-            // 
-            // Edit
-            // 
-            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Edit.HeaderText = "";
-            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
-            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Edit.MinimumWidth = 8;
-            this.Edit.Name = "Edit";
-            this.Edit.ToolTipText = "Edit user";
-            this.Edit.Width = 8;
-            // 
-            // Delete
-            // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Delete.HeaderText = "";
-            this.Delete.Image = ((System.Drawing.Image)(resources.GetObject("Delete.Image")));
-            this.Delete.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Delete.MinimumWidth = 8;
-            this.Delete.Name = "Delete";
-            this.Delete.ToolTipText = "Delete";
-            this.Delete.Width = 8;
             // 
             // label2
             // 
@@ -253,6 +182,77 @@
             this.BtnAddUser.UseVisualStyleBackColor = false;
             this.BtnAddUser.Click += new System.EventHandler(this.BtnAddUser_Click);
             // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "ID";
+            this.Column7.MinimumWidth = 8;
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 40;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Full Name";
+            this.Column1.MinimumWidth = 20;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 150;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Role";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Username";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 150;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Email";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 150;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Contact Number";
+            this.Column6.MinimumWidth = 8;
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 200;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Status";
+            this.Column5.MinimumWidth = 8;
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 150;
+            // 
+            // Edit
+            // 
+            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Edit.HeaderText = "";
+            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
+            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Edit.MinimumWidth = 8;
+            this.Edit.Name = "Edit";
+            this.Edit.ToolTipText = "Edit user";
+            this.Edit.Width = 8;
+            // 
+            // Delete
+            // 
+            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Delete.HeaderText = "";
+            this.Delete.Image = ((System.Drawing.Image)(resources.GetObject("Delete.Image")));
+            this.Delete.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Delete.MinimumWidth = 8;
+            this.Delete.Name = "Delete";
+            this.Delete.ToolTipText = "Delete";
+            this.Delete.Width = 8;
+            // 
             // UCUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -285,6 +285,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button BtnLogin;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button BtnAddUser;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
@@ -294,6 +295,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Delete;
-        private System.Windows.Forms.Button BtnAddUser;
     }
 }
