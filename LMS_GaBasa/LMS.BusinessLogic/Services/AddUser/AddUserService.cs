@@ -87,8 +87,8 @@ namespace LMS.BusinessLogic.Services.AddUser
             if (digitsOnly.Length != contactNumber.Length)
                 return (false, "Contact number must contain numbers only.");
 
-            if (digitsOnly.Length < 11)
-                return (false, "Contact number must be at least 11 digits.");
+            if (digitsOnly.Length != 11)
+                return (false, "Contact number must be exactly 11 digits.");
 
             return (true, null);
         }
