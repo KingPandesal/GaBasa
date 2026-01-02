@@ -2,11 +2,6 @@
 using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.BusinessLogic.Managers
 {
@@ -15,30 +10,26 @@ namespace LMS.BusinessLogic.Managers
         private readonly IUserRepository _userRepo;
         private readonly IPasswordHasher _passwordHasher;
 
-        // Inject both repository and hasher
         public UserManager(IUserRepository userRepo, IPasswordHasher passwordHasher)
         {
             _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
 
-        public User Authenticate(string username, string password)
+        public AuthenticationResult Authenticate(string username, string password)
         {
             var user = _userRepo.GetByUsername(username);
 
             if (user == null)
-                return null;
-
-            // compare against enum now
-            if (user.Status != UserStatus.Active)
-                return null;
+                return AuthenticationResult.Fail(AuthFailureReason.InvalidCredentials);
 
             if (!_passwordHasher.Verify(user.GetPasswordHash(), password))
-                return null;
+                return AuthenticationResult.Fail(AuthFailureReason.InvalidCredentials);
 
-            return user;
+            if (user.Status != UserStatus.Active)
+                return AuthenticationResult.Fail(AuthFailureReason.AccountInactive);
+
+            return AuthenticationResult.Ok(user);
         }
-
-        // end code
     }
 }

@@ -53,7 +53,6 @@ namespace LMS.DataAccess.Repositories
 
                     return new MemberProfileDto
                     {
-                        // User table fields
                         UserID = reader.IsDBNull(reader.GetOrdinal("UserID")) ? 0 : reader.GetInt32(reader.GetOrdinal("UserID")),
                         Username = reader.IsDBNull(reader.GetOrdinal("Username")) ? null : reader.GetString(reader.GetOrdinal("Username")),
                         FullName = $"{(reader.IsDBNull(reader.GetOrdinal("FirstName")) ? "" : reader.GetString(reader.GetOrdinal("FirstName")))} {(reader.IsDBNull(reader.GetOrdinal("LastName")) ? "" : reader.GetString(reader.GetOrdinal("LastName")))}".Trim(),
@@ -62,15 +61,11 @@ namespace LMS.DataAccess.Repositories
                         PhotoPath = reader.IsDBNull(reader.GetOrdinal("Photo")) ? null : reader.GetString(reader.GetOrdinal("Photo")),
                         Role = reader.IsDBNull(reader.GetOrdinal("Role")) ? null : reader.GetString(reader.GetOrdinal("Role")),
                         Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? null : reader.GetString(reader.GetOrdinal("Status")),
-
-                        // Member table fields
                         Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address")),
                         RegistrationDate = reader.IsDBNull(reader.GetOrdinal("RegistrationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("RegistrationDate")),
                         ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
                         ValidIdPath = reader.IsDBNull(reader.GetOrdinal("ValidID")) ? null : reader.GetString(reader.GetOrdinal("ValidID")),
                         MemberStatus = reader.IsDBNull(reader.GetOrdinal("MemberStatus")) ? null : reader.GetString(reader.GetOrdinal("MemberStatus")),
-
-                        // MemberType table fields (privileges)
                         MemberTypeName = reader.IsDBNull(reader.GetOrdinal("TypeName")) ? null : reader.GetString(reader.GetOrdinal("TypeName")),
                         MaxBooksAllowed = reader.IsDBNull(reader.GetOrdinal("MaxBooksAllowed")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaxBooksAllowed")),
                         BorrowingPeriod = reader.IsDBNull(reader.GetOrdinal("BorrowingPeriod")) ? 0 : reader.GetInt32(reader.GetOrdinal("BorrowingPeriod")),
@@ -82,7 +77,8 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
-        public bool UpdateMemberProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, string address)
+        public bool UpdateMemberProfile(int userId, string firstName, string lastName, string email,
+            string contactNumber, string photoPath, string address, string validIdPath, string username)
         {
             if (userId <= 0)
                 throw new ArgumentException("userId must be greater than 0", nameof(userId));
@@ -94,7 +90,7 @@ namespace LMS.DataAccess.Repositories
                 {
                     try
                     {
-                        // Update User table
+                        // Update User table (including username)
                         using (var cmd = conn.CreateCommand())
                         {
                             cmd.Transaction = transaction;
@@ -103,7 +99,8 @@ namespace LMS.DataAccess.Repositories
                                     LastName = @LastName, 
                                     Email = @Email, 
                                     ContactNumber = @ContactNumber, 
-                                    Photo = @Photo 
+                                    Photo = @Photo,
+                                    Username = @Username
                                 WHERE UserID = @UserID";
 
                             AddParameter(cmd, "@UserID", DbType.Int32, userId);
@@ -112,20 +109,23 @@ namespace LMS.DataAccess.Repositories
                             AddParameter(cmd, "@Email", DbType.String, email, 256);
                             AddParameter(cmd, "@ContactNumber", DbType.String, contactNumber, 20);
                             AddParameter(cmd, "@Photo", DbType.String, photoPath, 500);
+                            AddParameter(cmd, "@Username", DbType.String, username, 256);
 
                             cmd.ExecuteNonQuery();
                         }
 
-                        // Update Member table (Address)
+                        // Update Member table (Address and ValidID)
                         using (var cmd = conn.CreateCommand())
                         {
                             cmd.Transaction = transaction;
                             cmd.CommandText = @"UPDATE [Member] 
-                                SET [Address] = @Address 
+                                SET [Address] = @Address,
+                                    ValidID = @ValidID
                                 WHERE UserID = @UserID";
 
                             AddParameter(cmd, "@UserID", DbType.Int32, userId);
                             AddParameter(cmd, "@Address", DbType.String, address, 500);
+                            AddParameter(cmd, "@ValidID", DbType.String, validIdPath, 500);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -139,6 +139,61 @@ namespace LMS.DataAccess.Repositories
                         return false;
                     }
                 }
+            }
+        }
+
+        public bool UpdateMemberPassword(int userId, string newPasswordHash)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"UPDATE [User] SET [Password] = @Password WHERE UserID = @UserID";
+
+                AddParameter(cmd, "@UserID", DbType.Int32, userId);
+                AddParameter(cmd, "@Password", DbType.String, newPasswordHash, 256);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+        }
+
+        public string GetPasswordHash(int userId)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"SELECT [Password] FROM [User] WHERE UserID = @UserID";
+
+                AddParameter(cmd, "@UserID", DbType.Int32, userId);
+
+                var result = cmd.ExecuteScalar();
+                return result as string;
+            }
+        }
+
+        public bool UsernameExistsForOtherUser(int userId, string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT COUNT(1) FROM [User] WHERE Username = @Username AND UserID != @UserID";
+                AddParameter(cmd, "@Username", DbType.String, username, 256);
+                AddParameter(cmd, "@UserID", DbType.Int32, userId);
+                return (int)cmd.ExecuteScalar() > 0;
             }
         }
 

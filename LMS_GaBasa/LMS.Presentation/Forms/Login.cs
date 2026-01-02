@@ -101,34 +101,54 @@ namespace LMS.Presentation.Forms
         // ========== BtnLogin ==========
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            // Dungagi handling para sa wa na match na creds -ken:>
             string username = TxtUsername.Text.Trim();
             string password = TxtPassword.Text;
 
             if (CmbbxSelectUserType.SelectedItem == null)
             {
-                MessageBox.Show("Please select a role.");
+                MessageBox.Show("Please select a role.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var user = _userManager.Authenticate(username, password);
+            var result = _userManager.Authenticate(username, password);
 
-            if (user == null)
+            if (!result.Success)
             {
-                MessageBox.Show("Invalid username or password.");
+                switch (result.FailureReason)
+                {
+                    case AuthFailureReason.AccountInactive:
+                        MessageBox.Show(
+                            "Login denied. Account status: Inactive.\n\nPlease contact the library administrator to reactivate your account.",
+                            "Account Inactive",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                        break;
+
+                    case AuthFailureReason.InvalidCredentials:
+                    default:
+                        MessageBox.Show(
+                            "Invalid username or password.",
+                            "Login Failed",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        break;
+                }
                 return;
             }
 
-            Role selectedRole =
-                ((KeyValuePair<string, Role>)CmbbxSelectUserType.SelectedItem).Value;
+            Role selectedRole = ((KeyValuePair<string, Role>)CmbbxSelectUserType.SelectedItem).Value;
 
-            if (user.Role != selectedRole)
+            if (result.User.Role != selectedRole)
             {
-                MessageBox.Show("Selected role does not match your account.");
+                MessageBox.Show(
+                    "Selected role does not match your account.",
+                    "Role Mismatch",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            OpenDashboard(user);
+            OpenDashboard(result.User);
             this.Hide();
         }
 

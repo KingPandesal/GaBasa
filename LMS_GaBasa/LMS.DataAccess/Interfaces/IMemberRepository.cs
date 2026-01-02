@@ -13,6 +13,14 @@ namespace LMS.DataAccess.Interfaces
         /// Gets member profile data by UserID (joins User, Member, and MemberType tables)
         /// </summary>
         MemberProfileDto GetMemberProfileByUserId(int userId);
-        bool UpdateMemberProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, string address);
+        
+        bool UpdateMemberProfile(int userId, string firstName, string lastName, string email, 
+            string contactNumber, string photoPath, string address, string validIdPath, string username);
+        
+        bool UpdateMemberPassword(int userId, string newPasswordHash);
+        
+        string GetPasswordHash(int userId);
+        
+        bool UsernameExistsForOtherUser(int userId, string username);
     }
 }
