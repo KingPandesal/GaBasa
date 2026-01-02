@@ -42,15 +42,15 @@
             this.LblSearch = new System.Windows.Forms.Label();
             this.BtnApply = new System.Windows.Forms.Button();
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
-            this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -238,16 +238,54 @@
             this.CmbBxStatusFilter.TabIndex = 41;
             this.CmbBxStatusFilter.Text = "Status";
             // 
-            // Archive
+            // Column7
             // 
-            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Archive.HeaderText = "";
-            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
-            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Archive.MinimumWidth = 8;
-            this.Archive.Name = "Archive";
-            this.Archive.ToolTipText = "Archive user";
-            this.Archive.Width = 8;
+            this.Column7.HeaderText = "ID";
+            this.Column7.MinimumWidth = 8;
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 40;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Full Name";
+            this.Column1.MinimumWidth = 20;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 150;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Role";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Username";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 150;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Email";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 200;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Contact Number";
+            this.Column6.MinimumWidth = 8;
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 150;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Status";
+            this.Column5.MinimumWidth = 8;
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 150;
             // 
             // Edit
             // 
@@ -260,54 +298,16 @@
             this.Edit.ToolTipText = "Edit user";
             this.Edit.Width = 8;
             // 
-            // Column5
+            // Archive
             // 
-            this.Column5.HeaderText = "Status";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Contact Number";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Email";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 200;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Username";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Role";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Full Name";
-            this.Column1.MinimumWidth = 20;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "ID";
-            this.Column7.MinimumWidth = 8;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 40;
+            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Archive.HeaderText = "";
+            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
+            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Archive.MinimumWidth = 8;
+            this.Archive.Name = "Archive";
+            this.Archive.ToolTipText = "Archive user";
+            this.Archive.Width = 8;
             // 
             // UCUsers
             // 

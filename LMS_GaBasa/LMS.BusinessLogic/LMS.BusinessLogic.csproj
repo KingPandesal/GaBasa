@@ -69,6 +69,8 @@
     <Compile Include="Services\ArchiveUser\ArchiveUserService.cs" />
     <Compile Include="Services\EditUser\EditUserService.cs" />
     <Compile Include="Services\EditUser\IEditUserService.cs" />
+    <Compile Include="Services\FetchMembers\FetchMemberService.cs" />
+    <Compile Include="Services\FetchMembers\IFetchMemberService.cs" />
     <Compile Include="Services\FetchUsers\FetchUserService.cs" />
     <Compile Include="Services\FetchUsers\IFetchUserService.cs" />
     <Compile Include="Services\ArchiveUser\IArchiveUserService.cs" />

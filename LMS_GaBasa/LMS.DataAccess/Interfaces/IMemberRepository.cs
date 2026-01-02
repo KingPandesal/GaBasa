@@ -41,5 +41,10 @@ namespace LMS.DataAccess.Interfaces
         /// Gets member status by UserID (returns null if not a member)
         /// </summary>
         MemberStatus? GetMemberStatusByUserId(int userId);
+
+        /// <summary>
+        /// Gets all members with their details for display in DataGridView
+        /// </summary>
+        List<DTOFetchAllMembers> GetAllMembers();
     }
 }

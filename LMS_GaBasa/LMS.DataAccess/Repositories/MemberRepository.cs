@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
 using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Member;
@@ -318,6 +319,70 @@ namespace LMS.DataAccess.Repositories
 
                 return null;
             }
+        }
+
+        public List<DTOFetchAllMembers> GetAllMembers()
+        {
+            var members = new List<DTOFetchAllMembers>();
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        m.MemberID,
+                        u.FirstName,
+                        u.LastName,
+                        mt.TypeName AS MemberType,
+                        u.Username,
+                        u.Email,
+                        m.[Address],
+                        u.ContactNumber,
+                        mt.MaxBooksAllowed,
+                        mt.BorrowingPeriod,
+                        mt.RenewalLimit,
+                        mt.ReservationPrivilege,
+                        mt.FineRate,
+                        m.RegistrationDate,
+                        m.ExpirationDate,
+                        m.[Status]
+                    FROM [Member] m
+                    INNER JOIN [User] u ON m.UserID = u.UserID
+                    INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                    ORDER BY m.MemberID DESC";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string firstName = reader.IsDBNull(reader.GetOrdinal("FirstName")) ? "" : reader.GetString(reader.GetOrdinal("FirstName"));
+                        string lastName = reader.IsDBNull(reader.GetOrdinal("LastName")) ? "" : reader.GetString(reader.GetOrdinal("LastName"));
+
+                        members.Add(new DTOFetchAllMembers
+                        {
+                            MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                            FullName = $"{firstName} {lastName}".Trim(),
+                            MemberType = reader.IsDBNull(reader.GetOrdinal("MemberType")) ? "" : reader.GetString(reader.GetOrdinal("MemberType")),
+                            Username = reader.IsDBNull(reader.GetOrdinal("Username")) ? "" : reader.GetString(reader.GetOrdinal("Username")),
+                            Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? "" : reader.GetString(reader.GetOrdinal("Email")),
+                            Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? "" : reader.GetString(reader.GetOrdinal("Address")),
+                            ContactNumber = reader.IsDBNull(reader.GetOrdinal("ContactNumber")) ? "" : reader.GetString(reader.GetOrdinal("ContactNumber")),
+                            MaxBooksAllowed = reader.IsDBNull(reader.GetOrdinal("MaxBooksAllowed")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaxBooksAllowed")),
+                            BorrowingPeriod = reader.IsDBNull(reader.GetOrdinal("BorrowingPeriod")) ? 0 : reader.GetInt32(reader.GetOrdinal("BorrowingPeriod")),
+                            RenewalLimit = reader.IsDBNull(reader.GetOrdinal("RenewalLimit")) ? 0 : reader.GetInt32(reader.GetOrdinal("RenewalLimit")),
+                            ReservationPrivilege = !reader.IsDBNull(reader.GetOrdinal("ReservationPrivilege")) && reader.GetBoolean(reader.GetOrdinal("ReservationPrivilege")),
+                            FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate")),
+                            RegistrationDate = reader.IsDBNull(reader.GetOrdinal("RegistrationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("RegistrationDate")),
+                            ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
+                            Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "" : reader.GetString(reader.GetOrdinal("Status"))
+                        });
+                    }
+                }
+            }
+
+            return members;
         }
 
         private void AddParameter(IDbCommand cmd, string name, DbType type, object value, int size = 0)

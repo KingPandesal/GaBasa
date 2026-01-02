@@ -333,7 +333,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\icons\Icons\Archive.png" />
     <Content Include="Assets\icons\Icons\Pencil.png" />
+    <Content Include="Assets\icons\Icons\Search.png" />
     <Content Include="Assets\icons\Icons\Trash.png" />
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\LogOut.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
