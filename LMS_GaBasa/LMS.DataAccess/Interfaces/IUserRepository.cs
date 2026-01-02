@@ -18,5 +18,7 @@ namespace LMS.DataAccess.Repositories
         // Update user profile
         bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath);
 
+        int Add(User user);
+        bool UsernameExists(string username);
     }
 }

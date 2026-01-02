@@ -210,6 +210,61 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        public int Add(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"INSERT INTO [User] 
+            (Username, [Password], [Role], [Status], FirstName, LastName, Email, ContactNumber, Photo)
+            VALUES (@Username, @Password, @Role, @Status, @FirstName, @LastName, @Email, @ContactNumber, @Photo);
+            SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+                AddParameter(cmd, "@Username", DbType.String, user.Username, 256);
+                AddParameter(cmd, "@Password", DbType.String, user.GetPasswordHash(), 256);
+                AddParameter(cmd, "@Role", DbType.String, MapRoleToDbValue(user.Role), 50);  // Use mapper
+                AddParameter(cmd, "@Status", DbType.String, user.Status.ToString(), 50);
+                AddParameter(cmd, "@FirstName", DbType.String, user.FirstName, 100);
+                AddParameter(cmd, "@LastName", DbType.String, user.LastName, 100);
+                AddParameter(cmd, "@Email", DbType.String, user.Email, 256);
+                AddParameter(cmd, "@ContactNumber", DbType.String, user.ContactNumber, 20);
+                AddParameter(cmd, "@Photo", DbType.String, user.PhotoPath, 500);
+
+                return (int)cmd.ExecuteScalar();
+            }
+        }
+
+        public bool UsernameExists(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT COUNT(1) FROM [User] WHERE Username = @Username";
+                AddParameter(cmd, "@Username", DbType.String, username, 256);
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
+        // Helper to reduce repetition
+        private void AddParameter(System.Data.IDbCommand cmd, string name, DbType type, object value, int size)
+        {
+            var p = cmd.CreateParameter();
+            p.ParameterName = name;
+            p.DbType = type;
+            p.Size = size;
+            p.Value = value ?? DBNull.Value;
+            cmd.Parameters.Add(p);
+        }
+
         // ---------------------------
         // Private helper: centralized mapping of DB role string → concrete User subclass
         private User CreateUserFromRoleString(string role)
@@ -229,6 +284,22 @@ namespace LMS.DataAccess.Repositories
                 default:
                     //return null;
                     throw new DataException($"Unknown role '{role}'.");
+            }
+        }
+
+        // Add this helper method to map enum to DB value
+        private string MapRoleToDbValue(Role role)
+        {
+            switch (role)
+            {
+                case Role.Librarian:
+                    return "Admin";  // DB expects "Admin" for librarians
+                case Role.Staff:
+                    return "Staff";
+                case Role.Member:
+                    return "Member";
+                default:
+                    throw new ArgumentException($"Unknown role: {role}");
             }
         }
 

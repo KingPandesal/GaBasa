@@ -269,7 +269,6 @@
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCUsers";
             this.Size = new System.Drawing.Size(1580, 936);
-            this.Load += new System.EventHandler(this.UCUsers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

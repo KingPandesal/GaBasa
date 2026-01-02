@@ -56,6 +56,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.LblAddProfPic = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ChkBxShowPassword2 = new System.Windows.Forms.CheckBox();
+            this.ChkBxShowPassword1 = new System.Windows.Forms.CheckBox();
             this.PicBxProfilePicContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -245,6 +247,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.ChkBxShowPassword1);
+            this.groupBox2.Controls.Add(this.ChkBxShowPassword2);
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.textBox2);
@@ -265,7 +269,8 @@
             this.textBox3.ForeColor = System.Drawing.Color.Black;
             this.textBox3.Location = new System.Drawing.Point(31, 217);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(413, 34);
+            this.textBox3.PasswordChar = '•';
+            this.textBox3.Size = new System.Drawing.Size(380, 34);
             this.textBox3.TabIndex = 70;
             // 
             // label3
@@ -284,7 +289,8 @@
             this.textBox2.ForeColor = System.Drawing.Color.Black;
             this.textBox2.Location = new System.Drawing.Point(31, 141);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(413, 34);
+            this.textBox2.PasswordChar = '•';
+            this.textBox2.Size = new System.Drawing.Size(380, 34);
             this.textBox2.TabIndex = 68;
             // 
             // label2
@@ -337,6 +343,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(546, 391);
             this.panel1.TabIndex = 73;
+            // 
+            // ChkBxShowPassword2
+            // 
+            this.ChkBxShowPassword2.AutoSize = true;
+            this.ChkBxShowPassword2.Location = new System.Drawing.Point(422, 225);
+            this.ChkBxShowPassword2.Name = "ChkBxShowPassword2";
+            this.ChkBxShowPassword2.Size = new System.Drawing.Size(22, 21);
+            this.ChkBxShowPassword2.TabIndex = 71;
+            this.ChkBxShowPassword2.UseVisualStyleBackColor = true;
+            // 
+            // ChkBxShowPassword1
+            // 
+            this.ChkBxShowPassword1.AutoSize = true;
+            this.ChkBxShowPassword1.Location = new System.Drawing.Point(422, 149);
+            this.ChkBxShowPassword1.Name = "ChkBxShowPassword1";
+            this.ChkBxShowPassword1.Size = new System.Drawing.Size(22, 21);
+            this.ChkBxShowPassword1.TabIndex = 72;
+            this.ChkBxShowPassword1.UseVisualStyleBackColor = true;
             // 
             // AddUser
             // 
@@ -396,5 +420,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox ChkBxShowPassword1;
+        private System.Windows.Forms.CheckBox ChkBxShowPassword2;
     }
 }

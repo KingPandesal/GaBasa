@@ -19,13 +19,13 @@ namespace LMS.Presentation.UserControls.Management
         }
 
         // for testing only (add data)
-        private void UCUsers_Load(object sender, EventArgs e)
-        {
-            // Add data
-            String[] row;
-            row = new string[] { "kennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", "22"};
-            DgwUsers.Rows.Add(row);
-        }
+        //private void UCUsers_Load(object sender, EventArgs e)
+        //{
+        //    // Add data
+        //    String[] row;
+        //    row = new string[] { "kennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", "22"};
+        //    DgwUsers.Rows.Add(row);
+        //}
 
         private void DgwUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -35,7 +35,7 @@ namespace LMS.Presentation.UserControls.Management
         private void BtnAddUser_Click(object sender, EventArgs e)
         {
             AddUser addUserForm = new AddUser();
-            addUserForm.ShowDialog(); // Use ShowDialog() to open as modal
+            addUserForm.ShowDialog();
         }
 
         // end code

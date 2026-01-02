@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LMS.Model.Models.Enums;
+
 namespace LMS.Presentation.Forms
 {
     public partial class Login : Form

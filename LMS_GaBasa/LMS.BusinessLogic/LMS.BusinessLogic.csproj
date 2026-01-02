@@ -60,6 +60,8 @@
     <Compile Include="Hashing\BcryptPasswordHasher.cs" />
     <Compile Include="Hashing\IPasswordHasher.cs" />
     <Compile Include="Helpers\UserImageHelper.cs" />
+    <Compile Include="Services\AddUser\AddUserService.cs" />
+    <Compile Include="Services\AddUser\IAddUserService.cs" />
     <Compile Include="Services\IMemberProfileService.cs" />
     <Compile Include="Services\IUserProfileService.cs" />
     <Compile Include="Managers\IMemberManager.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using LMS.BusinessLogic.Security;
 using LMS.Model.Models.Users;
+using LMS.Model.Models.Enums;
 
 namespace LMS.Presentation.UI.MainForm.Navigation
 {
