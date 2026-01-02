@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditUser));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.CmbBxUserStatus = new System.Windows.Forms.ComboBox();
+            this.LblStatus = new System.Windows.Forms.Label();
             this.LblFirstName = new System.Windows.Forms.Label();
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblContactNumber = new System.Windows.Forms.Label();
@@ -48,13 +51,18 @@
             this.BtnSave = new System.Windows.Forms.Button();
             this.PicBxProfilePicContainer = new System.Windows.Forms.Panel();
             this.Design1 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             this.PicBxProfilePicContainer.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.CmbBxUserStatus);
+            this.groupBox1.Controls.Add(this.LblStatus);
             this.groupBox1.Controls.Add(this.LblFirstName);
             this.groupBox1.Controls.Add(this.LblEmail);
             this.groupBox1.Controls.Add(this.LblContactNumber);
@@ -67,12 +75,48 @@
             this.groupBox1.Controls.Add(this.TxtContactNumber);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.groupBox1.Location = new System.Drawing.Point(32, 231);
+            this.groupBox1.Location = new System.Drawing.Point(26, 14);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(477, 338);
+            this.groupBox1.Size = new System.Drawing.Size(477, 485);
             this.groupBox1.TabIndex = 78;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Personal Details";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.label3.Location = new System.Drawing.Point(30, 399);
+            this.label3.MaximumSize = new System.Drawing.Size(420, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(416, 63);
+            this.label3.TabIndex = 71;
+            this.label3.Text = "*Turning user\'s status to Inactive will archive their account and they won\'t be a" +
+    "ble to login anymore. You can still change this later.";
+            // 
+            // CmbBxUserStatus
+            // 
+            this.CmbBxUserStatus.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxUserStatus.FormattingEnabled = true;
+            this.CmbBxUserStatus.Items.AddRange(new object[] {
+            "Active",
+            "Inactive"});
+            this.CmbBxUserStatus.Location = new System.Drawing.Point(31, 356);
+            this.CmbBxUserStatus.Name = "CmbBxUserStatus";
+            this.CmbBxUserStatus.Size = new System.Drawing.Size(413, 36);
+            this.CmbBxUserStatus.TabIndex = 70;
+            // 
+            // LblStatus
+            // 
+            this.LblStatus.AutoSize = true;
+            this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblStatus.ForeColor = System.Drawing.Color.Black;
+            this.LblStatus.Location = new System.Drawing.Point(17, 332);
+            this.LblStatus.Name = "LblStatus";
+            this.LblStatus.Size = new System.Drawing.Size(52, 21);
+            this.LblStatus.TabIndex = 69;
+            this.LblStatus.Text = "Status";
             // 
             // LblFirstName
             // 
@@ -203,7 +247,7 @@
             this.LblCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblCancel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblCancel.Location = new System.Drawing.Point(412, 586);
+            this.LblCancel.Location = new System.Drawing.Point(412, 679);
             this.LblCancel.Margin = new System.Windows.Forms.Padding(4);
             this.LblCancel.Name = "LblCancel";
             this.LblCancel.Size = new System.Drawing.Size(97, 43);
@@ -219,7 +263,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(307, 586);
+            this.BtnSave.Location = new System.Drawing.Point(307, 679);
             this.BtnSave.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(97, 43);
@@ -244,13 +288,21 @@
             this.Design1.Size = new System.Drawing.Size(546, 85);
             this.Design1.TabIndex = 76;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Location = new System.Drawing.Point(6, 223);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(528, 437);
+            this.panel1.TabIndex = 79;
+            // 
             // EditUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(545, 640);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(545, 737);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.LblAddProfPic);
             this.Controls.Add(this.LblCancel);
             this.Controls.Add(this.BtnSave);
@@ -267,6 +319,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
             this.PicBxProfilePicContainer.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,5 +345,9 @@
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Panel PicBxProfilePicContainer;
         private System.Windows.Forms.Panel Design1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox CmbBxUserStatus;
+        private System.Windows.Forms.Label LblStatus;
+        private System.Windows.Forms.Panel panel1;
     }
 }

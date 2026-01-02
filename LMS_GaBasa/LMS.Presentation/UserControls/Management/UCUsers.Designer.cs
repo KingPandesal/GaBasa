@@ -46,7 +46,7 @@
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,7 +82,7 @@
             this.Column6,
             this.Column5,
             this.Edit,
-            this.Delete});
+            this.Archive});
             this.DgwUsers.GridColor = System.Drawing.SystemColors.ControlLight;
             this.DgwUsers.Location = new System.Drawing.Point(36, 200);
             this.DgwUsers.Name = "DgwUsers";
@@ -215,7 +215,7 @@
             this.Column3.HeaderText = "Email";
             this.Column3.MinimumWidth = 8;
             this.Column3.Name = "Column3";
-            this.Column3.Width = 150;
+            this.Column3.Width = 200;
             // 
             // Column6
             // 
@@ -229,7 +229,6 @@
             this.Column5.HeaderText = "Status";
             this.Column5.MinimumWidth = 8;
             this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
             // 
             // Edit
             // 
@@ -242,16 +241,16 @@
             this.Edit.ToolTipText = "Edit user";
             this.Edit.Width = 8;
             // 
-            // Delete
+            // Archive
             // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Delete.HeaderText = "";
-            this.Delete.Image = ((System.Drawing.Image)(resources.GetObject("Delete.Image")));
-            this.Delete.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Delete.MinimumWidth = 8;
-            this.Delete.Name = "Delete";
-            this.Delete.ToolTipText = "Delete";
-            this.Delete.Width = 8;
+            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Archive.HeaderText = "";
+            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
+            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Archive.MinimumWidth = 8;
+            this.Archive.Name = "Archive";
+            this.Archive.ToolTipText = "Archive user";
+            this.Archive.Width = 8;
             // 
             // UCUsers
             // 
@@ -294,6 +293,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
-        private System.Windows.Forms.DataGridViewImageColumn Delete;
+        private System.Windows.Forms.DataGridViewImageColumn Archive;
     }
 }

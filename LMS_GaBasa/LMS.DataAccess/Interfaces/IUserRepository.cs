@@ -28,6 +28,10 @@ namespace LMS.DataAccess.Repositories
             string email, 
             string contactNumber, 
             string photoPath, 
-            Role role);
+            Role role, 
+            UserStatus status);
+
+        // New method for archiving (soft delete)
+        bool ArchiveUser(int userId);
     }
 }

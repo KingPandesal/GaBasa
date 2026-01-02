@@ -31,8 +31,13 @@ namespace LMS.Presentation.Popup.Users
         {
             // Bind role combo
             comboBox1.Items.Clear();
-            comboBox1.Items.Add(new ComboItem("Librarian / Admin", Role.Librarian));
-            comboBox1.Items.Add(new ComboItem("Library Staff", Role.Staff));
+            comboBox1.Items.Add(new RoleComboItem("Librarian / Admin", Role.Librarian));
+            comboBox1.Items.Add(new RoleComboItem("Library Staff", Role.Staff));
+
+            // Bind status combo
+            CmbBxUserStatus.Items.Clear();
+            CmbBxUserStatus.Items.Add(new StatusComboItem("Active", UserStatus.Active));
+            CmbBxUserStatus.Items.Add(new StatusComboItem("Inactive", UserStatus.Inactive));
 
             // Wire up events
             BtnSave.Click += BtnSave_Click;
@@ -60,9 +65,19 @@ namespace LMS.Presentation.Popup.Users
             // Set role combo selection
             for (int i = 0; i < comboBox1.Items.Count; i++)
             {
-                if (comboBox1.Items[i] is ComboItem item && item.Value == user.Role)
+                if (comboBox1.Items[i] is RoleComboItem item && item.Value == user.Role)
                 {
                     comboBox1.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            // Set status combo selection
+            for (int i = 0; i < CmbBxUserStatus.Items.Count; i++)
+            {
+                if (CmbBxUserStatus.Items[i] is StatusComboItem item && item.Value == user.Status)
+                {
+                    CmbBxUserStatus.SelectedIndex = i;
                     break;
                 }
             }
@@ -80,7 +95,8 @@ namespace LMS.Presentation.Popup.Users
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            var selectedRole = (comboBox1.SelectedItem as ComboItem)?.Value ?? Role.Staff;
+            var selectedRole = (comboBox1.SelectedItem as RoleComboItem)?.Value ?? Role.Staff;
+            var selectedStatus = (CmbBxUserStatus.SelectedItem as StatusComboItem)?.Value ?? UserStatus.Active;
 
             // Handle photo - copy new photo if selected
             string storedPhotoPath = _selectedPhotoPath;
@@ -105,7 +121,8 @@ namespace LMS.Presentation.Popup.Users
                 Email = TxtEmail.Text.Trim(),
                 ContactNumber = TxtContactNumber.Text.Trim(),
                 PhotoPath = storedPhotoPath,
-                Role = selectedRole
+                Role = selectedRole,
+                Status = selectedStatus
             };
 
             var result = _editUserService.UpdateUser(dto);
@@ -162,12 +179,28 @@ namespace LMS.Presentation.Popup.Users
             this.Close();
         }
 
-        private class ComboItem
+        // Helper class for Role ComboBox
+        private class RoleComboItem
         {
             public string Text { get; }
             public Role Value { get; }
 
-            public ComboItem(string text, Role value)
+            public RoleComboItem(string text, Role value)
+            {
+                Text = text;
+                Value = value;
+            }
+
+            public override string ToString() => Text;
+        }
+
+        // Helper class for Status ComboBox
+        private class StatusComboItem
+        {
+            public string Text { get; }
+            public UserStatus Value { get; }
+
+            public StatusComboItem(string text, UserStatus value)
             {
                 Text = text;
                 Value = value;

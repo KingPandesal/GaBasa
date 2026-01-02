@@ -1,4 +1,5 @@
-﻿using LMS.BusinessLogic.Services.FetchUsers;
+﻿using LMS.BusinessLogic.Services.ArchiveUser;
+using LMS.BusinessLogic.Services.FetchUsers;
 using LMS.DataAccess.Repositories;
 using LMS.Presentation.Popup.Users;
 using System;
@@ -9,15 +10,19 @@ namespace LMS.Presentation.UserControls.Management
     public partial class UCUsers : UserControl
     {
         private readonly IFetchUserService _userListService;
+        private readonly IArchiveUserService _archiveUserService;
 
-        public UCUsers() : this(new FetchUserService(new UserRepository()))
+        public UCUsers() : this(
+            new FetchUserService(new UserRepository()),
+            new ArchiveUserService(new UserRepository()))
         {
         }
 
-        public UCUsers(IFetchUserService userListService)  // Changed to interface
+        public UCUsers(IFetchUserService userListService, IArchiveUserService archiveUserService)
         {
             InitializeComponent();
             _userListService = userListService ?? throw new ArgumentNullException(nameof(userListService));
+            _archiveUserService = archiveUserService ?? throw new ArgumentNullException(nameof(archiveUserService));
             
             // Load users when control is loaded
             this.Load += UCUsers_Load;
@@ -43,7 +48,7 @@ namespace LMS.Presentation.UserControls.Management
                         HeaderText = "#",
                         Width = 40
                     };
-                    DgwUsers.Columns.Insert(0, rowNumColumn);  // Insert at position 0
+                    DgwUsers.Columns.Insert(0, rowNumColumn);
                 }
 
                 var users = _userListService.GetAllStaffUsers();
@@ -52,8 +57,8 @@ namespace LMS.Presentation.UserControls.Management
                 foreach (var user in users)
                 {
                     DgwUsers.Rows.Add(
-                        rowNumber++,        // # (row number)
-                        user.UserID,        // ID
+                        rowNumber++,
+                        user.UserID,
                         user.FullName,
                         user.Role,
                         user.Username,
@@ -84,22 +89,49 @@ namespace LMS.Presentation.UserControls.Management
                 EditUser editUserForm = new EditUser();
                 editUserForm.LoadUser(userId);
 
-                // Refresh the grid if user was updated successfully
                 if (editUserForm.ShowDialog() == DialogResult.OK)
                 {
                     LoadUsers();
                 }
             }
-            // Delete button clicked (column index 9)
+            // Archive button clicked (column index 9)
             else if (e.ColumnIndex == 9)
             {
-                var result = MessageBox.Show("Are you sure you want to delete this user?",
-                    "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                // Get the current status from the Status column (index 7, after #)
+                string currentStatus = DgwUsers.Rows[e.RowIndex].Cells[7].Value?.ToString() ?? "";
 
-                if (result == DialogResult.Yes)
+                // Check if user is already inactive
+                if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
                 {
-                    // TODO: Call delete service
-                    MessageBox.Show($"Delete user ID: {userId}");
+                    MessageBox.Show(
+                        "This user is already inactive.\n\nTo reactivate, use the Edit button and change the status to Active.",
+                        "Already Archived",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    return;
+                }
+
+                string userName = DgwUsers.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "this user";
+
+                var confirmResult = MessageBox.Show(
+                    $"Are you sure you want to archive {userName}?\n\nThis user will no longer be able to login.",
+                    "Confirm Archive",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var result = _archiveUserService.Archive(userId);
+
+                    if (result.Success)
+                    {
+                        MessageBox.Show("User archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadUsers();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

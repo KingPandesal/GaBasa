@@ -1,9 +1,5 @@
 ﻿using LMS.Model.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LMS.Model.Models.Users;
 
 namespace LMS.Model.DTOs.User
 {
@@ -16,5 +12,6 @@ namespace LMS.Model.DTOs.User
         public string ContactNumber { get; set; }
         public string PhotoPath { get; set; }
         public Role Role { get; set; }
+        public UserStatus Status { get; set; }
     }
 }

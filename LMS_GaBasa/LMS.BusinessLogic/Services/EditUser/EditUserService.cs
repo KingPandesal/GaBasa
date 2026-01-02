@@ -30,7 +30,8 @@ namespace LMS.BusinessLogic.Services.EditUser
                 Email = user.Email,
                 ContactNumber = user.ContactNumber,
                 PhotoPath = user.PhotoPath,
-                Role = user.Role
+                Role = user.Role,
+                Status = user.Status
             };
         }
 
@@ -64,7 +65,8 @@ namespace LMS.BusinessLogic.Services.EditUser
                 dto.Email,
                 dto.ContactNumber,
                 dto.PhotoPath,
-                dto.Role
+                dto.Role,
+                dto.Status
             );
 
             return success ? UserEditResult.Ok() : UserEditResult.Fail("Failed to update user.");

@@ -314,7 +314,7 @@ namespace LMS.DataAccess.Repositories
             return users;
         }
 
-        public bool UpdateUser(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, Role role)
+        public bool UpdateUser(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, Role role, UserStatus status)
         {
             if (userId <= 0)
                 throw new ArgumentException("userId must be greater than 0", nameof(userId));
@@ -330,7 +330,8 @@ namespace LMS.DataAccess.Repositories
                                 Email = @Email, 
                                 ContactNumber = @ContactNumber, 
                                 Photo = @Photo,
-                                [Role] = @Role
+                                [Role] = @Role,
+                                [Status] = @Status
                             WHERE UserID = @UserID";
 
                 AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
@@ -340,6 +341,27 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@ContactNumber", DbType.String, contactNumber, 20);
                 AddParameter(cmd, "@Photo", DbType.String, photoPath, 500);
                 AddParameter(cmd, "@Role", DbType.String, MapRoleToDbValue(role), 50);
+                AddParameter(cmd, "@Status", DbType.String, status.ToString(), 50);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+        }
+
+        public bool ArchiveUser(int userId)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = "UPDATE [User] SET [Status] = @Status WHERE UserID = @UserID";
+
+                AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
+                AddParameter(cmd, "@Status", DbType.String, UserStatus.Inactive.ToString(), 50);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 return rowsAffected > 0;

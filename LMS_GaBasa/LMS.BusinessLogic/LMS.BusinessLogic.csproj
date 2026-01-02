@@ -62,10 +62,12 @@
     <Compile Include="Helpers\UserImageHelper.cs" />
     <Compile Include="Services\AddUser\AddUserService.cs" />
     <Compile Include="Services\AddUser\IAddUserService.cs" />
+    <Compile Include="Services\ArchiveUser\ArchiveUserService.cs" />
     <Compile Include="Services\EditUser\EditUserService.cs" />
     <Compile Include="Services\EditUser\IEditUserService.cs" />
     <Compile Include="Services\FetchUsers\FetchUserService.cs" />
     <Compile Include="Services\FetchUsers\IFetchUserService.cs" />
+    <Compile Include="Services\ArchiveUser\IArchiveUserService.cs" />
     <Compile Include="Services\IMemberProfileService.cs" />
     <Compile Include="Services\IUserProfileService.cs" />
     <Compile Include="Managers\IMemberManager.cs" />
