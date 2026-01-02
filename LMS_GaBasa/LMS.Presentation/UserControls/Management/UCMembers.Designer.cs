@@ -62,6 +62,7 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
+            this.RenewMembership = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgwMembers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -230,7 +231,8 @@
             this.Column10,
             this.Column5,
             this.Edit,
-            this.Archive});
+            this.Archive,
+            this.RenewMembership});
             this.DgwMembers.GridColor = System.Drawing.SystemColors.ControlLight;
             this.DgwMembers.Location = new System.Drawing.Point(36, 199);
             this.DgwMembers.Name = "DgwMembers";
@@ -266,7 +268,7 @@
             this.dataGridViewImageColumn1.MinimumWidth = 8;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.ToolTipText = "Edit member";
-            this.dataGridViewImageColumn1.Width = 8;
+            this.dataGridViewImageColumn1.Width = 150;
             // 
             // dataGridViewImageColumn2
             // 
@@ -277,7 +279,7 @@
             this.dataGridViewImageColumn2.MinimumWidth = 8;
             this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
             this.dataGridViewImageColumn2.ToolTipText = "Archive member";
-            this.dataGridViewImageColumn2.Width = 8;
+            this.dataGridViewImageColumn2.Width = 150;
             // 
             // Column17
             // 
@@ -413,6 +415,16 @@
             this.Archive.ToolTipText = "Archive member";
             this.Archive.Width = 8;
             // 
+            // RenewMembership
+            // 
+            this.RenewMembership.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.RenewMembership.HeaderText = "";
+            this.RenewMembership.Image = ((System.Drawing.Image)(resources.GetObject("RenewMembership.Image")));
+            this.RenewMembership.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.RenewMembership.MinimumWidth = 8;
+            this.RenewMembership.Name = "RenewMembership";
+            this.RenewMembership.Width = 8;
+            // 
             // UCMembers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -474,5 +486,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Archive;
+        private System.Windows.Forms.DataGridViewImageColumn RenewMembership;
     }
 }

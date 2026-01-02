@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LMS.Model.DTOs.Member;
 using LMS.Model.Models.Enums;
 
@@ -46,5 +47,35 @@ namespace LMS.DataAccess.Interfaces
         /// Gets all members with their details for display in DataGridView
         /// </summary>
         List<DTOFetchAllMembers> GetAllMembers();
+
+        /// <summary>
+        /// Gets member data for editing
+        /// </summary>
+        DTOEditMember GetMemberForEdit(int memberId);
+
+        /// <summary>
+        /// Updates member information
+        /// </summary>
+        bool UpdateMember(DTOEditMember dto);
+
+        /// <summary>
+        /// Updates all Active members whose expiration date has passed to Expired status
+        /// </summary>
+        void UpdateExpiredMembers();
+
+        /// <summary>
+        /// Gets expiration date by UserID
+        /// </summary>
+        DateTime? GetExpirationDateByUserId(int userId);
+
+        /// <summary>
+        /// Updates member status by UserID
+        /// </summary>
+        bool UpdateMemberStatusByUserId(int userId, MemberStatus status);
+
+        /// <summary>
+        /// Renews member's membership - updates registration date to today and expiration date to 1 year from today
+        /// </summary>
+        bool RenewMembership(int memberId);
     }
 }

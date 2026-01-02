@@ -16,6 +16,9 @@ namespace LMS.BusinessLogic.Services.FetchMembers
 
         public List<DTOFetchAllMembers> GetAllMembers()
         {
+            // Auto-expire members whose expiration date has passed
+            _memberRepo.UpdateExpiredMembers();
+
             return _memberRepo.GetAllMembers();
         }
     }

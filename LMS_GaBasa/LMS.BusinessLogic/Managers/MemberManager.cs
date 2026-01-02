@@ -18,6 +18,9 @@ namespace LMS.BusinessLogic.Managers
             if (userId <= 0)
                 return null;
 
+            // Check and update expiration before returning status
+            CheckAndExpireMember(userId);
+
             return _memberRepo.GetMemberStatusByUserId(userId);
         }
 
@@ -26,12 +29,12 @@ namespace LMS.BusinessLogic.Managers
             var status = GetMemberStatus(userId);
 
             if (!status.HasValue)
-                return null; // Not a member or member record not found
+                return null;
 
             switch (status.Value)
             {
                 case MemberStatus.Active:
-                    return null; // No issue, can login
+                    return null;
 
                 case MemberStatus.Inactive:
                     return AuthFailureReason.AccountInactive;
@@ -44,6 +47,20 @@ namespace LMS.BusinessLogic.Managers
 
                 default:
                     return AuthFailureReason.AccountInactive;
+            }
+        }
+
+        private void CheckAndExpireMember(int userId)
+        {
+            var expirationDate = _memberRepo.GetExpirationDateByUserId(userId);
+            var currentStatus = _memberRepo.GetMemberStatusByUserId(userId);
+
+            // Only expire if currently Active and past expiration date
+            if (currentStatus == MemberStatus.Active &&
+                expirationDate.HasValue &&
+                expirationDate.Value.Date < DateTime.Now.Date)
+            {
+                _memberRepo.UpdateMemberStatusByUserId(userId, MemberStatus.Expired);
             }
         }
     }

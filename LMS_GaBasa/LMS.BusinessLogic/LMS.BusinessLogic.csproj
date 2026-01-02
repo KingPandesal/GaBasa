@@ -67,6 +67,8 @@
     <Compile Include="Services\AddUser\AddUserService.cs" />
     <Compile Include="Services\AddUser\IAddUserService.cs" />
     <Compile Include="Services\ArchiveUser\ArchiveUserService.cs" />
+    <Compile Include="Services\EditMember\EditMemberService.cs" />
+    <Compile Include="Services\EditMember\IEditMemberService.cs" />
     <Compile Include="Services\EditUser\EditUserService.cs" />
     <Compile Include="Services\EditUser\IEditUserService.cs" />
     <Compile Include="Services\FetchMembers\FetchMemberService.cs" />
@@ -83,6 +85,8 @@
     <Compile Include="Hashing\Sha256PasswordHasher.cs" />
     <Compile Include="Security\RolePermissionService.cs" />
     <Compile Include="Services\MemberProfileService.cs" />
+    <Compile Include="Services\RenewMember\IRenewMemberService.cs" />
+    <Compile Include="Services\RenewMember\RenewMemberService.cs" />
     <Compile Include="Services\UserProfileService.cs" />
   </ItemGroup>
   <ItemGroup>

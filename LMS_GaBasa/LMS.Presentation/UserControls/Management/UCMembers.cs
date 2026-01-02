@@ -1,11 +1,13 @@
 ﻿using LMS.BusinessLogic.Hashing;
 using LMS.BusinessLogic.Services.AddMember;
 using LMS.BusinessLogic.Services.FetchMembers;
+using LMS.BusinessLogic.Services.RenewMember;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Member;
 using LMS.Presentation.Popup.Members;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,6 +17,7 @@ namespace LMS.Presentation.UserControls.Management
     {
         private readonly IAddMemberService _addMemberService;
         private readonly IFetchMemberService _fetchMemberService;
+        private readonly IRenewMemberService _renewMemberService;
 
         private List<DTOFetchAllMembers> _allMembers;
         private List<DTOFetchAllMembers> _filteredMembers;
@@ -23,6 +26,14 @@ namespace LMS.Presentation.UserControls.Management
         private int _currentPage = 1;
         private int _pageSize = 5;
         private int _totalPages = 1;
+
+        // Column indices
+        private const int ColMemberId = 1;
+        private const int ColFullName = 2;
+        private const int ColStatus = 15;
+        private const int ColEdit = 16;
+        private const int ColArchive = 17;
+        private const int ColRenew = 18;
 
         public UCMembers()
         {
@@ -33,6 +44,7 @@ namespace LMS.Presentation.UserControls.Management
             var passwordHasher = new BcryptPasswordHasher(12);
             _addMemberService = new AddMemberService(memberRepo, passwordHasher);
             _fetchMemberService = new FetchMemberService(memberRepo);
+            _renewMemberService = new RenewMemberService(memberRepo);
 
             this.Load += UCMembers_Load;
         }
@@ -42,6 +54,37 @@ namespace LMS.Presentation.UserControls.Management
             SetupFilters();
             SetupPagination();
             LoadMembers();
+
+            // Wire up DataGridView events
+            DgwMembers.CellContentClick += DgwMembers_CellContentClick;
+            DgwMembers.CellFormatting += DgwMembers_CellFormatting;
+        }
+
+        private void DgwMembers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            // Get the status value
+            string status = DgwMembers.Rows[e.RowIndex].Cells[ColStatus].Value?.ToString() ?? "";
+
+            // Format Renew button - only visible/enabled for Expired status
+            if (e.ColumnIndex == ColRenew)
+            {
+                var cell = DgwMembers.Rows[e.RowIndex].Cells[ColRenew];
+
+                if (!status.Equals("Expired", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Hide or gray out the renew button for non-expired members
+                    cell.Style.BackColor = Color.LightGray;
+                    cell.ToolTipText = "Only expired memberships can be renewed";
+                }
+                else
+                {
+                    cell.Style.BackColor = Color.White;
+                    cell.ToolTipText = "Click to renew membership";
+                }
+            }
         }
 
         private void SetupFilters()
@@ -73,11 +116,9 @@ namespace LMS.Presentation.UserControls.Management
 
         private void SetupPagination()
         {
-            // Set default page size
-            CmbBxPaginationNumbers.SelectedIndex = 0; // "5"
+            CmbBxPaginationNumbers.SelectedIndex = 0;
             _pageSize = 5;
 
-            // Wire up pagination events
             CmbBxPaginationNumbers.SelectedIndexChanged += CmbBxPaginationNumbers_SelectedIndexChanged;
             LblPaginationPrevious.Click += LblPaginationPrevious_Click;
             LblPaginationNext.Click += LblPaginationNext_Click;
@@ -87,13 +128,8 @@ namespace LMS.Presentation.UserControls.Management
         {
             try
             {
-                // Fetch and cache all members
                 _allMembers = _fetchMemberService.GetAllMembers();
-
-                // Reset to first page when loading
                 _currentPage = 1;
-
-                // Apply filters and pagination
                 ApplyFilters();
             }
             catch (Exception ex)
@@ -109,7 +145,6 @@ namespace LMS.Presentation.UserControls.Management
 
             var filteredMembers = _allMembers.AsEnumerable();
 
-            // Apply search filter
             string searchText = TxtSearchBar.Text?.Trim() ?? "";
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -123,7 +158,6 @@ namespace LMS.Presentation.UserControls.Management
                 );
             }
 
-            // Apply member type filter
             string selectedType = CmbBxMemberTypeFilter.SelectedItem?.ToString() ?? "All Types";
             if (selectedType != "All Types")
             {
@@ -132,7 +166,6 @@ namespace LMS.Presentation.UserControls.Management
                 );
             }
 
-            // Apply status filter
             string selectedStatus = CmbBxStatusFilter.SelectedItem?.ToString() ?? "All Status";
             if (selectedStatus != "All Status")
             {
@@ -141,13 +174,8 @@ namespace LMS.Presentation.UserControls.Management
                 );
             }
 
-            // Store filtered results
             _filteredMembers = filteredMembers.ToList();
-
-            // Calculate pagination
             CalculatePagination();
-
-            // Display current page
             DisplayCurrentPage();
         }
 
@@ -159,14 +187,12 @@ namespace LMS.Presentation.UserControls.Management
             if (_totalPages == 0)
                 _totalPages = 1;
 
-            // Ensure current page is within bounds
             if (_currentPage > _totalPages)
                 _currentPage = _totalPages;
 
             if (_currentPage < 1)
                 _currentPage = 1;
 
-            // Update pagination buttons state
             UpdatePaginationButtons();
         }
 
@@ -175,19 +201,13 @@ namespace LMS.Presentation.UserControls.Management
             if (_filteredMembers == null)
                 return;
 
-            // Get current page data
             var pagedMembers = _filteredMembers
                 .Skip((_currentPage - 1) * _pageSize)
                 .Take(_pageSize)
                 .ToList();
 
-            // Display in grid
             DisplayMembers(pagedMembers);
-
-            // Update pagination label
             UpdatePaginationLabel();
-
-            // Update pagination buttons state
             UpdatePaginationButtons();
         }
 
@@ -201,22 +221,22 @@ namespace LMS.Presentation.UserControls.Management
             foreach (var member in members)
             {
                 DgwMembers.Rows.Add(
-                    rowNumber++,                                    // #
-                    member.MemberID,                                // ID
-                    member.FullName,                                // Full Name
-                    member.MemberType,                              // Member Type
-                    member.Username,                                // Username
-                    member.Email,                                   // Email
-                    member.Address,                                 // Address
-                    member.ContactNumber,                           // Contact Number
-                    member.MaxBooksAllowed,                         // Max Books Allowed
-                    $"{member.BorrowingPeriod} days",               // Borrowing Period
-                    member.RenewalLimit,                            // Renewal Limit
-                    member.ReservationPrivilege ? "Yes" : "No",     // Reservation Privilege
-                    $"₱{member.FineRate:F2}",                       // Fine Rate
-                    member.RegistrationDate.ToString("MMM dd, yyyy"), // Registration Date
-                    member.ExpirationDate.ToString("MMM dd, yyyy"),   // Expiration Date
-                    member.Status                                   // Status
+                    rowNumber++,
+                    member.MemberID,
+                    member.FullName,
+                    member.MemberType,
+                    member.Username,
+                    member.Email,
+                    member.Address,
+                    member.ContactNumber,
+                    member.MaxBooksAllowed,
+                    $"{member.BorrowingPeriod} days",
+                    member.RenewalLimit,
+                    member.ReservationPrivilege ? "Yes" : "No",
+                    $"₱{member.FineRate:F2}",
+                    member.RegistrationDate.ToString("MMM dd, yyyy"),
+                    member.ExpirationDate.ToString("MMM dd, yyyy"),
+                    member.Status
                 );
             }
         }
@@ -242,7 +262,7 @@ namespace LMS.Presentation.UserControls.Management
             if (int.TryParse(selectedValue, out int pageSize))
             {
                 _pageSize = pageSize;
-                _currentPage = 1; // Reset to first page
+                _currentPage = 1;
                 ApplyFilters();
             }
         }
@@ -267,13 +287,13 @@ namespace LMS.Presentation.UserControls.Management
 
         private void BtnApply_Click(object sender, EventArgs e)
         {
-            _currentPage = 1; // Reset to first page when applying filters
+            _currentPage = 1;
             ApplyFilters();
         }
 
         private void TxtSearchBar_TextChanged(object sender, EventArgs e)
         {
-            _currentPage = 1; // Reset to first page when searching
+            _currentPage = 1;
             ApplyFilters();
         }
 
@@ -282,7 +302,6 @@ namespace LMS.Presentation.UserControls.Management
             var addMemberForm = new AddMember(_addMemberService);
             if (addMemberForm.ShowDialog() == DialogResult.OK)
             {
-                // Refresh member list after successful add
                 LoadMembers();
             }
         }
@@ -292,40 +311,100 @@ namespace LMS.Presentation.UserControls.Management
             if (e.RowIndex < 0)
                 return;
 
-            int memberId = Convert.ToInt32(DgwMembers.Rows[e.RowIndex].Cells[1].Value);
+            int memberId = Convert.ToInt32(DgwMembers.Rows[e.RowIndex].Cells[ColMemberId].Value);
+            string memberName = DgwMembers.Rows[e.RowIndex].Cells[ColFullName].Value?.ToString() ?? "this member";
+            string currentStatus = DgwMembers.Rows[e.RowIndex].Cells[ColStatus].Value?.ToString() ?? "";
 
-            // Edit button clicked (column index 16)
-            if (e.ColumnIndex == 16)
+            // Edit button clicked
+            if (e.ColumnIndex == ColEdit)
             {
-                // TODO: Implement EditMember form
-                MessageBox.Show($"Edit member ID: {memberId}", "Edit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var editMemberForm = new EditMember();
+                editMemberForm.LoadMember(memberId);
+
+                if (editMemberForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadMembers();
+                }
             }
-            // Archive button clicked (column index 17)
-            else if (e.ColumnIndex == 17)
+            // Archive button clicked
+            else if (e.ColumnIndex == ColArchive)
             {
-                string currentStatus = DgwMembers.Rows[e.RowIndex].Cells[15].Value?.ToString() ?? "";
-                string memberName = DgwMembers.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "this member";
+                HandleArchive(memberId, memberName, currentStatus);
+            }
+            // Renew button clicked
+            else if (e.ColumnIndex == ColRenew)
+            {
+                HandleRenew(memberId, memberName, currentStatus);
+            }
+        }
 
-                if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
+        private void HandleArchive(int memberId, string memberName, string currentStatus)
+        {
+            if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(
+                    "This member is already inactive.\n\nTo reactivate, use the Edit button and change the status to Active.",
+                    "Already Archived",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            var confirmResult = MessageBox.Show(
+                $"Are you sure you want to archive {memberName}?\n\nThis member will no longer be able to login.",
+                "Confirm Archive",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                // TODO: Implement archive member service
+                MessageBox.Show("Archive functionality coming soon.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void HandleRenew(int memberId, string memberName, string currentStatus)
+        {
+            // Only allow renew for Expired members
+            if (!currentStatus.Equals("Expired", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(
+                    "Only expired memberships can be renewed.\n\nThis member's status is: " + currentStatus,
+                    "Cannot Renew",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            var confirmResult = MessageBox.Show(
+                $"Are you sure you want to renew {memberName}'s membership?\n\n" +
+                "• Registration date will be set to today\n" +
+                "• Expiration date will be set to 1 year from today\n" +
+                "• Status will be changed to Active",
+                "Confirm Renewal",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                var result = _renewMemberService.RenewMembership(memberId);
+
+                if (result.Success)
                 {
                     MessageBox.Show(
-                        "This member is already inactive.\n\nTo reactivate, use the Edit button and change the status to Active.",
-                        "Already Archived",
+                        $"{memberName}'s membership has been renewed successfully!",
+                        "Renewal Successful",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
-                    return;
+                    LoadMembers();
                 }
-
-                var confirmResult = MessageBox.Show(
-                    $"Are you sure you want to archive {memberName}?\n\nThis member will no longer be able to login.",
-                    "Confirm Archive",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
-
-                if (confirmResult == DialogResult.Yes)
+                else
                 {
-                    // TODO: Implement archive member service
-                    MessageBox.Show("Archive functionality coming soon.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        result.ErrorMessage,
+                        "Renewal Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
         }

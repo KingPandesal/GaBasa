@@ -70,6 +70,12 @@
     <Compile Include="Popup\Members\AddMember.Designer.cs">
       <DependentUpon>AddMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Members\EditMember.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Members\EditMember.Designer.cs">
+      <DependentUpon>EditMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Profile\EditLibrarianStaffProfile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Members\AddMember.resx">
       <DependentUpon>AddMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Members\EditMember.resx">
+      <DependentUpon>EditMember.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Profile\EditLibrarianStaffProfile.resx">
       <DependentUpon>EditLibrarianStaffProfile.cs</DependentUpon>

@@ -385,6 +385,296 @@ namespace LMS.DataAccess.Repositories
             return members;
         }
 
+        public DTOEditMember GetMemberForEdit(int memberId)
+        {
+            if (memberId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        m.MemberID,
+                        m.UserID,
+                        u.FirstName,
+                        u.LastName,
+                        u.Email,
+                        m.[Address],
+                        u.ContactNumber,
+                        mt.TypeName AS MemberTypeName,
+                        u.Photo,
+                        m.ValidID,
+                        m.[Status]
+                    FROM [Member] m
+                    INNER JOIN [User] u ON m.UserID = u.UserID
+                    INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                    WHERE m.MemberID = @MemberID";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (!reader.Read())
+                        return null;
+
+                    string statusString = reader.IsDBNull(reader.GetOrdinal("Status")) ? "Active" : reader.GetString(reader.GetOrdinal("Status"));
+                    MemberStatus status = MemberStatus.Active;
+                    Enum.TryParse(statusString, true, out status);
+
+                    return new DTOEditMember
+                    {
+                        MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                        UserID = reader.GetInt32(reader.GetOrdinal("UserID")),
+                        FirstName = reader.IsDBNull(reader.GetOrdinal("FirstName")) ? "" : reader.GetString(reader.GetOrdinal("FirstName")),
+                        LastName = reader.IsDBNull(reader.GetOrdinal("LastName")) ? "" : reader.GetString(reader.GetOrdinal("LastName")),
+                        Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? "" : reader.GetString(reader.GetOrdinal("Email")),
+                        Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? "" : reader.GetString(reader.GetOrdinal("Address")),
+                        ContactNumber = reader.IsDBNull(reader.GetOrdinal("ContactNumber")) ? "" : reader.GetString(reader.GetOrdinal("ContactNumber")),
+                        MemberTypeName = reader.IsDBNull(reader.GetOrdinal("MemberTypeName")) ? "" : reader.GetString(reader.GetOrdinal("MemberTypeName")),
+                        PhotoPath = reader.IsDBNull(reader.GetOrdinal("Photo")) ? "" : reader.GetString(reader.GetOrdinal("Photo")),
+                        ValidIdPath = reader.IsDBNull(reader.GetOrdinal("ValidID")) ? "" : reader.GetString(reader.GetOrdinal("ValidID")),
+                        Status = status
+                    };
+                }
+            }
+        }
+
+        public bool UpdateMember(DTOEditMember dto)
+        {
+            if (dto == null || dto.MemberID <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Get UserID from MemberID
+                        int userId;
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = "SELECT UserID FROM [Member] WHERE MemberID = @MemberID";
+                            AddParameter(cmd, "@MemberID", DbType.Int32, dto.MemberID);
+                            var result = cmd.ExecuteScalar();
+                            if (result == null)
+                                return false;
+                            userId = Convert.ToInt32(result);
+                        }
+
+                        // Get MemberTypeID from TypeName
+                        int? memberTypeId = null;
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = "SELECT MemberTypeID FROM [MemberType] WHERE TypeName = @TypeName";
+                            AddParameter(cmd, "@TypeName", DbType.String, dto.MemberTypeName, 100);
+                            var result = cmd.ExecuteScalar();
+                            if (result != null)
+                                memberTypeId = Convert.ToInt32(result);
+                        }
+
+                        // Update User table
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = @"UPDATE [User] 
+                                SET FirstName = @FirstName, 
+                                    LastName = @LastName, 
+                                    Email = @Email, 
+                                    ContactNumber = @ContactNumber, 
+                                    Photo = @Photo
+                                WHERE UserID = @UserID";
+
+                            AddParameter(cmd, "@UserID", DbType.Int32, userId);
+                            AddParameter(cmd, "@FirstName", DbType.String, dto.FirstName, 100);
+                            AddParameter(cmd, "@LastName", DbType.String, dto.LastName, 100);
+                            AddParameter(cmd, "@Email", DbType.String, dto.Email, 256);
+                            AddParameter(cmd, "@ContactNumber", DbType.String, dto.ContactNumber, 20);
+                            AddParameter(cmd, "@Photo", DbType.String, dto.PhotoPath, 500);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Update Member table
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = @"UPDATE [Member] 
+                                SET [Address] = @Address,
+                                    ValidID = @ValidID,
+                                    [Status] = @Status,
+                                    MemberTypeID = @MemberTypeID
+                                WHERE MemberID = @MemberID";
+
+                            AddParameter(cmd, "@MemberID", DbType.Int32, dto.MemberID);
+                            AddParameter(cmd, "@Address", DbType.String, dto.Address, 500);
+                            AddParameter(cmd, "@ValidID", DbType.String, dto.ValidIdPath, 500);
+                            AddParameter(cmd, "@Status", DbType.String, dto.Status.ToString(), 50);
+                            AddParameter(cmd, "@MemberTypeID", DbType.Int32, memberTypeId);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public void UpdateExpiredMembers()
+        {
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    UPDATE [Member] 
+                    SET [Status] = 'Expired' 
+                    WHERE ExpirationDate < @Today 
+                    AND [Status] = 'Active'";
+
+                AddParameter(cmd, "@Today", DbType.DateTime, DateTime.Now.Date);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public DateTime? GetExpirationDateByUserId(int userId)
+        {
+            if (userId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT ExpirationDate FROM [Member] WHERE UserID = @UserID";
+                AddParameter(cmd, "@UserID", DbType.Int32, userId);
+
+                var result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    return null;
+
+                return Convert.ToDateTime(result);
+            }
+        }
+
+        public bool UpdateMemberStatusByUserId(int userId, MemberStatus status)
+        {
+            if (userId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "UPDATE [Member] SET [Status] = @Status WHERE UserID = @UserID";
+                AddParameter(cmd, "@UserID", DbType.Int32, userId);
+                AddParameter(cmd, "@Status", DbType.String, status.ToString(), 50);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public bool UpdateMemberStatusByMemberId(int memberId, MemberStatus status)
+        {
+            if (memberId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "UPDATE [Member] SET [Status] = @Status WHERE MemberID = @MemberID";
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                AddParameter(cmd, "@Status", DbType.String, status.ToString(), 50);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public int GetUnresolvedViolationCount(int memberId)
+        {
+            if (memberId <= 0)
+                return 0;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                // Assumes a Violation table exists with IsResolved column
+                cmd.CommandText = @"
+                    SELECT COUNT(*) 
+                    FROM [Violation] 
+                    WHERE MemberID = @MemberID 
+                    AND IsResolved = 0";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                var result = cmd.ExecuteScalar();
+                return result != null ? Convert.ToInt32(result) : 0;
+            }
+        }
+
+        public void SuspendMembersWithExcessiveViolations(int violationThreshold)
+        {
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                // Suspend members who have more than threshold unresolved violations
+                cmd.CommandText = @"
+                    UPDATE [Member] 
+                    SET [Status] = 'Suspended' 
+                    WHERE MemberID IN (
+                        SELECT MemberID 
+                        FROM [Violation] 
+                        WHERE IsResolved = 0 
+                        GROUP BY MemberID 
+                        HAVING COUNT(*) >= @Threshold
+                    )
+                    AND [Status] = 'Active'";
+
+                AddParameter(cmd, "@Threshold", DbType.Int32, violationThreshold);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool RenewMembership(int memberId)
+        {
+            if (memberId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    UPDATE [Member] 
+                    SET RegistrationDate = @RegistrationDate,
+                        ExpirationDate = @ExpirationDate,
+                        [Status] = 'Active'
+                    WHERE MemberID = @MemberID";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                AddParameter(cmd, "@RegistrationDate", DbType.DateTime, DateTime.Now.Date);
+                AddParameter(cmd, "@ExpirationDate", DbType.DateTime, DateTime.Now.Date.AddYears(1));
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
         private void AddParameter(IDbCommand cmd, string name, DbType type, object value, int size = 0)
         {
             var p = cmd.CreateParameter();
