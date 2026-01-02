@@ -47,6 +47,10 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
+            this.CmbBxRoleFilter = new System.Windows.Forms.ComboBox();
+            this.LblSearch = new System.Windows.Forms.Label();
+            this.BtnApply = new System.Windows.Forms.Button();
+            this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,15 +60,15 @@
             this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
             this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
             this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(32, 31);
+            this.TxtSearchBar.Location = new System.Drawing.Point(155, 32);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
             this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 60);
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1509, 60);
+            this.TxtSearchBar.Size = new System.Drawing.Size(897, 40);
             this.TxtSearchBar.TabIndex = 4;
-            this.TxtSearchBar.Text = "Search Users...";
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
             // 
@@ -252,11 +256,64 @@
             this.Archive.ToolTipText = "Archive user";
             this.Archive.Width = 8;
             // 
+            // CmbBxRoleFilter
+            // 
+            this.CmbBxRoleFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CmbBxRoleFilter.FormattingEnabled = true;
+            this.CmbBxRoleFilter.Location = new System.Drawing.Point(1232, 33);
+            this.CmbBxRoleFilter.Name = "CmbBxRoleFilter";
+            this.CmbBxRoleFilter.Size = new System.Drawing.Size(192, 36);
+            this.CmbBxRoleFilter.TabIndex = 38;
+            this.CmbBxRoleFilter.Text = "Librarian / Admin";
+            // 
+            // LblSearch
+            // 
+            this.LblSearch.AutoSize = true;
+            this.LblSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblSearch.Location = new System.Drawing.Point(75, 36);
+            this.LblSearch.Name = "LblSearch";
+            this.LblSearch.Size = new System.Drawing.Size(70, 28);
+            this.LblSearch.TabIndex = 39;
+            this.LblSearch.Text = "Search";
+            // 
+            // BtnApply
+            // 
+            this.BtnApply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnApply.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnApply.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnApply.ForeColor = System.Drawing.Color.White;
+            this.BtnApply.Location = new System.Drawing.Point(1441, 31);
+            this.BtnApply.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnApply.Name = "BtnApply";
+            this.BtnApply.Size = new System.Drawing.Size(104, 40);
+            this.BtnApply.TabIndex = 40;
+            this.BtnApply.Text = "Apply";
+            this.BtnApply.UseVisualStyleBackColor = false;
+            // 
+            // CmbBxStatusFilter
+            // 
+            this.CmbBxStatusFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CmbBxStatusFilter.FormattingEnabled = true;
+            this.CmbBxStatusFilter.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "15"});
+            this.CmbBxStatusFilter.Location = new System.Drawing.Point(1076, 33);
+            this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
+            this.CmbBxStatusFilter.Size = new System.Drawing.Size(139, 36);
+            this.CmbBxStatusFilter.TabIndex = 41;
+            this.CmbBxStatusFilter.Text = "Status";
+            // 
             // UCUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.CmbBxStatusFilter);
+            this.Controls.Add(this.BtnApply);
+            this.Controls.Add(this.LblSearch);
+            this.Controls.Add(this.CmbBxRoleFilter);
             this.Controls.Add(this.BtnAddUser);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.BtnLogin);
@@ -294,5 +351,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Archive;
+        private System.Windows.Forms.ComboBox CmbBxRoleFilter;
+        private System.Windows.Forms.Label LblSearch;
+        private System.Windows.Forms.Button BtnApply;
+        private System.Windows.Forms.ComboBox CmbBxStatusFilter;
     }
 }

@@ -77,7 +77,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.groupBox1.Location = new System.Drawing.Point(26, 14);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(477, 485);
+            this.groupBox1.Size = new System.Drawing.Size(474, 485);
             this.groupBox1.TabIndex = 78;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Personal Details";
@@ -97,6 +97,7 @@
             // 
             // CmbBxUserStatus
             // 
+            this.CmbBxUserStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbBxUserStatus.ForeColor = System.Drawing.Color.Black;
             this.CmbBxUserStatus.FormattingEnabled = true;
             this.CmbBxUserStatus.Items.AddRange(new object[] {
@@ -290,6 +291,7 @@
             // 
             // panel1
             // 
+            this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Location = new System.Drawing.Point(6, 223);
             this.panel1.Name = "panel1";

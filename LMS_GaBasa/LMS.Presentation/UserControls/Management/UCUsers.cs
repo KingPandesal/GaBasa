@@ -1,8 +1,11 @@
 ﻿using LMS.BusinessLogic.Services.ArchiveUser;
 using LMS.BusinessLogic.Services.FetchUsers;
 using LMS.DataAccess.Repositories;
+using LMS.Model.DTOs.User;
 using LMS.Presentation.Popup.Users;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LMS.Presentation.UserControls.Management
@@ -11,6 +14,7 @@ namespace LMS.Presentation.UserControls.Management
     {
         private readonly IFetchUserService _userListService;
         private readonly IArchiveUserService _archiveUserService;
+        private List<DTOFetchAllUsers> _allUsers; // Cache all users for filtering
 
         public UCUsers() : this(
             new FetchUserService(new UserRepository()),
@@ -23,22 +27,47 @@ namespace LMS.Presentation.UserControls.Management
             InitializeComponent();
             _userListService = userListService ?? throw new ArgumentNullException(nameof(userListService));
             _archiveUserService = archiveUserService ?? throw new ArgumentNullException(nameof(archiveUserService));
-            
+
             // Load users when control is loaded
             this.Load += UCUsers_Load;
         }
 
         private void UCUsers_Load(object sender, EventArgs e)
         {
+            SetupFilters();
             LoadUsers();
+        }
+
+        private void SetupFilters()
+        {
+            // Setup Role filter
+            CmbBxRoleFilter.Items.Clear();
+            CmbBxRoleFilter.Items.Add("All Roles");
+            CmbBxRoleFilter.Items.Add("Librarian / Admin");
+            CmbBxRoleFilter.Items.Add("Library Staff");
+            CmbBxRoleFilter.SelectedIndex = 0;
+
+            // Setup Status filter
+            CmbBxStatusFilter.Items.Clear();
+            CmbBxStatusFilter.Items.Add("All Status");
+            CmbBxStatusFilter.Items.Add("Active");
+            CmbBxStatusFilter.Items.Add("Inactive");
+            CmbBxStatusFilter.SelectedIndex = 0;
+
+            // Clear search placeholder text on focus
+            TxtSearchBar.Text = "";
+
+            // Wire up Apply button
+            BtnApply.Click += BtnApply_Click;
+
+            // Optional: Real-time search as user types
+            TxtSearchBar.TextChanged += TxtSearchBar_TextChanged;
         }
 
         private void LoadUsers()
         {
             try
             {
-                DgwUsers.Rows.Clear();
-
                 // Add # column at the beginning if it doesn't exist
                 if (DgwUsers.Columns["ColumnRowNum"] == null)
                 {
@@ -51,27 +80,89 @@ namespace LMS.Presentation.UserControls.Management
                     DgwUsers.Columns.Insert(0, rowNumColumn);
                 }
 
-                var users = _userListService.GetAllStaffUsers();
+                // Fetch and cache all users
+                _allUsers = _userListService.GetAllStaffUsers();
 
-                int rowNumber = 1;
-                foreach (var user in users)
-                {
-                    DgwUsers.Rows.Add(
-                        rowNumber++,
-                        user.UserID,
-                        user.FullName,
-                        user.Role,
-                        user.Username,
-                        user.Email,
-                        user.ContactNumber,
-                        user.Status
-                    );
-                }
+                // Apply current filters
+                ApplyFilters();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load users: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ApplyFilters()
+        {
+            if (_allUsers == null)
+                return;
+
+            var filteredUsers = _allUsers.AsEnumerable();
+
+            // Apply search filter
+            string searchText = TxtSearchBar.Text?.Trim() ?? "";
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                filteredUsers = filteredUsers.Where(u =>
+                    u.UserID.ToString().Equals(searchText, StringComparison.OrdinalIgnoreCase) ||
+                    (u.FullName?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (u.Username?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (u.Email?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (u.ContactNumber?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                );
+            }
+
+            // Apply role filter
+            string selectedRole = CmbBxRoleFilter.SelectedItem?.ToString() ?? "All Roles";
+            if (selectedRole != "All Roles")
+            {
+                filteredUsers = filteredUsers.Where(u =>
+                    u.Role.Equals(selectedRole, StringComparison.OrdinalIgnoreCase)
+                );
+            }
+
+            // Apply status filter
+            string selectedStatus = CmbBxStatusFilter.SelectedItem?.ToString() ?? "All Status";
+            if (selectedStatus != "All Status")
+            {
+                filteredUsers = filteredUsers.Where(u =>
+                    u.Status.Equals(selectedStatus, StringComparison.OrdinalIgnoreCase)
+                );
+            }
+
+            // Display filtered results
+            DisplayUsers(filteredUsers.ToList());
+        }
+
+        private void DisplayUsers(List<DTOFetchAllUsers> users)
+        {
+            DgwUsers.Rows.Clear();
+
+            int rowNumber = 1;
+            foreach (var user in users)
+            {
+                DgwUsers.Rows.Add(
+                    rowNumber++,
+                    user.UserID,
+                    user.FullName,
+                    user.Role,
+                    user.Username,
+                    user.Email,
+                    user.ContactNumber,
+                    user.Status
+                );
+            }
+        }
+
+        private void BtnApply_Click(object sender, EventArgs e)
+        {
+            ApplyFilters();
+        }
+
+        private void TxtSearchBar_TextChanged(object sender, EventArgs e)
+        {
+            // Real-time search as user types
+            ApplyFilters();
         }
 
         private void DgwUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -139,7 +230,7 @@ namespace LMS.Presentation.UserControls.Management
         private void BtnAddUser_Click(object sender, EventArgs e)
         {
             AddUser addUserForm = new AddUser();
-            
+
             // Refresh the grid if user was added successfully
             if (addUserForm.ShowDialog() == DialogResult.OK)
             {
