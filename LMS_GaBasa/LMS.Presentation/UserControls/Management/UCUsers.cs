@@ -14,7 +14,13 @@ namespace LMS.Presentation.UserControls.Management
     {
         private readonly IFetchUserService _userListService;
         private readonly IArchiveUserService _archiveUserService;
-        private List<DTOFetchAllUsers> _allUsers; // Cache all users for filtering
+        private List<DTOFetchAllUsers> _allUsers;
+        private List<DTOFetchAllUsers> _filteredUsers;
+
+        // Pagination state
+        private int _currentPage = 1;
+        private int _pageSize = 5;
+        private int _totalPages = 1;
 
         public UCUsers() : this(
             new FetchUserService(new UserRepository()),
@@ -28,13 +34,13 @@ namespace LMS.Presentation.UserControls.Management
             _userListService = userListService ?? throw new ArgumentNullException(nameof(userListService));
             _archiveUserService = archiveUserService ?? throw new ArgumentNullException(nameof(archiveUserService));
 
-            // Load users when control is loaded
             this.Load += UCUsers_Load;
         }
 
         private void UCUsers_Load(object sender, EventArgs e)
         {
             SetupFilters();
+            SetupPagination();
             LoadUsers();
         }
 
@@ -54,14 +60,23 @@ namespace LMS.Presentation.UserControls.Management
             CmbBxStatusFilter.Items.Add("Inactive");
             CmbBxStatusFilter.SelectedIndex = 0;
 
-            // Clear search placeholder text on focus
             TxtSearchBar.Text = "";
 
-            // Wire up Apply button
+            // Wire up events
             BtnApply.Click += BtnApply_Click;
-
-            // Optional: Real-time search as user types
             TxtSearchBar.TextChanged += TxtSearchBar_TextChanged;
+        }
+
+        private void SetupPagination()
+        {
+            // Set default page size
+            CmbBxPaginationNumbers.SelectedIndex = 0; // "5"
+            _pageSize = 5;
+
+            // Wire up pagination events
+            CmbBxPaginationNumbers.SelectedIndexChanged += CmbBxPaginationNumbers_SelectedIndexChanged;
+            LblPaginationPrevious.Click += LblPaginationPrevious_Click;
+            LblPaginationNext.Click += LblPaginationNext_Click;
         }
 
         private void LoadUsers()
@@ -83,7 +98,10 @@ namespace LMS.Presentation.UserControls.Management
                 // Fetch and cache all users
                 _allUsers = _userListService.GetAllStaffUsers();
 
-                // Apply current filters
+                // Reset to first page when loading
+                _currentPage = 1;
+
+                // Apply filters and pagination
                 ApplyFilters();
             }
             catch (Exception ex)
@@ -130,15 +148,63 @@ namespace LMS.Presentation.UserControls.Management
                 );
             }
 
-            // Display filtered results
-            DisplayUsers(filteredUsers.ToList());
+            // Store filtered results
+            _filteredUsers = filteredUsers.ToList();
+
+            // Calculate pagination
+            CalculatePagination();
+
+            // Display current page
+            DisplayCurrentPage();
+        }
+
+        private void CalculatePagination()
+        {
+            int totalRecords = _filteredUsers?.Count ?? 0;
+            _totalPages = (int)Math.Ceiling((double)totalRecords / _pageSize);
+
+            if (_totalPages == 0)
+                _totalPages = 1;
+
+            // Ensure current page is within bounds
+            if (_currentPage > _totalPages)
+                _currentPage = _totalPages;
+
+            if (_currentPage < 1)
+                _currentPage = 1;
+
+            // Update pagination buttons state
+            UpdatePaginationButtons();
+        }
+
+        private void DisplayCurrentPage()
+        {
+            if (_filteredUsers == null)
+                return;
+
+            // Get current page data
+            var pagedUsers = _filteredUsers
+                .Skip((_currentPage - 1) * _pageSize)
+                .Take(_pageSize)
+                .ToList();
+
+            // Display in grid
+            DisplayUsers(pagedUsers);
+
+            // Update pagination label
+            UpdatePaginationLabel();
+
+            // Update pagination buttons state
+            UpdatePaginationButtons();
         }
 
         private void DisplayUsers(List<DTOFetchAllUsers> users)
         {
             DgwUsers.Rows.Clear();
 
-            int rowNumber = 1;
+            int startIndex = (_currentPage - 1) * _pageSize;
+            int rowNumber = startIndex + 1;
+
             foreach (var user in users)
             {
                 DgwUsers.Rows.Add(
@@ -154,24 +220,61 @@ namespace LMS.Presentation.UserControls.Management
             }
         }
 
+        private void UpdatePaginationLabel()
+        {
+            int totalRecords = _filteredUsers?.Count ?? 0;
+            int startRecord = totalRecords == 0 ? 0 : ((_currentPage - 1) * _pageSize) + 1;
+            int endRecord = Math.Min(_currentPage * _pageSize, totalRecords);
+
+            LblPaginationShowEntries.Text = $"Showing {startRecord} to {endRecord} of {totalRecords} entries";
+        }
+
+        private void CmbBxPaginationNumbers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = CmbBxPaginationNumbers.SelectedItem?.ToString() ?? "5";
+            if (int.TryParse(selectedValue, out int pageSize))
+            {
+                _pageSize = pageSize;
+                _currentPage = 1; // Reset to first page
+                ApplyFilters();
+            }
+        }
+
+        private void LblPaginationPrevious_Click(object sender, EventArgs e)
+        {
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                DisplayCurrentPage();
+            }
+        }
+
+        private void LblPaginationNext_Click(object sender, EventArgs e)
+        {
+            if (_currentPage < _totalPages)
+            {
+                _currentPage++;
+                DisplayCurrentPage();
+            }
+        }
+
         private void BtnApply_Click(object sender, EventArgs e)
         {
+            _currentPage = 1; // Reset to first page when applying filters
             ApplyFilters();
         }
 
         private void TxtSearchBar_TextChanged(object sender, EventArgs e)
         {
-            // Real-time search as user types
+            _currentPage = 1; // Reset to first page when searching
             ApplyFilters();
         }
 
         private void DgwUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ignore header clicks
             if (e.RowIndex < 0)
                 return;
 
-            // Get the UserID from column index 1 (ID column, after #)
             int userId = Convert.ToInt32(DgwUsers.Rows[e.RowIndex].Cells[1].Value);
 
             // Edit button clicked (column index 8)
@@ -188,10 +291,8 @@ namespace LMS.Presentation.UserControls.Management
             // Archive button clicked (column index 9)
             else if (e.ColumnIndex == 9)
             {
-                // Get the current status from the Status column (index 7, after #)
                 string currentStatus = DgwUsers.Rows[e.RowIndex].Cells[7].Value?.ToString() ?? "";
 
-                // Check if user is already inactive
                 if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
                 {
                     MessageBox.Show(
@@ -231,11 +332,16 @@ namespace LMS.Presentation.UserControls.Management
         {
             AddUser addUserForm = new AddUser();
 
-            // Refresh the grid if user was added successfully
             if (addUserForm.ShowDialog() == DialogResult.OK)
             {
                 LoadUsers();
             }
+        }
+
+        private void UpdatePaginationButtons()
+        {
+            LblPaginationPrevious.Enabled = _currentPage > 1;
+            LblPaginationNext.Enabled = _currentPage < _totalPages;
         }
     }
 }

@@ -31,13 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCUsers));
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.DgwUsers = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.BtnLogin = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.LblEntries = new System.Windows.Forms.Label();
+            this.CmbBxPaginationNumbers = new System.Windows.Forms.ComboBox();
+            this.LblShow = new System.Windows.Forms.Label();
+            this.LblPaginationPrevious = new System.Windows.Forms.Button();
+            this.LblPaginationNext = new System.Windows.Forms.Button();
+            this.LblPaginationShowEntries = new System.Windows.Forms.Label();
             this.BtnAddUser = new System.Windows.Forms.Button();
+            this.CmbBxRoleFilter = new System.Windows.Forms.ComboBox();
+            this.LblSearch = new System.Windows.Forms.Label();
+            this.BtnApply = new System.Windows.Forms.Button();
+            this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,10 +51,6 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
-            this.CmbBxRoleFilter = new System.Windows.Forms.ComboBox();
-            this.LblSearch = new System.Windows.Forms.Label();
-            this.BtnApply = new System.Windows.Forms.Button();
-            this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,79 +96,82 @@
             this.DgwUsers.TabIndex = 10;
             this.DgwUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwUsers_CellContentClick);
             // 
-            // label2
+            // LblEntries
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(150, 132);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 28);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "entries";
+            this.LblEntries.AutoSize = true;
+            this.LblEntries.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblEntries.Location = new System.Drawing.Point(150, 132);
+            this.LblEntries.Name = "LblEntries";
+            this.LblEntries.Size = new System.Drawing.Size(70, 28);
+            this.LblEntries.TabIndex = 32;
+            this.LblEntries.Text = "entries";
             // 
-            // comboBox1
+            // CmbBxPaginationNumbers
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.CmbBxPaginationNumbers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.CmbBxPaginationNumbers.FormattingEnabled = true;
+            this.CmbBxPaginationNumbers.Items.AddRange(new object[] {
             "5",
             "10",
-            "15"});
-            this.comboBox1.Location = new System.Drawing.Point(93, 132);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(52, 33);
-            this.comboBox1.TabIndex = 31;
-            this.comboBox1.Text = "5";
+            "15",
+            "20",
+            "25",
+            "30"});
+            this.CmbBxPaginationNumbers.Location = new System.Drawing.Point(93, 132);
+            this.CmbBxPaginationNumbers.Name = "CmbBxPaginationNumbers";
+            this.CmbBxPaginationNumbers.Size = new System.Drawing.Size(52, 33);
+            this.CmbBxPaginationNumbers.TabIndex = 31;
+            this.CmbBxPaginationNumbers.Text = "5";
             // 
-            // label1
+            // LblShow
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(28, 132);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 28);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "Show";
+            this.LblShow.AutoSize = true;
+            this.LblShow.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblShow.Location = new System.Drawing.Point(28, 132);
+            this.LblShow.Name = "LblShow";
+            this.LblShow.Size = new System.Drawing.Size(60, 28);
+            this.LblShow.TabIndex = 30;
+            this.LblShow.Text = "Show";
             // 
-            // button2
+            // LblPaginationPrevious
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Location = new System.Drawing.Point(1276, 558);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(125, 46);
-            this.button2.TabIndex = 36;
-            this.button2.Text = "Previous";
-            this.button2.UseVisualStyleBackColor = false;
+            this.LblPaginationPrevious.BackColor = System.Drawing.Color.White;
+            this.LblPaginationPrevious.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblPaginationPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LblPaginationPrevious.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblPaginationPrevious.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblPaginationPrevious.Location = new System.Drawing.Point(1276, 558);
+            this.LblPaginationPrevious.Margin = new System.Windows.Forms.Padding(4);
+            this.LblPaginationPrevious.Name = "LblPaginationPrevious";
+            this.LblPaginationPrevious.Size = new System.Drawing.Size(125, 46);
+            this.LblPaginationPrevious.TabIndex = 36;
+            this.LblPaginationPrevious.Text = "Previous";
+            this.LblPaginationPrevious.UseVisualStyleBackColor = false;
             // 
-            // BtnLogin
+            // LblPaginationNext
             // 
-            this.BtnLogin.BackColor = System.Drawing.Color.White;
-            this.BtnLogin.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnLogin.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnLogin.Location = new System.Drawing.Point(1420, 558);
-            this.BtnLogin.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnLogin.Name = "BtnLogin";
-            this.BtnLogin.Size = new System.Drawing.Size(125, 46);
-            this.BtnLogin.TabIndex = 35;
-            this.BtnLogin.Text = "Next";
-            this.BtnLogin.UseVisualStyleBackColor = false;
+            this.LblPaginationNext.BackColor = System.Drawing.Color.White;
+            this.LblPaginationNext.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblPaginationNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LblPaginationNext.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblPaginationNext.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblPaginationNext.Location = new System.Drawing.Point(1420, 558);
+            this.LblPaginationNext.Margin = new System.Windows.Forms.Padding(4);
+            this.LblPaginationNext.Name = "LblPaginationNext";
+            this.LblPaginationNext.Size = new System.Drawing.Size(125, 46);
+            this.LblPaginationNext.TabIndex = 35;
+            this.LblPaginationNext.Text = "Next";
+            this.LblPaginationNext.UseVisualStyleBackColor = false;
             // 
-            // label3
+            // LblPaginationShowEntries
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(31, 567);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(268, 28);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Showing 1 to 5 of 100 entries";
+            this.LblPaginationShowEntries.AutoSize = true;
+            this.LblPaginationShowEntries.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblPaginationShowEntries.Location = new System.Drawing.Point(31, 567);
+            this.LblPaginationShowEntries.Name = "LblPaginationShowEntries";
+            this.LblPaginationShowEntries.Size = new System.Drawing.Size(268, 28);
+            this.LblPaginationShowEntries.TabIndex = 34;
+            this.LblPaginationShowEntries.Text = "Showing 1 to 5 of 100 entries";
             // 
             // BtnAddUser
             // 
@@ -185,76 +188,6 @@
             this.BtnAddUser.Text = "+ Add User";
             this.BtnAddUser.UseVisualStyleBackColor = false;
             this.BtnAddUser.Click += new System.EventHandler(this.BtnAddUser_Click);
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "ID";
-            this.Column7.MinimumWidth = 8;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 40;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Full Name";
-            this.Column1.MinimumWidth = 20;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Role";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Username";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Email";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 200;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Contact Number";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 200;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Status";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            // 
-            // Edit
-            // 
-            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Edit.HeaderText = "";
-            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
-            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Edit.MinimumWidth = 8;
-            this.Edit.Name = "Edit";
-            this.Edit.ToolTipText = "Edit user";
-            this.Edit.Width = 8;
-            // 
-            // Archive
-            // 
-            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Archive.HeaderText = "";
-            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
-            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Archive.MinimumWidth = 8;
-            this.Archive.Name = "Archive";
-            this.Archive.ToolTipText = "Archive user";
-            this.Archive.Width = 8;
             // 
             // CmbBxRoleFilter
             // 
@@ -305,6 +238,76 @@
             this.CmbBxStatusFilter.TabIndex = 41;
             this.CmbBxStatusFilter.Text = "Status";
             // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "ID";
+            this.Column7.MinimumWidth = 8;
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 40;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Full Name";
+            this.Column1.MinimumWidth = 20;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 150;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Role";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Username";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 150;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Email";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 200;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Contact Number";
+            this.Column6.MinimumWidth = 8;
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 150;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Status";
+            this.Column5.MinimumWidth = 8;
+            this.Column5.Name = "Column5";
+            // 
+            // Edit
+            // 
+            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Edit.HeaderText = "";
+            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
+            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Edit.MinimumWidth = 8;
+            this.Edit.Name = "Edit";
+            this.Edit.ToolTipText = "Edit user";
+            this.Edit.Width = 8;
+            // 
+            // Archive
+            // 
+            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Archive.HeaderText = "";
+            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
+            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Archive.MinimumWidth = 8;
+            this.Archive.Name = "Archive";
+            this.Archive.ToolTipText = "Archive user";
+            this.Archive.Width = 8;
+            // 
             // UCUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -315,12 +318,12 @@
             this.Controls.Add(this.LblSearch);
             this.Controls.Add(this.CmbBxRoleFilter);
             this.Controls.Add(this.BtnAddUser);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.BtnLogin);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LblPaginationPrevious);
+            this.Controls.Add(this.LblPaginationNext);
+            this.Controls.Add(this.LblPaginationShowEntries);
+            this.Controls.Add(this.LblEntries);
+            this.Controls.Add(this.CmbBxPaginationNumbers);
+            this.Controls.Add(this.LblShow);
             this.Controls.Add(this.DgwUsers);
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCUsers";
@@ -335,13 +338,17 @@
 
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.DataGridView DgwUsers;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button BtnLogin;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label LblEntries;
+        private System.Windows.Forms.ComboBox CmbBxPaginationNumbers;
+        private System.Windows.Forms.Label LblShow;
+        private System.Windows.Forms.Button LblPaginationPrevious;
+        private System.Windows.Forms.Button LblPaginationNext;
+        private System.Windows.Forms.Label LblPaginationShowEntries;
         private System.Windows.Forms.Button BtnAddUser;
+        private System.Windows.Forms.ComboBox CmbBxRoleFilter;
+        private System.Windows.Forms.Label LblSearch;
+        private System.Windows.Forms.Button BtnApply;
+        private System.Windows.Forms.ComboBox CmbBxStatusFilter;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
@@ -351,9 +358,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Archive;
-        private System.Windows.Forms.ComboBox CmbBxRoleFilter;
-        private System.Windows.Forms.Label LblSearch;
-        private System.Windows.Forms.Button BtnApply;
-        private System.Windows.Forms.ComboBox CmbBxStatusFilter;
     }
 }
