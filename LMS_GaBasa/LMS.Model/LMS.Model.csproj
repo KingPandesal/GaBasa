@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\Member\DTOCreateMember.cs" />
+    <Compile Include="DTOs\Member\DTOCreateMemberResult.cs" />
     <Compile Include="DTOs\Member\DTOUpdateMemberProfile.cs" />
     <Compile Include="DTOs\User\DTOCreateUser.cs" />
     <Compile Include="DTOs\User\DTOEditUser.cs" />

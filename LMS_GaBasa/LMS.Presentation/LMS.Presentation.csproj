@@ -64,6 +64,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Members\AddMember.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Members\AddMember.Designer.cs">
+      <DependentUpon>AddMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Profile\EditLibrarianStaffProfile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Members\AddMember.resx">
+      <DependentUpon>AddMember.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Profile\EditLibrarianStaffProfile.resx">
       <DependentUpon>EditLibrarianStaffProfile.cs</DependentUpon>

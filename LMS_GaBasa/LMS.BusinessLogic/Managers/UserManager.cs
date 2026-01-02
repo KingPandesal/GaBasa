@@ -8,11 +8,18 @@ namespace LMS.BusinessLogic.Managers
     public class UserManager : IUserManager
     {
         private readonly IUserRepository _userRepo;
+        private readonly IMemberManager _memberManager;
         private readonly IPasswordHasher _passwordHasher;
 
         public UserManager(IUserRepository userRepo, IPasswordHasher passwordHasher)
+            : this(userRepo, null, passwordHasher)
+        {
+        }
+
+        public UserManager(IUserRepository userRepo, IMemberManager memberManager, IPasswordHasher passwordHasher)
         {
             _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
+            _memberManager = memberManager;
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
 
@@ -26,8 +33,17 @@ namespace LMS.BusinessLogic.Managers
             if (!_passwordHasher.Verify(user.GetPasswordHash(), password))
                 return AuthenticationResult.Fail(AuthFailureReason.InvalidCredentials);
 
+            // Check User table status (applies to all users)
             if (user.Status != UserStatus.Active)
                 return AuthenticationResult.Fail(AuthFailureReason.AccountInactive);
+
+            // Additional check for Members - check MemberStatus using MemberManager
+            if (user.Role == Role.Member && _memberManager != null)
+            {
+                var memberFailure = _memberManager.ValidateMemberLoginStatus(user.UserID);
+                if (memberFailure.HasValue)
+                    return AuthenticationResult.Fail(memberFailure.Value);
+            }
 
             return AuthenticationResult.Ok(user);
         }

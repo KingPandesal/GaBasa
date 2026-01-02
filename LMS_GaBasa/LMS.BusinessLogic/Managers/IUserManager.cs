@@ -30,6 +30,8 @@ namespace LMS.BusinessLogic.Managers
     {
         None,
         InvalidCredentials,
-        AccountInactive
+        AccountInactive,
+        MemberSuspended,
+        MemberExpired
     }
 }

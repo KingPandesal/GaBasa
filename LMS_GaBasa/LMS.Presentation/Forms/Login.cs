@@ -2,13 +2,7 @@
 using LMS.Model.Models.Users;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LMS.Model.Models.Enums;
 
@@ -34,7 +28,6 @@ namespace LMS.Presentation.Forms
             // for placeholders
             SetPlaceholder(TxtUsername, "Enter your username");
             SetPlaceholder(TxtPassword, "Enter your password", isPassword: true);
-
         }
 
         private void SetPlaceholder(TextBox textBox, string placeholder, bool isPassword = false)
@@ -114,25 +107,7 @@ namespace LMS.Presentation.Forms
 
             if (!result.Success)
             {
-                switch (result.FailureReason)
-                {
-                    case AuthFailureReason.AccountInactive:
-                        MessageBox.Show(
-                            "Login denied. Account status: Inactive.\n\nPlease contact the library administrator to reactivate your account.",
-                            "Account Inactive",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
-                        break;
-
-                    case AuthFailureReason.InvalidCredentials:
-                    default:
-                        MessageBox.Show(
-                            "Invalid username or password.",
-                            "Login Failed",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        break;
-                }
+                ShowLoginError(result.FailureReason);
                 return;
             }
 
@@ -152,34 +127,50 @@ namespace LMS.Presentation.Forms
             this.Hide();
         }
 
-        private void OpenDashboard(User user)
+        private void ShowLoginError(AuthFailureReason reason)
         {
-            // Open main form (contains sidebar + content area)
-            // wla na tong dashboard forms, usercontrols na sila
-            var main = new MainForm(user);
-            main.Show();
+            switch (reason)
+            {
+                case AuthFailureReason.AccountInactive:
+                    MessageBox.Show(
+                        "Your account is inactive. Please contact the library staff to activate your account.",
+                        "Account Inactive",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    break;
 
-            // this.Close();
+                case AuthFailureReason.MemberSuspended:
+                    MessageBox.Show(
+                        "Your account has been suspended. Please contact the library staff for assistance.",
+                        "Account Suspended",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    break;
+
+                case AuthFailureReason.MemberExpired:
+                    MessageBox.Show(
+                        "Your account has expired. Please renew your membership to continue using the system.",
+                        "Account Expired",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    break;
+
+                case AuthFailureReason.InvalidCredentials:
+                default:
+                    MessageBox.Show(
+                        "Invalid username or password.",
+                        "Login Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    break;
+            }
         }
 
-        // ========== NOT UI ==========
-        // delete or comment ni after testing
-        // para lang this test if naka-konek sa datavis
-        //private void BtnTestConnection_Click(object sender, EventArgs e)
-        //{
-        //    using (var conn = new SqlConnection(connString))
-        //    {
-        //        try
-        //        {
-        //            conn.Open();
-        //            MessageBox.Show("Database Connected!");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Failed: " + ex.Message);
-        //        }
-        //    }
-        //}
+        private void OpenDashboard(User user)
+        {
+            var main = new MainForm(user);
+            main.Show();
+        }
 
         // end code
     }

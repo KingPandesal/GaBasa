@@ -3,6 +3,7 @@ using System.Data;
 using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Member;
+using LMS.Model.Models.Enums;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -194,6 +195,128 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@Username", DbType.String, username, 256);
                 AddParameter(cmd, "@UserID", DbType.Int32, userId);
                 return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
+        public bool UsernameExists(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT COUNT(1) FROM [User] WHERE Username = @Username";
+                AddParameter(cmd, "@Username", DbType.String, username, 256);
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
+        public int? GetMemberTypeIdByName(string typeName)
+        {
+            if (string.IsNullOrWhiteSpace(typeName))
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT MemberTypeID FROM [MemberType] WHERE TypeName = @TypeName";
+                AddParameter(cmd, "@TypeName", DbType.String, typeName, 100);
+
+                var result = cmd.ExecuteScalar();
+                return result != null ? (int?)Convert.ToInt32(result) : null;
+            }
+        }
+
+        public int AddMember(string firstName, string lastName, string email, string contactNumber,
+            string username, string passwordHash, string photoPath, string address,
+            string validIdPath, int memberTypeId)
+        {
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int userId;
+
+                        // Insert into User table
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = @"
+                                INSERT INTO [User] 
+                                (Username, [Password], [Role], [Status], FirstName, LastName, Email, ContactNumber, Photo)
+                                VALUES (@Username, @Password, 'Member', 'Active', @FirstName, @LastName, @Email, @ContactNumber, @Photo);
+                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+                            AddParameter(cmd, "@Username", DbType.String, username, 256);
+                            AddParameter(cmd, "@Password", DbType.String, passwordHash, 256);
+                            AddParameter(cmd, "@FirstName", DbType.String, firstName, 100);
+                            AddParameter(cmd, "@LastName", DbType.String, lastName, 100);
+                            AddParameter(cmd, "@Email", DbType.String, email, 256);
+                            AddParameter(cmd, "@ContactNumber", DbType.String, contactNumber, 20);
+                            AddParameter(cmd, "@Photo", DbType.String, photoPath, 500);
+
+                            userId = (int)cmd.ExecuteScalar();
+                        }
+
+                        // Insert into Member table
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.Transaction = transaction;
+                            cmd.CommandText = @"
+                                INSERT INTO [Member] 
+                                (UserID, MemberTypeID, [Address], RegistrationDate, ExpirationDate, ValidID, [Status])
+                                VALUES (@UserID, @MemberTypeID, @Address, @RegistrationDate, @ExpirationDate, @ValidID, 'Active');
+                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+                            AddParameter(cmd, "@UserID", DbType.Int32, userId);
+                            AddParameter(cmd, "@MemberTypeID", DbType.Int32, memberTypeId);
+                            AddParameter(cmd, "@Address", DbType.String, address, 500);
+                            AddParameter(cmd, "@RegistrationDate", DbType.DateTime, DateTime.Now);
+                            AddParameter(cmd, "@ExpirationDate", DbType.DateTime, DateTime.Now.AddYears(1));
+                            AddParameter(cmd, "@ValidID", DbType.String, validIdPath, 500);
+
+                            cmd.ExecuteScalar();
+                        }
+
+                        transaction.Commit();
+                        return userId;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public MemberStatus? GetMemberStatusByUserId(int userId)
+        {
+            if (userId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT [Status] FROM [Member] WHERE UserID = @UserID";
+                AddParameter(cmd, "@UserID", DbType.Int32, userId);
+
+                var result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                    return null;
+
+                string statusString = result.ToString();
+                if (Enum.TryParse<MemberStatus>(statusString, true, out var status))
+                    return status;
+
+                return null;
             }
         }
 
