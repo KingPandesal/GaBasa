@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.Presentation.Popup.Users;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,14 +18,26 @@ namespace LMS.Presentation.UserControls.Management
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        // for testing only (add data)
+        private void UCUsers_Load(object sender, EventArgs e)
         {
-
+            // Add data
+            String[] row;
+            row = new string[] { "kennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", "22"};
+            DgwUsers.Rows.Add(row);
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DgwUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            // dri ibutang and handle click sa edit ug delete
         }
+
+        private void BtnAddUser_Click(object sender, EventArgs e)
+        {
+            AddUser addUserForm = new AddUser();
+            addUserForm.ShowDialog(); // Use ShowDialog() to open as modal
+        }
+
+        // end code
     }
 }
