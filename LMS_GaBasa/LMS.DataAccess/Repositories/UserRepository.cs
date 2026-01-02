@@ -2,6 +2,7 @@
 using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace LMS.DataAccess.Repositories
@@ -252,6 +253,65 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@Username", DbType.String, username, 256);
                 return (int)cmd.ExecuteScalar() > 0;
             }
+        }
+
+        public List<User> GetAllStaffUsers()
+        {
+            var users = new List<User>();
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                // Get Admin and Staff users only (not Members)
+                cmd.CommandText = @"SELECT UserID, Username, [Role], [Status], FirstName, LastName, Email, ContactNumber, Photo 
+                                    FROM [User] 
+                                    WHERE [Role] IN ('Admin', 'Staff')
+                                    ORDER BY UserID DESC";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int userId = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                        string username = reader.IsDBNull(1) ? null : reader.GetString(1);
+                        string role = reader.IsDBNull(2) ? null : reader.GetString(2);
+                        string status = reader.IsDBNull(3) ? null : reader.GetString(3);
+                        string firstName = reader.IsDBNull(4) ? null : reader.GetString(4);
+                        string lastName = reader.IsDBNull(5) ? null : reader.GetString(5);
+                        string email = reader.IsDBNull(6) ? null : reader.GetString(6);
+                        string contactNumber = reader.IsDBNull(7) ? null : reader.GetString(7);
+                        string photo = reader.IsDBNull(8) ? null : reader.GetString(8);
+
+                        User user = CreateUserFromRoleString(role);
+                        if (user == null)
+                            continue;
+
+                        user.UserID = userId;
+                        user.Username = username;
+                        user.FirstName = firstName;
+                        user.LastName = lastName;
+                        user.Email = email;
+                        user.ContactNumber = contactNumber;
+                        user.PhotoPath = photo;
+
+                        if (!string.IsNullOrEmpty(status) &&
+                            Enum.TryParse<UserStatus>(status, true, out var parsedStatus))
+                        {
+                            user.Status = parsedStatus;
+                        }
+                        else
+                        {
+                            user.Status = UserStatus.Inactive;
+                        }
+
+                        users.Add(user);
+                    }
+                }
+            }
+
+            return users;
         }
 
         // Helper to reduce repetition

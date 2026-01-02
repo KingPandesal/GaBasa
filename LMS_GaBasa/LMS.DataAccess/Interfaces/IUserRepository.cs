@@ -1,9 +1,5 @@
 ﻿using LMS.Model.Models.Users;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -20,5 +16,8 @@ namespace LMS.DataAccess.Repositories
 
         int Add(User user);
         bool UsernameExists(string username);
+        
+        // New method for listing users (excluding Members for staff management)
+        List<User> GetAllStaffUsers();
     }
 }

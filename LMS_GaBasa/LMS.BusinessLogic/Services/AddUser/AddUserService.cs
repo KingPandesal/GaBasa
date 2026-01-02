@@ -7,6 +7,9 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+// Alias to resolve conflict between namespace and class
+using UserModel = LMS.Model.Models.Users.User;
+
 namespace LMS.BusinessLogic.Services.AddUser
 {
     public class AddUserService : IAddUserService
@@ -62,7 +65,7 @@ namespace LMS.BusinessLogic.Services.AddUser
                 return UserCreationResult.Fail(passwordValidation.ErrorMessage);
 
             // ===== CREATE USER =====
-            User user = CreateUserByRole(dto.Role);
+            UserModel user = CreateUserByRole(dto.Role);
             user.Username = dto.Username;
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
@@ -120,7 +123,7 @@ namespace LMS.BusinessLogic.Services.AddUser
             }
         }
 
-        private User CreateUserByRole(Role role)
+        private UserModel CreateUserByRole(Role role)
         {
             switch (role)
             {
