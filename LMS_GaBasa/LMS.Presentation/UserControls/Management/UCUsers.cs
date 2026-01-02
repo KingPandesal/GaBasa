@@ -78,12 +78,19 @@ namespace LMS.Presentation.UserControls.Management
             // Get the UserID from column index 1 (ID column, after #)
             int userId = Convert.ToInt32(DgwUsers.Rows[e.RowIndex].Cells[1].Value);
 
-            // Edit button clicked (column index 8, shifted by 1)
+            // Edit button clicked (column index 8)
             if (e.ColumnIndex == 8)
             {
-                MessageBox.Show($"Edit user ID: {userId}");
+                EditUser editUserForm = new EditUser();
+                editUserForm.LoadUser(userId);
+
+                // Refresh the grid if user was updated successfully
+                if (editUserForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadUsers();
+                }
             }
-            // Delete button clicked (column index 9, shifted by 1)
+            // Delete button clicked (column index 9)
             else if (e.ColumnIndex == 9)
             {
                 var result = MessageBox.Show("Are you sure you want to delete this user?",

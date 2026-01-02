@@ -314,6 +314,38 @@ namespace LMS.DataAccess.Repositories
             return users;
         }
 
+        public bool UpdateUser(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, Role role)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"UPDATE [User] 
+                            SET FirstName = @FirstName, 
+                                LastName = @LastName, 
+                                Email = @Email, 
+                                ContactNumber = @ContactNumber, 
+                                Photo = @Photo,
+                                [Role] = @Role
+                            WHERE UserID = @UserID";
+
+                AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
+                AddParameter(cmd, "@FirstName", DbType.String, firstName, 100);
+                AddParameter(cmd, "@LastName", DbType.String, lastName, 100);
+                AddParameter(cmd, "@Email", DbType.String, email, 256);
+                AddParameter(cmd, "@ContactNumber", DbType.String, contactNumber, 20);
+                AddParameter(cmd, "@Photo", DbType.String, photoPath, 500);
+                AddParameter(cmd, "@Role", DbType.String, MapRoleToDbValue(role), 50);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+        }
+
         // Helper to reduce repetition
         private void AddParameter(System.Data.IDbCommand cmd, string name, DbType type, object value, int size)
         {

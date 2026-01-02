@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="DTOs\Member\DTOUpdateMemberProfile.cs" />
     <Compile Include="DTOs\User\DTOCreateUser.cs" />
+    <Compile Include="DTOs\User\DTOEditUser.cs" />
     <Compile Include="DTOs\User\DTOFetchAllUsers.cs" />
     <Compile Include="DTOs\User\DTOUpdateUserProfile.cs" />
     <Compile Include="DTOs\User\DTOUserProfile.cs" />

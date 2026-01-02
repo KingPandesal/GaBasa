@@ -1,5 +1,6 @@
 ﻿using LMS.Model.Models.Users;
 using System.Collections.Generic;
+using LMS.Model.Models.Enums;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -19,5 +20,14 @@ namespace LMS.DataAccess.Repositories
         
         // New method for listing users (excluding Members for staff management)
         List<User> GetAllStaffUsers();
+        
+        // New method for updating user (including role)
+        bool UpdateUser(int userId, 
+            string firstName, 
+            string lastName, 
+            string email, 
+            string contactNumber, 
+            string photoPath, 
+            Role role);
     }
 }

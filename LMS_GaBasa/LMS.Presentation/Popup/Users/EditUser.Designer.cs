@@ -258,7 +258,10 @@
             this.Controls.Add(this.Design1);
             this.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "EditUser";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit user";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
