@@ -33,25 +33,35 @@
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             this.BtnApply = new System.Windows.Forms.Button();
             this.LblSearch = new System.Windows.Forms.Label();
-            this.CmbBxRoleFilter = new System.Windows.Forms.ComboBox();
             this.BtnAddUser = new System.Windows.Forms.Button();
             this.LblPaginationPrevious = new System.Windows.Forms.Button();
             this.LblPaginationNext = new System.Windows.Forms.Button();
             this.LblPaginationShowEntries = new System.Windows.Forms.Label();
-            this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             this.LblEntries = new System.Windows.Forms.Label();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CmbBxPaginationNumbers = new System.Windows.Forms.ComboBox();
             this.LblShow = new System.Windows.Forms.Label();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgwUsers = new System.Windows.Forms.DataGridView();
-            this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
             this.SuspendLayout();
@@ -74,7 +84,7 @@
             "5",
             "10",
             "15"});
-            this.CmbBxStatusFilter.Location = new System.Drawing.Point(1076, 33);
+            this.CmbBxStatusFilter.Location = new System.Drawing.Point(1138, 35);
             this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
             this.CmbBxStatusFilter.Size = new System.Drawing.Size(139, 36);
             this.CmbBxStatusFilter.TabIndex = 69;
@@ -105,16 +115,6 @@
             this.LblSearch.TabIndex = 67;
             this.LblSearch.Text = "Search";
             // 
-            // CmbBxRoleFilter
-            // 
-            this.CmbBxRoleFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxRoleFilter.FormattingEnabled = true;
-            this.CmbBxRoleFilter.Location = new System.Drawing.Point(1232, 33);
-            this.CmbBxRoleFilter.Name = "CmbBxRoleFilter";
-            this.CmbBxRoleFilter.Size = new System.Drawing.Size(192, 36);
-            this.CmbBxRoleFilter.TabIndex = 66;
-            this.CmbBxRoleFilter.Text = "Librarian / Admin";
-            // 
             // BtnAddUser
             // 
             this.BtnAddUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
@@ -127,7 +127,7 @@
             this.BtnAddUser.Name = "BtnAddUser";
             this.BtnAddUser.Size = new System.Drawing.Size(135, 46);
             this.BtnAddUser.TabIndex = 65;
-            this.BtnAddUser.Text = "+ Add User";
+            this.BtnAddUser.Text = "+ Add Book";
             this.BtnAddUser.UseVisualStyleBackColor = false;
             // 
             // LblPaginationPrevious
@@ -137,7 +137,7 @@
             this.LblPaginationPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblPaginationPrevious.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblPaginationPrevious.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblPaginationPrevious.Location = new System.Drawing.Point(1276, 558);
+            this.LblPaginationPrevious.Location = new System.Drawing.Point(1276, 711);
             this.LblPaginationPrevious.Margin = new System.Windows.Forms.Padding(4);
             this.LblPaginationPrevious.Name = "LblPaginationPrevious";
             this.LblPaginationPrevious.Size = new System.Drawing.Size(125, 46);
@@ -152,7 +152,7 @@
             this.LblPaginationNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblPaginationNext.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblPaginationNext.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblPaginationNext.Location = new System.Drawing.Point(1420, 558);
+            this.LblPaginationNext.Location = new System.Drawing.Point(1420, 711);
             this.LblPaginationNext.Margin = new System.Windows.Forms.Padding(4);
             this.LblPaginationNext.Name = "LblPaginationNext";
             this.LblPaginationNext.Size = new System.Drawing.Size(125, 46);
@@ -164,56 +164,35 @@
             // 
             this.LblPaginationShowEntries.AutoSize = true;
             this.LblPaginationShowEntries.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblPaginationShowEntries.Location = new System.Drawing.Point(31, 567);
+            this.LblPaginationShowEntries.Location = new System.Drawing.Point(31, 720);
             this.LblPaginationShowEntries.Name = "LblPaginationShowEntries";
             this.LblPaginationShowEntries.Size = new System.Drawing.Size(268, 28);
             this.LblPaginationShowEntries.TabIndex = 62;
             this.LblPaginationShowEntries.Text = "Showing 1 to 5 of 100 entries";
             // 
-            // Archive
-            // 
-            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Archive.HeaderText = "";
-            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
-            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Archive.MinimumWidth = 8;
-            this.Archive.Name = "Archive";
-            this.Archive.ToolTipText = "Archive user";
-            this.Archive.Width = 8;
-            // 
             // LblEntries
             // 
             this.LblEntries.AutoSize = true;
             this.LblEntries.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblEntries.Location = new System.Drawing.Point(150, 132);
+            this.LblEntries.Location = new System.Drawing.Point(174, 132);
             this.LblEntries.Name = "LblEntries";
             this.LblEntries.Size = new System.Drawing.Size(70, 28);
             this.LblEntries.TabIndex = 61;
             this.LblEntries.Text = "entries";
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Status";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
             // 
             // CmbBxPaginationNumbers
             // 
             this.CmbBxPaginationNumbers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.CmbBxPaginationNumbers.FormattingEnabled = true;
             this.CmbBxPaginationNumbers.Items.AddRange(new object[] {
-            "5",
             "10",
-            "15",
             "20",
-            "25",
             "30"});
             this.CmbBxPaginationNumbers.Location = new System.Drawing.Point(93, 132);
             this.CmbBxPaginationNumbers.Name = "CmbBxPaginationNumbers";
-            this.CmbBxPaginationNumbers.Size = new System.Drawing.Size(52, 33);
+            this.CmbBxPaginationNumbers.Size = new System.Drawing.Size(75, 33);
             this.CmbBxPaginationNumbers.TabIndex = 60;
-            this.CmbBxPaginationNumbers.Text = "5";
+            this.CmbBxPaginationNumbers.Text = "10";
             // 
             // LblShow
             // 
@@ -225,61 +204,26 @@
             this.LblShow.TabIndex = 59;
             this.LblShow.Text = "Show";
             // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Contact Number";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Email";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 200;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Username";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Role";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Full Name";
-            this.Column1.MinimumWidth = 20;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "ID";
-            this.Column7.MinimumWidth = 8;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 40;
-            // 
             // DgwUsers
             // 
             this.DgwUsers.AllowUserToAddRows = false;
             this.DgwUsers.BackgroundColor = System.Drawing.Color.White;
             this.DgwUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgwUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column7,
+            this.Column14,
             this.Column1,
-            this.Column4,
             this.Column2,
             this.Column3,
-            this.Column6,
+            this.Column4,
             this.Column5,
+            this.Column6,
+            this.Column7,
+            this.Column8,
+            this.Column9,
+            this.Column10,
+            this.Column11,
+            this.Column12,
+            this.Column13,
             this.Edit,
             this.Archive});
             this.DgwUsers.GridColor = System.Drawing.SystemColors.ControlLight;
@@ -287,19 +231,8 @@
             this.DgwUsers.Name = "DgwUsers";
             this.DgwUsers.RowHeadersWidth = 62;
             this.DgwUsers.RowTemplate.Height = 28;
-            this.DgwUsers.Size = new System.Drawing.Size(1509, 317);
+            this.DgwUsers.Size = new System.Drawing.Size(1509, 490);
             this.DgwUsers.TabIndex = 58;
-            // 
-            // Edit
-            // 
-            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Edit.HeaderText = "";
-            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
-            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Edit.MinimumWidth = 8;
-            this.Edit.Name = "Edit";
-            this.Edit.ToolTipText = "Edit user";
-            this.Edit.Width = 8;
             // 
             // TxtSearchBar
             // 
@@ -314,21 +247,201 @@
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.Size = new System.Drawing.Size(662, 40);
             this.TxtSearchBar.TabIndex = 57;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button1.Location = new System.Drawing.Point(1252, 123);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(135, 46);
+            this.button1.TabIndex = 71;
+            this.button1.Text = "📥 Import";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "15"});
+            this.comboBox1.Location = new System.Drawing.Point(1287, 35);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(139, 36);
+            this.comboBox1.TabIndex = 72;
+            this.comboBox1.Text = "Status";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "15"});
+            this.comboBox2.Location = new System.Drawing.Point(989, 35);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(139, 36);
+            this.comboBox2.TabIndex = 73;
+            this.comboBox2.Text = "Status";
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "15"});
+            this.comboBox3.Location = new System.Drawing.Point(839, 35);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(139, 36);
+            this.comboBox3.TabIndex = 74;
+            this.comboBox3.Text = "Status";
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "#";
+            this.Column14.MinimumWidth = 8;
+            this.Column14.Name = "Column14";
+            this.Column14.Width = 50;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Book ID";
+            this.Column1.MinimumWidth = 8;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "ISBN";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 150;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Call Number";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 150;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Title";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 150;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Subtitle";
+            this.Column5.MinimumWidth = 8;
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 150;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Publishers";
+            this.Column6.MinimumWidth = 8;
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 150;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Category";
+            this.Column7.MinimumWidth = 8;
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 150;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Language";
+            this.Column8.MinimumWidth = 8;
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 150;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Pages";
+            this.Column9.MinimumWidth = 8;
+            this.Column9.Name = "Column9";
+            this.Column9.Width = 150;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "Edition";
+            this.Column10.MinimumWidth = 8;
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 150;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Publication Year";
+            this.Column11.MinimumWidth = 8;
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 150;
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Description";
+            this.Column12.MinimumWidth = 8;
+            this.Column12.Name = "Column12";
+            this.Column12.Width = 150;
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "Resource Type";
+            this.Column13.MinimumWidth = 8;
+            this.Column13.Name = "Column13";
+            this.Column13.Width = 150;
+            // 
+            // Edit
+            // 
+            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Edit.HeaderText = "";
+            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
+            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Edit.MinimumWidth = 8;
+            this.Edit.Name = "Edit";
+            this.Edit.ToolTipText = "Edit user";
+            this.Edit.Width = 8;
+            // 
+            // Archive
+            // 
+            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Archive.HeaderText = "";
+            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
+            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Archive.MinimumWidth = 8;
+            this.Archive.Name = "Archive";
+            this.Archive.ToolTipText = "Archive user";
+            this.Archive.Width = 8;
             // 
             // UCInventory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CmbBxStatusFilter);
             this.Controls.Add(this.BtnApply);
             this.Controls.Add(this.LblSearch);
-            this.Controls.Add(this.CmbBxRoleFilter);
             this.Controls.Add(this.BtnAddUser);
             this.Controls.Add(this.LblPaginationPrevious);
             this.Controls.Add(this.LblPaginationNext);
@@ -353,24 +466,34 @@
         private System.Windows.Forms.ComboBox CmbBxStatusFilter;
         private System.Windows.Forms.Button BtnApply;
         private System.Windows.Forms.Label LblSearch;
-        private System.Windows.Forms.ComboBox CmbBxRoleFilter;
         private System.Windows.Forms.Button BtnAddUser;
         private System.Windows.Forms.Button LblPaginationPrevious;
         private System.Windows.Forms.Button LblPaginationNext;
         private System.Windows.Forms.Label LblPaginationShowEntries;
-        private System.Windows.Forms.DataGridViewImageColumn Archive;
         private System.Windows.Forms.Label LblEntries;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.ComboBox CmbBxPaginationNumbers;
         private System.Windows.Forms.Label LblShow;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridView DgwUsers;
-        private System.Windows.Forms.DataGridViewImageColumn Edit;
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
+        private System.Windows.Forms.DataGridViewImageColumn Edit;
+        private System.Windows.Forms.DataGridViewImageColumn Archive;
     }
 }
