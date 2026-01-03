@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.PnlDesign = new System.Windows.Forms.Panel();
             this.LblForBookCover = new System.Windows.Forms.Label();
             this.PnlAddBook = new System.Windows.Forms.Panel();
@@ -58,24 +57,10 @@
             this.TxtCallNumber = new System.Windows.Forms.TextBox();
             this.LblCallNumber = new System.Windows.Forms.Label();
             this.CmbBxLanguage = new System.Windows.Forms.ComboBox();
-            this.GrpBxResourceType = new System.Windows.Forms.GroupBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.RdoBtnPhysicalBook = new System.Windows.Forms.RadioButton();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.PnlPicBxBookCoverContainer = new System.Windows.Forms.Panel();
             this.TipforPicBxBookCover = new System.Windows.Forms.ToolTip(this.components);
-            this.RdoBtnPeriodical = new System.Windows.Forms.RadioButton();
-            this.RdoBtnTheses = new System.Windows.Forms.RadioButton();
-            this.RdoBtnAV = new System.Windows.Forms.RadioButton();
-            this.RdoBtnEBook = new System.Windows.Forms.RadioButton();
-            this.TxtDownloadLink = new System.Windows.Forms.TextBox();
-            this.LblDownloadLink = new System.Windows.Forms.Label();
             this.GrpBxCopyInformation = new System.Windows.Forms.GroupBox();
             this.textBox18 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
@@ -93,33 +78,39 @@
             this.NumPckNoOfCopies = new ReaLTaiizor.Controls.FoxNumeric();
             this.LblNoOfCopies = new System.Windows.Forms.Label();
             this.LblLocation = new System.Windows.Forms.Label();
-            this.RdoBtnReference = new System.Windows.Forms.RadioButton();
-            this.RdoBtnCirculation = new System.Windows.Forms.RadioButton();
-            this.GrpBxIfPhysicalBook = new System.Windows.Forms.GroupBox();
-            this.RdoBtnIfEBook = new System.Windows.Forms.GroupBox();
             this.TxtLocation = new System.Windows.Forms.TextBox();
             this.CmbBxAuthor = new System.Windows.Forms.ComboBox();
             this.CmbBxEditor = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
+            this.PicBxBookCover = new System.Windows.Forms.PictureBox();
+            this.GrpBxResourceType = new System.Windows.Forms.GroupBox();
+            this.FlowPnlforRdoBtns = new System.Windows.Forms.FlowLayoutPanel();
+            this.RdoBtnPhysicalBook = new System.Windows.Forms.RadioButton();
+            this.PnlforRdoBtnPhysicalBooks = new System.Windows.Forms.Panel();
+            this.RdoBtnReference = new System.Windows.Forms.RadioButton();
+            this.RdoBtnCirculation = new System.Windows.Forms.RadioButton();
+            this.RdoBtnTheses = new System.Windows.Forms.RadioButton();
+            this.RdoBtnPeriodical = new System.Windows.Forms.RadioButton();
+            this.RdoBtnAV = new System.Windows.Forms.RadioButton();
+            this.RdoBtnEBook = new System.Windows.Forms.RadioButton();
+            this.PnlforRdoBtnEBook = new System.Windows.Forms.Panel();
+            this.LblDownloadLink = new System.Windows.Forms.Label();
+            this.TxtDownloadLink = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             this.PnlAddBook.SuspendLayout();
             this.GrpBxBookInformation.SuspendLayout();
-            this.GrpBxResourceType.SuspendLayout();
             this.GrpBxCopyInformation.SuspendLayout();
-            this.GrpBxIfPhysicalBook.SuspendLayout();
-            this.RdoBtnIfEBook.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
+            this.GrpBxResourceType.SuspendLayout();
+            this.FlowPnlforRdoBtns.SuspendLayout();
+            this.PnlforRdoBtnPhysicalBooks.SuspendLayout();
+            this.PnlforRdoBtnEBook.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // PicBxBookCover
-            // 
-            this.PicBxBookCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.PicBxBookCover.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicBxBookCover.Location = new System.Drawing.Point(65, 68);
-            this.PicBxBookCover.Name = "PicBxBookCover";
-            this.PicBxBookCover.Size = new System.Drawing.Size(349, 463);
-            this.PicBxBookCover.TabIndex = 0;
-            this.PicBxBookCover.TabStop = false;
-            this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");
             // 
             // PnlDesign
             // 
@@ -144,8 +135,8 @@
             // PnlAddBook
             // 
             this.PnlAddBook.AutoScroll = true;
-            this.PnlAddBook.Controls.Add(this.GrpBxCopyInformation);
             this.PnlAddBook.Controls.Add(this.GrpBxResourceType);
+            this.PnlAddBook.Controls.Add(this.GrpBxCopyInformation);
             this.PnlAddBook.Controls.Add(this.GrpBxBookInformation);
             this.PnlAddBook.Location = new System.Drawing.Point(437, 122);
             this.PnlAddBook.Name = "PnlAddBook";
@@ -182,7 +173,7 @@
             this.GrpBxBookInformation.Controls.Add(this.CmbBxCategory);
             this.GrpBxBookInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxBookInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxBookInformation.Location = new System.Drawing.Point(21, 22);
+            this.GrpBxBookInformation.Location = new System.Drawing.Point(21, 3);
             this.GrpBxBookInformation.Name = "GrpBxBookInformation";
             this.GrpBxBookInformation.Size = new System.Drawing.Size(629, 845);
             this.GrpBxBookInformation.TabIndex = 72;
@@ -446,104 +437,6 @@
             this.CmbBxLanguage.Size = new System.Drawing.Size(353, 36);
             this.CmbBxLanguage.TabIndex = 93;
             // 
-            // GrpBxResourceType
-            // 
-            this.GrpBxResourceType.Controls.Add(this.RdoBtnIfEBook);
-            this.GrpBxResourceType.Controls.Add(this.GrpBxIfPhysicalBook);
-            this.GrpBxResourceType.Controls.Add(this.RdoBtnEBook);
-            this.GrpBxResourceType.Controls.Add(this.RdoBtnAV);
-            this.GrpBxResourceType.Controls.Add(this.RdoBtnTheses);
-            this.GrpBxResourceType.Controls.Add(this.RdoBtnPeriodical);
-            this.GrpBxResourceType.Controls.Add(this.RdoBtnPhysicalBook);
-            this.GrpBxResourceType.Controls.Add(this.textBox11);
-            this.GrpBxResourceType.Controls.Add(this.label14);
-            this.GrpBxResourceType.Controls.Add(this.textBox12);
-            this.GrpBxResourceType.Controls.Add(this.label15);
-            this.GrpBxResourceType.Controls.Add(this.textBox13);
-            this.GrpBxResourceType.Controls.Add(this.label16);
-            this.GrpBxResourceType.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.GrpBxResourceType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxResourceType.Location = new System.Drawing.Point(21, 891);
-            this.GrpBxResourceType.Name = "GrpBxResourceType";
-            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 531);
-            this.GrpBxResourceType.TabIndex = 73;
-            this.GrpBxResourceType.TabStop = false;
-            this.GrpBxResourceType.Text = "Resource Type";
-            this.GrpBxResourceType.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // textBox11
-            // 
-            this.textBox11.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox11.ForeColor = System.Drawing.Color.Black;
-            this.textBox11.Location = new System.Drawing.Point(204, 818);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(353, 34);
-            this.textBox11.TabIndex = 92;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(30, 821);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(121, 28);
-            this.label14.TabIndex = 91;
-            this.label14.Text = "Call Number";
-            // 
-            // textBox12
-            // 
-            this.textBox12.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox12.ForeColor = System.Drawing.Color.Black;
-            this.textBox12.Location = new System.Drawing.Point(232, 750);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(325, 34);
-            this.textBox12.TabIndex = 90;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label15.ForeColor = System.Drawing.Color.Black;
-            this.label15.Location = new System.Drawing.Point(30, 754);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(186, 28);
-            this.label15.TabIndex = 89;
-            this.label15.Text = "Physical Description";
-            // 
-            // textBox13
-            // 
-            this.textBox13.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox13.ForeColor = System.Drawing.Color.Black;
-            this.textBox13.Location = new System.Drawing.Point(204, 690);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(123, 34);
-            this.textBox13.TabIndex = 88;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(30, 694);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(121, 28);
-            this.label16.TabIndex = 87;
-            this.label16.Text = "No. of Pages";
-            // 
-            // RdoBtnPhysicalBook
-            // 
-            this.RdoBtnPhysicalBook.AutoSize = true;
-            this.RdoBtnPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnPhysicalBook.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnPhysicalBook.Location = new System.Drawing.Point(35, 76);
-            this.RdoBtnPhysicalBook.Name = "RdoBtnPhysicalBook";
-            this.RdoBtnPhysicalBook.Size = new System.Drawing.Size(156, 32);
-            this.RdoBtnPhysicalBook.TabIndex = 93;
-            this.RdoBtnPhysicalBook.TabStop = true;
-            this.RdoBtnPhysicalBook.Text = "Physical Book";
-            this.RdoBtnPhysicalBook.UseVisualStyleBackColor = true;
-            // 
             // BtnCancel
             // 
             this.BtnCancel.BackColor = System.Drawing.Color.White;
@@ -584,78 +477,6 @@
             this.PnlPicBxBookCoverContainer.Size = new System.Drawing.Size(401, 523);
             this.PnlPicBxBookCoverContainer.TabIndex = 0;
             // 
-            // RdoBtnPeriodical
-            // 
-            this.RdoBtnPeriodical.AutoSize = true;
-            this.RdoBtnPeriodical.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnPeriodical.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnPeriodical.Location = new System.Drawing.Point(34, 131);
-            this.RdoBtnPeriodical.Name = "RdoBtnPeriodical";
-            this.RdoBtnPeriodical.Size = new System.Drawing.Size(225, 32);
-            this.RdoBtnPeriodical.TabIndex = 94;
-            this.RdoBtnPeriodical.TabStop = true;
-            this.RdoBtnPeriodical.Text = "Periodical / Magazine";
-            this.RdoBtnPeriodical.UseVisualStyleBackColor = true;
-            // 
-            // RdoBtnTheses
-            // 
-            this.RdoBtnTheses.AutoSize = true;
-            this.RdoBtnTheses.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnTheses.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnTheses.Location = new System.Drawing.Point(35, 189);
-            this.RdoBtnTheses.Name = "RdoBtnTheses";
-            this.RdoBtnTheses.Size = new System.Drawing.Size(216, 32);
-            this.RdoBtnTheses.TabIndex = 95;
-            this.RdoBtnTheses.TabStop = true;
-            this.RdoBtnTheses.Text = "Theses / Dissertation";
-            this.RdoBtnTheses.UseVisualStyleBackColor = true;
-            // 
-            // RdoBtnAV
-            // 
-            this.RdoBtnAV.AutoSize = true;
-            this.RdoBtnAV.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnAV.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnAV.Location = new System.Drawing.Point(344, 76);
-            this.RdoBtnAV.Name = "RdoBtnAV";
-            this.RdoBtnAV.Size = new System.Drawing.Size(149, 32);
-            this.RdoBtnAV.TabIndex = 96;
-            this.RdoBtnAV.TabStop = true;
-            this.RdoBtnAV.Text = "Audio-Visual";
-            this.RdoBtnAV.UseVisualStyleBackColor = true;
-            // 
-            // RdoBtnEBook
-            // 
-            this.RdoBtnEBook.AutoSize = true;
-            this.RdoBtnEBook.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnEBook.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnEBook.Location = new System.Drawing.Point(344, 131);
-            this.RdoBtnEBook.Name = "RdoBtnEBook";
-            this.RdoBtnEBook.Size = new System.Drawing.Size(100, 32);
-            this.RdoBtnEBook.TabIndex = 97;
-            this.RdoBtnEBook.TabStop = true;
-            this.RdoBtnEBook.Text = "E-Book";
-            this.RdoBtnEBook.UseVisualStyleBackColor = true;
-            // 
-            // TxtDownloadLink
-            // 
-            this.TxtDownloadLink.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.TxtDownloadLink.ForeColor = System.Drawing.Color.Black;
-            this.TxtDownloadLink.Location = new System.Drawing.Point(186, 48);
-            this.TxtDownloadLink.Name = "TxtDownloadLink";
-            this.TxtDownloadLink.Size = new System.Drawing.Size(324, 34);
-            this.TxtDownloadLink.TabIndex = 99;
-            // 
-            // LblDownloadLink
-            // 
-            this.LblDownloadLink.AutoSize = true;
-            this.LblDownloadLink.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblDownloadLink.ForeColor = System.Drawing.Color.Black;
-            this.LblDownloadLink.Location = new System.Drawing.Point(12, 51);
-            this.LblDownloadLink.Name = "LblDownloadLink";
-            this.LblDownloadLink.Size = new System.Drawing.Size(142, 28);
-            this.LblDownloadLink.TabIndex = 98;
-            this.LblDownloadLink.Text = "Download Link";
-            // 
             // GrpBxCopyInformation
             // 
             this.GrpBxCopyInformation.Controls.Add(this.TxtLocation);
@@ -677,7 +498,7 @@
             this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
             this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(21, 1442);
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(21, 1341);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
             this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 181);
             this.GrpBxCopyInformation.TabIndex = 74;
@@ -863,58 +684,6 @@
             this.LblLocation.TabIndex = 106;
             this.LblLocation.Text = "Location";
             // 
-            // RdoBtnReference
-            // 
-            this.RdoBtnReference.AutoSize = true;
-            this.RdoBtnReference.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnReference.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnReference.Location = new System.Drawing.Point(16, 44);
-            this.RdoBtnReference.Name = "RdoBtnReference";
-            this.RdoBtnReference.Size = new System.Drawing.Size(121, 32);
-            this.RdoBtnReference.TabIndex = 101;
-            this.RdoBtnReference.TabStop = true;
-            this.RdoBtnReference.Text = "Reference";
-            this.RdoBtnReference.UseVisualStyleBackColor = true;
-            // 
-            // RdoBtnCirculation
-            // 
-            this.RdoBtnCirculation.AutoSize = true;
-            this.RdoBtnCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnCirculation.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnCirculation.Location = new System.Drawing.Point(327, 44);
-            this.RdoBtnCirculation.Name = "RdoBtnCirculation";
-            this.RdoBtnCirculation.Size = new System.Drawing.Size(131, 32);
-            this.RdoBtnCirculation.TabIndex = 102;
-            this.RdoBtnCirculation.TabStop = true;
-            this.RdoBtnCirculation.Text = "Circulation";
-            this.RdoBtnCirculation.UseVisualStyleBackColor = true;
-            // 
-            // GrpBxIfPhysicalBook
-            // 
-            this.GrpBxIfPhysicalBook.Controls.Add(this.RdoBtnReference);
-            this.GrpBxIfPhysicalBook.Controls.Add(this.RdoBtnCirculation);
-            this.GrpBxIfPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.GrpBxIfPhysicalBook.ForeColor = System.Drawing.Color.Black;
-            this.GrpBxIfPhysicalBook.Location = new System.Drawing.Point(34, 286);
-            this.GrpBxIfPhysicalBook.Name = "GrpBxIfPhysicalBook";
-            this.GrpBxIfPhysicalBook.Size = new System.Drawing.Size(522, 94);
-            this.GrpBxIfPhysicalBook.TabIndex = 103;
-            this.GrpBxIfPhysicalBook.TabStop = false;
-            this.GrpBxIfPhysicalBook.Text = "If Physical Book";
-            // 
-            // RdoBtnIfEBook
-            // 
-            this.RdoBtnIfEBook.Controls.Add(this.TxtDownloadLink);
-            this.RdoBtnIfEBook.Controls.Add(this.LblDownloadLink);
-            this.RdoBtnIfEBook.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnIfEBook.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnIfEBook.Location = new System.Drawing.Point(35, 399);
-            this.RdoBtnIfEBook.Name = "RdoBtnIfEBook";
-            this.RdoBtnIfEBook.Size = new System.Drawing.Size(522, 106);
-            this.RdoBtnIfEBook.TabIndex = 104;
-            this.RdoBtnIfEBook.TabStop = false;
-            this.RdoBtnIfEBook.Text = "If E-Book";
-            // 
             // TxtLocation
             // 
             this.TxtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -954,6 +723,248 @@
             this.CmbBxEditor.Size = new System.Drawing.Size(353, 36);
             this.CmbBxEditor.TabIndex = 94;
             // 
+            // PicBxBookCover
+            // 
+            this.PicBxBookCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.PicBxBookCover.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxBookCover.Location = new System.Drawing.Point(65, 68);
+            this.PicBxBookCover.Name = "PicBxBookCover";
+            this.PicBxBookCover.Size = new System.Drawing.Size(349, 463);
+            this.PicBxBookCover.TabIndex = 0;
+            this.PicBxBookCover.TabStop = false;
+            this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");
+            // 
+            // GrpBxResourceType
+            // 
+            this.GrpBxResourceType.Controls.Add(this.FlowPnlforRdoBtns);
+            this.GrpBxResourceType.Controls.Add(this.textBox11);
+            this.GrpBxResourceType.Controls.Add(this.label14);
+            this.GrpBxResourceType.Controls.Add(this.textBox12);
+            this.GrpBxResourceType.Controls.Add(this.label15);
+            this.GrpBxResourceType.Controls.Add(this.textBox13);
+            this.GrpBxResourceType.Controls.Add(this.label16);
+            this.GrpBxResourceType.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxResourceType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.GrpBxResourceType.Location = new System.Drawing.Point(21, 866);
+            this.GrpBxResourceType.Name = "GrpBxResourceType";
+            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 458);
+            this.GrpBxResourceType.TabIndex = 75;
+            this.GrpBxResourceType.TabStop = false;
+            this.GrpBxResourceType.Text = "Resource Type";
+            // 
+            // FlowPnlforRdoBtns
+            // 
+            this.FlowPnlforRdoBtns.AutoSize = true;
+            this.FlowPnlforRdoBtns.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.FlowPnlforRdoBtns.Controls.Add(this.RdoBtnPhysicalBook);
+            this.FlowPnlforRdoBtns.Controls.Add(this.PnlforRdoBtnPhysicalBooks);
+            this.FlowPnlforRdoBtns.Controls.Add(this.RdoBtnTheses);
+            this.FlowPnlforRdoBtns.Controls.Add(this.RdoBtnPeriodical);
+            this.FlowPnlforRdoBtns.Controls.Add(this.RdoBtnAV);
+            this.FlowPnlforRdoBtns.Controls.Add(this.RdoBtnEBook);
+            this.FlowPnlforRdoBtns.Controls.Add(this.PnlforRdoBtnEBook);
+            this.FlowPnlforRdoBtns.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.FlowPnlforRdoBtns.Location = new System.Drawing.Point(34, 69);
+            this.FlowPnlforRdoBtns.Name = "FlowPnlforRdoBtns";
+            this.FlowPnlforRdoBtns.Size = new System.Drawing.Size(544, 362);
+            this.FlowPnlforRdoBtns.TabIndex = 105;
+            // 
+            // RdoBtnPhysicalBook
+            // 
+            this.RdoBtnPhysicalBook.AutoSize = true;
+            this.RdoBtnPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnPhysicalBook.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnPhysicalBook.Location = new System.Drawing.Point(3, 3);
+            this.RdoBtnPhysicalBook.Name = "RdoBtnPhysicalBook";
+            this.RdoBtnPhysicalBook.Size = new System.Drawing.Size(156, 32);
+            this.RdoBtnPhysicalBook.TabIndex = 93;
+            this.RdoBtnPhysicalBook.TabStop = true;
+            this.RdoBtnPhysicalBook.Text = "Physical Book";
+            this.RdoBtnPhysicalBook.UseVisualStyleBackColor = true;
+            this.RdoBtnPhysicalBook.CheckedChanged += new System.EventHandler(this.RdoBtnPhysicalBook_CheckedChanged);
+            // 
+            // PnlforRdoBtnPhysicalBooks
+            // 
+            this.PnlforRdoBtnPhysicalBooks.Controls.Add(this.RdoBtnReference);
+            this.PnlforRdoBtnPhysicalBooks.Controls.Add(this.RdoBtnCirculation);
+            this.PnlforRdoBtnPhysicalBooks.Location = new System.Drawing.Point(3, 41);
+            this.PnlforRdoBtnPhysicalBooks.Name = "PnlforRdoBtnPhysicalBooks";
+            this.PnlforRdoBtnPhysicalBooks.Size = new System.Drawing.Size(215, 95);
+            this.PnlforRdoBtnPhysicalBooks.TabIndex = 106;
+            this.PnlforRdoBtnPhysicalBooks.Visible = false;
+            // 
+            // RdoBtnReference
+            // 
+            this.RdoBtnReference.AutoSize = true;
+            this.RdoBtnReference.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnReference.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnReference.Location = new System.Drawing.Point(35, 3);
+            this.RdoBtnReference.Name = "RdoBtnReference";
+            this.RdoBtnReference.Size = new System.Drawing.Size(121, 32);
+            this.RdoBtnReference.TabIndex = 101;
+            this.RdoBtnReference.TabStop = true;
+            this.RdoBtnReference.Text = "Reference";
+            this.RdoBtnReference.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnCirculation
+            // 
+            this.RdoBtnCirculation.AutoSize = true;
+            this.RdoBtnCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnCirculation.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnCirculation.Location = new System.Drawing.Point(35, 41);
+            this.RdoBtnCirculation.Name = "RdoBtnCirculation";
+            this.RdoBtnCirculation.Size = new System.Drawing.Size(131, 32);
+            this.RdoBtnCirculation.TabIndex = 102;
+            this.RdoBtnCirculation.TabStop = true;
+            this.RdoBtnCirculation.Text = "Circulation";
+            this.RdoBtnCirculation.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnTheses
+            // 
+            this.RdoBtnTheses.AutoSize = true;
+            this.RdoBtnTheses.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnTheses.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnTheses.Location = new System.Drawing.Point(3, 142);
+            this.RdoBtnTheses.Name = "RdoBtnTheses";
+            this.RdoBtnTheses.Size = new System.Drawing.Size(216, 32);
+            this.RdoBtnTheses.TabIndex = 95;
+            this.RdoBtnTheses.TabStop = true;
+            this.RdoBtnTheses.Text = "Theses / Dissertation";
+            this.RdoBtnTheses.UseVisualStyleBackColor = true;
+            this.RdoBtnTheses.CheckedChanged += new System.EventHandler(this.RdoBtnTheses_CheckedChanged);
+            // 
+            // RdoBtnPeriodical
+            // 
+            this.RdoBtnPeriodical.AutoSize = true;
+            this.RdoBtnPeriodical.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnPeriodical.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnPeriodical.Location = new System.Drawing.Point(3, 180);
+            this.RdoBtnPeriodical.Name = "RdoBtnPeriodical";
+            this.RdoBtnPeriodical.Size = new System.Drawing.Size(225, 32);
+            this.RdoBtnPeriodical.TabIndex = 94;
+            this.RdoBtnPeriodical.TabStop = true;
+            this.RdoBtnPeriodical.Text = "Periodical / Magazine";
+            this.RdoBtnPeriodical.UseVisualStyleBackColor = true;
+            this.RdoBtnPeriodical.CheckedChanged += new System.EventHandler(this.RdoBtnPeriodical_CheckedChanged);
+            // 
+            // RdoBtnAV
+            // 
+            this.RdoBtnAV.AutoSize = true;
+            this.RdoBtnAV.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnAV.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnAV.Location = new System.Drawing.Point(3, 218);
+            this.RdoBtnAV.Name = "RdoBtnAV";
+            this.RdoBtnAV.Size = new System.Drawing.Size(149, 32);
+            this.RdoBtnAV.TabIndex = 96;
+            this.RdoBtnAV.TabStop = true;
+            this.RdoBtnAV.Text = "Audio-Visual";
+            this.RdoBtnAV.UseVisualStyleBackColor = true;
+            this.RdoBtnAV.CheckedChanged += new System.EventHandler(this.RdoBtnAV_CheckedChanged);
+            // 
+            // RdoBtnEBook
+            // 
+            this.RdoBtnEBook.AutoSize = true;
+            this.RdoBtnEBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnEBook.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnEBook.Location = new System.Drawing.Point(3, 256);
+            this.RdoBtnEBook.Name = "RdoBtnEBook";
+            this.RdoBtnEBook.Size = new System.Drawing.Size(100, 32);
+            this.RdoBtnEBook.TabIndex = 97;
+            this.RdoBtnEBook.TabStop = true;
+            this.RdoBtnEBook.Text = "E-Book";
+            this.RdoBtnEBook.UseVisualStyleBackColor = true;
+            this.RdoBtnEBook.CheckedChanged += new System.EventHandler(this.RdoBtnEBook_CheckedChanged);
+            // 
+            // PnlforRdoBtnEBook
+            // 
+            this.PnlforRdoBtnEBook.Controls.Add(this.LblDownloadLink);
+            this.PnlforRdoBtnEBook.Controls.Add(this.TxtDownloadLink);
+            this.PnlforRdoBtnEBook.Location = new System.Drawing.Point(3, 294);
+            this.PnlforRdoBtnEBook.Name = "PnlforRdoBtnEBook";
+            this.PnlforRdoBtnEBook.Size = new System.Drawing.Size(538, 65);
+            this.PnlforRdoBtnEBook.TabIndex = 107;
+            this.PnlforRdoBtnEBook.Visible = false;
+            // 
+            // LblDownloadLink
+            // 
+            this.LblDownloadLink.AutoSize = true;
+            this.LblDownloadLink.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblDownloadLink.ForeColor = System.Drawing.Color.Black;
+            this.LblDownloadLink.Location = new System.Drawing.Point(30, 20);
+            this.LblDownloadLink.Name = "LblDownloadLink";
+            this.LblDownloadLink.Size = new System.Drawing.Size(142, 28);
+            this.LblDownloadLink.TabIndex = 98;
+            this.LblDownloadLink.Text = "Download Link";
+            // 
+            // TxtDownloadLink
+            // 
+            this.TxtDownloadLink.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtDownloadLink.ForeColor = System.Drawing.Color.Black;
+            this.TxtDownloadLink.Location = new System.Drawing.Point(195, 14);
+            this.TxtDownloadLink.Name = "TxtDownloadLink";
+            this.TxtDownloadLink.Size = new System.Drawing.Size(324, 34);
+            this.TxtDownloadLink.TabIndex = 99;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox11.ForeColor = System.Drawing.Color.Black;
+            this.textBox11.Location = new System.Drawing.Point(204, 818);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(353, 34);
+            this.textBox11.TabIndex = 92;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(30, 821);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(121, 28);
+            this.label14.TabIndex = 91;
+            this.label14.Text = "Call Number";
+            // 
+            // textBox12
+            // 
+            this.textBox12.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox12.ForeColor = System.Drawing.Color.Black;
+            this.textBox12.Location = new System.Drawing.Point(232, 750);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(325, 34);
+            this.textBox12.TabIndex = 90;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label15.ForeColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(30, 754);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(186, 28);
+            this.label15.TabIndex = 89;
+            this.label15.Text = "Physical Description";
+            // 
+            // textBox13
+            // 
+            this.textBox13.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox13.ForeColor = System.Drawing.Color.Black;
+            this.textBox13.Location = new System.Drawing.Point(204, 690);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(123, 34);
+            this.textBox13.TabIndex = 88;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(30, 694);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(121, 28);
+            this.label16.TabIndex = 87;
+            this.label16.Text = "No. of Pages";
+            // 
             // AddBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -973,19 +984,21 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add book";
             this.Load += new System.EventHandler(this.AddBook_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).EndInit();
             this.PnlDesign.ResumeLayout(false);
             this.PnlAddBook.ResumeLayout(false);
             this.GrpBxBookInformation.ResumeLayout(false);
             this.GrpBxBookInformation.PerformLayout();
-            this.GrpBxResourceType.ResumeLayout(false);
-            this.GrpBxResourceType.PerformLayout();
             this.GrpBxCopyInformation.ResumeLayout(false);
             this.GrpBxCopyInformation.PerformLayout();
-            this.GrpBxIfPhysicalBook.ResumeLayout(false);
-            this.GrpBxIfPhysicalBook.PerformLayout();
-            this.RdoBtnIfEBook.ResumeLayout(false);
-            this.RdoBtnIfEBook.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).EndInit();
+            this.GrpBxResourceType.ResumeLayout(false);
+            this.GrpBxResourceType.PerformLayout();
+            this.FlowPnlforRdoBtns.ResumeLayout(false);
+            this.FlowPnlforRdoBtns.PerformLayout();
+            this.PnlforRdoBtnPhysicalBooks.ResumeLayout(false);
+            this.PnlforRdoBtnPhysicalBooks.PerformLayout();
+            this.PnlforRdoBtnEBook.ResumeLayout(false);
+            this.PnlforRdoBtnEBook.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1022,24 +1035,10 @@
         private System.Windows.Forms.TextBox TxtEdition;
         private System.Windows.Forms.Label LblEdition;
         private System.Windows.Forms.ComboBox CmbBxLanguage;
-        private System.Windows.Forms.GroupBox GrpBxResourceType;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.RadioButton RdoBtnPhysicalBook;
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Panel PnlPicBxBookCoverContainer;
         private System.Windows.Forms.ToolTip TipforPicBxBookCover;
-        private System.Windows.Forms.RadioButton RdoBtnAV;
-        private System.Windows.Forms.RadioButton RdoBtnTheses;
-        private System.Windows.Forms.RadioButton RdoBtnPeriodical;
-        private System.Windows.Forms.TextBox TxtDownloadLink;
-        private System.Windows.Forms.Label LblDownloadLink;
-        private System.Windows.Forms.RadioButton RdoBtnEBook;
         private System.Windows.Forms.GroupBox GrpBxCopyInformation;
         private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.Label label25;
@@ -1057,12 +1056,27 @@
         private ReaLTaiizor.Controls.FoxNumeric NumPckNoOfCopies;
         private System.Windows.Forms.Label LblLocation;
         private System.Windows.Forms.Label LblNoOfCopies;
-        private System.Windows.Forms.RadioButton RdoBtnCirculation;
-        private System.Windows.Forms.RadioButton RdoBtnReference;
-        private System.Windows.Forms.GroupBox GrpBxIfPhysicalBook;
-        private System.Windows.Forms.GroupBox RdoBtnIfEBook;
         private System.Windows.Forms.TextBox TxtLocation;
         private System.Windows.Forms.ComboBox CmbBxEditor;
         private System.Windows.Forms.ComboBox CmbBxAuthor;
+        private System.Windows.Forms.GroupBox GrpBxResourceType;
+        private System.Windows.Forms.FlowLayoutPanel FlowPnlforRdoBtns;
+        private System.Windows.Forms.RadioButton RdoBtnPhysicalBook;
+        private System.Windows.Forms.Panel PnlforRdoBtnPhysicalBooks;
+        private System.Windows.Forms.RadioButton RdoBtnReference;
+        private System.Windows.Forms.RadioButton RdoBtnCirculation;
+        private System.Windows.Forms.RadioButton RdoBtnTheses;
+        private System.Windows.Forms.RadioButton RdoBtnPeriodical;
+        private System.Windows.Forms.RadioButton RdoBtnAV;
+        private System.Windows.Forms.RadioButton RdoBtnEBook;
+        private System.Windows.Forms.Panel PnlforRdoBtnEBook;
+        private System.Windows.Forms.Label LblDownloadLink;
+        private System.Windows.Forms.TextBox TxtDownloadLink;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.Label label16;
     }
 }

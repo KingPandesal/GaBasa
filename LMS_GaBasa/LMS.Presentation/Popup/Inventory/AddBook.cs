@@ -41,5 +41,35 @@ namespace LMS.Presentation.Popup.Inventory
         {
 
         }
+
+        private void RdoBtnPhysicalBook_CheckedChanged(object sender, EventArgs e)
+        {
+            PnlforRdoBtnPhysicalBooks.Visible = true;
+            PnlforRdoBtnEBook.Visible = false;
+        }
+
+        private void RdoBtnEBook_CheckedChanged(object sender, EventArgs e)
+        {
+            PnlforRdoBtnEBook.Visible = true;
+            PnlforRdoBtnPhysicalBooks.Visible = false;
+        }
+
+        private void RdoBtnTheses_CheckedChanged(object sender, EventArgs e)
+        {
+            PnlforRdoBtnEBook.Visible = false;
+            PnlforRdoBtnPhysicalBooks.Visible = false;
+        }
+
+        private void RdoBtnPeriodical_CheckedChanged(object sender, EventArgs e)
+        {
+            PnlforRdoBtnEBook.Visible = false;
+            PnlforRdoBtnPhysicalBooks.Visible = false;
+        }
+
+        private void RdoBtnAV_CheckedChanged(object sender, EventArgs e)
+        {
+            PnlforRdoBtnEBook.Visible = false;
+            PnlforRdoBtnPhysicalBooks.Visible = false;
+        }
     }
 }
