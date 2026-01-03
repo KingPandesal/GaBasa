@@ -276,7 +276,15 @@ namespace LMS.Presentation.UserControls.Management
             if (e.RowIndex < 0)
                 return;
 
-            int userId = Convert.ToInt32(DgwUsers.Rows[e.RowIndex].Cells[1].Value);
+            // Get the user from filtered list using the display index
+            int displayIndex = (_currentPage - 1) * _pageSize + e.RowIndex;
+            if (displayIndex >= _filteredUsers.Count)
+                return;
+
+            var user = _filteredUsers[displayIndex];
+            int userId = user.UserID;
+            string userName = user.FullName ?? "this user";
+            string currentStatus = user.Status ?? "";
 
             // Edit button clicked (column index 9)
             if (e.ColumnIndex == 9)
@@ -292,8 +300,6 @@ namespace LMS.Presentation.UserControls.Management
             // Archive button clicked (column index 10)
             else if (e.ColumnIndex == 10)
             {
-                string currentStatus = DgwUsers.Rows[e.RowIndex].Cells[8].Value?.ToString() ?? "";
-
                 if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
                 {
                     MessageBox.Show(
@@ -303,8 +309,6 @@ namespace LMS.Presentation.UserControls.Management
                         MessageBoxIcon.Information);
                     return;
                 }
-
-                string userName = DgwUsers.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "this user";
 
                 var confirmResult = MessageBox.Show(
                     $"Are you sure you want to archive {userName}?\n\nThis user will no longer be able to login.",

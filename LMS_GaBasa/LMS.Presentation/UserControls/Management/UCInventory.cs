@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.Presentation.Popup.Inventory;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,9 +18,13 @@ namespace LMS.Presentation.UserControls.Management
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void BtnAddBook_Click(object sender, EventArgs e)
         {
+            AddBook addBookForm = new AddBook();
+            addBookForm.ShowDialog();
 
         }
+
+        // end code
     }
 }

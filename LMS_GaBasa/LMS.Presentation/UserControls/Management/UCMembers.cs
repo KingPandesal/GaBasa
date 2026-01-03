@@ -4,6 +4,7 @@ using LMS.BusinessLogic.Services.FetchMembers;
 using LMS.BusinessLogic.Services.RenewMember;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Member;
+using LMS.Model.Models.Enums;
 using LMS.Presentation.Popup.Members;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace LMS.Presentation.UserControls.Management
         private readonly IAddMemberService _addMemberService;
         private readonly IFetchMemberService _fetchMemberService;
         private readonly IRenewMemberService _renewMemberService;
+        private readonly MemberRepository _memberRepository;
 
         private List<DTOFetchAllMembers> _allMembers;
         private List<DTOFetchAllMembers> _filteredMembers;
@@ -46,6 +48,7 @@ namespace LMS.Presentation.UserControls.Management
             _addMemberService = new AddMemberService(memberRepo, passwordHasher);
             _fetchMemberService = new FetchMemberService(memberRepo);
             _renewMemberService = new RenewMemberService(memberRepo);
+            _memberRepository = memberRepo;
 
             this.Load += UCMembers_Load;
         }
@@ -313,9 +316,15 @@ namespace LMS.Presentation.UserControls.Management
             if (e.RowIndex < 0)
                 return;
 
-            int memberId = Convert.ToInt32(DgwMembers.Rows[e.RowIndex].Cells[ColMemberId].Value);
-            string memberName = DgwMembers.Rows[e.RowIndex].Cells[ColFullName].Value?.ToString() ?? "this member";
-            string currentStatus = DgwMembers.Rows[e.RowIndex].Cells[ColStatus].Value?.ToString() ?? "";
+            // Get the row number from the first column and find the member from filtered list
+            int displayIndex = (_currentPage - 1) * _pageSize + e.RowIndex;
+            if (displayIndex >= _filteredMembers.Count)
+                return;
+
+            var member = _filteredMembers[displayIndex];
+            int memberId = member.MemberID;
+            string memberName = member.FullName ?? "this member";
+            string currentStatus = member.Status ?? "";
 
             // Edit button clicked
             if (e.ColumnIndex == ColEdit)
@@ -360,8 +369,25 @@ namespace LMS.Presentation.UserControls.Management
 
             if (confirmResult == DialogResult.Yes)
             {
-                // TODO: Implement archive member service
-                MessageBox.Show("Archive functionality coming soon.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool success = _memberRepository.UpdateMemberStatusByMemberId(memberId, MemberStatus.Inactive);
+
+                if (success)
+                {
+                    MessageBox.Show(
+                        $"{memberName} has been archived successfully.",
+                        "Archive Successful",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    LoadMembers();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Failed to archive member.",
+                        "Archive Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
 
