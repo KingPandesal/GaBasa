@@ -366,6 +366,7 @@
             this.LblCancel.TabIndex = 75;
             this.LblCancel.Text = "Cancel";
             this.LblCancel.UseVisualStyleBackColor = false;
+            this.LblCancel.Click += new System.EventHandler(this.LblCancel_Click_1);
             // 
             // BtnSave
             // 
@@ -381,6 +382,7 @@
             this.BtnSave.TabIndex = 74;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = false;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click_1);
             // 
             // LblAddProfPic
             // 

@@ -76,6 +76,12 @@
     <Compile Include="Popup\Inventory\AddBook.Designer.cs">
       <DependentUpon>AddBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Inventory\EditBook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Inventory\EditBook.Designer.cs">
+      <DependentUpon>EditBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Members\AddMember.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Inventory\EditBook.resx">
+      <DependentUpon>EditBook.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Members\AddMember.resx">
       <DependentUpon>AddMember.cs</DependentUpon>

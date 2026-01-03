@@ -243,5 +243,15 @@ namespace LMS.Presentation.Popup.Members
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void BtnSave_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblCancel_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

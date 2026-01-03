@@ -1,0 +1,1063 @@
+﻿namespace LMS.Presentation.Popup.Inventory
+{
+    partial class EditBook
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.GrpBxCopyInformation = new System.Windows.Forms.GroupBox();
+            this.TxtLocation = new System.Windows.Forms.TextBox();
+            this.LblLocation = new System.Windows.Forms.Label();
+            this.LblNoOfCopies = new System.Windows.Forms.Label();
+            this.NumPckNoOfCopies = new ReaLTaiizor.Controls.FoxNumeric();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.TxtDownloadLink = new System.Windows.Forms.TextBox();
+            this.LblDownloadLink = new System.Windows.Forms.Label();
+            this.RdoBtnEBook = new System.Windows.Forms.RadioButton();
+            this.RdoBtnAV = new System.Windows.Forms.RadioButton();
+            this.RdoBtnTheses = new System.Windows.Forms.RadioButton();
+            this.RdoBtnPeriodical = new System.Windows.Forms.RadioButton();
+            this.TipforPicBxBookCover = new System.Windows.Forms.ToolTip(this.components);
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.PnlPicBxBookCoverContainer = new System.Windows.Forms.Panel();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.RdoBtnReference = new System.Windows.Forms.RadioButton();
+            this.RdoBtnCirculation = new System.Windows.Forms.RadioButton();
+            this.RdoBtnIfEBook = new System.Windows.Forms.GroupBox();
+            this.GrpBxIfPhysicalBook = new System.Windows.Forms.GroupBox();
+            this.RdoBtnPhysicalBook = new System.Windows.Forms.RadioButton();
+            this.CmbBxEditor = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.PnlAddBook = new System.Windows.Forms.Panel();
+            this.GrpBxResourceType = new System.Windows.Forms.GroupBox();
+            this.GrpBxBookInformation = new System.Windows.Forms.GroupBox();
+            this.CmbBxAuthor = new System.Windows.Forms.ComboBox();
+            this.CmbBxLanguage = new System.Windows.Forms.ComboBox();
+            this.TxtCallNumber = new System.Windows.Forms.TextBox();
+            this.LblCallNumber = new System.Windows.Forms.Label();
+            this.TxtPhysicalDescription = new System.Windows.Forms.TextBox();
+            this.LblPhysicalDescription = new System.Windows.Forms.Label();
+            this.TxtNoOfPages = new System.Windows.Forms.TextBox();
+            this.LblNoOfPages = new System.Windows.Forms.Label();
+            this.LblLanguage = new System.Windows.Forms.Label();
+            this.LblCategory = new System.Windows.Forms.Label();
+            this.TxtEdition = new System.Windows.Forms.TextBox();
+            this.LblEdition = new System.Windows.Forms.Label();
+            this.TxtPublicationYear = new System.Windows.Forms.TextBox();
+            this.LblPublicationYear = new System.Windows.Forms.Label();
+            this.TxtPublisher = new System.Windows.Forms.TextBox();
+            this.LblPublisher = new System.Windows.Forms.Label();
+            this.LblEditor = new System.Windows.Forms.Label();
+            this.LblAuthor = new System.Windows.Forms.Label();
+            this.TxtSubtitle = new System.Windows.Forms.TextBox();
+            this.LblSubtitle = new System.Windows.Forms.Label();
+            this.TxtTitle = new System.Windows.Forms.TextBox();
+            this.LblTitle = new System.Windows.Forms.Label();
+            this.LblISBN = new System.Windows.Forms.Label();
+            this.TxtISBN = new System.Windows.Forms.TextBox();
+            this.CmbBxCategory = new System.Windows.Forms.ComboBox();
+            this.LblForBookCover = new System.Windows.Forms.Label();
+            this.PnlDesign = new System.Windows.Forms.Panel();
+            this.BtnCancel = new System.Windows.Forms.Button();
+            this.PicBxBookCover = new System.Windows.Forms.PictureBox();
+            this.GrpBxCopyInformation.SuspendLayout();
+            this.RdoBtnIfEBook.SuspendLayout();
+            this.GrpBxIfPhysicalBook.SuspendLayout();
+            this.PnlAddBook.SuspendLayout();
+            this.GrpBxResourceType.SuspendLayout();
+            this.GrpBxBookInformation.SuspendLayout();
+            this.PnlDesign.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // textBox18
+            // 
+            this.textBox18.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox18.ForeColor = System.Drawing.Color.Black;
+            this.textBox18.Location = new System.Drawing.Point(204, 818);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(353, 34);
+            this.textBox18.TabIndex = 92;
+            // 
+            // textBox19
+            // 
+            this.textBox19.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox19.ForeColor = System.Drawing.Color.Black;
+            this.textBox19.Location = new System.Drawing.Point(232, 750);
+            this.textBox19.Name = "textBox19";
+            this.textBox19.Size = new System.Drawing.Size(325, 34);
+            this.textBox19.TabIndex = 90;
+            // 
+            // GrpBxCopyInformation
+            // 
+            this.GrpBxCopyInformation.Controls.Add(this.TxtLocation);
+            this.GrpBxCopyInformation.Controls.Add(this.LblLocation);
+            this.GrpBxCopyInformation.Controls.Add(this.LblNoOfCopies);
+            this.GrpBxCopyInformation.Controls.Add(this.NumPckNoOfCopies);
+            this.GrpBxCopyInformation.Controls.Add(this.textBox18);
+            this.GrpBxCopyInformation.Controls.Add(this.label25);
+            this.GrpBxCopyInformation.Controls.Add(this.textBox19);
+            this.GrpBxCopyInformation.Controls.Add(this.label26);
+            this.GrpBxCopyInformation.Controls.Add(this.textBox20);
+            this.GrpBxCopyInformation.Controls.Add(this.label27);
+            this.GrpBxCopyInformation.Controls.Add(this.label28);
+            this.GrpBxCopyInformation.Controls.Add(this.label29);
+            this.GrpBxCopyInformation.Controls.Add(this.textBox21);
+            this.GrpBxCopyInformation.Controls.Add(this.label30);
+            this.GrpBxCopyInformation.Controls.Add(this.textBox22);
+            this.GrpBxCopyInformation.Controls.Add(this.label31);
+            this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
+            this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(21, 1442);
+            this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
+            this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 181);
+            this.GrpBxCopyInformation.TabIndex = 74;
+            this.GrpBxCopyInformation.TabStop = false;
+            this.GrpBxCopyInformation.Text = "Copy Information";
+            // 
+            // TxtLocation
+            // 
+            this.TxtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtLocation.ForeColor = System.Drawing.Color.Black;
+            this.TxtLocation.Location = new System.Drawing.Point(203, 112);
+            this.TxtLocation.Name = "TxtLocation";
+            this.TxtLocation.Size = new System.Drawing.Size(354, 34);
+            this.TxtLocation.TabIndex = 100;
+            // 
+            // LblLocation
+            // 
+            this.LblLocation.AutoSize = true;
+            this.LblLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblLocation.ForeColor = System.Drawing.Color.Black;
+            this.LblLocation.Location = new System.Drawing.Point(30, 115);
+            this.LblLocation.Name = "LblLocation";
+            this.LblLocation.Size = new System.Drawing.Size(87, 28);
+            this.LblLocation.TabIndex = 106;
+            this.LblLocation.Text = "Location";
+            // 
+            // LblNoOfCopies
+            // 
+            this.LblNoOfCopies.AutoSize = true;
+            this.LblNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblNoOfCopies.ForeColor = System.Drawing.Color.Black;
+            this.LblNoOfCopies.Location = new System.Drawing.Point(30, 67);
+            this.LblNoOfCopies.Name = "LblNoOfCopies";
+            this.LblNoOfCopies.Size = new System.Drawing.Size(130, 28);
+            this.LblNoOfCopies.TabIndex = 105;
+            this.LblNoOfCopies.Text = "No. of Copies";
+            // 
+            // NumPckNoOfCopies
+            // 
+            this.NumPckNoOfCopies.BackColor = System.Drawing.Color.Transparent;
+            this.NumPckNoOfCopies.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.NumPckNoOfCopies.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(98)))), ((int)(((byte)(110)))));
+            this.NumPckNoOfCopies.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.NumPckNoOfCopies.DisabledButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(198)))), ((int)(((byte)(210)))));
+            this.NumPckNoOfCopies.DisabledTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(178)))), ((int)(((byte)(190)))));
+            this.NumPckNoOfCopies.EnabledCalc = true;
+            this.NumPckNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.NumPckNoOfCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(78)))), ((int)(((byte)(90)))));
+            this.NumPckNoOfCopies.Location = new System.Drawing.Point(204, 68);
+            this.NumPckNoOfCopies.Max = 100;
+            this.NumPckNoOfCopies.Min = 0;
+            this.NumPckNoOfCopies.Name = "NumPckNoOfCopies";
+            this.NumPckNoOfCopies.Size = new System.Drawing.Size(75, 27);
+            this.NumPckNoOfCopies.TabIndex = 104;
+            this.NumPckNoOfCopies.Text = "foxNumeric1";
+            this.NumPckNoOfCopies.Value = 0;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label25.ForeColor = System.Drawing.Color.Black;
+            this.label25.Location = new System.Drawing.Point(30, 821);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(121, 28);
+            this.label25.TabIndex = 91;
+            this.label25.Text = "Call Number";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label26.ForeColor = System.Drawing.Color.Black;
+            this.label26.Location = new System.Drawing.Point(30, 754);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(186, 28);
+            this.label26.TabIndex = 89;
+            this.label26.Text = "Physical Description";
+            // 
+            // textBox20
+            // 
+            this.textBox20.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox20.ForeColor = System.Drawing.Color.Black;
+            this.textBox20.Location = new System.Drawing.Point(204, 690);
+            this.textBox20.Name = "textBox20";
+            this.textBox20.Size = new System.Drawing.Size(123, 34);
+            this.textBox20.TabIndex = 88;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label27.ForeColor = System.Drawing.Color.Black;
+            this.label27.Location = new System.Drawing.Point(30, 694);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(121, 28);
+            this.label27.TabIndex = 87;
+            this.label27.Text = "No. of Pages";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label28.ForeColor = System.Drawing.Color.Black;
+            this.label28.Location = new System.Drawing.Point(30, 593);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(97, 28);
+            this.label28.TabIndex = 85;
+            this.label28.Text = "Language";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label29.ForeColor = System.Drawing.Color.Black;
+            this.label29.Location = new System.Drawing.Point(30, 532);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(92, 28);
+            this.label29.TabIndex = 83;
+            this.label29.Text = "Category";
+            // 
+            // textBox21
+            // 
+            this.textBox21.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox21.ForeColor = System.Drawing.Color.Black;
+            this.textBox21.Location = new System.Drawing.Point(434, 436);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new System.Drawing.Size(123, 34);
+            this.textBox21.TabIndex = 82;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label30.ForeColor = System.Drawing.Color.Black;
+            this.label30.Location = new System.Drawing.Point(354, 439);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(74, 28);
+            this.label30.TabIndex = 81;
+            this.label30.Text = "Edition";
+            // 
+            // textBox22
+            // 
+            this.textBox22.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox22.ForeColor = System.Drawing.Color.Black;
+            this.textBox22.Location = new System.Drawing.Point(204, 436);
+            this.textBox22.Name = "textBox22";
+            this.textBox22.Size = new System.Drawing.Size(123, 34);
+            this.textBox22.TabIndex = 80;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label31.ForeColor = System.Drawing.Color.Black;
+            this.label31.Location = new System.Drawing.Point(30, 439);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(151, 28);
+            this.label31.TabIndex = 79;
+            this.label31.Text = "Publication Year";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBox2.ForeColor = System.Drawing.Color.Black;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.comboBox2.Location = new System.Drawing.Point(204, 529);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(353, 36);
+            this.comboBox2.TabIndex = 68;
+            // 
+            // TxtDownloadLink
+            // 
+            this.TxtDownloadLink.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtDownloadLink.ForeColor = System.Drawing.Color.Black;
+            this.TxtDownloadLink.Location = new System.Drawing.Point(186, 48);
+            this.TxtDownloadLink.Name = "TxtDownloadLink";
+            this.TxtDownloadLink.Size = new System.Drawing.Size(324, 34);
+            this.TxtDownloadLink.TabIndex = 99;
+            // 
+            // LblDownloadLink
+            // 
+            this.LblDownloadLink.AutoSize = true;
+            this.LblDownloadLink.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblDownloadLink.ForeColor = System.Drawing.Color.Black;
+            this.LblDownloadLink.Location = new System.Drawing.Point(12, 51);
+            this.LblDownloadLink.Name = "LblDownloadLink";
+            this.LblDownloadLink.Size = new System.Drawing.Size(142, 28);
+            this.LblDownloadLink.TabIndex = 98;
+            this.LblDownloadLink.Text = "Download Link";
+            // 
+            // RdoBtnEBook
+            // 
+            this.RdoBtnEBook.AutoSize = true;
+            this.RdoBtnEBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnEBook.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnEBook.Location = new System.Drawing.Point(344, 131);
+            this.RdoBtnEBook.Name = "RdoBtnEBook";
+            this.RdoBtnEBook.Size = new System.Drawing.Size(100, 32);
+            this.RdoBtnEBook.TabIndex = 97;
+            this.RdoBtnEBook.TabStop = true;
+            this.RdoBtnEBook.Text = "E-Book";
+            this.RdoBtnEBook.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnAV
+            // 
+            this.RdoBtnAV.AutoSize = true;
+            this.RdoBtnAV.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnAV.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnAV.Location = new System.Drawing.Point(344, 76);
+            this.RdoBtnAV.Name = "RdoBtnAV";
+            this.RdoBtnAV.Size = new System.Drawing.Size(149, 32);
+            this.RdoBtnAV.TabIndex = 96;
+            this.RdoBtnAV.TabStop = true;
+            this.RdoBtnAV.Text = "Audio-Visual";
+            this.RdoBtnAV.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnTheses
+            // 
+            this.RdoBtnTheses.AutoSize = true;
+            this.RdoBtnTheses.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnTheses.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnTheses.Location = new System.Drawing.Point(35, 189);
+            this.RdoBtnTheses.Name = "RdoBtnTheses";
+            this.RdoBtnTheses.Size = new System.Drawing.Size(216, 32);
+            this.RdoBtnTheses.TabIndex = 95;
+            this.RdoBtnTheses.TabStop = true;
+            this.RdoBtnTheses.Text = "Theses / Dissertation";
+            this.RdoBtnTheses.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnPeriodical
+            // 
+            this.RdoBtnPeriodical.AutoSize = true;
+            this.RdoBtnPeriodical.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnPeriodical.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnPeriodical.Location = new System.Drawing.Point(34, 131);
+            this.RdoBtnPeriodical.Name = "RdoBtnPeriodical";
+            this.RdoBtnPeriodical.Size = new System.Drawing.Size(225, 32);
+            this.RdoBtnPeriodical.TabIndex = 94;
+            this.RdoBtnPeriodical.TabStop = true;
+            this.RdoBtnPeriodical.Text = "Periodical / Magazine";
+            this.RdoBtnPeriodical.UseVisualStyleBackColor = true;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox11.ForeColor = System.Drawing.Color.Black;
+            this.textBox11.Location = new System.Drawing.Point(204, 818);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(353, 34);
+            this.textBox11.TabIndex = 92;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(30, 821);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(121, 28);
+            this.label14.TabIndex = 91;
+            this.label14.Text = "Call Number";
+            // 
+            // textBox12
+            // 
+            this.textBox12.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox12.ForeColor = System.Drawing.Color.Black;
+            this.textBox12.Location = new System.Drawing.Point(232, 750);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(325, 34);
+            this.textBox12.TabIndex = 90;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label15.ForeColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(30, 754);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(186, 28);
+            this.label15.TabIndex = 89;
+            this.label15.Text = "Physical Description";
+            // 
+            // textBox13
+            // 
+            this.textBox13.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox13.ForeColor = System.Drawing.Color.Black;
+            this.textBox13.Location = new System.Drawing.Point(204, 690);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(123, 34);
+            this.textBox13.TabIndex = 88;
+            // 
+            // PnlPicBxBookCoverContainer
+            // 
+            this.PnlPicBxBookCoverContainer.BackColor = System.Drawing.Color.White;
+            this.PnlPicBxBookCoverContainer.Location = new System.Drawing.Point(39, 36);
+            this.PnlPicBxBookCoverContainer.Name = "PnlPicBxBookCoverContainer";
+            this.PnlPicBxBookCoverContainer.Size = new System.Drawing.Size(401, 523);
+            this.PnlPicBxBookCoverContainer.TabIndex = 0;
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnSave.ForeColor = System.Drawing.Color.White;
+            this.BtnSave.Location = new System.Drawing.Point(907, 559);
+            this.BtnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(97, 43);
+            this.BtnSave.TabIndex = 82;
+            this.BtnSave.Text = "Save";
+            this.BtnSave.UseVisualStyleBackColor = false;
+            // 
+            // RdoBtnReference
+            // 
+            this.RdoBtnReference.AutoSize = true;
+            this.RdoBtnReference.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnReference.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnReference.Location = new System.Drawing.Point(16, 44);
+            this.RdoBtnReference.Name = "RdoBtnReference";
+            this.RdoBtnReference.Size = new System.Drawing.Size(121, 32);
+            this.RdoBtnReference.TabIndex = 101;
+            this.RdoBtnReference.TabStop = true;
+            this.RdoBtnReference.Text = "Reference";
+            this.RdoBtnReference.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnCirculation
+            // 
+            this.RdoBtnCirculation.AutoSize = true;
+            this.RdoBtnCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnCirculation.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnCirculation.Location = new System.Drawing.Point(327, 44);
+            this.RdoBtnCirculation.Name = "RdoBtnCirculation";
+            this.RdoBtnCirculation.Size = new System.Drawing.Size(131, 32);
+            this.RdoBtnCirculation.TabIndex = 102;
+            this.RdoBtnCirculation.TabStop = true;
+            this.RdoBtnCirculation.Text = "Circulation";
+            this.RdoBtnCirculation.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnIfEBook
+            // 
+            this.RdoBtnIfEBook.Controls.Add(this.TxtDownloadLink);
+            this.RdoBtnIfEBook.Controls.Add(this.LblDownloadLink);
+            this.RdoBtnIfEBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnIfEBook.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnIfEBook.Location = new System.Drawing.Point(35, 399);
+            this.RdoBtnIfEBook.Name = "RdoBtnIfEBook";
+            this.RdoBtnIfEBook.Size = new System.Drawing.Size(522, 106);
+            this.RdoBtnIfEBook.TabIndex = 104;
+            this.RdoBtnIfEBook.TabStop = false;
+            this.RdoBtnIfEBook.Text = "If E-Book";
+            // 
+            // GrpBxIfPhysicalBook
+            // 
+            this.GrpBxIfPhysicalBook.Controls.Add(this.RdoBtnReference);
+            this.GrpBxIfPhysicalBook.Controls.Add(this.RdoBtnCirculation);
+            this.GrpBxIfPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.GrpBxIfPhysicalBook.ForeColor = System.Drawing.Color.Black;
+            this.GrpBxIfPhysicalBook.Location = new System.Drawing.Point(34, 286);
+            this.GrpBxIfPhysicalBook.Name = "GrpBxIfPhysicalBook";
+            this.GrpBxIfPhysicalBook.Size = new System.Drawing.Size(522, 94);
+            this.GrpBxIfPhysicalBook.TabIndex = 103;
+            this.GrpBxIfPhysicalBook.TabStop = false;
+            this.GrpBxIfPhysicalBook.Text = "If Physical Book";
+            // 
+            // RdoBtnPhysicalBook
+            // 
+            this.RdoBtnPhysicalBook.AutoSize = true;
+            this.RdoBtnPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnPhysicalBook.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnPhysicalBook.Location = new System.Drawing.Point(35, 76);
+            this.RdoBtnPhysicalBook.Name = "RdoBtnPhysicalBook";
+            this.RdoBtnPhysicalBook.Size = new System.Drawing.Size(156, 32);
+            this.RdoBtnPhysicalBook.TabIndex = 93;
+            this.RdoBtnPhysicalBook.TabStop = true;
+            this.RdoBtnPhysicalBook.Text = "Physical Book";
+            this.RdoBtnPhysicalBook.UseVisualStyleBackColor = true;
+            // 
+            // CmbBxEditor
+            // 
+            this.CmbBxEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxEditor.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxEditor.FormattingEnabled = true;
+            this.CmbBxEditor.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxEditor.Location = new System.Drawing.Point(204, 285);
+            this.CmbBxEditor.Name = "CmbBxEditor";
+            this.CmbBxEditor.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxEditor.TabIndex = 94;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(30, 694);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(121, 28);
+            this.label16.TabIndex = 87;
+            this.label16.Text = "No. of Pages";
+            // 
+            // PnlAddBook
+            // 
+            this.PnlAddBook.AutoScroll = true;
+            this.PnlAddBook.Controls.Add(this.GrpBxCopyInformation);
+            this.PnlAddBook.Controls.Add(this.GrpBxResourceType);
+            this.PnlAddBook.Controls.Add(this.GrpBxBookInformation);
+            this.PnlAddBook.Location = new System.Drawing.Point(437, 122);
+            this.PnlAddBook.Name = "PnlAddBook";
+            this.PnlAddBook.Size = new System.Drawing.Size(699, 409);
+            this.PnlAddBook.TabIndex = 81;
+            // 
+            // GrpBxResourceType
+            // 
+            this.GrpBxResourceType.Controls.Add(this.RdoBtnIfEBook);
+            this.GrpBxResourceType.Controls.Add(this.GrpBxIfPhysicalBook);
+            this.GrpBxResourceType.Controls.Add(this.RdoBtnEBook);
+            this.GrpBxResourceType.Controls.Add(this.RdoBtnAV);
+            this.GrpBxResourceType.Controls.Add(this.RdoBtnTheses);
+            this.GrpBxResourceType.Controls.Add(this.RdoBtnPeriodical);
+            this.GrpBxResourceType.Controls.Add(this.RdoBtnPhysicalBook);
+            this.GrpBxResourceType.Controls.Add(this.textBox11);
+            this.GrpBxResourceType.Controls.Add(this.label14);
+            this.GrpBxResourceType.Controls.Add(this.textBox12);
+            this.GrpBxResourceType.Controls.Add(this.label15);
+            this.GrpBxResourceType.Controls.Add(this.textBox13);
+            this.GrpBxResourceType.Controls.Add(this.label16);
+            this.GrpBxResourceType.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxResourceType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.GrpBxResourceType.Location = new System.Drawing.Point(21, 891);
+            this.GrpBxResourceType.Name = "GrpBxResourceType";
+            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 531);
+            this.GrpBxResourceType.TabIndex = 73;
+            this.GrpBxResourceType.TabStop = false;
+            this.GrpBxResourceType.Text = "Resource Type";
+            // 
+            // GrpBxBookInformation
+            // 
+            this.GrpBxBookInformation.Controls.Add(this.CmbBxEditor);
+            this.GrpBxBookInformation.Controls.Add(this.CmbBxAuthor);
+            this.GrpBxBookInformation.Controls.Add(this.CmbBxLanguage);
+            this.GrpBxBookInformation.Controls.Add(this.TxtCallNumber);
+            this.GrpBxBookInformation.Controls.Add(this.LblCallNumber);
+            this.GrpBxBookInformation.Controls.Add(this.TxtPhysicalDescription);
+            this.GrpBxBookInformation.Controls.Add(this.LblPhysicalDescription);
+            this.GrpBxBookInformation.Controls.Add(this.TxtNoOfPages);
+            this.GrpBxBookInformation.Controls.Add(this.LblNoOfPages);
+            this.GrpBxBookInformation.Controls.Add(this.LblLanguage);
+            this.GrpBxBookInformation.Controls.Add(this.LblCategory);
+            this.GrpBxBookInformation.Controls.Add(this.TxtEdition);
+            this.GrpBxBookInformation.Controls.Add(this.LblEdition);
+            this.GrpBxBookInformation.Controls.Add(this.TxtPublicationYear);
+            this.GrpBxBookInformation.Controls.Add(this.LblPublicationYear);
+            this.GrpBxBookInformation.Controls.Add(this.TxtPublisher);
+            this.GrpBxBookInformation.Controls.Add(this.LblPublisher);
+            this.GrpBxBookInformation.Controls.Add(this.LblEditor);
+            this.GrpBxBookInformation.Controls.Add(this.LblAuthor);
+            this.GrpBxBookInformation.Controls.Add(this.TxtSubtitle);
+            this.GrpBxBookInformation.Controls.Add(this.LblSubtitle);
+            this.GrpBxBookInformation.Controls.Add(this.TxtTitle);
+            this.GrpBxBookInformation.Controls.Add(this.LblTitle);
+            this.GrpBxBookInformation.Controls.Add(this.LblISBN);
+            this.GrpBxBookInformation.Controls.Add(this.TxtISBN);
+            this.GrpBxBookInformation.Controls.Add(this.CmbBxCategory);
+            this.GrpBxBookInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxBookInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.GrpBxBookInformation.Location = new System.Drawing.Point(21, 22);
+            this.GrpBxBookInformation.Name = "GrpBxBookInformation";
+            this.GrpBxBookInformation.Size = new System.Drawing.Size(629, 845);
+            this.GrpBxBookInformation.TabIndex = 72;
+            this.GrpBxBookInformation.TabStop = false;
+            this.GrpBxBookInformation.Text = "Book Information";
+            // 
+            // CmbBxAuthor
+            // 
+            this.CmbBxAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxAuthor.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxAuthor.FormattingEnabled = true;
+            this.CmbBxAuthor.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxAuthor.Location = new System.Drawing.Point(203, 235);
+            this.CmbBxAuthor.Name = "CmbBxAuthor";
+            this.CmbBxAuthor.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxAuthor.TabIndex = 94;
+            // 
+            // CmbBxLanguage
+            // 
+            this.CmbBxLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxLanguage.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxLanguage.FormattingEnabled = true;
+            this.CmbBxLanguage.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxLanguage.Location = new System.Drawing.Point(204, 590);
+            this.CmbBxLanguage.Name = "CmbBxLanguage";
+            this.CmbBxLanguage.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxLanguage.TabIndex = 93;
+            // 
+            // TxtCallNumber
+            // 
+            this.TxtCallNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtCallNumber.ForeColor = System.Drawing.Color.Black;
+            this.TxtCallNumber.Location = new System.Drawing.Point(204, 785);
+            this.TxtCallNumber.Name = "TxtCallNumber";
+            this.TxtCallNumber.Size = new System.Drawing.Size(353, 34);
+            this.TxtCallNumber.TabIndex = 92;
+            // 
+            // LblCallNumber
+            // 
+            this.LblCallNumber.AutoSize = true;
+            this.LblCallNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblCallNumber.ForeColor = System.Drawing.Color.Black;
+            this.LblCallNumber.Location = new System.Drawing.Point(30, 788);
+            this.LblCallNumber.Name = "LblCallNumber";
+            this.LblCallNumber.Size = new System.Drawing.Size(121, 28);
+            this.LblCallNumber.TabIndex = 91;
+            this.LblCallNumber.Text = "Call Number";
+            // 
+            // TxtPhysicalDescription
+            // 
+            this.TxtPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtPhysicalDescription.ForeColor = System.Drawing.Color.Black;
+            this.TxtPhysicalDescription.Location = new System.Drawing.Point(232, 733);
+            this.TxtPhysicalDescription.Name = "TxtPhysicalDescription";
+            this.TxtPhysicalDescription.Size = new System.Drawing.Size(325, 34);
+            this.TxtPhysicalDescription.TabIndex = 90;
+            // 
+            // LblPhysicalDescription
+            // 
+            this.LblPhysicalDescription.AutoSize = true;
+            this.LblPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblPhysicalDescription.ForeColor = System.Drawing.Color.Black;
+            this.LblPhysicalDescription.Location = new System.Drawing.Point(30, 737);
+            this.LblPhysicalDescription.Name = "LblPhysicalDescription";
+            this.LblPhysicalDescription.Size = new System.Drawing.Size(186, 28);
+            this.LblPhysicalDescription.TabIndex = 89;
+            this.LblPhysicalDescription.Text = "Physical Description";
+            // 
+            // TxtNoOfPages
+            // 
+            this.TxtNoOfPages.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtNoOfPages.ForeColor = System.Drawing.Color.Black;
+            this.TxtNoOfPages.Location = new System.Drawing.Point(204, 680);
+            this.TxtNoOfPages.Name = "TxtNoOfPages";
+            this.TxtNoOfPages.Size = new System.Drawing.Size(123, 34);
+            this.TxtNoOfPages.TabIndex = 88;
+            // 
+            // LblNoOfPages
+            // 
+            this.LblNoOfPages.AutoSize = true;
+            this.LblNoOfPages.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblNoOfPages.ForeColor = System.Drawing.Color.Black;
+            this.LblNoOfPages.Location = new System.Drawing.Point(30, 684);
+            this.LblNoOfPages.Name = "LblNoOfPages";
+            this.LblNoOfPages.Size = new System.Drawing.Size(121, 28);
+            this.LblNoOfPages.TabIndex = 87;
+            this.LblNoOfPages.Text = "No. of Pages";
+            // 
+            // LblLanguage
+            // 
+            this.LblLanguage.AutoSize = true;
+            this.LblLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblLanguage.ForeColor = System.Drawing.Color.Black;
+            this.LblLanguage.Location = new System.Drawing.Point(30, 593);
+            this.LblLanguage.Name = "LblLanguage";
+            this.LblLanguage.Size = new System.Drawing.Size(97, 28);
+            this.LblLanguage.TabIndex = 85;
+            this.LblLanguage.Text = "Language";
+            // 
+            // LblCategory
+            // 
+            this.LblCategory.AutoSize = true;
+            this.LblCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblCategory.ForeColor = System.Drawing.Color.Black;
+            this.LblCategory.Location = new System.Drawing.Point(30, 532);
+            this.LblCategory.Name = "LblCategory";
+            this.LblCategory.Size = new System.Drawing.Size(92, 28);
+            this.LblCategory.TabIndex = 83;
+            this.LblCategory.Text = "Category";
+            // 
+            // TxtEdition
+            // 
+            this.TxtEdition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtEdition.ForeColor = System.Drawing.Color.Black;
+            this.TxtEdition.Location = new System.Drawing.Point(434, 436);
+            this.TxtEdition.Name = "TxtEdition";
+            this.TxtEdition.Size = new System.Drawing.Size(123, 34);
+            this.TxtEdition.TabIndex = 82;
+            // 
+            // LblEdition
+            // 
+            this.LblEdition.AutoSize = true;
+            this.LblEdition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblEdition.ForeColor = System.Drawing.Color.Black;
+            this.LblEdition.Location = new System.Drawing.Point(354, 439);
+            this.LblEdition.Name = "LblEdition";
+            this.LblEdition.Size = new System.Drawing.Size(74, 28);
+            this.LblEdition.TabIndex = 81;
+            this.LblEdition.Text = "Edition";
+            // 
+            // TxtPublicationYear
+            // 
+            this.TxtPublicationYear.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtPublicationYear.ForeColor = System.Drawing.Color.Black;
+            this.TxtPublicationYear.Location = new System.Drawing.Point(204, 436);
+            this.TxtPublicationYear.Name = "TxtPublicationYear";
+            this.TxtPublicationYear.Size = new System.Drawing.Size(123, 34);
+            this.TxtPublicationYear.TabIndex = 80;
+            // 
+            // LblPublicationYear
+            // 
+            this.LblPublicationYear.AutoSize = true;
+            this.LblPublicationYear.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblPublicationYear.ForeColor = System.Drawing.Color.Black;
+            this.LblPublicationYear.Location = new System.Drawing.Point(30, 439);
+            this.LblPublicationYear.Name = "LblPublicationYear";
+            this.LblPublicationYear.Size = new System.Drawing.Size(151, 28);
+            this.LblPublicationYear.TabIndex = 79;
+            this.LblPublicationYear.Text = "Publication Year";
+            // 
+            // TxtPublisher
+            // 
+            this.TxtPublisher.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtPublisher.ForeColor = System.Drawing.Color.Black;
+            this.TxtPublisher.Location = new System.Drawing.Point(204, 374);
+            this.TxtPublisher.Name = "TxtPublisher";
+            this.TxtPublisher.Size = new System.Drawing.Size(353, 34);
+            this.TxtPublisher.TabIndex = 78;
+            // 
+            // LblPublisher
+            // 
+            this.LblPublisher.AutoSize = true;
+            this.LblPublisher.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblPublisher.ForeColor = System.Drawing.Color.Black;
+            this.LblPublisher.Location = new System.Drawing.Point(30, 377);
+            this.LblPublisher.Name = "LblPublisher";
+            this.LblPublisher.Size = new System.Drawing.Size(92, 28);
+            this.LblPublisher.TabIndex = 77;
+            this.LblPublisher.Text = "Publisher";
+            // 
+            // LblEditor
+            // 
+            this.LblEditor.AutoSize = true;
+            this.LblEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblEditor.ForeColor = System.Drawing.Color.Black;
+            this.LblEditor.Location = new System.Drawing.Point(30, 288);
+            this.LblEditor.Name = "LblEditor";
+            this.LblEditor.Size = new System.Drawing.Size(85, 28);
+            this.LblEditor.TabIndex = 75;
+            this.LblEditor.Text = "Editor(s)";
+            // 
+            // LblAuthor
+            // 
+            this.LblAuthor.AutoSize = true;
+            this.LblAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblAuthor.ForeColor = System.Drawing.Color.Black;
+            this.LblAuthor.Location = new System.Drawing.Point(30, 238);
+            this.LblAuthor.Name = "LblAuthor";
+            this.LblAuthor.Size = new System.Drawing.Size(93, 28);
+            this.LblAuthor.TabIndex = 73;
+            this.LblAuthor.Text = "Author(s)";
+            // 
+            // TxtSubtitle
+            // 
+            this.TxtSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtSubtitle.ForeColor = System.Drawing.Color.Black;
+            this.TxtSubtitle.Location = new System.Drawing.Point(204, 156);
+            this.TxtSubtitle.Name = "TxtSubtitle";
+            this.TxtSubtitle.Size = new System.Drawing.Size(353, 34);
+            this.TxtSubtitle.TabIndex = 72;
+            // 
+            // LblSubtitle
+            // 
+            this.LblSubtitle.AutoSize = true;
+            this.LblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblSubtitle.ForeColor = System.Drawing.Color.Black;
+            this.LblSubtitle.Location = new System.Drawing.Point(30, 159);
+            this.LblSubtitle.Name = "LblSubtitle";
+            this.LblSubtitle.Size = new System.Drawing.Size(80, 28);
+            this.LblSubtitle.TabIndex = 71;
+            this.LblSubtitle.Text = "Subtitle";
+            // 
+            // TxtTitle
+            // 
+            this.TxtTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtTitle.ForeColor = System.Drawing.Color.Black;
+            this.TxtTitle.Location = new System.Drawing.Point(204, 108);
+            this.TxtTitle.Name = "TxtTitle";
+            this.TxtTitle.Size = new System.Drawing.Size(353, 34);
+            this.TxtTitle.TabIndex = 70;
+            // 
+            // LblTitle
+            // 
+            this.LblTitle.AutoSize = true;
+            this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblTitle.ForeColor = System.Drawing.Color.Black;
+            this.LblTitle.Location = new System.Drawing.Point(30, 111);
+            this.LblTitle.Name = "LblTitle";
+            this.LblTitle.Size = new System.Drawing.Size(49, 28);
+            this.LblTitle.TabIndex = 69;
+            this.LblTitle.Text = "Title";
+            // 
+            // LblISBN
+            // 
+            this.LblISBN.AutoSize = true;
+            this.LblISBN.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblISBN.ForeColor = System.Drawing.Color.Black;
+            this.LblISBN.Location = new System.Drawing.Point(30, 61);
+            this.LblISBN.Name = "LblISBN";
+            this.LblISBN.Size = new System.Drawing.Size(54, 28);
+            this.LblISBN.TabIndex = 59;
+            this.LblISBN.Text = "ISBN";
+            // 
+            // TxtISBN
+            // 
+            this.TxtISBN.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtISBN.ForeColor = System.Drawing.Color.Black;
+            this.TxtISBN.Location = new System.Drawing.Point(204, 61);
+            this.TxtISBN.Name = "TxtISBN";
+            this.TxtISBN.Size = new System.Drawing.Size(353, 34);
+            this.TxtISBN.TabIndex = 63;
+            // 
+            // CmbBxCategory
+            // 
+            this.CmbBxCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxCategory.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxCategory.FormattingEnabled = true;
+            this.CmbBxCategory.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxCategory.Location = new System.Drawing.Point(204, 529);
+            this.CmbBxCategory.Name = "CmbBxCategory";
+            this.CmbBxCategory.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxCategory.TabIndex = 68;
+            // 
+            // LblForBookCover
+            // 
+            this.LblForBookCover.AutoSize = true;
+            this.LblForBookCover.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblForBookCover.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.LblForBookCover.Location = new System.Drawing.Point(79, 560);
+            this.LblForBookCover.Name = "LblForBookCover";
+            this.LblForBookCover.Size = new System.Drawing.Size(317, 28);
+            this.LblForBookCover.TabIndex = 80;
+            this.LblForBookCover.Text = "Click box above to edit book cover";
+            // 
+            // PnlDesign
+            // 
+            this.PnlDesign.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.PnlDesign.Controls.Add(this.PnlPicBxBookCoverContainer);
+            this.PnlDesign.Location = new System.Drawing.Point(0, 0);
+            this.PnlDesign.Name = "PnlDesign";
+            this.PnlDesign.Size = new System.Drawing.Size(1141, 102);
+            this.PnlDesign.TabIndex = 79;
+            // 
+            // BtnCancel
+            // 
+            this.BtnCancel.BackColor = System.Drawing.Color.White;
+            this.BtnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCancel.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnCancel.Location = new System.Drawing.Point(1012, 559);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Size = new System.Drawing.Size(97, 43);
+            this.BtnCancel.TabIndex = 83;
+            this.BtnCancel.Text = "Cancel";
+            this.BtnCancel.UseVisualStyleBackColor = false;
+            // 
+            // PicBxBookCover
+            // 
+            this.PicBxBookCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.PicBxBookCover.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxBookCover.Location = new System.Drawing.Point(65, 68);
+            this.PicBxBookCover.Name = "PicBxBookCover";
+            this.PicBxBookCover.Size = new System.Drawing.Size(349, 463);
+            this.PicBxBookCover.TabIndex = 78;
+            this.PicBxBookCover.TabStop = false;
+            this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to edit picture");
+            // 
+            // EditBook
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1138, 628);
+            this.Controls.Add(this.BtnSave);
+            this.Controls.Add(this.PnlAddBook);
+            this.Controls.Add(this.LblForBookCover);
+            this.Controls.Add(this.PicBxBookCover);
+            this.Controls.Add(this.PnlDesign);
+            this.Controls.Add(this.BtnCancel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "EditBook";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Edit book";
+            this.GrpBxCopyInformation.ResumeLayout(false);
+            this.GrpBxCopyInformation.PerformLayout();
+            this.RdoBtnIfEBook.ResumeLayout(false);
+            this.RdoBtnIfEBook.PerformLayout();
+            this.GrpBxIfPhysicalBook.ResumeLayout(false);
+            this.GrpBxIfPhysicalBook.PerformLayout();
+            this.PnlAddBook.ResumeLayout(false);
+            this.GrpBxResourceType.ResumeLayout(false);
+            this.GrpBxResourceType.PerformLayout();
+            this.GrpBxBookInformation.ResumeLayout(false);
+            this.GrpBxBookInformation.PerformLayout();
+            this.PnlDesign.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.GroupBox GrpBxCopyInformation;
+        private System.Windows.Forms.TextBox TxtLocation;
+        private System.Windows.Forms.Label LblLocation;
+        private System.Windows.Forms.Label LblNoOfCopies;
+        private ReaLTaiizor.Controls.FoxNumeric NumPckNoOfCopies;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox textBox20;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox TxtDownloadLink;
+        private System.Windows.Forms.Label LblDownloadLink;
+        private System.Windows.Forms.RadioButton RdoBtnEBook;
+        private System.Windows.Forms.RadioButton RdoBtnAV;
+        private System.Windows.Forms.RadioButton RdoBtnTheses;
+        private System.Windows.Forms.RadioButton RdoBtnPeriodical;
+        private System.Windows.Forms.ToolTip TipforPicBxBookCover;
+        private System.Windows.Forms.PictureBox PicBxBookCover;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.Panel PnlPicBxBookCoverContainer;
+        private System.Windows.Forms.Button BtnSave;
+        private System.Windows.Forms.RadioButton RdoBtnReference;
+        private System.Windows.Forms.RadioButton RdoBtnCirculation;
+        private System.Windows.Forms.GroupBox RdoBtnIfEBook;
+        private System.Windows.Forms.GroupBox GrpBxIfPhysicalBook;
+        private System.Windows.Forms.RadioButton RdoBtnPhysicalBook;
+        private System.Windows.Forms.ComboBox CmbBxEditor;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Panel PnlAddBook;
+        private System.Windows.Forms.GroupBox GrpBxResourceType;
+        private System.Windows.Forms.GroupBox GrpBxBookInformation;
+        private System.Windows.Forms.ComboBox CmbBxAuthor;
+        private System.Windows.Forms.ComboBox CmbBxLanguage;
+        private System.Windows.Forms.TextBox TxtCallNumber;
+        private System.Windows.Forms.Label LblCallNumber;
+        private System.Windows.Forms.TextBox TxtPhysicalDescription;
+        private System.Windows.Forms.Label LblPhysicalDescription;
+        private System.Windows.Forms.TextBox TxtNoOfPages;
+        private System.Windows.Forms.Label LblNoOfPages;
+        private System.Windows.Forms.Label LblLanguage;
+        private System.Windows.Forms.Label LblCategory;
+        private System.Windows.Forms.TextBox TxtEdition;
+        private System.Windows.Forms.Label LblEdition;
+        private System.Windows.Forms.TextBox TxtPublicationYear;
+        private System.Windows.Forms.Label LblPublicationYear;
+        private System.Windows.Forms.TextBox TxtPublisher;
+        private System.Windows.Forms.Label LblPublisher;
+        private System.Windows.Forms.Label LblEditor;
+        private System.Windows.Forms.Label LblAuthor;
+        private System.Windows.Forms.TextBox TxtSubtitle;
+        private System.Windows.Forms.Label LblSubtitle;
+        private System.Windows.Forms.TextBox TxtTitle;
+        private System.Windows.Forms.Label LblTitle;
+        private System.Windows.Forms.Label LblISBN;
+        private System.Windows.Forms.TextBox TxtISBN;
+        private System.Windows.Forms.ComboBox CmbBxCategory;
+        private System.Windows.Forms.Label LblForBookCover;
+        private System.Windows.Forms.Panel PnlDesign;
+        private System.Windows.Forms.Button BtnCancel;
+    }
+}
