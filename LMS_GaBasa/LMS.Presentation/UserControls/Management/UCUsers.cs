@@ -209,7 +209,7 @@ namespace LMS.Presentation.UserControls.Management
             {
                 DgwUsers.Rows.Add(
                     rowNumber++,
-                    user.UserID,
+                    user.FormattedID,  // Changed from user.UserID
                     user.FullName,
                     user.Role,
                     user.Username,

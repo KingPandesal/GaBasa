@@ -347,6 +347,7 @@ namespace LMS.DataAccess.Repositories
                         mt.FineRate,
                         m.RegistrationDate,
                         m.ExpirationDate,
+                        u.LastLogin,
                         m.[Status]
                     FROM [Member] m
                     INNER JOIN [User] u ON m.UserID = u.UserID
@@ -359,6 +360,7 @@ namespace LMS.DataAccess.Repositories
                     {
                         string firstName = reader.IsDBNull(reader.GetOrdinal("FirstName")) ? "" : reader.GetString(reader.GetOrdinal("FirstName"));
                         string lastName = reader.IsDBNull(reader.GetOrdinal("LastName")) ? "" : reader.GetString(reader.GetOrdinal("LastName"));
+                        DateTime? lastLogin = reader.IsDBNull(reader.GetOrdinal("LastLogin")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("LastLogin"));
 
                         members.Add(new DTOFetchAllMembers
                         {
@@ -376,6 +378,7 @@ namespace LMS.DataAccess.Repositories
                             FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate")),
                             RegistrationDate = reader.IsDBNull(reader.GetOrdinal("RegistrationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("RegistrationDate")),
                             ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
+                            LastLogin = lastLogin.HasValue ? lastLogin.Value.ToString("MMM dd, yyyy hh:mm tt") : "Never",
                             Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "" : reader.GetString(reader.GetOrdinal("Status"))
                         });
                     }

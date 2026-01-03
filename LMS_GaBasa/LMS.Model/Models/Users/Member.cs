@@ -11,6 +11,8 @@ namespace LMS.Model.Models.Users
     {
         public override Role Role => Role.Member;
 
+        protected override string RolePrefix => "MEM";
+
         // update: obsolete methods moved to RolePermissionService
         //public override bool CanManageUsers() => false;
         //public override bool CanManageCatalog() => false;

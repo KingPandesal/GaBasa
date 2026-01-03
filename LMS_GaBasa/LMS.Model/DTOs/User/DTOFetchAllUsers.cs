@@ -9,6 +9,7 @@ namespace LMS.Model.DTOs.User
     public class DTOFetchAllUsers
     {
         public int UserID { get; set; }
+        public string FormattedID { get; set; }  // Add this
         public string FullName { get; set; }
         public string Role { get; set; }
         public string Username { get; set; }

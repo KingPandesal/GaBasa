@@ -266,10 +266,9 @@
             // 
             // Column7
             // 
-            this.Column7.HeaderText = "ID";
+            this.Column7.HeaderText = "User ID";
             this.Column7.MinimumWidth = 8;
             this.Column7.Name = "Column7";
-            this.Column7.Width = 40;
             // 
             // Column1
             // 

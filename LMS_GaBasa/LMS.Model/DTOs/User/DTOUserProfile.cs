@@ -10,6 +10,7 @@ namespace LMS.Model.DTOs.User
     {
         // Common user info
         public int UserID { get; set; }
+        public string FormattedID { get; set; }  // Add this
         public string Username { get; set; }
         public string FullName { get; set; }
         public string Role { get; set; }

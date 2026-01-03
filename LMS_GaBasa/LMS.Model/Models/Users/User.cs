@@ -26,6 +26,28 @@ namespace LMS.Model.Models.Users
         // Enum (Db): Admin, Staff, Member
         // abstract
 
+        // ========== FORMATTED ID =========
+        /// <summary>
+        /// Gets the role-based prefix for the formatted ID (e.g., "LIB", "STF").
+        /// Override in subclasses to provide role-specific prefixes.
+        /// </summary>
+        protected abstract string RolePrefix { get; }
+
+        /// <summary>
+        /// Gets the formatted display ID (e.g., "LIB-0001", "STF-0002").
+        /// Format: {RolePrefix}-{UserID padded to at least 4 digits}
+        /// </summary>
+        public string FormattedID
+        {
+            get
+            {
+                int minDigits = 4;
+                int actualDigits = UserID.ToString().Length;
+                int padLength = Math.Max(minDigits, actualDigits);
+                return $"{RolePrefix}-{UserID.ToString().PadLeft(padLength, '0')}";
+            }
+        }
+
         // ========== PERMISSIONS ==========
         // obsolete -ken:>
         //public abstract bool CanManageUsers();

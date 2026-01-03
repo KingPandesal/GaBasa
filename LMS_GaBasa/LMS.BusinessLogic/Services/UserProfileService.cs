@@ -30,7 +30,8 @@ namespace LMS.BusinessLogic.Services
                 ContactNumber = user.ContactNumber,
                 PhotoPath = absolutePhotoPath, // Return absolute path for UI
                 Role = user.Role.ToString(),
-                Status = user.Status.ToString()
+                Status = user.Status.ToString(),
+                FormattedID = UserIdFormatter.Format(user.UserID, user.Role.ToString())
             };
         }
 

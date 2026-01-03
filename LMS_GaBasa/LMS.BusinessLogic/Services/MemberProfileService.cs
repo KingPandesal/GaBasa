@@ -31,6 +31,9 @@ namespace LMS.BusinessLogic.Services
             profile.PhotoPath = UserImageHelper.GetAbsolutePath(profile.PhotoPath);
             profile.ValidIdPath = UserImageHelper.GetAbsolutePath(profile.ValidIdPath);
 
+            // Populate formatted ID for display
+            profile.FormattedID = UserIdFormatter.FormatMemberId(profile.UserID);
+
             return profile;
         }
 

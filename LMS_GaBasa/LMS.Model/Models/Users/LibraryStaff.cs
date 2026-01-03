@@ -11,13 +11,15 @@ namespace LMS.Model.Models.Users
     {
         public override Role Role => Role.Staff;
 
+        protected override string RolePrefix => "STF";
+
         // update: obsolete methods moved to RolePermissionService
         //public override bool CanManageUsers() => false;
         //public override bool CanManageCatalog() => true;
         //public override bool CanCirculateBooks() => true;
         //public override bool CanViewReports() => false;
 
-
+        // end code
     }
 
 }

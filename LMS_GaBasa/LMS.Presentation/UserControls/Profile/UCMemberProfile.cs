@@ -43,7 +43,7 @@ namespace LMS.Presentation.UserControls.Profile
 
             // User info
             LblFullname.Text = profile.FullName;
-            LblIDNumber.Text = profile.UserID.ToString();
+            LblIDNumber.Text = profile.FormattedID;  // Changed from profile.UserID.ToString()
             LblEmail.Text = profile.Email;
             LblRole.Text = profile.Role;
             LblMemberStatus.Text = profile.Status;

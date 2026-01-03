@@ -5,6 +5,7 @@ namespace LMS.Model.DTOs.Member
     public class DTOFetchAllMembers
     {
         public int MemberID { get; set; }
+        public string FormattedID { get; set; }  // Add this
         public string FullName { get; set; }
         public string MemberType { get; set; }
         public string Username { get; set; }
@@ -18,6 +19,7 @@ namespace LMS.Model.DTOs.Member
         public decimal FineRate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public string LastLogin { get; set; }
         public string Status { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using LMS.Model.DTOs.User;
 using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
+using LMS.BusinessLogic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +30,9 @@ namespace LMS.BusinessLogic.Services.FetchUsers
                 result.Add(new DTOFetchAllUsers
                 {
                     UserID = user.UserID,
+                    FormattedID = UserIdFormatter.Format(user.UserID, user.Role.ToString()),
                     FullName = user.GetFullName(),
-                    Role = MapRoleToDisplayName(user.Role),
+                    Role = user.Role.ToString(),
                     Username = user.Username,
                     Email = user.Email ?? "",
                     ContactNumber = user.ContactNumber ?? "",
@@ -42,19 +44,6 @@ namespace LMS.BusinessLogic.Services.FetchUsers
             }
 
             return result;
-        }
-
-        private string MapRoleToDisplayName(Role role)
-        {
-            switch (role)
-            {
-                case Role.Librarian:
-                    return "Librarian / Admin";
-                case Role.Staff:
-                    return "Library Staff";
-                default:
-                    return role.ToString();
-            }
         }
     }
 }

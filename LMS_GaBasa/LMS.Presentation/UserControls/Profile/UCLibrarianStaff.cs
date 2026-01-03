@@ -38,7 +38,7 @@ namespace LMS.Presentation.UserControls.Profile
 
             // Populate UI controls
             LblFullname.Text = profile.FullName;
-            LblIDNumber.Text = profile.UserID.ToString();
+            LblIDNumber.Text = profile.FormattedID;  // Changed from profile.UserID.ToString()
             LblEmail.Text = profile.Email;
             LblRole.Text = profile.Role;
             LblStatus.Text = profile.Status;

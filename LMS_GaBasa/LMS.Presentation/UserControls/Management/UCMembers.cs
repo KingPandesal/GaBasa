@@ -27,13 +27,14 @@ namespace LMS.Presentation.UserControls.Management
         private int _pageSize = 5;
         private int _totalPages = 1;
 
-        // Column indices
+        // Column indices - updated for LastLogin column
         private const int ColMemberId = 1;
         private const int ColFullName = 2;
-        private const int ColStatus = 15;
-        private const int ColEdit = 16;
-        private const int ColArchive = 17;
-        private const int ColRenew = 18;
+        private const int ColLastLogin = 15;
+        private const int ColStatus = 16;
+        private const int ColEdit = 17;
+        private const int ColArchive = 18;
+        private const int ColRenew = 19;
 
         public UCMembers()
         {
@@ -222,7 +223,7 @@ namespace LMS.Presentation.UserControls.Management
             {
                 DgwMembers.Rows.Add(
                     rowNumber++,
-                    member.MemberID,
+                    member.FormattedID,  // Changed from member.MemberID
                     member.FullName,
                     member.MemberType,
                     member.Username,
@@ -236,6 +237,7 @@ namespace LMS.Presentation.UserControls.Management
                     $"₱{member.FineRate:F2}",
                     member.RegistrationDate.ToString("MMM dd, yyyy"),
                     member.ExpirationDate.ToString("MMM dd, yyyy"),
+                    member.LastLogin,
                     member.Status
                 );
             }
@@ -378,8 +380,7 @@ namespace LMS.Presentation.UserControls.Management
 
             var confirmResult = MessageBox.Show(
                 $"Are you sure you want to renew {memberName}'s membership?\n\n" +
-                "• Registration date will be set to today\n" +
-                "• Expiration date will be set to 1 year from today\n" +
+                "• Expiration date will be extended by 1 year\n" +
                 "• Status will be changed to Active",
                 "Confirm Renewal",
                 MessageBoxButtons.YesNo,

@@ -1,4 +1,5 @@
-﻿using LMS.DataAccess.Interfaces;
+﻿using LMS.BusinessLogic.Helpers;
+using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Member;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,15 @@ namespace LMS.BusinessLogic.Services.FetchMembers
             // Auto-expire members whose expiration date has passed
             _memberRepo.UpdateExpiredMembers();
 
-            return _memberRepo.GetAllMembers();
+            var members = _memberRepo.GetAllMembers();
+
+            // Apply formatted ID to each member
+            foreach (var member in members)
+            {
+                member.FormattedID = UserIdFormatter.FormatMemberId(member.MemberID);
+            }
+
+            return members;
         }
     }
 }
