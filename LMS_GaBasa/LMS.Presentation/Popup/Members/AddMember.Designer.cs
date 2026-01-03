@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddMember));
             this.panel1 = new System.Windows.Forms.Panel();
             this.GrpBx1 = new System.Windows.Forms.GroupBox();
+            this.LblContactNumber = new System.Windows.Forms.Label();
+            this.TxtContactNumber = new System.Windows.Forms.TextBox();
             this.LblFirstName = new System.Windows.Forms.Label();
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblAddress = new System.Windows.Forms.Label();
@@ -52,23 +54,21 @@
             this.TxtUsername = new System.Windows.Forms.TextBox();
             this.LblPassword = new System.Windows.Forms.Label();
             this.TipPicBxProfilePic = new System.Windows.Forms.ToolTip(this.components);
+            this.PicBxValidID = new System.Windows.Forms.PictureBox();
+            this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
             this.Design1 = new System.Windows.Forms.Panel();
             this.LblCancel = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.LblAddProfPic = new System.Windows.Forms.Label();
-            this.LblContactNumber = new System.Windows.Forms.Label();
-            this.TxtContactNumber = new System.Windows.Forms.TextBox();
             this.PicBxValidIDContainer = new System.Windows.Forms.Panel();
-            this.PicBxValidID = new System.Windows.Forms.PictureBox();
             this.PicBxProfilePicContainer = new System.Windows.Forms.Panel();
-            this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.GrpBx1.SuspendLayout();
             this.GrpBx2.SuspendLayout();
-            this.PicBxValidIDContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).BeginInit();
-            this.PicBxProfilePicContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
+            this.PicBxValidIDContainer.SuspendLayout();
+            this.PicBxProfilePicContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -103,6 +103,25 @@
             this.GrpBx1.TabIndex = 71;
             this.GrpBx1.TabStop = false;
             this.GrpBx1.Text = "Personal Details";
+            // 
+            // LblContactNumber
+            // 
+            this.LblContactNumber.AutoSize = true;
+            this.LblContactNumber.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblContactNumber.ForeColor = System.Drawing.Color.Black;
+            this.LblContactNumber.Location = new System.Drawing.Point(17, 330);
+            this.LblContactNumber.Name = "LblContactNumber";
+            this.LblContactNumber.Size = new System.Drawing.Size(125, 21);
+            this.LblContactNumber.TabIndex = 69;
+            this.LblContactNumber.Text = "Contact Number";
+            // 
+            // TxtContactNumber
+            // 
+            this.TxtContactNumber.ForeColor = System.Drawing.Color.Black;
+            this.TxtContactNumber.Location = new System.Drawing.Point(31, 354);
+            this.TxtContactNumber.Name = "TxtContactNumber";
+            this.TxtContactNumber.Size = new System.Drawing.Size(413, 34);
+            this.TxtContactNumber.TabIndex = 70;
             // 
             // LblFirstName
             // 
@@ -301,6 +320,30 @@
             this.LblPassword.TabIndex = 67;
             this.LblPassword.Text = "Password";
             // 
+            // PicBxValidID
+            // 
+            this.PicBxValidID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxValidID.Image = ((System.Drawing.Image)(resources.GetObject("PicBxValidID.Image")));
+            this.PicBxValidID.Location = new System.Drawing.Point(13, 16);
+            this.PicBxValidID.Name = "PicBxValidID";
+            this.PicBxValidID.Size = new System.Drawing.Size(123, 119);
+            this.PicBxValidID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxValidID.TabIndex = 0;
+            this.PicBxValidID.TabStop = false;
+            this.TipPicBxProfilePic.SetToolTip(this.PicBxValidID, "Click to edit photo");
+            // 
+            // PicBxProfilePic
+            // 
+            this.PicBxProfilePic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxProfilePic.Image = ((System.Drawing.Image)(resources.GetObject("PicBxProfilePic.Image")));
+            this.PicBxProfilePic.Location = new System.Drawing.Point(13, 16);
+            this.PicBxProfilePic.Name = "PicBxProfilePic";
+            this.PicBxProfilePic.Size = new System.Drawing.Size(123, 119);
+            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxProfilePic.TabIndex = 0;
+            this.PicBxProfilePic.TabStop = false;
+            this.TipPicBxProfilePic.SetToolTip(this.PicBxProfilePic, "Click to edit photo");
+            // 
             // Design1
             // 
             this.Design1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
@@ -350,25 +393,6 @@
             this.LblAddProfPic.TabIndex = 78;
             this.LblAddProfPic.Text = "Click picture to add photo and Valid ID";
             // 
-            // LblContactNumber
-            // 
-            this.LblContactNumber.AutoSize = true;
-            this.LblContactNumber.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblContactNumber.ForeColor = System.Drawing.Color.Black;
-            this.LblContactNumber.Location = new System.Drawing.Point(17, 330);
-            this.LblContactNumber.Name = "LblContactNumber";
-            this.LblContactNumber.Size = new System.Drawing.Size(125, 21);
-            this.LblContactNumber.TabIndex = 69;
-            this.LblContactNumber.Text = "Contact Number";
-            // 
-            // TxtContactNumber
-            // 
-            this.TxtContactNumber.ForeColor = System.Drawing.Color.Black;
-            this.TxtContactNumber.Location = new System.Drawing.Point(31, 354);
-            this.TxtContactNumber.Name = "TxtContactNumber";
-            this.TxtContactNumber.Size = new System.Drawing.Size(413, 34);
-            this.TxtContactNumber.TabIndex = 70;
-            // 
             // PicBxValidIDContainer
             // 
             this.PicBxValidIDContainer.BackColor = System.Drawing.Color.White;
@@ -378,18 +402,6 @@
             this.PicBxValidIDContainer.Size = new System.Drawing.Size(149, 145);
             this.PicBxValidIDContainer.TabIndex = 74;
             // 
-            // PicBxValidID
-            // 
-            this.PicBxValidID.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicBxValidID.Image = ((System.Drawing.Image)(resources.GetObject("PicBxValidID.Image")));
-            this.PicBxValidID.Location = new System.Drawing.Point(13, 16);
-            this.PicBxValidID.Name = "PicBxValidID";
-            this.PicBxValidID.Size = new System.Drawing.Size(123, 119);
-            this.PicBxValidID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PicBxValidID.TabIndex = 0;
-            this.PicBxValidID.TabStop = false;
-            this.TipPicBxProfilePic.SetToolTip(this.PicBxValidID, "Click to edit photo");
-            // 
             // PicBxProfilePicContainer
             // 
             this.PicBxProfilePicContainer.BackColor = System.Drawing.Color.White;
@@ -398,18 +410,6 @@
             this.PicBxProfilePicContainer.Name = "PicBxProfilePicContainer";
             this.PicBxProfilePicContainer.Size = new System.Drawing.Size(149, 145);
             this.PicBxProfilePicContainer.TabIndex = 73;
-            // 
-            // PicBxProfilePic
-            // 
-            this.PicBxProfilePic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicBxProfilePic.Image = ((System.Drawing.Image)(resources.GetObject("PicBxProfilePic.Image")));
-            this.PicBxProfilePic.Location = new System.Drawing.Point(13, 16);
-            this.PicBxProfilePic.Name = "PicBxProfilePic";
-            this.PicBxProfilePic.Size = new System.Drawing.Size(123, 119);
-            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PicBxProfilePic.TabIndex = 0;
-            this.PicBxProfilePic.TabStop = false;
-            this.TipPicBxProfilePic.SetToolTip(this.PicBxProfilePic, "Click to edit photo");
             // 
             // AddMember
             // 
@@ -428,16 +428,17 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddMember";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add member";
             this.panel1.ResumeLayout(false);
             this.GrpBx1.ResumeLayout(false);
             this.GrpBx1.PerformLayout();
             this.GrpBx2.ResumeLayout(false);
             this.GrpBx2.PerformLayout();
-            this.PicBxValidIDContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).EndInit();
-            this.PicBxProfilePicContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
+            this.PicBxValidIDContainer.ResumeLayout(false);
+            this.PicBxProfilePicContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

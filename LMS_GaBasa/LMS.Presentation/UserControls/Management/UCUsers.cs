@@ -215,6 +215,7 @@ namespace LMS.Presentation.UserControls.Management
                     user.Username,
                     user.Email,
                     user.ContactNumber,
+                    user.LastLogin,
                     user.Status
                 );
             }
@@ -277,8 +278,8 @@ namespace LMS.Presentation.UserControls.Management
 
             int userId = Convert.ToInt32(DgwUsers.Rows[e.RowIndex].Cells[1].Value);
 
-            // Edit button clicked (column index 8)
-            if (e.ColumnIndex == 8)
+            // Edit button clicked (column index 9)
+            if (e.ColumnIndex == 9)
             {
                 EditUser editUserForm = new EditUser();
                 editUserForm.LoadUser(userId);
@@ -288,10 +289,10 @@ namespace LMS.Presentation.UserControls.Management
                     LoadUsers();
                 }
             }
-            // Archive button clicked (column index 9)
-            else if (e.ColumnIndex == 9)
+            // Archive button clicked (column index 10)
+            else if (e.ColumnIndex == 10)
             {
-                string currentStatus = DgwUsers.Rows[e.RowIndex].Cells[7].Value?.ToString() ?? "";
+                string currentStatus = DgwUsers.Rows[e.RowIndex].Cells[8].Value?.ToString() ?? "";
 
                 if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
                 {
@@ -342,6 +343,66 @@ namespace LMS.Presentation.UserControls.Management
         {
             LblPaginationPrevious.Enabled = _currentPage > 1;
             LblPaginationNext.Enabled = _currentPage < _totalPages;
+        }
+
+        private void LblEntries_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CmbBxPaginationNumbers_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblShow_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblPaginationPrevious_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblPaginationNext_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblPaginationShowEntries_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TxtSearchBar_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CmbBxRoleFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnApply_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CmbBxStatusFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

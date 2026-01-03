@@ -45,6 +45,9 @@ namespace LMS.BusinessLogic.Managers
                     return AuthenticationResult.Fail(memberFailure.Value);
             }
 
+            // Update last login timestamp
+            _userRepo.UpdateLastLogin(user.UserID);
+
             return AuthenticationResult.Ok(user);
         }
     }

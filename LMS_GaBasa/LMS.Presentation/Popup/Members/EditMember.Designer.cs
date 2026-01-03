@@ -43,6 +43,9 @@
             this.TxtAddress = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.GrpBx1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.CmbBxUserStatus = new System.Windows.Forms.ComboBox();
+            this.LblStatus = new System.Windows.Forms.Label();
             this.LblContactNumber = new System.Windows.Forms.Label();
             this.TxtContactNumber = new System.Windows.Forms.TextBox();
             this.LblFirstName = new System.Windows.Forms.Label();
@@ -53,9 +56,6 @@
             this.TxtEmail = new System.Windows.Forms.TextBox();
             this.TxtLastName = new System.Windows.Forms.TextBox();
             this.LblMemberType = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.CmbBxUserStatus = new System.Windows.Forms.ComboBox();
-            this.LblStatus = new System.Windows.Forms.Label();
             this.PicBxProfilePicContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).BeginInit();
@@ -209,6 +209,44 @@
             this.GrpBx1.TabStop = false;
             this.GrpBx1.Text = "Personal Details";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.label3.Location = new System.Drawing.Point(30, 473);
+            this.label3.MaximumSize = new System.Drawing.Size(420, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(413, 63);
+            this.label3.TabIndex = 74;
+            this.label3.Text = "*Changing member\'s status from Active will archive their account and they won\'t b" +
+    "e able to login anymore. You can still change this later.";
+            // 
+            // CmbBxUserStatus
+            // 
+            this.CmbBxUserStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbBxUserStatus.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxUserStatus.FormattingEnabled = true;
+            this.CmbBxUserStatus.Items.AddRange(new object[] {
+            "Active",
+            "Inactive",
+            "Suspended"});
+            this.CmbBxUserStatus.Location = new System.Drawing.Point(31, 430);
+            this.CmbBxUserStatus.Name = "CmbBxUserStatus";
+            this.CmbBxUserStatus.Size = new System.Drawing.Size(413, 36);
+            this.CmbBxUserStatus.TabIndex = 73;
+            // 
+            // LblStatus
+            // 
+            this.LblStatus.AutoSize = true;
+            this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblStatus.ForeColor = System.Drawing.Color.Black;
+            this.LblStatus.Location = new System.Drawing.Point(17, 406);
+            this.LblStatus.Name = "LblStatus";
+            this.LblStatus.Size = new System.Drawing.Size(115, 21);
+            this.LblStatus.TabIndex = 72;
+            this.LblStatus.Text = "Member Status";
+            // 
             // LblContactNumber
             // 
             this.LblContactNumber.AutoSize = true;
@@ -310,43 +348,6 @@
             this.LblMemberType.TabIndex = 67;
             this.LblMemberType.Text = "Member Type";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.label3.Location = new System.Drawing.Point(30, 473);
-            this.label3.MaximumSize = new System.Drawing.Size(420, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(413, 63);
-            this.label3.TabIndex = 74;
-            this.label3.Text = "*Changing member\'s status from Active will archive their account and they won\'t b" +
-    "e able to login anymore. You can still change this later.";
-            // 
-            // CmbBxUserStatus
-            // 
-            this.CmbBxUserStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CmbBxUserStatus.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxUserStatus.FormattingEnabled = true;
-            this.CmbBxUserStatus.Items.AddRange(new object[] {
-            "Active",
-            "Inactive"});
-            this.CmbBxUserStatus.Location = new System.Drawing.Point(31, 430);
-            this.CmbBxUserStatus.Name = "CmbBxUserStatus";
-            this.CmbBxUserStatus.Size = new System.Drawing.Size(413, 36);
-            this.CmbBxUserStatus.TabIndex = 73;
-            // 
-            // LblStatus
-            // 
-            this.LblStatus.AutoSize = true;
-            this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblStatus.Location = new System.Drawing.Point(17, 406);
-            this.LblStatus.Name = "LblStatus";
-            this.LblStatus.Size = new System.Drawing.Size(115, 21);
-            this.LblStatus.TabIndex = 72;
-            this.LblStatus.Text = "Member Status";
-            // 
             // EditMember
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -364,6 +365,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditMember";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit member";
             this.PicBxProfilePicContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();

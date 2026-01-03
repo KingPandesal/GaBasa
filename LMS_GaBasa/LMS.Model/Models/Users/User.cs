@@ -11,7 +11,7 @@ namespace LMS.Model.Models.Users
     public abstract class User
     {
         public int UserID { get; internal set; }
-        public string Username { get; internal  set; }
+        public string Username { get; internal set; }
         protected string PasswordHash { get; private set; } // hashed
         public string FirstName { get; internal set; }
         public string LastName { get; internal set; }
@@ -19,6 +19,7 @@ namespace LMS.Model.Models.Users
         public string ContactNumber { get; internal set; }
         public string PhotoPath { get; internal set; }
         public UserStatus Status { get; internal set; }
+        public DateTime? LastLogin { get; internal set; }
         // Enum (Database): Active, Inactive
 
         public abstract Role Role { get; }

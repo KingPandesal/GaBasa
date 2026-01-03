@@ -248,7 +248,7 @@
             this.LblCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblCancel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblCancel.Location = new System.Drawing.Point(412, 679);
+            this.LblCancel.Location = new System.Drawing.Point(409, 631);
             this.LblCancel.Margin = new System.Windows.Forms.Padding(4);
             this.LblCancel.Name = "LblCancel";
             this.LblCancel.Size = new System.Drawing.Size(97, 43);
@@ -264,7 +264,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(307, 679);
+            this.BtnSave.Location = new System.Drawing.Point(304, 631);
             this.BtnSave.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(97, 43);
@@ -295,7 +295,7 @@
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Location = new System.Drawing.Point(6, 223);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(528, 437);
+            this.panel1.Size = new System.Drawing.Size(528, 388);
             this.panel1.TabIndex = 79;
             // 
             // EditUser
@@ -303,7 +303,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(545, 737);
+            this.ClientSize = new System.Drawing.Size(545, 688);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.LblAddProfPic);
             this.Controls.Add(this.LblCancel);

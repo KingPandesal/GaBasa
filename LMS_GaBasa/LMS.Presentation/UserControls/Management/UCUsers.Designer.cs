@@ -42,16 +42,19 @@
             this.LblSearch = new System.Windows.Forms.Label();
             this.BtnApply = new System.Windows.Forms.Button();
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLastLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // TxtSearchBar
@@ -71,6 +74,7 @@
             this.TxtSearchBar.TabIndex = 4;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
+            this.TxtSearchBar.TextChanged += new System.EventHandler(this.TxtSearchBar_TextChanged_1);
             // 
             // DgwUsers
             // 
@@ -84,6 +88,7 @@
             this.Column2,
             this.Column3,
             this.Column6,
+            this.ColumnLastLogin,
             this.Column5,
             this.Edit,
             this.Archive});
@@ -105,6 +110,7 @@
             this.LblEntries.Size = new System.Drawing.Size(70, 28);
             this.LblEntries.TabIndex = 32;
             this.LblEntries.Text = "entries";
+            this.LblEntries.Click += new System.EventHandler(this.LblEntries_Click);
             // 
             // CmbBxPaginationNumbers
             // 
@@ -122,6 +128,7 @@
             this.CmbBxPaginationNumbers.Size = new System.Drawing.Size(52, 33);
             this.CmbBxPaginationNumbers.TabIndex = 31;
             this.CmbBxPaginationNumbers.Text = "5";
+            this.CmbBxPaginationNumbers.SelectedIndexChanged += new System.EventHandler(this.CmbBxPaginationNumbers_SelectedIndexChanged_1);
             // 
             // LblShow
             // 
@@ -132,6 +139,7 @@
             this.LblShow.Size = new System.Drawing.Size(60, 28);
             this.LblShow.TabIndex = 30;
             this.LblShow.Text = "Show";
+            this.LblShow.Click += new System.EventHandler(this.LblShow_Click);
             // 
             // LblPaginationPrevious
             // 
@@ -147,6 +155,7 @@
             this.LblPaginationPrevious.TabIndex = 36;
             this.LblPaginationPrevious.Text = "Previous";
             this.LblPaginationPrevious.UseVisualStyleBackColor = false;
+            this.LblPaginationPrevious.Click += new System.EventHandler(this.LblPaginationPrevious_Click_1);
             // 
             // LblPaginationNext
             // 
@@ -162,6 +171,7 @@
             this.LblPaginationNext.TabIndex = 35;
             this.LblPaginationNext.Text = "Next";
             this.LblPaginationNext.UseVisualStyleBackColor = false;
+            this.LblPaginationNext.Click += new System.EventHandler(this.LblPaginationNext_Click_1);
             // 
             // LblPaginationShowEntries
             // 
@@ -172,6 +182,7 @@
             this.LblPaginationShowEntries.Size = new System.Drawing.Size(268, 28);
             this.LblPaginationShowEntries.TabIndex = 34;
             this.LblPaginationShowEntries.Text = "Showing 1 to 5 of 100 entries";
+            this.LblPaginationShowEntries.Click += new System.EventHandler(this.LblPaginationShowEntries_Click);
             // 
             // BtnAddUser
             // 
@@ -198,6 +209,7 @@
             this.CmbBxRoleFilter.Size = new System.Drawing.Size(192, 36);
             this.CmbBxRoleFilter.TabIndex = 38;
             this.CmbBxRoleFilter.Text = "Librarian / Admin";
+            this.CmbBxRoleFilter.SelectedIndexChanged += new System.EventHandler(this.CmbBxRoleFilter_SelectedIndexChanged);
             // 
             // LblSearch
             // 
@@ -208,6 +220,7 @@
             this.LblSearch.Size = new System.Drawing.Size(70, 28);
             this.LblSearch.TabIndex = 39;
             this.LblSearch.Text = "Search";
+            this.LblSearch.Click += new System.EventHandler(this.LblSearch_Click);
             // 
             // BtnApply
             // 
@@ -223,6 +236,7 @@
             this.BtnApply.TabIndex = 40;
             this.BtnApply.Text = "Apply";
             this.BtnApply.UseVisualStyleBackColor = false;
+            this.BtnApply.Click += new System.EventHandler(this.BtnApply_Click_1);
             // 
             // CmbBxStatusFilter
             // 
@@ -237,6 +251,18 @@
             this.CmbBxStatusFilter.Size = new System.Drawing.Size(139, 36);
             this.CmbBxStatusFilter.TabIndex = 41;
             this.CmbBxStatusFilter.Text = "Status";
+            this.CmbBxStatusFilter.SelectedIndexChanged += new System.EventHandler(this.CmbBxStatusFilter_SelectedIndexChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(36, 35);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 56;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Column7
             // 
@@ -280,6 +306,13 @@
             this.Column6.Name = "Column6";
             this.Column6.Width = 150;
             // 
+            // ColumnLastLogin
+            // 
+            this.ColumnLastLogin.HeaderText = "Last Login";
+            this.ColumnLastLogin.MinimumWidth = 8;
+            this.ColumnLastLogin.Name = "ColumnLastLogin";
+            this.ColumnLastLogin.Width = 150;
+            // 
             // Column5
             // 
             this.Column5.HeaderText = "Status";
@@ -314,6 +347,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CmbBxStatusFilter);
             this.Controls.Add(this.BtnApply);
             this.Controls.Add(this.LblSearch);
@@ -330,6 +364,7 @@
             this.Name = "UCUsers";
             this.Size = new System.Drawing.Size(1580, 936);
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,12 +385,14 @@
         private System.Windows.Forms.Label LblSearch;
         private System.Windows.Forms.Button BtnApply;
         private System.Windows.Forms.ComboBox CmbBxStatusFilter;
+        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLastLogin;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Archive;

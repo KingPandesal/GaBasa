@@ -33,5 +33,8 @@ namespace LMS.DataAccess.Repositories
 
         // New method for archiving (soft delete)
         bool ArchiveUser(int userId);
+
+        // Update last login timestamp
+        bool UpdateLastLogin(int userId);
     }
 }

@@ -34,7 +34,10 @@ namespace LMS.BusinessLogic.Services.FetchUsers
                     Username = user.Username,
                     Email = user.Email ?? "",
                     ContactNumber = user.ContactNumber ?? "",
-                    Status = user.Status.ToString()
+                    Status = user.Status.ToString(),
+                    LastLogin = user.LastLogin.HasValue 
+                        ? user.LastLogin.Value.ToString("MMM dd, yyyy hh:mm tt") 
+                        : "Never"
                 });
             }
 

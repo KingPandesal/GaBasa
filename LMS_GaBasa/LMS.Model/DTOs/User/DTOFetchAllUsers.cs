@@ -15,6 +15,6 @@ namespace LMS.Model.DTOs.User
         public string Email { get; set; }
         public string ContactNumber { get; set; }
         public string Status { get; set; }
-
+        public string LastLogin { get; set; }
     }
 }

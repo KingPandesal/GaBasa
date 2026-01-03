@@ -265,7 +265,7 @@ namespace LMS.DataAccess.Repositories
                 conn.Open();
 
                 // Get Admin and Staff users only (not Members)
-                cmd.CommandText = @"SELECT UserID, Username, [Role], [Status], FirstName, LastName, Email, ContactNumber, Photo 
+                cmd.CommandText = @"SELECT UserID, Username, [Role], [Status], FirstName, LastName, Email, ContactNumber, Photo, LastLogin 
                                     FROM [User] 
                                     WHERE [Role] IN ('Admin', 'Staff')
                                     ORDER BY UserID DESC";
@@ -283,6 +283,7 @@ namespace LMS.DataAccess.Repositories
                         string email = reader.IsDBNull(6) ? null : reader.GetString(6);
                         string contactNumber = reader.IsDBNull(7) ? null : reader.GetString(7);
                         string photo = reader.IsDBNull(8) ? null : reader.GetString(8);
+                        DateTime? lastLogin = reader.IsDBNull(9) ? (DateTime?)null : reader.GetDateTime(9);
 
                         User user = CreateUserFromRoleString(role);
                         if (user == null)
@@ -295,6 +296,7 @@ namespace LMS.DataAccess.Repositories
                         user.Email = email;
                         user.ContactNumber = contactNumber;
                         user.PhotoPath = photo;
+                        user.LastLogin = lastLogin;
 
                         if (!string.IsNullOrEmpty(status) &&
                             Enum.TryParse<UserStatus>(status, true, out var parsedStatus))
@@ -362,6 +364,26 @@ namespace LMS.DataAccess.Repositories
 
                 AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
                 AddParameter(cmd, "@Status", DbType.String, UserStatus.Inactive.ToString(), 50);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+        }
+
+        public bool UpdateLastLogin(int userId)
+        {
+            if (userId <= 0)
+                throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = "UPDATE [User] SET LastLogin = @LastLogin WHERE UserID = @UserID";
+
+                AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
+                AddParameter(cmd, "@LastLogin", DbType.DateTime, DateTime.Now, 0);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 return rowsAffected > 0;

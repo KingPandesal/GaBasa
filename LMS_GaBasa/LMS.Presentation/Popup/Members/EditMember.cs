@@ -92,20 +92,22 @@ namespace LMS.Presentation.Popup.Members
         {
             CmbBxUserStatus.Items.Clear();
 
-            // If status is Expired or Suspended, show it but disable changing
-            if (currentStatus == MemberStatus.Expired || currentStatus == MemberStatus.Suspended)
+            // Expired status is read-only (automatic based on expiration date)
+            if (currentStatus == MemberStatus.Expired)
             {
-                CmbBxUserStatus.Items.Add(new StatusComboItem(currentStatus.ToString(), currentStatus));
+                CmbBxUserStatus.Items.Add(new StatusComboItem("Expired", MemberStatus.Expired));
                 CmbBxUserStatus.SelectedIndex = 0;
                 CmbBxUserStatus.Enabled = false;
             }
             else
             {
-                // Only Active and Inactive can be manually set
+                // Active, Inactive, and Suspended can be manually set
                 CmbBxUserStatus.Items.Add(new StatusComboItem("Active", MemberStatus.Active));
                 CmbBxUserStatus.Items.Add(new StatusComboItem("Inactive", MemberStatus.Inactive));
+                CmbBxUserStatus.Items.Add(new StatusComboItem("Suspended", MemberStatus.Suspended));
+                CmbBxUserStatus.Enabled = true;
 
-                // Set selection
+                // Set selection based on current status
                 for (int i = 0; i < CmbBxUserStatus.Items.Count; i++)
                 {
                     if (CmbBxUserStatus.Items[i] is StatusComboItem item && item.Value == currentStatus)
@@ -114,6 +116,10 @@ namespace LMS.Presentation.Popup.Members
                         break;
                     }
                 }
+
+                // Default to first item if not found
+                if (CmbBxUserStatus.SelectedIndex == -1)
+                    CmbBxUserStatus.SelectedIndex = 0;
             }
         }
 
