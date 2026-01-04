@@ -421,7 +421,7 @@
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxCopyInformation.Location = new System.Drawing.Point(21, 1561);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
-            this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 367);
+            this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
             this.GrpBxCopyInformation.TabIndex = 74;
             this.GrpBxCopyInformation.TabStop = false;
             this.GrpBxCopyInformation.Text = "Copy Information";
@@ -430,7 +430,7 @@
             // 
             this.TxtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtLocation.ForeColor = System.Drawing.Color.Black;
-            this.TxtLocation.Location = new System.Drawing.Point(205, 164);
+            this.TxtLocation.Location = new System.Drawing.Point(205, 170);
             this.TxtLocation.Name = "TxtLocation";
             this.TxtLocation.Size = new System.Drawing.Size(354, 34);
             this.TxtLocation.TabIndex = 100;
@@ -440,7 +440,7 @@
             this.LblLocation.AutoSize = true;
             this.LblLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblLocation.ForeColor = System.Drawing.Color.Black;
-            this.LblLocation.Location = new System.Drawing.Point(32, 167);
+            this.LblLocation.Location = new System.Drawing.Point(32, 173);
             this.LblLocation.Name = "LblLocation";
             this.LblLocation.Size = new System.Drawing.Size(155, 28);
             this.LblLocation.TabIndex = 106;
@@ -1038,7 +1038,7 @@
             "Lost",
             "Damaged",
             "Repair"});
-            this.comboBox1.Location = new System.Drawing.Point(205, 111);
+            this.comboBox1.Location = new System.Drawing.Point(205, 117);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(353, 36);
             this.comboBox1.TabIndex = 108;
@@ -1048,7 +1048,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(31, 115);
+            this.label1.Location = new System.Drawing.Point(31, 121);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(133, 28);
             this.label1.TabIndex = 107;
@@ -1059,7 +1059,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label2.Location = new System.Drawing.Point(33, 254);
+            this.label2.Location = new System.Drawing.Point(33, 260);
             this.label2.MaximumSize = new System.Drawing.Size(550, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(524, 50);
@@ -1072,7 +1072,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label3.Location = new System.Drawing.Point(33, 310);
+            this.label3.Location = new System.Drawing.Point(33, 316);
             this.label3.MaximumSize = new System.Drawing.Size(550, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(468, 25);
@@ -1084,7 +1084,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label4.Location = new System.Drawing.Point(33, 225);
+            this.label4.Location = new System.Drawing.Point(33, 231);
             this.label4.MaximumSize = new System.Drawing.Size(550, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(55, 25);

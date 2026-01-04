@@ -31,6 +31,11 @@ namespace LMS.Presentation.UserControls.Management
             importBookForm.ShowDialog();
         }
 
+        private void LblPaginationPrevious_Click(object sender, EventArgs e)
+        {
+
+        }
+
         // end code
     }
 }

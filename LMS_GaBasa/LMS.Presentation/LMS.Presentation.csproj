@@ -378,6 +378,7 @@
     <None Include="Assets\backgrounds\BG-login.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\dataimages\BookCopyBarcodes\" />
     <Folder Include="Assets\dataimages\Books\" />
     <Folder Include="Assets\dataimages\Members\" />
     <Folder Include="Assets\dataimages\Users\" />

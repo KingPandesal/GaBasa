@@ -60,7 +60,6 @@
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.BtnImport = new System.Windows.Forms.Button();
-            this.CmbBxLocationFilter = new System.Windows.Forms.ComboBox();
             this.CmbBxCategoryFilter = new System.Windows.Forms.ComboBox();
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -74,7 +73,7 @@
             // 
             this.CmbBxResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxResourceTypeFilter.FormattingEnabled = true;
-            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1092, 35);
+            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1241, 35);
             this.CmbBxResourceTypeFilter.Name = "CmbBxResourceTypeFilter";
             this.CmbBxResourceTypeFilter.Size = new System.Drawing.Size(185, 36);
             this.CmbBxResourceTypeFilter.TabIndex = 69;
@@ -135,6 +134,7 @@
             this.LblPaginationPrevious.TabIndex = 64;
             this.LblPaginationPrevious.Text = "Previous";
             this.LblPaginationPrevious.UseVisualStyleBackColor = false;
+            this.LblPaginationPrevious.Click += new System.EventHandler(this.LblPaginationPrevious_Click);
             // 
             // LblPaginationNext
             // 
@@ -375,7 +375,7 @@
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(614, 40);
+            this.TxtSearchBar.Size = new System.Drawing.Size(761, 40);
             this.TxtSearchBar.TabIndex = 57;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
@@ -396,23 +396,11 @@
             this.BtnImport.UseVisualStyleBackColor = false;
             this.BtnImport.Click += new System.EventHandler(this.BtnImport_Click);
             // 
-            // CmbBxLocationFilter
-            // 
-            this.CmbBxLocationFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxLocationFilter.FormattingEnabled = true;
-            this.CmbBxLocationFilter.Items.AddRange(new object[] {
-            ""});
-            this.CmbBxLocationFilter.Location = new System.Drawing.Point(1287, 35);
-            this.CmbBxLocationFilter.Name = "CmbBxLocationFilter";
-            this.CmbBxLocationFilter.Size = new System.Drawing.Size(139, 36);
-            this.CmbBxLocationFilter.TabIndex = 72;
-            this.CmbBxLocationFilter.Text = "All Location";
-            // 
             // CmbBxCategoryFilter
             // 
             this.CmbBxCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxCategoryFilter.FormattingEnabled = true;
-            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(936, 35);
+            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(1085, 35);
             this.CmbBxCategoryFilter.Name = "CmbBxCategoryFilter";
             this.CmbBxCategoryFilter.Size = new System.Drawing.Size(146, 36);
             this.CmbBxCategoryFilter.TabIndex = 73;
@@ -422,7 +410,7 @@
             // 
             this.CmbBxStatusFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxStatusFilter.FormattingEnabled = true;
-            this.CmbBxStatusFilter.Location = new System.Drawing.Point(788, 35);
+            this.CmbBxStatusFilter.Location = new System.Drawing.Point(937, 35);
             this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
             this.CmbBxStatusFilter.Size = new System.Drawing.Size(139, 36);
             this.CmbBxStatusFilter.TabIndex = 74;
@@ -467,7 +455,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.CmbBxStatusFilter);
             this.Controls.Add(this.CmbBxCategoryFilter);
-            this.Controls.Add(this.CmbBxLocationFilter);
             this.Controls.Add(this.BtnImport);
             this.Controls.Add(this.PicBxSearchIcon);
             this.Controls.Add(this.CmbBxResourceTypeFilter);
@@ -507,7 +494,6 @@
         private System.Windows.Forms.DataGridView DgwInventory;
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.Button BtnImport;
-        private System.Windows.Forms.ComboBox CmbBxLocationFilter;
         private System.Windows.Forms.ComboBox CmbBxCategoryFilter;
         private System.Windows.Forms.ComboBox CmbBxStatusFilter;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
