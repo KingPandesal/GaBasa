@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS.Presentation.Popup.Reservation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,9 +18,12 @@ namespace LMS.Presentation.UserControls.Management
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void BtnAddReservation_Click(object sender, EventArgs e)
         {
-
+            AddReservation addReservation = new AddReservation();
+            addReservation.ShowDialog();
         }
+
+        // end code
     }
 }

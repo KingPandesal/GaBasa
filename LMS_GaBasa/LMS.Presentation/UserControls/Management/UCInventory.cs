@@ -25,6 +25,12 @@ namespace LMS.Presentation.UserControls.Management
 
         }
 
+        private void BtnImport_Click(object sender, EventArgs e)
+        {
+            ImportBook importBookForm = new ImportBook();
+            importBookForm.ShowDialog();
+        }
+
         // end code
     }
 }
