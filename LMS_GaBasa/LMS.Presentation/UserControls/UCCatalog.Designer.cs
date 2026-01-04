@@ -60,12 +60,10 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.button7 = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.button6 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -77,19 +75,45 @@
             this.PnlPopularBooksSection = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.button13 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.PnlSearchLogic.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -453,8 +477,12 @@
             // 
             // panel7
             // 
-            this.panel7.Controls.Add(this.pictureBox6);
             this.panel7.Controls.Add(this.button7);
+            this.panel7.Controls.Add(this.label29);
+            this.panel7.Controls.Add(this.label30);
+            this.panel7.Controls.Add(this.label31);
+            this.panel7.Controls.Add(this.button10);
+            this.panel7.Controls.Add(this.pictureBox6);
             this.panel7.Controls.Add(this.label20);
             this.panel7.Controls.Add(this.label21);
             this.panel7.Location = new System.Drawing.Point(1078, 1);
@@ -471,21 +499,6 @@
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.White;
-            this.button7.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button7.Location = new System.Drawing.Point(186, 184);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(275, 36);
-            this.button7.TabIndex = 66;
-            this.button7.Text = "Click here to view book details...";
-            this.button7.UseVisualStyleBackColor = false;
             // 
             // label20
             // 
@@ -512,8 +525,12 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.pictureBox5);
             this.panel6.Controls.Add(this.button6);
+            this.panel6.Controls.Add(this.label26);
+            this.panel6.Controls.Add(this.label27);
+            this.panel6.Controls.Add(this.label28);
+            this.panel6.Controls.Add(this.button9);
+            this.panel6.Controls.Add(this.pictureBox5);
             this.panel6.Controls.Add(this.label16);
             this.panel6.Controls.Add(this.label19);
             this.panel6.Location = new System.Drawing.Point(539, 1);
@@ -530,21 +547,6 @@
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.White;
-            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button6.Location = new System.Drawing.Point(186, 184);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(275, 36);
-            this.button6.TabIndex = 66;
-            this.button6.Text = "Click here to view book details...";
-            this.button6.UseVisualStyleBackColor = false;
             // 
             // label16
             // 
@@ -571,6 +573,10 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button8);
+            this.panel2.Controls.Add(this.label25);
+            this.panel2.Controls.Add(this.label24);
+            this.panel2.Controls.Add(this.label22);
             this.panel2.Controls.Add(this.pictureBox4);
             this.panel2.Controls.Add(this.button5);
             this.panel2.Controls.Add(this.label17);
@@ -592,17 +598,17 @@
             // 
             // button5
             // 
-            this.button5.BackColor = System.Drawing.Color.White;
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.Location = new System.Drawing.Point(186, 184);
+            this.button5.ForeColor = System.Drawing.Color.White;
+            this.button5.Location = new System.Drawing.Point(190, 173);
             this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(275, 36);
+            this.button5.Size = new System.Drawing.Size(127, 36);
             this.button5.TabIndex = 66;
-            this.button5.Text = "Click here to view book details...";
+            this.button5.Text = "View Details";
             this.button5.UseVisualStyleBackColor = false;
             // 
             // label17
@@ -621,12 +627,12 @@
             this.label18.BackColor = System.Drawing.Color.OrangeRed;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(192, 38);
+            this.label18.Location = new System.Drawing.Point(186, 39);
             this.label18.Name = "label18";
             this.label18.Padding = new System.Windows.Forms.Padding(4);
-            this.label18.Size = new System.Drawing.Size(63, 28);
+            this.label18.Size = new System.Drawing.Size(64, 28);
             this.label18.TabIndex = 2;
-            this.label18.Text = "Thesis";
+            this.label18.Text = "Fiction";
             // 
             // label23
             // 
@@ -653,8 +659,12 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.label38);
+            this.panel3.Controls.Add(this.label39);
+            this.panel3.Controls.Add(this.label40);
+            this.panel3.Controls.Add(this.button13);
+            this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Location = new System.Drawing.Point(1078, 0);
@@ -671,21 +681,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Location = new System.Drawing.Point(186, 184);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(275, 36);
-            this.button2.TabIndex = 66;
-            this.button2.Text = "Click here to view book details...";
-            this.button2.UseVisualStyleBackColor = false;
             // 
             // label3
             // 
@@ -712,8 +707,12 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.pictureBox2);
             this.panel4.Controls.Add(this.button3);
+            this.panel4.Controls.Add(this.label35);
+            this.panel4.Controls.Add(this.label36);
+            this.panel4.Controls.Add(this.label37);
+            this.panel4.Controls.Add(this.button12);
+            this.panel4.Controls.Add(this.pictureBox2);
             this.panel4.Controls.Add(this.label8);
             this.panel4.Controls.Add(this.label9);
             this.panel4.Location = new System.Drawing.Point(539, 0);
@@ -730,21 +729,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Location = new System.Drawing.Point(186, 184);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(275, 36);
-            this.button3.TabIndex = 66;
-            this.button3.Text = "Click here to view book details...";
-            this.button3.UseVisualStyleBackColor = false;
             // 
             // label8
             // 
@@ -771,8 +755,12 @@
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.pictureBox3);
             this.panel8.Controls.Add(this.button4);
+            this.panel8.Controls.Add(this.label32);
+            this.panel8.Controls.Add(this.label33);
+            this.panel8.Controls.Add(this.label34);
+            this.panel8.Controls.Add(this.button11);
+            this.panel8.Controls.Add(this.pictureBox3);
             this.panel8.Controls.Add(this.label10);
             this.panel8.Controls.Add(this.label15);
             this.panel8.Location = new System.Drawing.Point(0, 0);
@@ -789,21 +777,6 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.White;
-            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.Location = new System.Drawing.Point(186, 184);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(275, 36);
-            this.button4.TabIndex = 66;
-            this.button4.Text = "Click here to view book details...";
-            this.button4.UseVisualStyleBackColor = false;
             // 
             // label10
             // 
@@ -827,6 +800,351 @@
             this.label15.Size = new System.Drawing.Size(63, 28);
             this.label15.TabIndex = 2;
             this.label15.Text = "Thesis";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label22.Location = new System.Drawing.Point(183, 80);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(147, 21);
+            this.label22.TabIndex = 78;
+            this.label22.Text = "Author: J.K. Rowling";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label24.Location = new System.Drawing.Point(183, 101);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(122, 21);
+            this.label24.TabIndex = 79;
+            this.label24.Text = "Status: Available";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label25.Location = new System.Drawing.Point(183, 122);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(134, 21);
+            this.label25.TabIndex = 80;
+            this.label25.Text = "Location: Shelf A4";
+            // 
+            // button8
+            // 
+            this.button8.BackColor = System.Drawing.Color.White;
+            this.button8.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button8.Location = new System.Drawing.Point(325, 173);
+            this.button8.Margin = new System.Windows.Forms.Padding(4);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(102, 36);
+            this.button8.TabIndex = 81;
+            this.button8.Text = "Reserve";
+            this.button8.UseVisualStyleBackColor = false;
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.Color.White;
+            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button6.Location = new System.Drawing.Point(334, 172);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(102, 36);
+            this.button6.TabIndex = 86;
+            this.button6.Text = "Reserve";
+            this.button6.UseVisualStyleBackColor = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label26.Location = new System.Drawing.Point(192, 121);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(134, 21);
+            this.label26.TabIndex = 85;
+            this.label26.Text = "Location: Shelf A4";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label27.Location = new System.Drawing.Point(192, 100);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(122, 21);
+            this.label27.TabIndex = 84;
+            this.label27.Text = "Status: Available";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label28.Location = new System.Drawing.Point(192, 79);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(147, 21);
+            this.label28.TabIndex = 83;
+            this.label28.Text = "Author: J.K. Rowling";
+            // 
+            // button9
+            // 
+            this.button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button9.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button9.ForeColor = System.Drawing.Color.White;
+            this.button9.Location = new System.Drawing.Point(199, 172);
+            this.button9.Margin = new System.Windows.Forms.Padding(4);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(127, 36);
+            this.button9.TabIndex = 82;
+            this.button9.Text = "View Details";
+            this.button9.UseVisualStyleBackColor = false;
+            // 
+            // button7
+            // 
+            this.button7.BackColor = System.Drawing.Color.White;
+            this.button7.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button7.Location = new System.Drawing.Point(334, 172);
+            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(102, 36);
+            this.button7.TabIndex = 86;
+            this.button7.Text = "Reserve";
+            this.button7.UseVisualStyleBackColor = false;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label29.Location = new System.Drawing.Point(192, 121);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(134, 21);
+            this.label29.TabIndex = 85;
+            this.label29.Text = "Location: Shelf A4";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label30.Location = new System.Drawing.Point(192, 100);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(122, 21);
+            this.label30.TabIndex = 84;
+            this.label30.Text = "Status: Available";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label31.Location = new System.Drawing.Point(192, 79);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(147, 21);
+            this.label31.TabIndex = 83;
+            this.label31.Text = "Author: J.K. Rowling";
+            // 
+            // button10
+            // 
+            this.button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button10.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button10.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button10.ForeColor = System.Drawing.Color.White;
+            this.button10.Location = new System.Drawing.Point(199, 172);
+            this.button10.Margin = new System.Windows.Forms.Padding(4);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(127, 36);
+            this.button10.TabIndex = 82;
+            this.button10.Text = "View Details";
+            this.button10.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.White;
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button4.Location = new System.Drawing.Point(331, 172);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(102, 36);
+            this.button4.TabIndex = 86;
+            this.button4.Text = "Reserve";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label32.Location = new System.Drawing.Point(189, 121);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(134, 21);
+            this.label32.TabIndex = 85;
+            this.label32.Text = "Location: Shelf A4";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label33.Location = new System.Drawing.Point(189, 100);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(122, 21);
+            this.label33.TabIndex = 84;
+            this.label33.Text = "Status: Available";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label34.Location = new System.Drawing.Point(189, 79);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(147, 21);
+            this.label34.TabIndex = 83;
+            this.label34.Text = "Author: J.K. Rowling";
+            // 
+            // button11
+            // 
+            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button11.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Location = new System.Drawing.Point(196, 172);
+            this.button11.Margin = new System.Windows.Forms.Padding(4);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(127, 36);
+            this.button11.TabIndex = 82;
+            this.button11.Text = "View Details";
+            this.button11.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button3.Location = new System.Drawing.Point(331, 172);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(102, 36);
+            this.button3.TabIndex = 86;
+            this.button3.Text = "Reserve";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label35.Location = new System.Drawing.Point(189, 121);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(134, 21);
+            this.label35.TabIndex = 85;
+            this.label35.Text = "Location: Shelf A4";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label36.Location = new System.Drawing.Point(189, 100);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(122, 21);
+            this.label36.TabIndex = 84;
+            this.label36.Text = "Status: Available";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label37.Location = new System.Drawing.Point(189, 79);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(147, 21);
+            this.label37.TabIndex = 83;
+            this.label37.Text = "Author: J.K. Rowling";
+            // 
+            // button12
+            // 
+            this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button12.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button12.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button12.ForeColor = System.Drawing.Color.White;
+            this.button12.Location = new System.Drawing.Point(196, 172);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(127, 36);
+            this.button12.TabIndex = 82;
+            this.button12.Text = "View Details";
+            this.button12.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.Location = new System.Drawing.Point(331, 172);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(102, 36);
+            this.button2.TabIndex = 86;
+            this.button2.Text = "Reserve";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label38.Location = new System.Drawing.Point(189, 121);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(134, 21);
+            this.label38.TabIndex = 85;
+            this.label38.Text = "Location: Shelf A4";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label39.Location = new System.Drawing.Point(189, 100);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(122, 21);
+            this.label39.TabIndex = 84;
+            this.label39.Text = "Status: Available";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label40.Location = new System.Drawing.Point(189, 79);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(147, 21);
+            this.label40.TabIndex = 83;
+            this.label40.Text = "Author: J.K. Rowling";
+            // 
+            // button13
+            // 
+            this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button13.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button13.ForeColor = System.Drawing.Color.White;
+            this.button13.Location = new System.Drawing.Point(196, 172);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(127, 36);
+            this.button13.TabIndex = 82;
+            this.button13.Text = "View Details";
+            this.button13.UseVisualStyleBackColor = false;
             // 
             // UCCatalog
             // 
@@ -924,11 +1242,9 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Panel panel2;
@@ -939,18 +1255,44 @@
         private System.Windows.Forms.Panel PnlPopularBooksSection;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Button button11;
     }
 }
