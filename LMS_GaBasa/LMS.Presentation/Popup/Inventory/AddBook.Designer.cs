@@ -71,6 +71,12 @@
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.GrpBxBookInformation = new System.Windows.Forms.GroupBox();
+            this.LstBxEditor = new System.Windows.Forms.ListBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.LstBxAuthor = new System.Windows.Forms.ListBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.CmbBxLanguage = new System.Windows.Forms.ComboBox();
             this.TxtCallNumber = new System.Windows.Forms.TextBox();
             this.LblCallNumber = new System.Windows.Forms.Label();
@@ -99,14 +105,13 @@
             this.BtnSave = new System.Windows.Forms.Button();
             this.TipforPicBxBookCover = new System.Windows.Forms.ToolTip(this.components);
             this.PicBxBookCover = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.LstBxAuthor = new System.Windows.Forms.ListBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.LstBxEditor = new System.Windows.Forms.ListBox();
             this.TipforLstBxAuthor = new System.Windows.Forms.ToolTip(this.components);
             this.TipforLstBxEditor = new System.Windows.Forms.ToolTip(this.components);
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             this.PnlAddBook.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
@@ -140,7 +145,7 @@
             this.LblForBookCover.AutoSize = true;
             this.LblForBookCover.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblForBookCover.ForeColor = System.Drawing.Color.Gray;
-            this.LblForBookCover.Location = new System.Drawing.Point(79, 560);
+            this.LblForBookCover.Location = new System.Drawing.Point(76, 560);
             this.LblForBookCover.Name = "LblForBookCover";
             this.LblForBookCover.Size = new System.Drawing.Size(317, 28);
             this.LblForBookCover.TabIndex = 2;
@@ -390,6 +395,11 @@
             // 
             // GrpBxCopyInformation
             // 
+            this.GrpBxCopyInformation.Controls.Add(this.label4);
+            this.GrpBxCopyInformation.Controls.Add(this.label3);
+            this.GrpBxCopyInformation.Controls.Add(this.label2);
+            this.GrpBxCopyInformation.Controls.Add(this.comboBox1);
+            this.GrpBxCopyInformation.Controls.Add(this.label1);
             this.GrpBxCopyInformation.Controls.Add(this.TxtLocation);
             this.GrpBxCopyInformation.Controls.Add(this.LblLocation);
             this.GrpBxCopyInformation.Controls.Add(this.LblNoOfCopies);
@@ -411,7 +421,7 @@
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxCopyInformation.Location = new System.Drawing.Point(21, 1561);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
-            this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 181);
+            this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 367);
             this.GrpBxCopyInformation.TabIndex = 74;
             this.GrpBxCopyInformation.TabStop = false;
             this.GrpBxCopyInformation.Text = "Copy Information";
@@ -420,7 +430,7 @@
             // 
             this.TxtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtLocation.ForeColor = System.Drawing.Color.Black;
-            this.TxtLocation.Location = new System.Drawing.Point(203, 112);
+            this.TxtLocation.Location = new System.Drawing.Point(205, 164);
             this.TxtLocation.Name = "TxtLocation";
             this.TxtLocation.Size = new System.Drawing.Size(354, 34);
             this.TxtLocation.TabIndex = 100;
@@ -430,18 +440,18 @@
             this.LblLocation.AutoSize = true;
             this.LblLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblLocation.ForeColor = System.Drawing.Color.Black;
-            this.LblLocation.Location = new System.Drawing.Point(30, 115);
+            this.LblLocation.Location = new System.Drawing.Point(32, 167);
             this.LblLocation.Name = "LblLocation";
-            this.LblLocation.Size = new System.Drawing.Size(87, 28);
+            this.LblLocation.Size = new System.Drawing.Size(155, 28);
             this.LblLocation.TabIndex = 106;
-            this.LblLocation.Text = "Location";
+            this.LblLocation.Text = "Default Location";
             // 
             // LblNoOfCopies
             // 
             this.LblNoOfCopies.AutoSize = true;
             this.LblNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblNoOfCopies.ForeColor = System.Drawing.Color.Black;
-            this.LblNoOfCopies.Location = new System.Drawing.Point(30, 67);
+            this.LblNoOfCopies.Location = new System.Drawing.Point(32, 68);
             this.LblNoOfCopies.Name = "LblNoOfCopies";
             this.LblNoOfCopies.Size = new System.Drawing.Size(130, 28);
             this.LblNoOfCopies.TabIndex = 105;
@@ -644,6 +654,78 @@
             this.GrpBxBookInformation.TabIndex = 72;
             this.GrpBxBookInformation.TabStop = false;
             this.GrpBxBookInformation.Text = "Book Information";
+            // 
+            // LstBxEditor
+            // 
+            this.LstBxEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LstBxEditor.FormattingEnabled = true;
+            this.LstBxEditor.ItemHeight = 28;
+            this.LstBxEditor.Location = new System.Drawing.Point(38, 475);
+            this.LstBxEditor.Name = "LstBxEditor";
+            this.LstBxEditor.Size = new System.Drawing.Size(519, 116);
+            this.LstBxEditor.TabIndex = 96;
+            this.TipforLstBxEditor.SetToolTip(this.LstBxEditor, "Double click an editor to remove");
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.Location = new System.Drawing.Point(482, 428);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(76, 38);
+            this.button2.TabIndex = 78;
+            this.button2.Text = "Add";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // LstBxAuthor
+            // 
+            this.LstBxAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LstBxAuthor.FormattingEnabled = true;
+            this.LstBxAuthor.ItemHeight = 28;
+            this.LstBxAuthor.Location = new System.Drawing.Point(37, 283);
+            this.LstBxAuthor.Name = "LstBxAuthor";
+            this.LstBxAuthor.Size = new System.Drawing.Size(519, 116);
+            this.LstBxAuthor.TabIndex = 96;
+            this.TipforLstBxAuthor.SetToolTip(this.LstBxAuthor, "Double click an author to remove");
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox2.ForeColor = System.Drawing.Color.Black;
+            this.textBox2.Location = new System.Drawing.Point(204, 429);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(262, 34);
+            this.textBox2.TabIndex = 95;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button1.Location = new System.Drawing.Point(481, 234);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(76, 38);
+            this.button1.TabIndex = 78;
+            this.button1.Text = "Add";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBox1.ForeColor = System.Drawing.Color.Black;
+            this.textBox1.Location = new System.Drawing.Point(203, 235);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(262, 34);
+            this.textBox1.TabIndex = 95;
             // 
             // CmbBxLanguage
             // 
@@ -944,77 +1026,70 @@
             this.PicBxBookCover.TabStop = false;
             this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");
             // 
-            // textBox1
+            // comboBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox1.ForeColor = System.Drawing.Color.Black;
-            this.textBox1.Location = new System.Drawing.Point(203, 235);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(262, 34);
-            this.textBox1.TabIndex = 95;
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBox1.ForeColor = System.Drawing.Color.Black;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Available",
+            "Borrowed",
+            "Reserved",
+            "Lost",
+            "Damaged",
+            "Repair"});
+            this.comboBox1.Location = new System.Drawing.Point(205, 111);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(353, 36);
+            this.comboBox1.TabIndex = 108;
             // 
-            // button1
+            // label1
             // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Location = new System.Drawing.Point(481, 234);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(76, 38);
-            this.button1.TabIndex = 78;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = false;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(31, 115);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 28);
+            this.label1.TabIndex = 107;
+            this.label1.Text = "Default Status";
             // 
-            // LstBxAuthor
+            // label2
             // 
-            this.LstBxAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LstBxAuthor.FormattingEnabled = true;
-            this.LstBxAuthor.ItemHeight = 28;
-            this.LstBxAuthor.Location = new System.Drawing.Point(37, 283);
-            this.LstBxAuthor.Name = "LstBxAuthor";
-            this.LstBxAuthor.Size = new System.Drawing.Size(519, 116);
-            this.LstBxAuthor.TabIndex = 96;
-            this.TipforLstBxAuthor.SetToolTip(this.LstBxAuthor, "Double click an author to remove");
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label2.Location = new System.Drawing.Point(33, 254);
+            this.label2.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(524, 50);
+            this.label2.TabIndex = 109;
+            this.label2.Text = "• Status and location are applied to all copies initially and can be edited per c" +
+    "opy later.";
             // 
-            // textBox2
+            // label3
             // 
-            this.textBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox2.ForeColor = System.Drawing.Color.Black;
-            this.textBox2.Location = new System.Drawing.Point(204, 429);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(262, 34);
-            this.textBox2.TabIndex = 95;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label3.Location = new System.Drawing.Point(33, 310);
+            this.label3.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(468, 25);
+            this.label3.TabIndex = 110;
+            this.label3.Text = "• Each book copy receives a unique barcode upon saving.";
             // 
-            // button2
+            // label4
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Location = new System.Drawing.Point(482, 428);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(76, 38);
-            this.button2.TabIndex = 78;
-            this.button2.Text = "Add";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // LstBxEditor
-            // 
-            this.LstBxEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LstBxEditor.FormattingEnabled = true;
-            this.LstBxEditor.ItemHeight = 28;
-            this.LstBxEditor.Location = new System.Drawing.Point(38, 475);
-            this.LstBxEditor.Name = "LstBxEditor";
-            this.LstBxEditor.Size = new System.Drawing.Size(519, 116);
-            this.LstBxEditor.TabIndex = 96;
-            this.TipforLstBxEditor.SetToolTip(this.LstBxEditor, "Double click an editor to remove");
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label4.Location = new System.Drawing.Point(33, 225);
+            this.label4.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(55, 25);
+            this.label4.TabIndex = 111;
+            this.label4.Text = "Note:";
             // 
             // AddBook
             // 
@@ -1135,5 +1210,10 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolTip TipforLstBxEditor;
         private System.Windows.Forms.ToolTip TipforLstBxAuthor;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }
