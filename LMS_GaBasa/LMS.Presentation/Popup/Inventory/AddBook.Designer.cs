@@ -53,6 +53,11 @@
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.GrpBxCopyInformation = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.TxtLocation = new System.Windows.Forms.TextBox();
             this.LblLocation = new System.Windows.Forms.Label();
             this.LblNoOfCopies = new System.Windows.Forms.Label();
@@ -107,11 +112,6 @@
             this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.TipforLstBxAuthor = new System.Windows.Forms.ToolTip(this.components);
             this.TipforLstBxEditor = new System.Windows.Forms.ToolTip(this.components);
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             this.PnlAddBook.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
@@ -426,6 +426,71 @@
             this.GrpBxCopyInformation.TabStop = false;
             this.GrpBxCopyInformation.Text = "Copy Information";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label4.Location = new System.Drawing.Point(33, 231);
+            this.label4.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(55, 25);
+            this.label4.TabIndex = 111;
+            this.label4.Text = "Note:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label3.Location = new System.Drawing.Point(33, 316);
+            this.label3.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(468, 25);
+            this.label3.TabIndex = 110;
+            this.label3.Text = "• Each book copy receives a unique barcode upon saving.";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label2.Location = new System.Drawing.Point(33, 260);
+            this.label2.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(524, 50);
+            this.label2.TabIndex = 109;
+            this.label2.Text = "• Status and location are applied to all copies initially and can be edited per c" +
+    "opy later.";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBox1.ForeColor = System.Drawing.Color.Black;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Available",
+            "Borrowed",
+            "Reserved",
+            "Lost",
+            "Damaged",
+            "Repair"});
+            this.comboBox1.Location = new System.Drawing.Point(205, 117);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(353, 36);
+            this.comboBox1.TabIndex = 108;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(31, 121);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 28);
+            this.label1.TabIndex = 107;
+            this.label1.Text = "Status";
+            // 
             // TxtLocation
             // 
             this.TxtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -442,9 +507,9 @@
             this.LblLocation.ForeColor = System.Drawing.Color.Black;
             this.LblLocation.Location = new System.Drawing.Point(32, 173);
             this.LblLocation.Name = "LblLocation";
-            this.LblLocation.Size = new System.Drawing.Size(155, 28);
+            this.LblLocation.Size = new System.Drawing.Size(87, 28);
             this.LblLocation.TabIndex = 106;
-            this.LblLocation.Text = "Default Location";
+            this.LblLocation.Text = "Location";
             // 
             // LblNoOfCopies
             // 
@@ -1025,71 +1090,6 @@
             this.PicBxBookCover.TabIndex = 0;
             this.PicBxBookCover.TabStop = false;
             this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBox1.ForeColor = System.Drawing.Color.Black;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Available",
-            "Borrowed",
-            "Reserved",
-            "Lost",
-            "Damaged",
-            "Repair"});
-            this.comboBox1.Location = new System.Drawing.Point(205, 117);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(353, 36);
-            this.comboBox1.TabIndex = 108;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(31, 121);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 28);
-            this.label1.TabIndex = 107;
-            this.label1.Text = "Default Status";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label2.Location = new System.Drawing.Point(33, 260);
-            this.label2.MaximumSize = new System.Drawing.Size(550, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(524, 50);
-            this.label2.TabIndex = 109;
-            this.label2.Text = "• Status and location are applied to all copies initially and can be edited per c" +
-    "opy later.";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label3.Location = new System.Drawing.Point(33, 316);
-            this.label3.MaximumSize = new System.Drawing.Size(550, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(468, 25);
-            this.label3.TabIndex = 110;
-            this.label3.Text = "• Each book copy receives a unique barcode upon saving.";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label4.Location = new System.Drawing.Point(33, 231);
-            this.label4.MaximumSize = new System.Drawing.Size(550, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 25);
-            this.label4.TabIndex = 111;
-            this.label4.Text = "Note:";
             // 
             // AddBook
             // 

@@ -73,18 +73,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.PnlPopularBooksSection = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -99,21 +87,33 @@
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button13 = new System.Windows.Forms.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.button12 = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.PnlSearchLogic.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -125,12 +125,12 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.PnlPopularBooksSection.SuspendLayout();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panel8.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -455,14 +455,14 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label7.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(3, 0);
             this.label7.Name = "label7";
             this.label7.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.label7.Size = new System.Drawing.Size(184, 42);
+            this.label7.Size = new System.Drawing.Size(160, 42);
             this.label7.TabIndex = 22;
-            this.label7.Text = "New Arrivals >";
+            this.label7.Text = "New Arrivals";
             // 
             // panel5
             // 
@@ -637,14 +637,14 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label23.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.label23.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.Location = new System.Drawing.Point(3, 305);
             this.label23.Name = "label23";
             this.label23.Padding = new System.Windows.Forms.Padding(0, 20, 0, 10);
-            this.label23.Size = new System.Drawing.Size(203, 62);
+            this.label23.Size = new System.Drawing.Size(179, 62);
             this.label23.TabIndex = 25;
-            this.label23.Text = "Popular Books >";
+            this.label23.Text = "Popular Books";
             // 
             // PnlPopularBooksSection
             // 
@@ -656,150 +656,6 @@
             this.PnlPopularBooksSection.Name = "PnlPopularBooksSection";
             this.PnlPopularBooksSection.Size = new System.Drawing.Size(1241, 257);
             this.PnlPopularBooksSection.TabIndex = 117;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.button2);
-            this.panel3.Controls.Add(this.label38);
-            this.panel3.Controls.Add(this.label39);
-            this.panel3.Controls.Add(this.label40);
-            this.panel3.Controls.Add(this.button13);
-            this.panel3.Controls.Add(this.pictureBox1);
-            this.panel3.Controls.Add(this.label3);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Location = new System.Drawing.Point(1078, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(533, 222);
-            this.panel3.TabIndex = 71;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(175, 220);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(181, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(349, 32);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Inspirational Women Leaders...";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.OrangeRed;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(192, 38);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(4);
-            this.label4.Size = new System.Drawing.Size(63, 28);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Thesis";
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.button3);
-            this.panel4.Controls.Add(this.label35);
-            this.panel4.Controls.Add(this.label36);
-            this.panel4.Controls.Add(this.label37);
-            this.panel4.Controls.Add(this.button12);
-            this.panel4.Controls.Add(this.pictureBox2);
-            this.panel4.Controls.Add(this.label8);
-            this.panel4.Controls.Add(this.label9);
-            this.panel4.Location = new System.Drawing.Point(539, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(533, 222);
-            this.panel4.TabIndex = 71;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(175, 220);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label8.Location = new System.Drawing.Point(181, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(349, 32);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Inspirational Women Leaders...";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.OrangeRed;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(192, 38);
-            this.label9.Name = "label9";
-            this.label9.Padding = new System.Windows.Forms.Padding(4);
-            this.label9.Size = new System.Drawing.Size(63, 28);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "Thesis";
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.button4);
-            this.panel8.Controls.Add(this.label32);
-            this.panel8.Controls.Add(this.label33);
-            this.panel8.Controls.Add(this.label34);
-            this.panel8.Controls.Add(this.button11);
-            this.panel8.Controls.Add(this.pictureBox3);
-            this.panel8.Controls.Add(this.label10);
-            this.panel8.Controls.Add(this.label15);
-            this.panel8.Location = new System.Drawing.Point(0, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(533, 222);
-            this.panel8.TabIndex = 70;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(175, 220);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label10.Location = new System.Drawing.Point(181, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(349, 32);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Inspirational Women Leaders...";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.OrangeRed;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(192, 38);
-            this.label15.Name = "label15";
-            this.label15.Padding = new System.Windows.Forms.Padding(4);
-            this.label15.Size = new System.Drawing.Size(63, 28);
-            this.label15.TabIndex = 2;
-            this.label15.Text = "Thesis";
             // 
             // label22
             // 
@@ -966,125 +822,83 @@
             this.button10.Text = "View Details";
             this.button10.UseVisualStyleBackColor = false;
             // 
-            // button4
+            // label4
             // 
-            this.button4.BackColor = System.Drawing.Color.White;
-            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.Location = new System.Drawing.Point(331, 172);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(102, 36);
-            this.button4.TabIndex = 86;
-            this.button4.Text = "Reserve";
-            this.button4.UseVisualStyleBackColor = false;
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.OrangeRed;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(192, 38);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(4);
+            this.label4.Size = new System.Drawing.Size(63, 28);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Thesis";
             // 
-            // label32
+            // label3
             // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label32.Location = new System.Drawing.Point(189, 121);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(134, 21);
-            this.label32.TabIndex = 85;
-            this.label32.Text = "Location: Shelf A4";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(181, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(349, 32);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Inspirational Women Leaders...";
             // 
-            // label33
+            // pictureBox1
             // 
-            this.label33.AutoSize = true;
-            this.label33.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label33.Location = new System.Drawing.Point(189, 100);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(122, 21);
-            this.label33.TabIndex = 84;
-            this.label33.Text = "Status: Available";
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(175, 220);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
-            // label34
+            // button13
             // 
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label34.Location = new System.Drawing.Point(189, 79);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(147, 21);
-            this.label34.TabIndex = 83;
-            this.label34.Text = "Author: J.K. Rowling";
+            this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button13.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button13.ForeColor = System.Drawing.Color.White;
+            this.button13.Location = new System.Drawing.Point(196, 172);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(127, 36);
+            this.button13.TabIndex = 82;
+            this.button13.Text = "View Details";
+            this.button13.UseVisualStyleBackColor = false;
             // 
-            // button11
+            // label40
             // 
-            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button11.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Location = new System.Drawing.Point(196, 172);
-            this.button11.Margin = new System.Windows.Forms.Padding(4);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(127, 36);
-            this.button11.TabIndex = 82;
-            this.button11.Text = "View Details";
-            this.button11.UseVisualStyleBackColor = false;
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label40.Location = new System.Drawing.Point(189, 79);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(147, 21);
+            this.label40.TabIndex = 83;
+            this.label40.Text = "Author: J.K. Rowling";
             // 
-            // button3
+            // label39
             // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Location = new System.Drawing.Point(331, 172);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(102, 36);
-            this.button3.TabIndex = 86;
-            this.button3.Text = "Reserve";
-            this.button3.UseVisualStyleBackColor = false;
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label39.Location = new System.Drawing.Point(189, 100);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(122, 21);
+            this.label39.TabIndex = 84;
+            this.label39.Text = "Status: Available";
             // 
-            // label35
+            // label38
             // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label35.Location = new System.Drawing.Point(189, 121);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(134, 21);
-            this.label35.TabIndex = 85;
-            this.label35.Text = "Location: Shelf A4";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label36.Location = new System.Drawing.Point(189, 100);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(122, 21);
-            this.label36.TabIndex = 84;
-            this.label36.Text = "Status: Available";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label37.Location = new System.Drawing.Point(189, 79);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(147, 21);
-            this.label37.TabIndex = 83;
-            this.label37.Text = "Author: J.K. Rowling";
-            // 
-            // button12
-            // 
-            this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button12.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button12.ForeColor = System.Drawing.Color.White;
-            this.button12.Location = new System.Drawing.Point(196, 172);
-            this.button12.Margin = new System.Windows.Forms.Padding(4);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(127, 36);
-            this.button12.TabIndex = 82;
-            this.button12.Text = "View Details";
-            this.button12.UseVisualStyleBackColor = false;
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label38.Location = new System.Drawing.Point(189, 121);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(134, 21);
+            this.label38.TabIndex = 85;
+            this.label38.Text = "Location: Shelf A4";
             // 
             // button2
             // 
@@ -1101,50 +915,236 @@
             this.button2.Text = "Reserve";
             this.button2.UseVisualStyleBackColor = false;
             // 
-            // label38
+            // panel3
             // 
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label38.Location = new System.Drawing.Point(189, 121);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(134, 21);
-            this.label38.TabIndex = 85;
-            this.label38.Text = "Location: Shelf A4";
+            this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.label38);
+            this.panel3.Controls.Add(this.label39);
+            this.panel3.Controls.Add(this.label40);
+            this.panel3.Controls.Add(this.button13);
+            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.label4);
+            this.panel3.Location = new System.Drawing.Point(1078, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(533, 222);
+            this.panel3.TabIndex = 71;
             // 
-            // label39
+            // label15
             // 
-            this.label39.AutoSize = true;
-            this.label39.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label39.Location = new System.Drawing.Point(189, 100);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(122, 21);
-            this.label39.TabIndex = 84;
-            this.label39.Text = "Status: Available";
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.OrangeRed;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(192, 38);
+            this.label15.Name = "label15";
+            this.label15.Padding = new System.Windows.Forms.Padding(4);
+            this.label15.Size = new System.Drawing.Size(63, 28);
+            this.label15.TabIndex = 2;
+            this.label15.Text = "Thesis";
             // 
-            // label40
+            // label10
             // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label40.Location = new System.Drawing.Point(189, 79);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(147, 21);
-            this.label40.TabIndex = 83;
-            this.label40.Text = "Author: J.K. Rowling";
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.label10.Location = new System.Drawing.Point(181, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(349, 32);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Inspirational Women Leaders...";
             // 
-            // button13
+            // pictureBox3
             // 
-            this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button13.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button13.ForeColor = System.Drawing.Color.White;
-            this.button13.Location = new System.Drawing.Point(196, 172);
-            this.button13.Margin = new System.Windows.Forms.Padding(4);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(127, 36);
-            this.button13.TabIndex = 82;
-            this.button13.Text = "View Details";
-            this.button13.UseVisualStyleBackColor = false;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(175, 220);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
+            // 
+            // button11
+            // 
+            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button11.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Location = new System.Drawing.Point(196, 172);
+            this.button11.Margin = new System.Windows.Forms.Padding(4);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(127, 36);
+            this.button11.TabIndex = 82;
+            this.button11.Text = "View Details";
+            this.button11.UseVisualStyleBackColor = false;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label34.Location = new System.Drawing.Point(189, 79);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(147, 21);
+            this.label34.TabIndex = 83;
+            this.label34.Text = "Author: J.K. Rowling";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label33.Location = new System.Drawing.Point(189, 100);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(122, 21);
+            this.label33.TabIndex = 84;
+            this.label33.Text = "Status: Available";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label32.Location = new System.Drawing.Point(189, 121);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(134, 21);
+            this.label32.TabIndex = 85;
+            this.label32.Text = "Location: Shelf A4";
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.White;
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button4.Location = new System.Drawing.Point(331, 172);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(102, 36);
+            this.button4.TabIndex = 86;
+            this.button4.Text = "Reserve";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.button4);
+            this.panel8.Controls.Add(this.label32);
+            this.panel8.Controls.Add(this.label33);
+            this.panel8.Controls.Add(this.label34);
+            this.panel8.Controls.Add(this.button11);
+            this.panel8.Controls.Add(this.pictureBox3);
+            this.panel8.Controls.Add(this.label10);
+            this.panel8.Controls.Add(this.label15);
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(533, 222);
+            this.panel8.TabIndex = 70;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.OrangeRed;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(192, 38);
+            this.label9.Name = "label9";
+            this.label9.Padding = new System.Windows.Forms.Padding(4);
+            this.label9.Size = new System.Drawing.Size(63, 28);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Thesis";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.label8.Location = new System.Drawing.Point(181, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(349, 32);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Inspirational Women Leaders...";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(175, 220);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // button12
+            // 
+            this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button12.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button12.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button12.ForeColor = System.Drawing.Color.White;
+            this.button12.Location = new System.Drawing.Point(196, 172);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(127, 36);
+            this.button12.TabIndex = 82;
+            this.button12.Text = "View Details";
+            this.button12.UseVisualStyleBackColor = false;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label37.Location = new System.Drawing.Point(189, 79);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(147, 21);
+            this.label37.TabIndex = 83;
+            this.label37.Text = "Author: J.K. Rowling";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label36.Location = new System.Drawing.Point(189, 100);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(122, 21);
+            this.label36.TabIndex = 84;
+            this.label36.Text = "Status: Available";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label35.Location = new System.Drawing.Point(189, 121);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(134, 21);
+            this.label35.TabIndex = 85;
+            this.label35.Text = "Location: Shelf A4";
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button3.Location = new System.Drawing.Point(331, 172);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(102, 36);
+            this.button3.TabIndex = 86;
+            this.button3.Text = "Reserve";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.button3);
+            this.panel4.Controls.Add(this.label35);
+            this.panel4.Controls.Add(this.label36);
+            this.panel4.Controls.Add(this.label37);
+            this.panel4.Controls.Add(this.button12);
+            this.panel4.Controls.Add(this.pictureBox2);
+            this.panel4.Controls.Add(this.label8);
+            this.panel4.Controls.Add(this.label9);
+            this.panel4.Location = new System.Drawing.Point(539, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(533, 222);
+            this.panel4.TabIndex = 71;
             // 
             // UCCatalog
             // 
@@ -1194,15 +1194,15 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.PnlPopularBooksSection.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1253,18 +1253,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel PnlPopularBooksSection;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label25;
@@ -1279,20 +1267,32 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label15;
     }
 }

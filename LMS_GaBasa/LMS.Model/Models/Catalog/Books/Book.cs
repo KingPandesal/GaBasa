@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LMS.Model.Models.Catalog;
 
 namespace LMS.Model.Models.Catalog.Books
 {
@@ -26,9 +27,10 @@ namespace LMS.Model.Models.Catalog.Books
         public ResourceType ResourceType { get; set; }
         // Enum: Book, Periodical, Thesis, AV, E-Book
         public string CoverImage { get; set; }
+        public string LoanType { get; set; }
+        public string DownloadURL { get; set; }
 
-        public List<Author> Authors { get; set; } = new List<Author>();
+        public List<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
         public List<BookCopy> Copies { get; set; } = new List<BookCopy>();
     }
-
 }
