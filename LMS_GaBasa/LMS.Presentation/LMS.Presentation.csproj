@@ -89,11 +89,17 @@
     <Compile Include="Popup\Inventory\ImportBook.Designer.cs">
       <DependentUpon>ImportBook.cs</DependentUpon>
     </Compile>
-    <Compile Include="Popup\Inventory\ViewCopy.cs">
+    <Compile Include="Popup\Inventory\ViewBookCopy.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Popup\Inventory\ViewCopy.Designer.cs">
-      <DependentUpon>ViewCopy.cs</DependentUpon>
+    <Compile Include="Popup\Inventory\ViewBookCopy.Designer.cs">
+      <DependentUpon>ViewBookCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\Inventory\ViewCoverImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Inventory\ViewCoverImage.Designer.cs">
+      <DependentUpon>ViewCoverImage.cs</DependentUpon>
     </Compile>
     <Compile Include="Popup\Members\AddMember.cs">
       <SubType>Form</SubType>
@@ -281,6 +287,9 @@
     <EmbeddedResource Include="Popup\Inventory\ImportBook.resx">
       <DependentUpon>ImportBook.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Inventory\ViewCoverImage.resx">
+      <DependentUpon>ViewCoverImage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\Members\AddMember.resx">
       <DependentUpon>AddMember.cs</DependentUpon>
     </EmbeddedResource>
@@ -402,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\icons\Icons\Archive.png" />
+    <Content Include="Assets\icons\Icons\excel green.png" />
     <Content Include="Assets\icons\Icons\Pencil.png" />
     <Content Include="Assets\icons\Icons\Renew.png" />
     <Content Include="Assets\icons\Icons\Search.png" />

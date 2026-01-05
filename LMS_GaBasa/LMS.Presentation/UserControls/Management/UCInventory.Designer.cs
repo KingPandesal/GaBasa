@@ -45,31 +45,31 @@
             this.CmbBxCategoryFilter = new System.Windows.Forms.ComboBox();
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Column23 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnISBN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCallNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnSubtitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAuthors = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEditors = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPublishers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLanguage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPages = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEdition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPublicationYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnResourceType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDLURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLoanType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnTotalCopies = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAvailableCopies = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBtnCoverImage = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnBtnCopies = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgwInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
@@ -207,29 +207,29 @@
             this.DgwInventory.BackgroundColor = System.Drawing.Color.White;
             this.DgwInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgwInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column14,
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column19,
-            this.Column20,
-            this.Column7,
-            this.Column8,
-            this.Column9,
-            this.Column10,
-            this.Column11,
-            this.Column12,
-            this.Column13,
-            this.Column16,
-            this.Column15,
-            this.Column21,
-            this.Column22,
-            this.Column18,
-            this.Column17,
-            this.Column23,
+            this.ColumnNumbering,
+            this.ColumnBookID,
+            this.ColumnISBN,
+            this.ColumnCallNo,
+            this.ColumnTitle,
+            this.ColumnSubtitle,
+            this.ColumnAuthors,
+            this.ColumnEditors,
+            this.ColumnPublishers,
+            this.ColumnCategory,
+            this.ColumnLanguage,
+            this.ColumnPages,
+            this.ColumnEdition,
+            this.ColumnPublicationYear,
+            this.ColumnDescription,
+            this.ColumnResourceType,
+            this.ColumnDLURL,
+            this.ColumnLoanType,
+            this.ColumnTotalCopies,
+            this.ColumnAvailableCopies,
+            this.ColumnStatus,
+            this.ColumnBtnCoverImage,
+            this.ColumnBtnCopies,
             this.Edit});
             this.DgwInventory.GridColor = System.Drawing.SystemColors.ControlLight;
             this.DgwInventory.Location = new System.Drawing.Point(36, 200);
@@ -238,6 +238,7 @@
             this.DgwInventory.RowTemplate.Height = 28;
             this.DgwInventory.Size = new System.Drawing.Size(1509, 490);
             this.DgwInventory.TabIndex = 58;
+            this.DgwInventory.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwInventory_CellContentClick);
             // 
             // TxtSearchBar
             // 
@@ -302,7 +303,17 @@
             this.dataGridViewImageColumn1.MinimumWidth = 8;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.ToolTipText = "Edit user";
-            this.dataGridViewImageColumn1.Width = 150;
+            this.dataGridViewImageColumn1.Width = 8;
+            // 
+            // PicBxSearchIcon
+            // 
+            this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
+            this.PicBxSearchIcon.Location = new System.Drawing.Point(36, 35);
+            this.PicBxSearchIcon.Name = "PicBxSearchIcon";
+            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
+            this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxSearchIcon.TabIndex = 70;
+            this.PicBxSearchIcon.TabStop = false;
             // 
             // dataGridViewImageColumn2
             // 
@@ -315,177 +326,168 @@
             this.dataGridViewImageColumn2.ToolTipText = "Archive user";
             this.dataGridViewImageColumn2.Width = 150;
             // 
-            // PicBxSearchIcon
+            // ColumnNumbering
             // 
-            this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
-            this.PicBxSearchIcon.Location = new System.Drawing.Point(36, 35);
-            this.PicBxSearchIcon.Name = "PicBxSearchIcon";
-            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
-            this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicBxSearchIcon.TabIndex = 70;
-            this.PicBxSearchIcon.TabStop = false;
+            this.ColumnNumbering.HeaderText = "#";
+            this.ColumnNumbering.MinimumWidth = 8;
+            this.ColumnNumbering.Name = "ColumnNumbering";
+            this.ColumnNumbering.Width = 50;
             // 
-            // Column14
+            // ColumnBookID
             // 
-            this.Column14.HeaderText = "#";
-            this.Column14.MinimumWidth = 8;
-            this.Column14.Name = "Column14";
-            this.Column14.Width = 50;
+            this.ColumnBookID.HeaderText = "Book ID";
+            this.ColumnBookID.MinimumWidth = 8;
+            this.ColumnBookID.Name = "ColumnBookID";
+            this.ColumnBookID.Width = 150;
             // 
-            // Column1
+            // ColumnISBN
             // 
-            this.Column1.HeaderText = "Book ID";
-            this.Column1.MinimumWidth = 8;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
+            this.ColumnISBN.HeaderText = "ISBN";
+            this.ColumnISBN.MinimumWidth = 8;
+            this.ColumnISBN.Name = "ColumnISBN";
+            this.ColumnISBN.Width = 150;
             // 
-            // Column2
+            // ColumnCallNo
             // 
-            this.Column2.HeaderText = "ISBN";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
+            this.ColumnCallNo.HeaderText = "Call Number";
+            this.ColumnCallNo.MinimumWidth = 8;
+            this.ColumnCallNo.Name = "ColumnCallNo";
+            this.ColumnCallNo.Width = 150;
             // 
-            // Column3
+            // ColumnTitle
             // 
-            this.Column3.HeaderText = "Call Number";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 150;
+            this.ColumnTitle.HeaderText = "Title";
+            this.ColumnTitle.MinimumWidth = 8;
+            this.ColumnTitle.Name = "ColumnTitle";
+            this.ColumnTitle.Width = 150;
             // 
-            // Column4
+            // ColumnSubtitle
             // 
-            this.Column4.HeaderText = "Title";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
+            this.ColumnSubtitle.HeaderText = "Subtitle";
+            this.ColumnSubtitle.MinimumWidth = 8;
+            this.ColumnSubtitle.Name = "ColumnSubtitle";
+            this.ColumnSubtitle.Width = 150;
             // 
-            // Column5
+            // ColumnAuthors
             // 
-            this.Column5.HeaderText = "Subtitle";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
+            this.ColumnAuthors.HeaderText = "Authors";
+            this.ColumnAuthors.MinimumWidth = 8;
+            this.ColumnAuthors.Name = "ColumnAuthors";
+            this.ColumnAuthors.Width = 150;
             // 
-            // Column6
+            // ColumnEditors
             // 
-            this.Column6.HeaderText = "Publishers";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
+            this.ColumnEditors.HeaderText = "Editors";
+            this.ColumnEditors.MinimumWidth = 8;
+            this.ColumnEditors.Name = "ColumnEditors";
+            this.ColumnEditors.Width = 150;
             // 
-            // Column19
+            // ColumnPublishers
             // 
-            this.Column19.HeaderText = "Authors";
-            this.Column19.MinimumWidth = 8;
-            this.Column19.Name = "Column19";
-            this.Column19.Width = 150;
+            this.ColumnPublishers.HeaderText = "Publishers";
+            this.ColumnPublishers.MinimumWidth = 8;
+            this.ColumnPublishers.Name = "ColumnPublishers";
+            this.ColumnPublishers.Width = 150;
             // 
-            // Column20
+            // ColumnCategory
             // 
-            this.Column20.HeaderText = "Editors";
-            this.Column20.MinimumWidth = 8;
-            this.Column20.Name = "Column20";
-            this.Column20.Width = 150;
+            this.ColumnCategory.HeaderText = "Category";
+            this.ColumnCategory.MinimumWidth = 8;
+            this.ColumnCategory.Name = "ColumnCategory";
+            this.ColumnCategory.Width = 150;
             // 
-            // Column7
+            // ColumnLanguage
             // 
-            this.Column7.HeaderText = "Category";
-            this.Column7.MinimumWidth = 8;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 150;
+            this.ColumnLanguage.HeaderText = "Language";
+            this.ColumnLanguage.MinimumWidth = 8;
+            this.ColumnLanguage.Name = "ColumnLanguage";
+            this.ColumnLanguage.Width = 150;
             // 
-            // Column8
+            // ColumnPages
             // 
-            this.Column8.HeaderText = "Language";
-            this.Column8.MinimumWidth = 8;
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 150;
+            this.ColumnPages.HeaderText = "Pages";
+            this.ColumnPages.MinimumWidth = 8;
+            this.ColumnPages.Name = "ColumnPages";
+            this.ColumnPages.Width = 150;
             // 
-            // Column9
+            // ColumnEdition
             // 
-            this.Column9.HeaderText = "Pages";
-            this.Column9.MinimumWidth = 8;
-            this.Column9.Name = "Column9";
-            this.Column9.Width = 150;
+            this.ColumnEdition.HeaderText = "Edition";
+            this.ColumnEdition.MinimumWidth = 8;
+            this.ColumnEdition.Name = "ColumnEdition";
+            this.ColumnEdition.Width = 150;
             // 
-            // Column10
+            // ColumnPublicationYear
             // 
-            this.Column10.HeaderText = "Edition";
-            this.Column10.MinimumWidth = 8;
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 150;
+            this.ColumnPublicationYear.HeaderText = "Publication Year";
+            this.ColumnPublicationYear.MinimumWidth = 8;
+            this.ColumnPublicationYear.Name = "ColumnPublicationYear";
+            this.ColumnPublicationYear.Width = 150;
             // 
-            // Column11
+            // ColumnDescription
             // 
-            this.Column11.HeaderText = "Publication Year";
-            this.Column11.MinimumWidth = 8;
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 150;
+            this.ColumnDescription.HeaderText = "Description";
+            this.ColumnDescription.MinimumWidth = 8;
+            this.ColumnDescription.Name = "ColumnDescription";
+            this.ColumnDescription.Width = 150;
             // 
-            // Column12
+            // ColumnResourceType
             // 
-            this.Column12.HeaderText = "Description";
-            this.Column12.MinimumWidth = 8;
-            this.Column12.Name = "Column12";
-            this.Column12.Width = 150;
+            this.ColumnResourceType.HeaderText = "Resource Type";
+            this.ColumnResourceType.MinimumWidth = 8;
+            this.ColumnResourceType.Name = "ColumnResourceType";
+            this.ColumnResourceType.Width = 150;
             // 
-            // Column13
+            // ColumnDLURL
             // 
-            this.Column13.HeaderText = "Resource Type";
-            this.Column13.MinimumWidth = 8;
-            this.Column13.Name = "Column13";
-            this.Column13.Width = 150;
+            this.ColumnDLURL.HeaderText = "Download URL";
+            this.ColumnDLURL.MinimumWidth = 8;
+            this.ColumnDLURL.Name = "ColumnDLURL";
+            this.ColumnDLURL.Width = 150;
             // 
-            // Column16
+            // ColumnLoanType
             // 
-            this.Column16.HeaderText = "Download URL";
-            this.Column16.MinimumWidth = 8;
-            this.Column16.Name = "Column16";
-            this.Column16.Width = 150;
+            this.ColumnLoanType.HeaderText = "Loan Type";
+            this.ColumnLoanType.MinimumWidth = 8;
+            this.ColumnLoanType.Name = "ColumnLoanType";
+            this.ColumnLoanType.Width = 150;
             // 
-            // Column15
+            // ColumnTotalCopies
             // 
-            this.Column15.HeaderText = "Loan Type";
-            this.Column15.MinimumWidth = 8;
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 150;
+            this.ColumnTotalCopies.HeaderText = "Total Copies";
+            this.ColumnTotalCopies.MinimumWidth = 8;
+            this.ColumnTotalCopies.Name = "ColumnTotalCopies";
+            this.ColumnTotalCopies.Width = 150;
             // 
-            // Column21
+            // ColumnAvailableCopies
             // 
-            this.Column21.HeaderText = "Total Copies";
-            this.Column21.MinimumWidth = 8;
-            this.Column21.Name = "Column21";
-            this.Column21.Width = 150;
+            this.ColumnAvailableCopies.HeaderText = "Available Copies";
+            this.ColumnAvailableCopies.MinimumWidth = 8;
+            this.ColumnAvailableCopies.Name = "ColumnAvailableCopies";
+            this.ColumnAvailableCopies.Width = 150;
             // 
-            // Column22
+            // ColumnStatus
             // 
-            this.Column22.HeaderText = "Available Copies";
-            this.Column22.MinimumWidth = 8;
-            this.Column22.Name = "Column22";
-            this.Column22.Width = 150;
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.MinimumWidth = 8;
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.Width = 150;
             // 
-            // Column18
+            // ColumnBtnCoverImage
             // 
-            this.Column18.HeaderText = "Status";
-            this.Column18.MinimumWidth = 8;
-            this.Column18.Name = "Column18";
-            this.Column18.Width = 150;
+            this.ColumnBtnCoverImage.HeaderText = "Cover Image";
+            this.ColumnBtnCoverImage.MinimumWidth = 8;
+            this.ColumnBtnCoverImage.Name = "ColumnBtnCoverImage";
+            this.ColumnBtnCoverImage.Text = "View Cover Image";
+            this.ColumnBtnCoverImage.Width = 150;
             // 
-            // Column17
+            // ColumnBtnCopies
             // 
-            this.Column17.HeaderText = "Cover Image";
-            this.Column17.MinimumWidth = 8;
-            this.Column17.Name = "Column17";
-            this.Column17.Text = "View Cover Image";
-            this.Column17.Width = 150;
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Copies";
-            this.Column23.MinimumWidth = 8;
-            this.Column23.Name = "Column23";
-            this.Column23.Width = 150;
+            this.ColumnBtnCopies.HeaderText = "Copies";
+            this.ColumnBtnCopies.MinimumWidth = 8;
+            this.ColumnBtnCopies.Name = "ColumnBtnCopies";
+            this.ColumnBtnCopies.Text = "View All Copies";
+            this.ColumnBtnCopies.Width = 150;
             // 
             // Edit
             // 
@@ -548,29 +550,29 @@
         private System.Windows.Forms.ComboBox CmbBxStatusFilter;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column22;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewButtonColumn Column17;
-        private System.Windows.Forms.DataGridViewButtonColumn Column23;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumbering;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnBookID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnISBN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCallNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnSubtitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAuthors;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEditors;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPublishers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLanguage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPages;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEdition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPublicationYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnResourceType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDLURL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLoanType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnTotalCopies;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAvailableCopies;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnBtnCoverImage;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnBtnCopies;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
     }
 }
