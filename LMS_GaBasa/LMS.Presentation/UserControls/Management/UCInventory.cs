@@ -206,15 +206,25 @@ namespace LMS.Presentation.UserControls.Management
                 filtered = filtered.Where(b => b.ResourceType.ToString().Equals(selectedResourceType, StringComparison.OrdinalIgnoreCase));
             }
 
-            // Status filter (use available copies to decide status)
+            // Status filter (use available copies to decide status; for E-Books use DownloadURL)
             string selectedStatus = CmbBxStatusFilter.SelectedItem?.ToString() ?? CmbBxStatusFilter.Text;
             if (!string.IsNullOrWhiteSpace(selectedStatus) && !selectedStatus.Equals("All Status", StringComparison.OrdinalIgnoreCase))
             {
                 filtered = filtered.Where(b =>
                 {
-                    var copies = _bookCopyRepo.GetByBookId(b.BookID) ?? new List<BookCopy>();
-                    int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
-                    string status = availableCopies > 0 ? "Available" : "Out of Stock";
+                    string status;
+                    if (b.ResourceType == ResourceType.EBook)
+                    {
+                        // E-Book is available if a download URL is present; otherwise consider unavailable
+                        status = !string.IsNullOrWhiteSpace(b.DownloadURL) ? "Available" : "Out of Stock";
+                    }
+                    else
+                    {
+                        var copies = _bookCopyRepo.GetByBookId(b.BookID) ?? new List<BookCopy>();
+                        int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
+                        status = availableCopies > 0 ? "Available" : "Out of Stock";
+                    }
+
                     return status.Equals(selectedStatus, StringComparison.OrdinalIgnoreCase);
                 });
             }
@@ -269,10 +279,22 @@ namespace LMS.Presentation.UserControls.Management
                 string publishers = GetPublisherString(book.PublisherID);
 
                 // Copies -> totals and availability
-                var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                // If book is an E-Book treat as having zero copies (no copies allowed)
+                bool isEbook = book.ResourceType == ResourceType.EBook;
+                var copies = isEbook ? new List<BookCopy>() : _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
                 int totalCopies = copies.Count;
                 int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
-                string status = availableCopies > 0 ? "Available" : "Out of Stock";
+
+                // Determine status: for e-books rely on DownloadURL; for physical use copies
+                string status;
+                if (isEbook)
+                {
+                    status = !string.IsNullOrWhiteSpace(book.DownloadURL) ? "Available" : "Out of Stock";
+                }
+                else
+                {
+                    status = availableCopies > 0 ? "Available" : "Out of Stock";
+                }
 
                 // Book ID formatted (INV-0001)
                 string formattedBookId = $"INV-{book.BookID:D4}";
@@ -311,6 +333,25 @@ namespace LMS.Presentation.UserControls.Management
 
                 // Buttons - store Book object on the row Tag so click handlers can find the right book
                 row.Tag = book;
+
+                // Visually disable the "View Copies" button for e-books:
+                if (DgwInventory.Columns.Contains("ColumnBtnCopies"))
+                {
+                    var cell = row.Cells["ColumnBtnCopies"];
+                    if (isEbook)
+                    {
+                        // mark cell read-only and gray it out; clicking will be ignored in CellContentClick handler
+                        cell.ReadOnly = true;
+                        cell.Style.ForeColor = Color.Gray;
+                        cell.Value = "N/A";
+                    }
+                    else
+                    {
+                        cell.ReadOnly = false;
+                        cell.Style.ForeColor = Color.Black;
+                        cell.Value = "View Copies";
+                    }
+                }
 
                 rowNumber++;
             }
@@ -420,6 +461,13 @@ namespace LMS.Presentation.UserControls.Management
             }
             else if (colName == "ColumnBtnCopies")
             {
+                // Do not open ViewBookCopy for e-books
+                if (book.ResourceType == ResourceType.EBook)
+                {
+                    MessageBox.Show("This is an E-Book and has no physical copies.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 // Open view copies form. For now just show the form and pass book id as TODO later
                 using (var view = new ViewBookCopy())
                 {

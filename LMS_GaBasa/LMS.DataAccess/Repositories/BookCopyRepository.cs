@@ -163,6 +163,24 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        // New: delete all copies for a given BookID (used when converting to E-Book)
+        public bool DeleteByBookId(int bookId)
+        {
+            if (bookId <= 0) return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"DELETE FROM [BookCopy] WHERE BookID = @BookID";
+                AddParameter(cmd, "@BookID", DbType.Int32, bookId, 0);
+
+                // returns true even if 0 rows affected (no copies to delete)
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+        }
+
         // Expose a ResourceType -> prefix mapping for consumers (EditBook etc.)
         public string GetPrefixForResourceType(ResourceType type)
         {

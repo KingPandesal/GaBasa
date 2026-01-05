@@ -232,6 +232,14 @@ namespace LMS.Presentation.Popup.Inventory
                 return;
             }
 
+            if (!ContainsLetter(authorName))
+            {
+                MessageBox.Show("Author name must contain at least one letter and may include digits.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CmbBxAuthors.Focus();
+                return;
+            }
+
             // Prefer existing DB author (lookup) — don't create DB record here.
             try
             {
@@ -269,6 +277,14 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 MessageBox.Show("Please enter an editor name.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!ContainsLetter(editorName))
+            {
+                MessageBox.Show("Editor name must contain at least one letter and may include digits.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CmbBxEditor.Focus();
                 return;
             }
 
@@ -398,13 +414,27 @@ namespace LMS.Presentation.Popup.Inventory
         {
             try
             {
-                // Validate pages input contains digits only (provide clearer message than generic required)
+                // Validate pages input: allow large numbers and common formatting (commas), clamp if too large.
                 var pagesText = TxtNoOfPages.Text?.Trim();
-                if (!string.IsNullOrEmpty(pagesText) && !pagesText.All(char.IsDigit))
+                if (!string.IsNullOrEmpty(pagesText))
                 {
-                    MessageBox.Show("Number of pages should be digits only.", "Validation Error",
+                    int pages = ParseInt(pagesText);
+                    if (pages <= 0)
+                    {
+                        MessageBox.Show("Number of pages should be a positive integer.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtNoOfPages.Focus();
+                        return;
+                    }
+                }
+
+                // Publisher validation: must contain at least one letter if provided
+                var publisherText = CmbBxPublisher.Text?.Trim();
+                if (!string.IsNullOrWhiteSpace(publisherText) && !ContainsLetter(publisherText))
+                {
+                    MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    TxtNoOfPages.Focus();
+                    CmbBxPublisher.Focus();
                     return;
                 }
 
@@ -647,8 +677,28 @@ namespace LMS.Presentation.Popup.Inventory
 
         private int ParseInt(string value)
         {
-            if (int.TryParse(value, out int result))
-                return result;
+            if (string.IsNullOrWhiteSpace(value))
+                return 0;
+
+            value = value.Trim();
+
+            // Try parse as long to accept values above int range, then clamp to int.MaxValue.
+            if (long.TryParse(value, out long longVal))
+            {
+                if (longVal <= int.MinValue) return int.MinValue;
+                if (longVal > int.MaxValue) return int.MaxValue;
+                return (int)longVal;
+            }
+
+            // Accept common formatted numbers like "1,234,567" by removing non-digit chars except leading sign.
+            var digits = new string(value.Where(c => char.IsDigit(c) || c == '-' || c == '+').ToArray());
+            if (long.TryParse(digits, out longVal))
+            {
+                if (longVal <= int.MinValue) return int.MinValue;
+                if (longVal > int.MaxValue) return int.MaxValue;
+                return (int)longVal;
+            }
+
             return 0;
         }
 
@@ -779,6 +829,11 @@ namespace LMS.Presentation.Popup.Inventory
                     e.SuppressKeyPress = true;
                 }
             };
+        }
+
+        private bool ContainsLetter(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) && value.Any(char.IsLetter);
         }
     }
 }

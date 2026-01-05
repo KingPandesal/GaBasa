@@ -122,12 +122,26 @@ namespace LMS.Presentation.Forms
         // ===== 5: Event handlers =====
         private void LogoutButton_Click(object sender, EventArgs e)
         {
-            var confirm = MessageBox.Show("Are you sure you want to log out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var confirm = MessageBox.Show(
+                "Are you sure you want to log out? The application will exit.",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
             if (confirm != DialogResult.Yes)
                 return;
 
-            // restart app so startup/login flow runs again.
-            Application.Restart();
+            // Exit the application to avoid restart/login flow issues.
+            try
+            {
+                Application.Exit();
+                // Ensure termination if Application.Exit doesn't immediately stop (defensive).
+                Environment.Exit(0);
+            }
+            catch
+            {
+                Environment.Exit(0);
+            }
         }
 
         // ===== 8: Module navigation system =====

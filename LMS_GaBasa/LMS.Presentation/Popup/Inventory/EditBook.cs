@@ -282,6 +282,14 @@ namespace LMS.Presentation.Popup.Inventory
             var name = CmbBxAuthors.Text?.Trim();
             if (string.IsNullOrWhiteSpace(name)) return;
 
+            if (!ContainsLetter(name))
+            {
+                MessageBox.Show("Author name must contain at least one letter and may include digits.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CmbBxAuthors.Focus();
+                return;
+            }
+
             // Use LINQ to check existence because ListBox.ObjectCollection.Contains doesn't accept a comparer
             bool exists = LstBxAuthor.Items.Cast<object>()
                 .Any(x => string.Equals(x?.ToString(), name, StringComparison.OrdinalIgnoreCase));
@@ -296,6 +304,14 @@ namespace LMS.Presentation.Popup.Inventory
         {
             var name = CmbBxEditor.Text?.Trim();
             if (string.IsNullOrWhiteSpace(name)) return;
+
+            if (!ContainsLetter(name))
+            {
+                MessageBox.Show("Editor name must contain at least one letter and may include digits.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CmbBxEditor.Focus();
+                return;
+            }
 
             bool exists = LstBxEditor.Items.Cast<object>()
                 .Any(x => string.Equals(x?.ToString(), name, StringComparison.OrdinalIgnoreCase));
@@ -337,10 +353,15 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                if (!string.IsNullOrWhiteSpace(TxtNoOfPages.Text) && !int.TryParse(TxtNoOfPages.Text.Trim(), out _))
+                // Validate pages input: accept large numbers, clamp if necessary
+                if (!string.IsNullOrWhiteSpace(TxtNoOfPages.Text))
                 {
-                    MessageBox.Show("Number of pages must be numeric.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    int pages = ParseInt(TxtNoOfPages.Text);
+                    if (pages <= 0)
+                    {
+                        MessageBox.Show("Number of pages must be a positive integer.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
 
                 // Ensure we have a book to update
@@ -368,6 +389,16 @@ namespace LMS.Presentation.Popup.Inventory
                         MessageBox.Show("Please provide a download link for E-Book resources.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                }
+
+                // Publisher validation: must contain at least one letter if provided
+                var publisherText = CmbBxPublisher.Text?.Trim();
+                if (!string.IsNullOrWhiteSpace(publisherText) && !ContainsLetter(publisherText))
+                {
+                    MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CmbBxPublisher.Focus();
+                    return;
                 }
 
                 // Map UI -> book
@@ -415,6 +446,22 @@ namespace LMS.Presentation.Popup.Inventory
                 else if (RdoBtnAV.Checked) _book.ResourceType = ResourceType.AV;
                 else _book.ResourceType = ResourceType.PhysicalBook;
 
+                // If user is changing from non-eBook to eBook, confirm because copies will be deleted.
+                if (_originalResourceType != _book.ResourceType && _book.ResourceType == ResourceType.EBook && _originalResourceType != ResourceType.EBook)
+                {
+                    var dlgRes = MessageBox.Show(
+                        "Are you sure you want to edit this book's resource type to E-Book? All copies of this book will be permanently deleted.",
+                        "Confirm change to E-Book",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (dlgRes != DialogResult.Yes)
+                    {
+                        // user cancelled the destructive change
+                        return;
+                    }
+                }
+
                 // Loan type
                 if (RdoBtnReference.Checked) _book.LoanType = "Reference";
                 else if (RdoBtnCirculation.Checked) _book.LoanType = "Circulation";
@@ -461,12 +508,24 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                // If resource type changed, regenerate accessions/barcodes for copies
+                // If resource type changed, handle copies / regeneration.
                 if (_originalResourceType != _book.ResourceType)
                 {
                     try
                     {
-                        RegenerateAccessionsAndBarcodes(_book.BookID, _originalResourceType, _book.ResourceType);
+                        // If changed TO EBook -> delete copies permanently
+                        if (_book.ResourceType == ResourceType.EBook && _originalResourceType != ResourceType.EBook)
+                        {
+                            var bookCopyRepo = new BookCopyRepository(new DbConnection());
+                            bool deleted = bookCopyRepo.DeleteByBookId(_book.BookID);
+                            // suppressed exception on delete; if needed we could verify, but treat as non-fatal
+                        }
+                        else
+                        {
+                            // Otherwise regenerate accessions and barcodes
+                            RegenerateAccessionsAndBarcodes(_book.BookID, _originalResourceType, _book.ResourceType);
+                        }
+
                         // update original type to prevent repeated regeneration if dialog stays open
                         _originalResourceType = _book.ResourceType;
                     }
@@ -766,7 +825,28 @@ namespace LMS.Presentation.Popup.Inventory
 
         private int ParseInt(string value)
         {
-            if (int.TryParse(value, out int result)) return result;
+            if (string.IsNullOrWhiteSpace(value))
+                return 0;
+
+            value = value.Trim();
+
+            // Try parse as long to accept values above int range, then clamp to int.MaxValue.
+            if (long.TryParse(value, out long longVal))
+            {
+                if (longVal <= int.MinValue) return int.MinValue;
+                if (longVal > int.MaxValue) return int.MaxValue;
+                return (int)longVal;
+            }
+
+            // Accept common formatted numbers like "1,234,567" by removing non-digit chars except leading sign.
+            var digits = new string(value.Where(c => char.IsDigit(c) || c == '-' || c == '+').ToArray());
+            if (long.TryParse(digits, out longVal))
+            {
+                if (longVal <= int.MinValue) return int.MinValue;
+                if (longVal > int.MaxValue) return int.MaxValue;
+                return (int)longVal;
+            }
+
             return 0;
         }
 
@@ -795,6 +875,11 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 return null;
             }
+        }
+
+        private bool ContainsLetter(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) && value.Any(char.IsLetter);
         }
     }
 }
