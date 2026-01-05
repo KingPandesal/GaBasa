@@ -159,10 +159,6 @@
             this.CmbBxLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.CmbBxLanguage.ForeColor = System.Drawing.Color.Black;
             this.CmbBxLanguage.FormattingEnabled = true;
-            this.CmbBxLanguage.Items.AddRange(new object[] {
-            "English",
-            "Tagalog",
-            "Bisaya"});
             this.CmbBxLanguage.Location = new System.Drawing.Point(201, 871);
             this.CmbBxLanguage.Name = "CmbBxLanguage";
             this.CmbBxLanguage.Size = new System.Drawing.Size(353, 36);
@@ -759,11 +755,6 @@
             this.CmbBxEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.CmbBxEditor.ForeColor = System.Drawing.Color.Black;
             this.CmbBxEditor.FormattingEnabled = true;
-            this.CmbBxEditor.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
             this.CmbBxEditor.Location = new System.Drawing.Point(200, 485);
             this.CmbBxEditor.Name = "CmbBxEditor";
             this.CmbBxEditor.Size = new System.Drawing.Size(263, 36);
@@ -774,11 +765,6 @@
             this.CmbBxPublisher.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.CmbBxPublisher.ForeColor = System.Drawing.Color.Black;
             this.CmbBxPublisher.FormattingEnabled = true;
-            this.CmbBxPublisher.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
             this.CmbBxPublisher.Location = new System.Drawing.Point(200, 682);
             this.CmbBxPublisher.Name = "CmbBxPublisher";
             this.CmbBxPublisher.Size = new System.Drawing.Size(353, 36);

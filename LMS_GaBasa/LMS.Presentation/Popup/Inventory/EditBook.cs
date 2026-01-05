@@ -1,4 +1,6 @@
-﻿using LMS.DataAccess.Database;
+﻿using LMS.BusinessLogic.Managers;
+using LMS.BusinessLogic.Managers.Interfaces;
+using LMS.DataAccess.Database;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Book;
 using LMS.Model.Models.Catalog;
@@ -23,6 +25,7 @@ namespace LMS.Presentation.Popup.Inventory
         private readonly AuthorRepository _authorRepo;
         private readonly PublisherRepository _publisherRepo;
         private readonly CategoryRepository _categoryRepo;
+        private readonly ICatalogManager _catalogManager;
 
         private Book _book;
         private ResourceType _originalResourceType; // track original type
@@ -43,13 +46,18 @@ namespace LMS.Presentation.Popup.Inventory
             _publisherRepo = new PublisherRepository(new DbConnection());
             _categoryRepo = new CategoryRepository(new DbConnection());
 
+            // create a local CatalogManager (Category + Language repos) so we can reuse AddBook-style helpers
+            var languageRepo = new LanguageRepository(new DbConnection());
+            _catalogManager = new CatalogManager(_categoryRepo, languageRepo);
+
             _book = book;
             _originalResourceType = book?.ResourceType ?? ResourceType.PhysicalBook;
 
             WireUpEvents();
 
-            // Populate categories so CmbBxCategory shows values before we set selected value
+            // Populate comboboxes similar to AddBook so UI suggestions match behavior
             LoadCategories();
+            LoadLanguages(); // <-- added: populate language combobox
 
             if (_book != null)
                 LoadBookToForm(_book);
@@ -95,19 +103,129 @@ namespace LMS.Presentation.Popup.Inventory
                         if (!string.IsNullOrWhiteSpace(c.Name) && !CmbBxCategory.Items.Contains(c.Name))
                             CmbBxCategory.Items.Add(c.Name);
                     }
-
-                    // Enable autocomplete to help user type/select categories
-                    CmbBxCategory.DropDownStyle = ComboBoxStyle.DropDown;
-                    var ac = new AutoCompleteStringCollection();
-                    ac.AddRange(CmbBxCategory.Items.Cast<string>().ToArray());
-                    CmbBxCategory.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    CmbBxCategory.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                    CmbBxCategory.AutoCompleteCustomSource = ac;
                 }
             }
             catch
             {
                 // ignore category load errors; leave combo empty
+            }
+        }
+
+        // Use the same approach as AddBook: ask the CatalogManager for languages
+        private void LoadLanguages()
+        {
+            try
+            {
+                CmbBxLanguage.Items.Clear();
+                var languages = _catalogManager.GetAllLanguages();
+                if (languages != null)
+                {
+                    foreach (var lang in languages)
+                    {
+                        CmbBxLanguage.Items.Add(lang);
+                    }
+                }
+            }
+            catch
+            {
+                // ignore language load errors
+            }
+        }
+
+        // Populate authors for suggestions and enable autocomplete + Enter-to-add
+        private void LoadAuthors()
+        {
+            try
+            {
+                var authorNames = _authorRepo?.GetAll()
+                    .Where(a => !string.IsNullOrWhiteSpace(a.FullName))
+                    .Select(a => a.FullName.Trim())
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                SetupComboBoxForAutocomplete(CmbBxAuthors, authorNames);
+
+                if (authorNames != null && authorNames.Length > 0)
+                {
+                    // Ensure dropdown shows the items
+                    CmbBxAuthors.Items.Clear();
+                    CmbBxAuthors.Items.AddRange(authorNames);
+                }
+            }
+            catch
+            {
+                // fallback: ensure combobox has autocomplete setup even if DB query failed
+                SetupComboBoxForAutocomplete(CmbBxAuthors, null);
+            }
+        }
+
+        // Populate editor suggestions similar to AddBook (distinct author names who've been used as editors)
+        private void LoadEditors()
+        {
+            try
+            {
+                var editorNamesSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                try
+                {
+                    var editorIds = _bookAuthorRepo?.GetDistinctAuthorIdsByRole("Editor");
+                    if (editorIds != null)
+                    {
+                        foreach (var id in editorIds)
+                        {
+                            try
+                            {
+                                var author = _authorRepo?.GetById(id);
+                                if (author != null && !string.IsNullOrWhiteSpace(author.FullName))
+                                    editorNamesSet.Add(author.FullName.Trim());
+                            }
+                            catch
+                            {
+                                // skip single lookup failure
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // ignore role-query failures
+                }
+
+                var editorNames = editorNamesSet.ToArray();
+                SetupComboBoxForAutocomplete(CmbBxEditor, editorNames);
+                if (editorNames.Length > 0)
+                {
+                    CmbBxEditor.Items.Clear();
+                    CmbBxEditor.Items.AddRange(editorNames);
+                }
+            }
+            catch
+            {
+                SetupComboBoxForAutocomplete(CmbBxEditor, null);
+            }
+        }
+
+        // Populate publisher suggestions and enable autocomplete
+        private void LoadPublishers()
+        {
+            try
+            {
+                var publisherNames = _publisherRepo?.GetAll()
+                    ?.Where(p => !string.IsNullOrWhiteSpace(p.Name))
+                    .Select(p => p.Name.Trim())
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                SetupComboBoxForAutocomplete(CmbBxPublisher, publisherNames);
+
+                if (publisherNames != null && publisherNames.Length > 0)
+                {
+                    CmbBxPublisher.Items.Clear();
+                    CmbBxPublisher.Items.AddRange(publisherNames);
+                }
+            }
+            catch
+            {
+                SetupComboBoxForAutocomplete(CmbBxPublisher, null);
             }
         }
 
@@ -880,6 +998,45 @@ namespace LMS.Presentation.Popup.Inventory
         private bool ContainsLetter(string value)
         {
             return !string.IsNullOrWhiteSpace(value) && value.Any(char.IsLetter);
+        }
+
+        // Setup helper copied from AddBook to give consistent combobox/autocomplete behavior
+        private void SetupComboBoxForAutocomplete(ComboBox comboBox, IEnumerable<string> items)
+        {
+            if (comboBox == null) return;
+
+            comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            var ac = new AutoCompleteStringCollection();
+
+            comboBox.Items.Clear();
+            if (items != null)
+            {
+                var array = items.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
+                if (array.Length > 0)
+                {
+                    comboBox.Items.AddRange(array);
+                    ac.AddRange(array);
+                }
+            }
+
+            comboBox.AutoCompleteCustomSource = ac;
+
+            // Enter key should act like pressing Add button for author/editor comboboxes
+            comboBox.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    if (comboBox == CmbBxAuthors) BtnAddAuthor.PerformClick();
+                    else if (comboBox == CmbBxEditor) BtnAddEditor.PerformClick();
+                    // publisher combobox no longer has an "Add" button
+
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+            };
         }
     }
 }
