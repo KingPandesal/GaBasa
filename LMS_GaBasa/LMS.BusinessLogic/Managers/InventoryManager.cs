@@ -51,6 +51,13 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
+            // ISBN must contain digits only
+            if (!dto.ISBN.All(char.IsDigit))
+            {
+                errorMessage = "ISBN must contain digits only.";
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(dto.Title))
             {
                 errorMessage = "Title is required.";
@@ -66,6 +73,14 @@ namespace LMS.BusinessLogic.Managers
             if (string.IsNullOrWhiteSpace(dto.Publisher))
             {
                 errorMessage = "Publisher is required.";
+                return false;
+            }
+
+            // Publication year must not be in the future
+            int currentYear = DateTime.Now.Year;
+            if (dto.PublicationYear > currentYear)
+            {
+                errorMessage = $"Publication year cannot be greater than {currentYear}.";
                 return false;
             }
 

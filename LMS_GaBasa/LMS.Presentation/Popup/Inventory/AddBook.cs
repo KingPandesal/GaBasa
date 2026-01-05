@@ -29,6 +29,9 @@ namespace LMS.Presentation.Popup.Inventory
         // Barcode generator (presentation implements the business interface)
         private readonly IBarcodeGenerator _barcodeGenerator;
 
+        // Author repository used to populate suggestions and lookup existing authors/editors
+        private readonly IAuthorRepository _authorRepo;
+
         private List<string> _authors = new List<string>();
         private List<string> _editors = new List<string>();
         private List<string> _publishers = new List<string>();
@@ -63,6 +66,9 @@ namespace LMS.Presentation.Popup.Inventory
 
             _inventoryManager = new InventoryManager(addBookService, bookRepo, _catalogManager);
 
+            // keep reference to author repo for populating suggestions
+            _authorRepo = authorRepo;
+
             InitializeForm();
         }
 
@@ -76,6 +82,9 @@ namespace LMS.Presentation.Popup.Inventory
             _publisherRepo = publisherRepo ?? throw new ArgumentNullException(nameof(publisherRepo));
             _barcodeGenerator = barcodeGenerator; // optional
 
+            // If DI didn't provide an author repo, create a local one for suggestions
+            _authorRepo = new AuthorRepository(new DbConnection());
+
             InitializeForm();
         }
 
@@ -86,6 +95,24 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Load predefined languages
             LoadLanguages();
+
+            // Populate author/editor suggestion lists from DB
+            try
+            {
+                var authorNames = _authorRepo?.GetAll()
+                    .Where(a => !string.IsNullOrWhiteSpace(a.FullName))
+                    .Select(a => a.FullName.Trim())
+                    .Distinct(StringComparer.OrdinalIgnoreCase);
+
+                SetupComboBoxForAutocomplete(CmbBxAuthors, authorNames);
+                SetupComboBoxForAutocomplete(CmbBxEditor, authorNames);
+            }
+            catch
+            {
+                // Non-fatal: if DB lookup fails keep existing behavior (empty suggestion list)
+                SetupComboBoxForAutocomplete(CmbBxAuthors, null);
+                SetupComboBoxForAutocomplete(CmbBxEditor, null);
+            }
 
             // Set default values
             NumPckNoOfCopies.Value = 1;
@@ -160,6 +187,18 @@ namespace LMS.Presentation.Popup.Inventory
                 return;
             }
 
+            // Prefer existing DB author (lookup) — don't create DB record here.
+            try
+            {
+                var existing = _authorRepo?.GetByName(authorName.Trim());
+                if (existing != null)
+                    authorName = existing.FullName?.Trim() ?? authorName;
+            }
+            catch
+            {
+                // Ignore DB lookup error — fall back to typed name
+            }
+
             if (!_authors.Contains(authorName, StringComparer.OrdinalIgnoreCase))
             {
                 _authors.Add(authorName);
@@ -186,6 +225,18 @@ namespace LMS.Presentation.Popup.Inventory
                 MessageBox.Show("Please enter an editor name.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            // Prefer existing DB author record for editor as well
+            try
+            {
+                var existing = _authorRepo?.GetByName(editorName.Trim());
+                if (existing != null)
+                    editorName = existing.FullName?.Trim() ?? editorName;
+            }
+            catch
+            {
+                // Ignore lookup errors
             }
 
             if (!_editors.Contains(editorName, StringComparer.OrdinalIgnoreCase))
@@ -218,8 +269,6 @@ namespace LMS.Presentation.Popup.Inventory
             // Prevent duplicates in the UI list (case-insensitive)
             if (_publishers.Contains(publisherName, StringComparer.OrdinalIgnoreCase))
             {
-                MessageBox.Show("This publisher is already added to the list.", "Duplicate",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CmbBxPublisher.Text = string.Empty;
                 CmbBxPublisher.Focus();
                 return;
@@ -233,18 +282,15 @@ namespace LMS.Presentation.Popup.Inventory
 
                 if (existing != null)
                 {
-                    // Use existing publisher
+                    // Use existing publisher (quietly)
                     _publishers.Add(existing.Name);
                     RefreshPublisherListBox();
                     if (!CmbBxPublisher.Items.Contains(existing.Name))
                         CmbBxPublisher.Items.Add(existing.Name);
-
-                    MessageBox.Show("Publisher exists in database and was added to the list.", "Info",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // Create new publisher in DB and add to UI
+                    // Create new publisher in DB and add to UI (quietly)
                     var newPub = new Publisher
                     {
                         Name = publisherName,
@@ -260,9 +306,6 @@ namespace LMS.Presentation.Popup.Inventory
 
                         if (!CmbBxPublisher.Items.Contains(publisherName))
                             CmbBxPublisher.Items.Add(publisherName);
-
-                        MessageBox.Show("Publisher created and added.", "Success",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
