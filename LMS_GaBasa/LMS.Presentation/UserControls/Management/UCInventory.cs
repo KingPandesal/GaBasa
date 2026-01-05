@@ -179,17 +179,76 @@ namespace LMS.Presentation.UserControls.Management
 
             var filtered = _allBooks.AsEnumerable();
 
-            // Search text (match Title, ISBN, CallNumber, Authors)
+            // Search text (match Title, ISBN, CallNumber, Authors, Category (subject), Publisher, Year, Description, AccessionNumber)
             string searchText = TxtSearchBar.Text?.Trim() ?? "";
-            if (!string.IsNullOrEmpty(searchText) && !string.Equals(searchText, ""))
+            if (!string.IsNullOrEmpty(searchText))
             {
                 string s = searchText;
                 filtered = filtered.Where(b =>
-                    (!string.IsNullOrEmpty(b.Title) && b.Title.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (!string.IsNullOrEmpty(b.ISBN) && b.ISBN.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (!string.IsNullOrEmpty(b.CallNumber) && b.CallNumber.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (!string.IsNullOrEmpty(GetAuthorsCsv(b.BookID)) && GetAuthorsCsv(b.BookID).IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
-                );
+                {
+                    // Title
+                    if (!string.IsNullOrEmpty(b.Title) && b.Title.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // ISBN
+                    if (!string.IsNullOrEmpty(b.ISBN) && b.ISBN.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Call Number
+                    if (!string.IsNullOrEmpty(b.CallNumber) && b.CallNumber.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Subtitle / PhysicalDescription (treat as subject/description)
+                    if (!string.IsNullOrEmpty(b.Subtitle) && b.Subtitle.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                    if (!string.IsNullOrEmpty(b.PhysicalDescription) && b.PhysicalDescription.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Publication Year (allow numeric or partial match)
+                    if (b.PublicationYear > 0 && b.PublicationYear.ToString().IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Authors
+                    var authorsCsv = GetAuthorsCsv(b.BookID);
+                    if (!string.IsNullOrEmpty(authorsCsv) && authorsCsv.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Editors (in case user searches editor names)
+                    var editorsCsv = GetEditorsCsv(b.BookID);
+                    if (!string.IsNullOrEmpty(editorsCsv) && editorsCsv.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Category / Subject
+                    var categoryName = GetCategoryName(b.CategoryID);
+                    if (!string.IsNullOrEmpty(categoryName) && categoryName.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Publisher
+                    var publisherName = GetPublisherString(b.PublisherID);
+                    if (!string.IsNullOrEmpty(publisherName) && publisherName.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
+                    // Accession number (search copies for matching accession)
+                    try
+                    {
+                        // For e-books there are no copies; for others check copies
+                        if (b.ResourceType != ResourceType.EBook)
+                        {
+                            var copies = _bookCopyRepo.GetByBookId(b.BookID) ?? new List<BookCopy>();
+                            if (copies.Any(c => !string.IsNullOrWhiteSpace(c.AccessionNumber) &&
+                                                c.AccessionNumber.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // ignore copy lookup errors and continue
+                    }
+
+                    return false;
+                });
             }
 
             // Category filter
@@ -468,11 +527,23 @@ namespace LMS.Presentation.UserControls.Management
                     return;
                 }
 
-                // Open view copies form. For now just show the form and pass book id as TODO later
-                using (var view = new ViewBookCopy())
+                // Open view copies form and pass book id and title.
+                // If the view returned DialogResult.OK (user saved), refresh inventory to reflect changes.
+                try
                 {
-                    // TODO: pass book.BookID to ViewBookCopy when that form accepts it.
-                    view.ShowDialog();
+                    using (var view = new ViewBookCopy(book.BookID, book.Title))
+                    {
+                        var result = view.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            // Reload inventory so the main grid reflects edits done in the copy view
+                            LoadInventory();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to open copies view: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else if (colName == "Edit")

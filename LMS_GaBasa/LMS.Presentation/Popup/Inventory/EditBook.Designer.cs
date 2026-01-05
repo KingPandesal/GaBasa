@@ -49,6 +49,7 @@
             this.TipforLstBxAuthor = new System.Windows.Forms.ToolTip(this.components);
             this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.TipforPicBxBookCover = new System.Windows.Forms.ToolTip(this.components);
+            this.LblForBookCover = new System.Windows.Forms.Label();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.TxtISBN = new System.Windows.Forms.TextBox();
@@ -88,7 +89,6 @@
             this.CmbBxAuthors = new System.Windows.Forms.ComboBox();
             this.CmbBxEditor = new System.Windows.Forms.ComboBox();
             this.CmbBxPublisher = new System.Windows.Forms.ComboBox();
-            this.LblForBookCover = new System.Windows.Forms.Label();
             this.TipforLstBxEditor = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
             this.PnlDesign.SuspendLayout();
@@ -290,6 +290,18 @@
             this.PicBxBookCover.TabIndex = 78;
             this.PicBxBookCover.TabStop = false;
             this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");
+            // 
+            // LblForBookCover
+            // 
+            this.LblForBookCover.AutoSize = true;
+            this.LblForBookCover.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblForBookCover.ForeColor = System.Drawing.Color.Gray;
+            this.LblForBookCover.Location = new System.Drawing.Point(76, 560);
+            this.LblForBookCover.Name = "LblForBookCover";
+            this.LblForBookCover.Size = new System.Drawing.Size(317, 28);
+            this.LblForBookCover.TabIndex = 80;
+            this.LblForBookCover.Text = "Click box above to edit book cover";
+            this.TipforPicBxBookCover.SetToolTip(this.LblForBookCover, "Click to edit book cover");
             // 
             // BtnCancel
             // 
@@ -737,11 +749,6 @@
             this.CmbBxAuthors.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.CmbBxAuthors.ForeColor = System.Drawing.Color.Black;
             this.CmbBxAuthors.FormattingEnabled = true;
-            this.CmbBxAuthors.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
             this.CmbBxAuthors.Location = new System.Drawing.Point(200, 289);
             this.CmbBxAuthors.Name = "CmbBxAuthors";
             this.CmbBxAuthors.Size = new System.Drawing.Size(263, 36);
@@ -776,18 +783,6 @@
             this.CmbBxPublisher.Name = "CmbBxPublisher";
             this.CmbBxPublisher.Size = new System.Drawing.Size(353, 36);
             this.CmbBxPublisher.TabIndex = 99;
-            // 
-            // LblForBookCover
-            // 
-            this.LblForBookCover.AutoSize = true;
-            this.LblForBookCover.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblForBookCover.ForeColor = System.Drawing.Color.Gray;
-            this.LblForBookCover.Location = new System.Drawing.Point(76, 560);
-            this.LblForBookCover.Name = "LblForBookCover";
-            this.LblForBookCover.Size = new System.Drawing.Size(317, 28);
-            this.LblForBookCover.TabIndex = 80;
-            this.LblForBookCover.Text = "Click box above to edit book cover";
-            this.TipforPicBxBookCover.SetToolTip(this.LblForBookCover, "Click to edit book cover");
             // 
             // EditBook
             // 

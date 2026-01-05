@@ -77,17 +77,35 @@
     <Compile Include="Popup\Inventory\AddBook.Designer.cs">
       <DependentUpon>AddBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Inventory\AddBookCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Inventory\AddBookCopy.Designer.cs">
+      <DependentUpon>AddBookCopy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Inventory\EditBook.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Popup\Inventory\EditBook.Designer.cs">
       <DependentUpon>EditBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Inventory\EditBookCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Inventory\EditBookCopy.Designer.cs">
+      <DependentUpon>EditBookCopy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Inventory\ImportBook.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Popup\Inventory\ImportBook.Designer.cs">
       <DependentUpon>ImportBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\Inventory\ViewBarcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Inventory\ViewBarcode.Designer.cs">
+      <DependentUpon>ViewBarcode.cs</DependentUpon>
     </Compile>
     <Compile Include="Popup\Inventory\ViewBookCopy.cs">
       <SubType>Form</SubType>
@@ -281,11 +299,23 @@
     <EmbeddedResource Include="Popup\Inventory\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Inventory\AddBookCopy.resx">
+      <DependentUpon>AddBookCopy.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\EditBook.resx">
       <DependentUpon>EditBook.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Inventory\EditBookCopy.resx">
+      <DependentUpon>EditBookCopy.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\ImportBook.resx">
       <DependentUpon>ImportBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Inventory\ViewBarcode.resx">
+      <DependentUpon>ViewBarcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Inventory\ViewBookCopy.resx">
+      <DependentUpon>ViewBookCopy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\ViewCoverImage.resx">
       <DependentUpon>ViewCoverImage.cs</DependentUpon>

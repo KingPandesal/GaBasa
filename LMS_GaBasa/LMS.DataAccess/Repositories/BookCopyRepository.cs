@@ -46,6 +46,32 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        // New: update an existing copy's mutable fields (Status, Location, Barcode)
+        public bool Update(BookCopy copy)
+        {
+            if (copy == null) throw new ArgumentNullException(nameof(copy));
+            if (copy.CopyID <= 0) throw new ArgumentException(nameof(copy.CopyID));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    UPDATE [BookCopy]
+                    SET Status = @Status,
+                        Location = @Location,
+                        barcode = @Barcode
+                    WHERE CopyID = @CopyID";
+
+                AddParameter(cmd, "@Status", DbType.String, copy.Status, 50);
+                AddParameter(cmd, "@Location", DbType.String, copy.Location, 200);
+                AddParameter(cmd, "@Barcode", DbType.String, copy.Barcode, 500);
+                AddParameter(cmd, "@CopyID", DbType.Int32, copy.CopyID, 0);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
         public List<BookCopy> GetByBookId(int bookId)
         {
             var copies = new List<BookCopy>();
@@ -178,6 +204,23 @@ namespace LMS.DataAccess.Repositories
                 // returns true even if 0 rows affected (no copies to delete)
                 cmd.ExecuteNonQuery();
                 return true;
+            }
+        }
+
+        // New: delete a single copy by its CopyID
+        public bool DeleteByCopyId(int copyId)
+        {
+            if (copyId <= 0) return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"DELETE FROM [BookCopy] WHERE CopyID = @CopyID";
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId, 0);
+
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
             }
         }
 
