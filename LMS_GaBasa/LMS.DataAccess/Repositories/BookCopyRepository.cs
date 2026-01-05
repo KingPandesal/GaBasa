@@ -21,13 +21,16 @@ namespace LMS.DataAccess.Repositories
         /// <summary>
         /// Adds a BookCopy. If copy.AccessionNumber is null/empty this method will
         /// generate a unique accession using the DB identity (CopyID) inside a transaction
-        /// to avoid race conditions.
+        /// to avoid race conditions and keep AccessionNumber NOT NULL.
         /// Returns the new CopyID.
         /// </summary>
         public int Add(BookCopy copy)
         {
             if (copy == null)
                 throw new ArgumentNullException(nameof(copy));
+
+            // Helper to map AddedByID -> DB null when not provided
+            object addedByValue = copy.AddedByID > 0 ? (object)copy.AddedByID : null;
 
             // If caller already provided an accession number, do a simple insert.
             if (!string.IsNullOrWhiteSpace(copy.AccessionNumber))
@@ -37,23 +40,27 @@ namespace LMS.DataAccess.Repositories
                 {
                     conn.Open();
                     cmd.CommandText = @"INSERT INTO [BookCopy] 
-                        (BookID, AccessionNumber, Status, Location, barcode, DateAdded, AddedByID) 
-                        VALUES (@BookID, @AccessionNumber, @Status, @Location, @BarcodeImage, @DateAdded, @AddedByID);
+                        (BookID, AccessionNumber, Status, Location, barcode, dateAdded, addedByID) 
+                        VALUES (@BookID, @AccessionNumber, @Status, @Location, @Barcode, @DateAdded, @AddedByID);
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                     AddParameter(cmd, "@BookID", DbType.Int32, copy.BookID, 0);
-                    AddParameter(cmd, "@AccessionNumber", DbType.String, copy.AccessionNumber, 50);
-                    AddParameter(cmd, "@Status", DbType.String, copy.Status ?? "Available", 50);
+                    AddParameter(cmd, "@AccessionNumber", DbType.String, copy.AccessionNumber, 30);
+                    AddParameter(cmd, "@Status", DbType.String, copy.Status ?? "Available", 20);
                     AddParameter(cmd, "@Location", DbType.String, copy.Location, 100);
-                    AddParameter(cmd, "@BarcodeImage", DbType.String, copy.Barcode, 500);
+                    AddParameter(cmd, "@Barcode", DbType.String, copy.Barcode, 50);
                     AddParameter(cmd, "@DateAdded", DbType.DateTime, copy.DateAdded == default(DateTime) ? (object)DateTime.Now : copy.DateAdded, 0);
-                    AddParameter(cmd, "@AddedByID", DbType.Int32, copy.AddedByID, 0);
+                    AddParameter(cmd, "@AddedByID", DbType.Int32, addedByValue, 0);
 
                     return (int)cmd.ExecuteScalar();
                 }
             }
 
             // Otherwise generate accession atomically using identity (CopyID) to avoid concurrency/race.
+            // Because AccessionNumber is NOT NULL and has a UNIQUE constraint, we:
+            // 1) Insert a temporary unique placeholder AccessionNumber (GUID-based)
+            // 2) Get the new identity (CopyID)
+            // 3) Compute final accession using CopyID and update the row
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
@@ -76,34 +83,35 @@ namespace LMS.DataAccess.Repositories
                             }
                         }
 
-                        // 2) Insert row WITHOUT AccessionNumber to obtain identity (CopyID)
+                        // 2) Insert row WITH a temporary unique AccessionNumber (so NOT NULL + UNIQUE satisfied)
                         int newId;
                         DateTime dateAdded = copy.DateAdded == default(DateTime) ? DateTime.Now : copy.DateAdded;
+                        string tempAccession = $"TMP-{Guid.NewGuid():N}";
                         using (var cmdInsert = conn.CreateCommand())
                         {
                             cmdInsert.Transaction = tran;
                             cmdInsert.CommandText = @"INSERT INTO [BookCopy] 
-                                (BookID, Status, Location, barcode, DateAdded, AddedByID) 
-                                VALUES (@BookID, @Status, @Location, @BarcodeImage, @DateAdded, @AddedByID);
+                                (BookID, AccessionNumber, Status, Location, barcode, dateAdded, addedByID) 
+                                VALUES (@BookID, @AccessionNumber, @Status, @Location, @Barcode, @DateAdded, @AddedByID);
                                 SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                             AddParameter(cmdInsert, "@BookID", DbType.Int32, copy.BookID, 0);
-                            AddParameter(cmdInsert, "@Status", DbType.String, copy.Status ?? "Available", 50);
+                            AddParameter(cmdInsert, "@AccessionNumber", DbType.String, tempAccession, 30);
+                            AddParameter(cmdInsert, "@Status", DbType.String, copy.Status ?? "Available", 20);
                             AddParameter(cmdInsert, "@Location", DbType.String, copy.Location, 100);
-                            AddParameter(cmdInsert, "@BarcodeImage", DbType.String, copy.Barcode, 500);
+                            AddParameter(cmdInsert, "@Barcode", DbType.String, copy.Barcode, 50);
                             AddParameter(cmdInsert, "@DateAdded", DbType.DateTime, dateAdded, 0);
-                            AddParameter(cmdInsert, "@AddedByID", DbType.Int32, copy.AddedByID, 0);
+                            AddParameter(cmdInsert, "@AddedByID", DbType.Int32, addedByValue, 0);
 
                             newId = (int)cmdInsert.ExecuteScalar();
                         }
 
-                        // 3) Compute accession using prefix + year + sequence derived from newId
+                        // 3) Compute accession using prefix + BookID + year + sequence derived from newId
                         string prefix = MapResourceTypeToPrefix(resourceTypeStr);
                         int year = dateAdded.Year;
 
-                        // Use identity (newId) as the unique per-insert sequence number.
-                        // Format with at least 4 digits as before.
-                        string accession = $"{prefix}-{year}-{newId:D4}";
+                        // Format: PREFIX-BookID-Year-Sequence (sequence uses the unique identity to guarantee uniqueness)
+                        string accession = $"{prefix}-{copy.BookID}-{year}-{newId:D4}";
 
                         // 4) Update the inserted row with the generated accession
                         using (var cmdUpdate = conn.CreateCommand())
@@ -113,7 +121,7 @@ namespace LMS.DataAccess.Repositories
                                                       SET AccessionNumber = @AccessionNumber
                                                       WHERE CopyID = @CopyID";
 
-                            AddParameter(cmdUpdate, "@AccessionNumber", DbType.String, accession, 50);
+                            AddParameter(cmdUpdate, "@AccessionNumber", DbType.String, accession, 30);
                             AddParameter(cmdUpdate, "@CopyID", DbType.Int32, newId, 0);
 
                             cmdUpdate.ExecuteNonQuery();
@@ -145,7 +153,7 @@ namespace LMS.DataAccess.Repositories
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = @"SELECT CopyID, BookID, AccessionNumber, Status, Location, barcode, DateAdded, AddedByID 
+                cmd.CommandText = @"SELECT CopyID, BookID, AccessionNumber, Status, Location, barcode, dateAdded, addedByID 
                                     FROM [BookCopy] WHERE BookID = @BookID";
                 AddParameter(cmd, "@BookID", DbType.Int32, bookId, 0);
 
@@ -201,7 +209,7 @@ namespace LMS.DataAccess.Repositories
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = "SELECT COUNT(*) FROM [BookCopy] WHERE BookID = @BookID AND YEAR(DateAdded) = @Year";
+                cmd.CommandText = "SELECT COUNT(*) FROM [BookCopy] WHERE BookID = @BookID AND YEAR(dateAdded) = @Year";
                 AddParameter(cmd, "@BookID", DbType.Int32, bookId, 0);
                 AddParameter(cmd, "@Year", DbType.Int32, dateAdded.Year, 0);
                 copyCount = (int)cmd.ExecuteScalar();
@@ -210,6 +218,7 @@ namespace LMS.DataAccess.Repositories
             int nextNumber = copyCount + 1;
             int year = dateAdded.Year;
 
+            // Keep legacy format if someone still relies on it:
             return $"{prefix}-{year}-{nextNumber:D4}";
         }
 
@@ -223,11 +232,11 @@ namespace LMS.DataAccess.Repositories
             {
                 conn.Open();
                 cmd.CommandText = @"UPDATE [BookCopy] 
-                                    SET barcode = @BarcodeImage 
+                                    SET barcode = @Barcode 
                                     WHERE AccessionNumber = @AccessionNumber";
 
-                AddParameter(cmd, "@BarcodeImage", DbType.String, barcodeImagePath, 500);
-                AddParameter(cmd, "@AccessionNumber", DbType.String, accessionNumber, 50);
+                AddParameter(cmd, "@Barcode", DbType.String, barcodeImagePath, 50);
+                AddParameter(cmd, "@AccessionNumber", DbType.String, accessionNumber, 30);
 
                 return cmd.ExecuteNonQuery() > 0;
             }

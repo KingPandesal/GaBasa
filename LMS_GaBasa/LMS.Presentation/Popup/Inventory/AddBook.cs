@@ -584,11 +584,44 @@ namespace LMS.Presentation.Popup.Inventory
 
         private ResourceType GetSelectedResourceType()
         {
+            // If a radio is explicitly checked, return the corresponding enum directly.
             if (RdoBtnPhysicalBook.Checked) return ResourceType.PhysicalBook;
             if (RdoBtnEBook.Checked) return ResourceType.EBook;
             if (RdoBtnTheses.Checked) return ResourceType.Thesis;
             if (RdoBtnPeriodical.Checked) return ResourceType.Periodical;
             if (RdoBtnAV.Checked) return ResourceType.AV;
+
+            // Fallback: try to map by label text if UI changed to display "Audio-Visual" (or similar)
+            string label = null;
+            if (RdoBtnAV != null) label = RdoBtnAV.Text?.Trim();
+
+            if (!string.IsNullOrWhiteSpace(label))
+            {
+                switch (label.Trim())
+                {
+                    case "AV":
+                    case "Audio-Visual":
+                    case "Audio Visual":
+                    case "AudioVisual":
+                        return ResourceType.AV;
+                    case "E-Book":
+                    case "EBook":
+                        return ResourceType.EBook;
+                    case "Thesis":
+                    case "Theses":
+                        return ResourceType.Thesis;
+                    case "Periodical":
+                    case "Periodicals":
+                        return ResourceType.Periodical;
+                    case "Physical Book":
+                    case "PhysicalBook":
+                    case "Book":
+                    default:
+                        return ResourceType.PhysicalBook;
+                }
+            }
+
+            // Default
             return ResourceType.PhysicalBook;
         }
 

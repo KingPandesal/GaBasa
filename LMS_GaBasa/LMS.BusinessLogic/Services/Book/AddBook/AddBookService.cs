@@ -114,10 +114,6 @@ namespace LMS.BusinessLogic.Services.Book.AddBook
 
             const int maxRetries = 3;
 
-            // After earlier validation and after creating the book (or earlier if you prefer)
-            if (dto.AddedByID <= 0)
-                return BookCreationResultService.Fail("AddedByID (current user) is required to add book copies.");
-
             for (int i = 0; i < copyCount; i++)
             {
                 bool saved = false;
@@ -129,13 +125,13 @@ namespace LMS.BusinessLogic.Services.Book.AddBook
                     attempt++;
                     try
                     {
-                        // Pre-generate accession (repository legacy method) and supply it on INSERT
-                        string accessionNumber = _bookCopyRepo.GenerateAccessionNumber(bookId, dateAdded);
-
+                        // DON'T pre-generate accession number here.
+                        // Let repository generate a unique accession atomically (it will insert a temp accession,
+                        // obtain the new identity, then update to the final accession format).
                         var copy = new BookCopy
                         {
                             BookID = bookId,
-                            AccessionNumber = accessionNumber, // must be NOT NULL for DB
+                            AccessionNumber = null, // repository will create final accession
                             Status = string.IsNullOrWhiteSpace(dto.CopyStatus) ? "Available" : dto.CopyStatus,
                             Location = string.IsNullOrWhiteSpace(dto.CopyLocation) ? "Main Library" : dto.CopyLocation,
                             Barcode = null,
@@ -147,12 +143,13 @@ namespace LMS.BusinessLogic.Services.Book.AddBook
                         if (newId <= 0)
                             throw new InvalidOperationException("Failed to insert book copy.");
 
-                        createdAccessions.Add(accessionNumber);
+                        // repository populates copy.AccessionNumber
+                        createdAccessions.Add(copy.AccessionNumber);
                         saved = true;
                     }
                     catch (Exception ex)
                     {
-                        // Likely unique constraint collision on AccessionNumber — retry.
+                        // If this fails, keep retrying (transient/unique collisions are unlikely with this approach)
                         lastEx = ex;
                         Trace.TraceWarning($"Attempt {attempt} to add book copy failed for BookID={bookId}: {ex.Message}");
                         System.Threading.Thread.Sleep(50 * attempt);
@@ -162,7 +159,6 @@ namespace LMS.BusinessLogic.Services.Book.AddBook
                 if (!saved)
                 {
                     Trace.TraceError($"Failed to add copy for BookID={bookId} after {maxRetries} attempts. Last error: {lastEx?.Message}");
-                    // Return the exact exception text (stack trace included) to the caller for diagnostics.
                     return BookCreationResultService.Fail(lastEx?.ToString() ?? "Failed to create book copies due to concurrency. Try again.");
                 }
             }

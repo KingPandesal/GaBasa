@@ -211,16 +211,16 @@ namespace LMS.DataAccess.Repositories
             switch (type)
             {
                 case ResourceType.EBook:
-                    return "E-Book";          // or "EBook" depending on your DB constraint
+                    return "E-Book";
                 case ResourceType.Thesis:
                     return "Thesis";
                 case ResourceType.AV:
-                    return "Audio-Visual";    // or "AV"
+                    return "AV";
                 case ResourceType.Periodical:
-                    return "Periodical";      // or "Periodical / Magazine"
+                    return "Periodical";
                 case ResourceType.PhysicalBook:
                 default:
-                    return "Book";            // or "PhysicalBook"
+                    return "Book";
             }
         }
     }
