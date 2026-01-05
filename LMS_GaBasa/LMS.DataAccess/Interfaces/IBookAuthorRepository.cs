@@ -1,9 +1,5 @@
 ﻿using LMS.Model.Models.Catalog.Books;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.DataAccess.Interfaces
 {
@@ -11,5 +7,8 @@ namespace LMS.DataAccess.Interfaces
     {
         void Add(BookAuthor bookAuthor);
         List<BookAuthor> GetByBookId(int bookId);
+
+        // Returns distinct AuthorIDs that appear in BookAuthor with the given role (e.g. "Editor")
+        List<int> GetDistinctAuthorIdsByRole(string role);
     }
 }

@@ -58,6 +58,12 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
+            if (string.IsNullOrWhiteSpace(dto.CallNumber))
+            {
+                errorMessage = "Call number is required.";
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(dto.Title))
             {
                 errorMessage = "Title is required.";
@@ -108,11 +114,6 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(dto.CallNumber))
-            {
-                errorMessage = "Call number is required.";
-                return false;
-            }
 
             // Resource type specific validation
             if (dto.ResourceType == ResourceType.PhysicalBook)

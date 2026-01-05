@@ -31,6 +31,7 @@ namespace LMS.Presentation.Popup.Inventory
 
         // Author repository used to populate suggestions and lookup existing authors/editors
         private readonly IAuthorRepository _authorRepo;
+        private readonly IBookAuthorRepository _bookAuthorRepo;
 
         private List<string> _authors = new List<string>();
         private List<string> _editors = new List<string>();
@@ -68,6 +69,7 @@ namespace LMS.Presentation.Popup.Inventory
 
             // keep reference to author repo for populating suggestions
             _authorRepo = authorRepo;
+            _bookAuthorRepo = bookAuthorRepo;
 
             InitializeForm();
         }
@@ -84,6 +86,7 @@ namespace LMS.Presentation.Popup.Inventory
 
             // If DI didn't provide an author repo, create a local one for suggestions
             _authorRepo = new AuthorRepository(new DbConnection());
+            _bookAuthorRepo = new BookAuthorRepository(new DbConnection());
 
             InitializeForm();
         }
@@ -99,13 +102,57 @@ namespace LMS.Presentation.Popup.Inventory
             // Populate author/editor suggestion lists from DB
             try
             {
+                // Authors: all names from Author table
                 var authorNames = _authorRepo?.GetAll()
                     .Where(a => !string.IsNullOrWhiteSpace(a.FullName))
                     .Select(a => a.FullName.Trim())
-                    .Distinct(StringComparer.OrdinalIgnoreCase);
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
 
+                // Populate authors combo with DB values so users can select instead of typing
                 SetupComboBoxForAutocomplete(CmbBxAuthors, authorNames);
-                SetupComboBoxForAutocomplete(CmbBxEditor, authorNames);
+                if (authorNames != null && authorNames.Length > 0)
+                {
+                    // Ensure dropdown shows the items
+                    CmbBxAuthors.Items.Clear();
+                    CmbBxAuthors.Items.AddRange(authorNames);
+                }
+
+                // Editors: find distinct author IDs that appear with Role = "Editor",
+                // then map to author names and avoid duplicates.
+                var editorNamesSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                try
+                {
+                    var editorIds = _bookAuthorRepo?.GetDistinctAuthorIdsByRole("Editor");
+                    if (editorIds != null)
+                    {
+                        foreach (var id in editorIds)
+                        {
+                            try
+                            {
+                                var author = _authorRepo?.GetById(id);
+                                if (author != null && !string.IsNullOrWhiteSpace(author.FullName))
+                                    editorNamesSet.Add(author.FullName.Trim());
+                            }
+                            catch
+                            {
+                                // Skip any single lookup failure
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // ignore role-query failures
+                }
+
+                var editorNames = editorNamesSet.ToArray();
+                SetupComboBoxForAutocomplete(CmbBxEditor, editorNames);
+                if (editorNames.Length > 0)
+                {
+                    CmbBxEditor.Items.Clear();
+                    CmbBxEditor.Items.AddRange(editorNames);
+                }
             }
             catch
             {
@@ -129,8 +176,7 @@ namespace LMS.Presentation.Popup.Inventory
             BtnCancel.Click += BtnCancel_Click;
 
             // Enable editable/combo behaviour and Enter-to-add
-            SetupComboBoxForAutocomplete(CmbBxAuthors, null);
-            SetupComboBoxForAutocomplete(CmbBxEditor, null);
+            // DO NOT clear previously populated author/editor items here
             SetupComboBoxForAutocomplete(CmbBxPublisher, _publisherRepo != null ? _publisherRepo.GetAll().Select(p => p.Name) : null);
 
             // Hide sub-panels initially
@@ -436,6 +482,16 @@ namespace LMS.Presentation.Popup.Inventory
         {
             try
             {
+                // Validate pages input contains digits only (provide clearer message than generic required)
+                var pagesText = TxtNoOfPages.Text?.Trim();
+                if (!string.IsNullOrEmpty(pagesText) && !pagesText.All(char.IsDigit))
+                {
+                    MessageBox.Show("Number of pages should be digits only.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TxtNoOfPages.Focus();
+                    return;
+                }
+
                 var dto = BuildDTOFromForm();
 
                 // Set the AddedByID to the currently logged in user id (Program.CurrentUserId).

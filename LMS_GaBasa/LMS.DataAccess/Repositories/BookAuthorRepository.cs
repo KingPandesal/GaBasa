@@ -69,6 +69,33 @@ namespace LMS.DataAccess.Repositories
             return bookAuthors;
         }
 
+        // New: return distinct AuthorIDs which have the specified role across the BookAuthor table.
+        public List<int> GetDistinctAuthorIdsByRole(string role)
+        {
+            var ids = new List<int>();
+
+            if (string.IsNullOrWhiteSpace(role)) return ids;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"SELECT DISTINCT AuthorID FROM [BookAuthor] WHERE Role = @Role";
+                AddParameter(cmd, "@Role", DbType.String, role, 50);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (!reader.IsDBNull(0))
+                            ids.Add(reader.GetInt32(0));
+                    }
+                }
+            }
+
+            return ids;
+        }
+
         private void AddParameter(IDbCommand cmd, string name, DbType type, object value, int size)
         {
             var p = cmd.CreateParameter();
