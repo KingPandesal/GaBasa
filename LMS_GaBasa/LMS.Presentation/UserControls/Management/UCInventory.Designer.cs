@@ -79,9 +79,15 @@
             // 
             this.CmbBxResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxResourceTypeFilter.FormattingEnabled = true;
-            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1241, 35);
+            this.CmbBxResourceTypeFilter.Items.AddRange(new object[] {
+            "Physical Book",
+            "Periodicals / Magazines",
+            "Theses / Dissertations",
+            "Audio-Visual Materials",
+            "E-Books"});
+            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1179, 35);
             this.CmbBxResourceTypeFilter.Name = "CmbBxResourceTypeFilter";
-            this.CmbBxResourceTypeFilter.Size = new System.Drawing.Size(185, 36);
+            this.CmbBxResourceTypeFilter.Size = new System.Drawing.Size(247, 36);
             this.CmbBxResourceTypeFilter.TabIndex = 69;
             this.CmbBxResourceTypeFilter.Text = "All Resource Type";
             // 
@@ -253,7 +259,7 @@
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(761, 40);
+            this.TxtSearchBar.Size = new System.Drawing.Size(490, 40);
             this.TxtSearchBar.TabIndex = 57;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
@@ -278,9 +284,9 @@
             // 
             this.CmbBxCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxCategoryFilter.FormattingEnabled = true;
-            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(1085, 35);
+            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(922, 35);
             this.CmbBxCategoryFilter.Name = "CmbBxCategoryFilter";
-            this.CmbBxCategoryFilter.Size = new System.Drawing.Size(146, 36);
+            this.CmbBxCategoryFilter.Size = new System.Drawing.Size(247, 36);
             this.CmbBxCategoryFilter.TabIndex = 73;
             this.CmbBxCategoryFilter.Text = "All Category";
             // 
@@ -288,9 +294,12 @@
             // 
             this.CmbBxStatusFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxStatusFilter.FormattingEnabled = true;
-            this.CmbBxStatusFilter.Location = new System.Drawing.Point(937, 35);
+            this.CmbBxStatusFilter.Items.AddRange(new object[] {
+            "Available",
+            "Out of Stock"});
+            this.CmbBxStatusFilter.Location = new System.Drawing.Point(663, 36);
             this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
-            this.CmbBxStatusFilter.Size = new System.Drawing.Size(139, 36);
+            this.CmbBxStatusFilter.Size = new System.Drawing.Size(247, 36);
             this.CmbBxStatusFilter.TabIndex = 74;
             this.CmbBxStatusFilter.Text = "All Status";
             // 

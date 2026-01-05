@@ -12,6 +12,7 @@ using LMS.DataAccess.Repositories;
 using LMS.DataAccess.Database;
 using LMS.Model.Models.Catalog;
 using LMS.Model.Models.Catalog.Books;
+using LMS.Model.Models.Enums;
 using System.IO;
 
 namespace LMS.Presentation.UserControls.Management
@@ -73,14 +74,67 @@ namespace LMS.Presentation.UserControls.Management
 
         private void UCInventory_Load(object sender, EventArgs e)
         {
+            // Populate filters first
+            SetupFilters();
+
             // Initialize pagination controls and wire events
             SetupPagination();
 
-            // Wire filter/apply events
+            // Wire filter/apply events (ensure single subscription)
+            BtnApply.Click -= BtnApply_Click;
             BtnApply.Click += BtnApply_Click;
+
+            TxtSearchBar.TextChanged -= TxtSearchBar_TextChanged;
             TxtSearchBar.TextChanged += TxtSearchBar_TextChanged;
 
             LoadInventory();
+        }
+
+        private void SetupFilters()
+        {
+            // Category filter
+            CmbBxCategoryFilter.Items.Clear();
+            CmbBxCategoryFilter.Items.Add("All Category");
+            try
+            {
+                var cats = _categoryRepo.GetAll();
+                if (cats != null)
+                {
+                    foreach (var c in cats)
+                    {
+                        if (!string.IsNullOrWhiteSpace(c?.Name) && !CmbBxCategoryFilter.Items.Contains(c.Name))
+                            CmbBxCategoryFilter.Items.Add(c.Name);
+                    }
+                }
+            }
+            catch
+            {
+                // ignore errors populating categories
+            }
+            CmbBxCategoryFilter.SelectedIndex = 0;
+
+            // Resource type filter
+            CmbBxResourceTypeFilter.Items.Clear();
+            CmbBxResourceTypeFilter.Items.Add("All Resource Type");
+            try
+            {
+                foreach (var name in Enum.GetNames(typeof(ResourceType)))
+                {
+                    CmbBxResourceTypeFilter.Items.Add(name);
+                }
+            }
+            catch
+            {
+                // ignore if enum not available or error
+            }
+            CmbBxResourceTypeFilter.SelectedIndex = 0;
+
+            // Status filter
+            CmbBxStatusFilter.Items.Clear();
+            CmbBxStatusFilter.Items.Add("All Status");
+            CmbBxStatusFilter.Items.Add("Available");
+            CmbBxStatusFilter.Items.Add("Out of Stock");
+            CmbBxStatusFilter.SelectedIndex = 0;
         }
 
         private void SetupPagination()
