@@ -35,7 +35,6 @@ namespace LMS.Presentation.Popup.Inventory
 
         private List<string> _authors = new List<string>();
         private List<string> _editors = new List<string>();
-        private List<string> _publishers = new List<string>();
         private string _coverImagePath = null;
 
         // Designer / backwards-compatible ctor (keeps current behavior)
@@ -169,10 +168,10 @@ namespace LMS.Presentation.Popup.Inventory
             PicBxBookCover.Click += PicBxBookCover_Click;
             BtnAddAuthor.Click += BtnAddAuthor_Click;
             BtnAddEditor.Click += BtnAddEditor_Click;
-            BtnAddPublisher.Click += BtnAddPublisher_Click;
+            // BtnAddPublisher removed: publisher is single combobox now
             LstBxAuthor.DoubleClick += LstBxAuthor_DoubleClick;
             LstBxEditor.DoubleClick += LstBxEditor_DoubleClick;
-            LstBxPublisher.DoubleClick += LstBxPublisher_DoubleClick;
+            // LstBxPublisher removed from UI; do not subscribe
             BtnCancel.Click += BtnCancel_Click;
 
             // Enable editable/combo behaviour and Enter-to-add
@@ -302,73 +301,8 @@ namespace LMS.Presentation.Popup.Inventory
             }
         }
 
-        private void BtnAddPublisher_Click(object sender, EventArgs e)
-        {
-            string publisherName = CmbBxPublisher.Text.Trim();
-            if (string.IsNullOrWhiteSpace(publisherName))
-            {
-                MessageBox.Show("Please enter a publisher name.", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Prevent duplicates in the UI list (case-insensitive)
-            if (_publishers.Contains(publisherName, StringComparer.OrdinalIgnoreCase))
-            {
-                CmbBxPublisher.Text = string.Empty;
-                CmbBxPublisher.Focus();
-                return;
-            }
-
-            try
-            {
-                // Check DB for existing publisher (by name)
-                var existing = _publisherRepo?.GetAll()
-                    .FirstOrDefault(p => string.Equals(p.Name?.Trim(), publisherName, StringComparison.OrdinalIgnoreCase));
-
-                if (existing != null)
-                {
-                    // Use existing publisher (quietly)
-                    _publishers.Add(existing.Name);
-                    RefreshPublisherListBox();
-                    if (!CmbBxPublisher.Items.Contains(existing.Name))
-                        CmbBxPublisher.Items.Add(existing.Name);
-                }
-                else
-                {
-                    // Create new publisher in DB and add to UI (quietly)
-                    var newPub = new Publisher
-                    {
-                        Name = publisherName,
-                        Address = null,
-                        ContactNumber = null
-                    };
-
-                    int newId = _publisherRepo.Add(newPub); // returns new PublisherID
-                    if (newId > 0)
-                    {
-                        _publishers.Add(publisherName);
-                        RefreshPublisherListBox();
-
-                        if (!CmbBxPublisher.Items.Contains(publisherName))
-                            CmbBxPublisher.Items.Add(publisherName);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to create publisher.", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-
-                CmbBxPublisher.Text = string.Empty;
-                CmbBxPublisher.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to add publisher: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        // Publisher add/remove UI removed — publisher is single combobox input now.
+        // Any persistence (create publisher) is handled in BuildDTOFromForm -> AddBookService.
 
         private void LstBxAuthor_DoubleClick(object sender, EventArgs e)
         {
@@ -388,15 +322,6 @@ namespace LMS.Presentation.Popup.Inventory
             }
         }
 
-        private void LstBxPublisher_DoubleClick(object sender, EventArgs e)
-        {
-            if (LstBxPublisher.SelectedIndex >= 0)
-            {
-                _publishers.RemoveAt(LstBxPublisher.SelectedIndex);
-                RefreshPublisherListBox();
-            }
-        }
-
         private void RefreshAuthorListBox()
         {
             LstBxAuthor.Items.Clear();
@@ -412,15 +337,6 @@ namespace LMS.Presentation.Popup.Inventory
             foreach (var editor in _editors)
             {
                 LstBxEditor.Items.Add(editor);
-            }
-        }
-
-        private void RefreshPublisherListBox()
-        {
-            LstBxPublisher.Items.Clear();
-            foreach (var publisher in _publishers)
-            {
-                LstBxPublisher.Items.Add(publisher);
             }
         }
 
@@ -555,17 +471,16 @@ namespace LMS.Presentation.Popup.Inventory
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private DTOCreateBook BuildDTOFromForm()
         {
-            // Determine publisher name: prefer combobox text, fallback to first in listbox
+            // Determine publisher name: prefer combobox text only (single publisher)
             string publisherName = !string.IsNullOrWhiteSpace(CmbBxPublisher.Text)
                 ? CmbBxPublisher.Text.Trim()
-                : (_publishers.Count > 0 ? _publishers[0] : string.Empty);
+                : string.Empty;
 
             var dto = new DTOCreateBook
             {
@@ -858,7 +773,7 @@ namespace LMS.Presentation.Popup.Inventory
                 {
                     if (comboBox == CmbBxAuthors) BtnAddAuthor.PerformClick();
                     else if (comboBox == CmbBxEditor) BtnAddEditor.PerformClick();
-                    else if (comboBox == CmbBxPublisher) BtnAddPublisher.PerformClick();
+                    // publisher combobox no longer has an "Add" button
 
                     e.Handled = true;
                     e.SuppressKeyPress = true;

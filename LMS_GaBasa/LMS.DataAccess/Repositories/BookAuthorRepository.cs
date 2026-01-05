@@ -96,6 +96,19 @@ namespace LMS.DataAccess.Repositories
             return ids;
         }
 
+        // New: delete all BookAuthor rows for a given BookID (used by Edit flow to replace associations)
+        public void DeleteByBookId(int bookId)
+        {
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "DELETE FROM [BookAuthor] WHERE BookID = @BookID";
+                AddParameter(cmd, "@BookID", DbType.Int32, bookId, 0);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         private void AddParameter(IDbCommand cmd, string name, DbType type, object value, int size)
         {
             var p = cmd.CreateParameter();

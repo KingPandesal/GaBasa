@@ -1,6 +1,7 @@
 ﻿using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.Models.Catalog;
+using LMS.Model.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,130 +19,30 @@ namespace LMS.DataAccess.Repositories
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        /// <summary>
-        /// Adds a BookCopy. If copy.AccessionNumber is null/empty this method will
-        /// generate a unique accession using the DB identity (CopyID) inside a transaction
-        /// to avoid race conditions and keep AccessionNumber NOT NULL.
-        /// Returns the new CopyID.
-        /// </summary>
+        // Implement Add to satisfy IBookCopyRepository
         public int Add(BookCopy copy)
         {
-            if (copy == null)
-                throw new ArgumentNullException(nameof(copy));
+            if (copy == null) throw new ArgumentNullException(nameof(copy));
 
-            // Helper to map AddedByID -> DB null when not provided
-            object addedByValue = copy.AddedByID > 0 ? (object)copy.AddedByID : null;
-
-            // If caller already provided an accession number, do a simple insert.
-            if (!string.IsNullOrWhiteSpace(copy.AccessionNumber))
-            {
-                using (var conn = _db.GetConnection())
-                using (var cmd = conn.CreateCommand())
-                {
-                    conn.Open();
-                    cmd.CommandText = @"INSERT INTO [BookCopy] 
-                        (BookID, AccessionNumber, Status, Location, barcode, dateAdded, addedByID) 
-                        VALUES (@BookID, @AccessionNumber, @Status, @Location, @Barcode, @DateAdded, @AddedByID);
-                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
-                    AddParameter(cmd, "@BookID", DbType.Int32, copy.BookID, 0);
-                    AddParameter(cmd, "@AccessionNumber", DbType.String, copy.AccessionNumber, 30);
-                    AddParameter(cmd, "@Status", DbType.String, copy.Status ?? "Available", 20);
-                    AddParameter(cmd, "@Location", DbType.String, copy.Location, 100);
-                    AddParameter(cmd, "@Barcode", DbType.String, copy.Barcode, 50);
-                    AddParameter(cmd, "@DateAdded", DbType.DateTime, copy.DateAdded == default(DateTime) ? (object)DateTime.Now : copy.DateAdded, 0);
-                    AddParameter(cmd, "@AddedByID", DbType.Int32, addedByValue, 0);
-
-                    return (int)cmd.ExecuteScalar();
-                }
-            }
-
-            // Otherwise generate accession atomically using identity (CopyID) to avoid concurrency/race.
-            // Because AccessionNumber is NOT NULL and has a UNIQUE constraint, we:
-            // 1) Insert a temporary unique placeholder AccessionNumber (GUID-based)
-            // 2) Get the new identity (CopyID)
-            // 3) Compute final accession using CopyID and update the row
             using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                using (var tran = conn.BeginTransaction())
-                {
-                    try
-                    {
-                        // 1) Read resource type from Book (to determine prefix)
-                        string resourceTypeStr = null;
-                        using (var cmdGet = conn.CreateCommand())
-                        {
-                            cmdGet.Transaction = tran;
-                            cmdGet.CommandText = "SELECT ResourceType FROM [Book] WHERE BookID = @BookID";
-                            AddParameter(cmdGet, "@BookID", DbType.Int32, copy.BookID, 0);
+                cmd.CommandText = @"
+                    INSERT INTO [BookCopy] (BookID, AccessionNumber, Status, Location, barcode, dateAdded, addedByID)
+                    VALUES (@BookID, @AccessionNumber, @Status, @Location, @Barcode, @DateAdded, @AddedByID);
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                            using (var reader = cmdGet.ExecuteReader())
-                            {
-                                if (reader.Read() && !reader.IsDBNull(0))
-                                    resourceTypeStr = reader.GetString(0);
-                            }
-                        }
+                AddParameter(cmd, "@BookID", DbType.Int32, copy.BookID, 0);
+                AddParameter(cmd, "@AccessionNumber", DbType.String, copy.AccessionNumber, 200);
+                AddParameter(cmd, "@Status", DbType.String, copy.Status, 50);
+                AddParameter(cmd, "@Location", DbType.String, copy.Location, 200);
+                AddParameter(cmd, "@Barcode", DbType.String, copy.Barcode, 500);
+                AddParameter(cmd, "@DateAdded", DbType.DateTime, copy.DateAdded == DateTime.MinValue ? (object)DateTime.UtcNow : copy.DateAdded, 0);
+                AddParameter(cmd, "@AddedByID", DbType.Int32, copy.AddedByID, 0);
 
-                        // 2) Insert row WITH a temporary unique AccessionNumber (so NOT NULL + UNIQUE satisfied)
-                        int newId;
-                        DateTime dateAdded = copy.DateAdded == default(DateTime) ? DateTime.Now : copy.DateAdded;
-                        string tempAccession = $"TMP-{Guid.NewGuid():N}";
-                        using (var cmdInsert = conn.CreateCommand())
-                        {
-                            cmdInsert.Transaction = tran;
-                            cmdInsert.CommandText = @"INSERT INTO [BookCopy] 
-                                (BookID, AccessionNumber, Status, Location, barcode, dateAdded, addedByID) 
-                                VALUES (@BookID, @AccessionNumber, @Status, @Location, @Barcode, @DateAdded, @AddedByID);
-                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
-                            AddParameter(cmdInsert, "@BookID", DbType.Int32, copy.BookID, 0);
-                            AddParameter(cmdInsert, "@AccessionNumber", DbType.String, tempAccession, 30);
-                            AddParameter(cmdInsert, "@Status", DbType.String, copy.Status ?? "Available", 20);
-                            AddParameter(cmdInsert, "@Location", DbType.String, copy.Location, 100);
-                            AddParameter(cmdInsert, "@Barcode", DbType.String, copy.Barcode, 50);
-                            AddParameter(cmdInsert, "@DateAdded", DbType.DateTime, dateAdded, 0);
-                            AddParameter(cmdInsert, "@AddedByID", DbType.Int32, addedByValue, 0);
-
-                            newId = (int)cmdInsert.ExecuteScalar();
-                        }
-
-                        // 3) Compute accession using prefix + BookID + year + sequence derived from newId
-                        string prefix = MapResourceTypeToPrefix(resourceTypeStr);
-                        int year = dateAdded.Year;
-
-                        // Format: PREFIX-BookID-Year-Sequence (sequence uses the unique identity to guarantee uniqueness)
-                        string accession = $"{prefix}-{copy.BookID}-{year}-{newId:D4}";
-
-                        // 4) Update the inserted row with the generated accession
-                        using (var cmdUpdate = conn.CreateCommand())
-                        {
-                            cmdUpdate.Transaction = tran;
-                            cmdUpdate.CommandText = @"UPDATE [BookCopy] 
-                                                      SET AccessionNumber = @AccessionNumber
-                                                      WHERE CopyID = @CopyID";
-
-                            AddParameter(cmdUpdate, "@AccessionNumber", DbType.String, accession, 30);
-                            AddParameter(cmdUpdate, "@CopyID", DbType.Int32, newId, 0);
-
-                            cmdUpdate.ExecuteNonQuery();
-                        }
-
-                        tran.Commit();
-
-                        // Populate the copy object with generated accession if caller expects it
-                        copy.AccessionNumber = accession;
-                        copy.DateAdded = dateAdded;
-                        copy.CopyID = newId;
-
-                        return newId;
-                    }
-                    catch
-                    {
-                        try { tran.Rollback(); } catch { }
-                        throw;
-                    }
-                }
+                var result = cmd.ExecuteScalar();
+                return result == null || result == DBNull.Value ? 0 : Convert.ToInt32(result);
             }
         }
 
@@ -239,6 +140,45 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@AccessionNumber", DbType.String, accessionNumber, 30);
 
                 return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        // New: update accession number and barcode path for a single copy
+        public bool UpdateAccessionAndBarcodeByCopyId(int copyId, string accessionNumber, string barcodePath)
+        {
+            if (copyId <= 0) throw new ArgumentException(nameof(copyId));
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"UPDATE [BookCopy]
+                                    SET AccessionNumber = @AccessionNumber,
+                                        Barcode = @Barcode
+                                    WHERE CopyID = @CopyID";
+                AddParameter(cmd, "@AccessionNumber", DbType.String, (object)accessionNumber ?? DBNull.Value, 200);
+                AddParameter(cmd, "@Barcode", DbType.String, (object)barcodePath ?? DBNull.Value, 500);
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId, 0);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        // Expose a ResourceType -> prefix mapping for consumers (EditBook etc.)
+        public string GetPrefixForResourceType(ResourceType type)
+        {
+            switch (type)
+            {
+                case ResourceType.EBook:
+                    return "EB";
+                case ResourceType.Thesis:
+                    return "TH";
+                case ResourceType.AV:
+                    return "AV";
+                case ResourceType.Periodical:
+                    return "PR";
+                case ResourceType.PhysicalBook:
+                default:
+                    return "BK";
             }
         }
 

@@ -43,7 +43,9 @@ namespace LMS.Presentation.Forms
                     textBox.ForeColor = Color.Black;
 
                     if (isPassword)
-                        textBox.UseSystemPasswordChar = true;
+                        // Respect the checkbox state when user enters the password box:
+                        // if the "show password" checkbox is checked, don't mask; otherwise mask.
+                        textBox.UseSystemPasswordChar = !ChkbxShowPassword.Checked;
                 }
             };
 

@@ -76,6 +76,9 @@
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.GrpBxBookInformation = new System.Windows.Forms.GroupBox();
+            this.CmbBxAuthors = new System.Windows.Forms.ComboBox();
+            this.CmbBxEditor = new System.Windows.Forms.ComboBox();
+            this.CmbBxPublisher = new System.Windows.Forms.ComboBox();
             this.LstBxEditor = new System.Windows.Forms.ListBox();
             this.BtnAddEditor = new System.Windows.Forms.Button();
             this.LstBxAuthor = new System.Windows.Forms.ListBox();
@@ -109,12 +112,7 @@
             this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.TipforLstBxAuthor = new System.Windows.Forms.ToolTip(this.components);
             this.TipforLstBxEditor = new System.Windows.Forms.ToolTip(this.components);
-            this.BtnAddPublisher = new System.Windows.Forms.Button();
-            this.LstBxPublisher = new System.Windows.Forms.ListBox();
             this.TipforLstBxPublisher = new System.Windows.Forms.ToolTip(this.components);
-            this.CmbBxPublisher = new System.Windows.Forms.ComboBox();
-            this.CmbBxEditor = new System.Windows.Forms.ComboBox();
-            this.CmbBxAuthors = new System.Windows.Forms.ComboBox();
             this.PnlDesign.SuspendLayout();
             this.PnlAddBook.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
@@ -687,8 +685,6 @@
             this.GrpBxBookInformation.Controls.Add(this.CmbBxAuthors);
             this.GrpBxBookInformation.Controls.Add(this.CmbBxEditor);
             this.GrpBxBookInformation.Controls.Add(this.CmbBxPublisher);
-            this.GrpBxBookInformation.Controls.Add(this.LstBxPublisher);
-            this.GrpBxBookInformation.Controls.Add(this.BtnAddPublisher);
             this.GrpBxBookInformation.Controls.Add(this.LstBxEditor);
             this.GrpBxBookInformation.Controls.Add(this.BtnAddEditor);
             this.GrpBxBookInformation.Controls.Add(this.LstBxAuthor);
@@ -725,6 +721,52 @@
             this.GrpBxBookInformation.TabStop = false;
             this.GrpBxBookInformation.Text = "Book Information";
             this.GrpBxBookInformation.Enter += new System.EventHandler(this.GrpBxBookInformation_Enter);
+            // 
+            // CmbBxAuthors
+            // 
+            this.CmbBxAuthors.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxAuthors.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxAuthors.FormattingEnabled = true;
+            this.CmbBxAuthors.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxAuthors.Location = new System.Drawing.Point(205, 290);
+            this.CmbBxAuthors.Name = "CmbBxAuthors";
+            this.CmbBxAuthors.Size = new System.Drawing.Size(263, 36);
+            this.CmbBxAuthors.TabIndex = 101;
+            // 
+            // CmbBxEditor
+            // 
+            this.CmbBxEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxEditor.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxEditor.FormattingEnabled = true;
+            this.CmbBxEditor.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxEditor.Location = new System.Drawing.Point(201, 485);
+            this.CmbBxEditor.Name = "CmbBxEditor";
+            this.CmbBxEditor.Size = new System.Drawing.Size(263, 36);
+            this.CmbBxEditor.TabIndex = 100;
+            // 
+            // CmbBxPublisher
+            // 
+            this.CmbBxPublisher.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxPublisher.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxPublisher.FormattingEnabled = true;
+            this.CmbBxPublisher.Items.AddRange(new object[] {
+            "Staff",
+            "Faculty",
+            "Student",
+            "Guest"});
+            this.CmbBxPublisher.Location = new System.Drawing.Point(201, 682);
+            this.CmbBxPublisher.Name = "CmbBxPublisher";
+            this.CmbBxPublisher.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxPublisher.TabIndex = 99;
+            this.CmbBxPublisher.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // LstBxEditor
             // 
@@ -789,7 +831,7 @@
             "English",
             "Tagalog",
             "Bisaya"});
-            this.CmbBxLanguage.Location = new System.Drawing.Point(203, 1025);
+            this.CmbBxLanguage.Location = new System.Drawing.Point(203, 873);
             this.CmbBxLanguage.Name = "CmbBxLanguage";
             this.CmbBxLanguage.Size = new System.Drawing.Size(353, 36);
             this.CmbBxLanguage.TabIndex = 93;
@@ -821,7 +863,7 @@
             // 
             this.TxtPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtPhysicalDescription.ForeColor = System.Drawing.Color.Black;
-            this.TxtPhysicalDescription.Location = new System.Drawing.Point(235, 1154);
+            this.TxtPhysicalDescription.Location = new System.Drawing.Point(235, 1002);
             this.TxtPhysicalDescription.Name = "TxtPhysicalDescription";
             this.TxtPhysicalDescription.Size = new System.Drawing.Size(325, 34);
             this.TxtPhysicalDescription.TabIndex = 90;
@@ -832,7 +874,7 @@
             this.LblPhysicalDescription.AutoSize = true;
             this.LblPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblPhysicalDescription.ForeColor = System.Drawing.Color.Black;
-            this.LblPhysicalDescription.Location = new System.Drawing.Point(28, 1159);
+            this.LblPhysicalDescription.Location = new System.Drawing.Point(28, 1007);
             this.LblPhysicalDescription.Name = "LblPhysicalDescription";
             this.LblPhysicalDescription.Size = new System.Drawing.Size(186, 28);
             this.LblPhysicalDescription.TabIndex = 89;
@@ -843,7 +885,7 @@
             // 
             this.TxtNoOfPages.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtNoOfPages.ForeColor = System.Drawing.Color.Black;
-            this.TxtNoOfPages.Location = new System.Drawing.Point(202, 1105);
+            this.TxtNoOfPages.Location = new System.Drawing.Point(202, 953);
             this.TxtNoOfPages.Name = "TxtNoOfPages";
             this.TxtNoOfPages.Size = new System.Drawing.Size(123, 34);
             this.TxtNoOfPages.TabIndex = 88;
@@ -854,7 +896,7 @@
             this.LblNoOfPages.AutoSize = true;
             this.LblNoOfPages.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblNoOfPages.ForeColor = System.Drawing.Color.Black;
-            this.LblNoOfPages.Location = new System.Drawing.Point(28, 1109);
+            this.LblNoOfPages.Location = new System.Drawing.Point(28, 957);
             this.LblNoOfPages.Name = "LblNoOfPages";
             this.LblNoOfPages.Size = new System.Drawing.Size(121, 28);
             this.LblNoOfPages.TabIndex = 87;
@@ -866,7 +908,7 @@
             this.LblLanguage.AutoSize = true;
             this.LblLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblLanguage.ForeColor = System.Drawing.Color.Black;
-            this.LblLanguage.Location = new System.Drawing.Point(29, 1028);
+            this.LblLanguage.Location = new System.Drawing.Point(29, 876);
             this.LblLanguage.Name = "LblLanguage";
             this.LblLanguage.Size = new System.Drawing.Size(97, 28);
             this.LblLanguage.TabIndex = 85;
@@ -878,7 +920,7 @@
             this.LblCategory.AutoSize = true;
             this.LblCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblCategory.ForeColor = System.Drawing.Color.Black;
-            this.LblCategory.Location = new System.Drawing.Point(29, 967);
+            this.LblCategory.Location = new System.Drawing.Point(29, 815);
             this.LblCategory.Name = "LblCategory";
             this.LblCategory.Size = new System.Drawing.Size(92, 28);
             this.LblCategory.TabIndex = 83;
@@ -889,7 +931,7 @@
             // 
             this.TxtEdition.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtEdition.ForeColor = System.Drawing.Color.Black;
-            this.TxtEdition.Location = new System.Drawing.Point(431, 885);
+            this.TxtEdition.Location = new System.Drawing.Point(431, 733);
             this.TxtEdition.Name = "TxtEdition";
             this.TxtEdition.Size = new System.Drawing.Size(123, 34);
             this.TxtEdition.TabIndex = 82;
@@ -900,7 +942,7 @@
             this.LblEdition.AutoSize = true;
             this.LblEdition.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblEdition.ForeColor = System.Drawing.Color.Black;
-            this.LblEdition.Location = new System.Drawing.Point(353, 887);
+            this.LblEdition.Location = new System.Drawing.Point(353, 735);
             this.LblEdition.Name = "LblEdition";
             this.LblEdition.Size = new System.Drawing.Size(74, 28);
             this.LblEdition.TabIndex = 81;
@@ -911,7 +953,7 @@
             // 
             this.TxtPublicationYear.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtPublicationYear.ForeColor = System.Drawing.Color.Black;
-            this.TxtPublicationYear.Location = new System.Drawing.Point(202, 884);
+            this.TxtPublicationYear.Location = new System.Drawing.Point(202, 732);
             this.TxtPublicationYear.Name = "TxtPublicationYear";
             this.TxtPublicationYear.Size = new System.Drawing.Size(123, 34);
             this.TxtPublicationYear.TabIndex = 80;
@@ -922,7 +964,7 @@
             this.LblPublicationYear.AutoSize = true;
             this.LblPublicationYear.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblPublicationYear.ForeColor = System.Drawing.Color.Black;
-            this.LblPublicationYear.Location = new System.Drawing.Point(32, 886);
+            this.LblPublicationYear.Location = new System.Drawing.Point(32, 734);
             this.LblPublicationYear.Name = "LblPublicationYear";
             this.LblPublicationYear.Size = new System.Drawing.Size(151, 28);
             this.LblPublicationYear.TabIndex = 79;
@@ -1033,7 +1075,7 @@
             "Faculty",
             "Student",
             "Guest"});
-            this.CmbBxCategory.Location = new System.Drawing.Point(203, 964);
+            this.CmbBxCategory.Location = new System.Drawing.Point(203, 812);
             this.CmbBxCategory.Name = "CmbBxCategory";
             this.CmbBxCategory.Size = new System.Drawing.Size(353, 36);
             this.CmbBxCategory.TabIndex = 68;
@@ -1082,79 +1124,6 @@
             this.PicBxBookCover.TabIndex = 0;
             this.PicBxBookCover.TabStop = false;
             this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");
-            // 
-            // BtnAddPublisher
-            // 
-            this.BtnAddPublisher.BackColor = System.Drawing.Color.White;
-            this.BtnAddPublisher.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAddPublisher.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAddPublisher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAddPublisher.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.BtnAddPublisher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAddPublisher.Location = new System.Drawing.Point(480, 681);
-            this.BtnAddPublisher.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnAddPublisher.Name = "BtnAddPublisher";
-            this.BtnAddPublisher.Size = new System.Drawing.Size(76, 38);
-            this.BtnAddPublisher.TabIndex = 97;
-            this.BtnAddPublisher.Text = "Add";
-            this.BtnAddPublisher.UseVisualStyleBackColor = false;
-            // 
-            // LstBxPublisher
-            // 
-            this.LstBxPublisher.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LstBxPublisher.FormattingEnabled = true;
-            this.LstBxPublisher.ItemHeight = 28;
-            this.LstBxPublisher.Location = new System.Drawing.Point(36, 728);
-            this.LstBxPublisher.Name = "LstBxPublisher";
-            this.LstBxPublisher.Size = new System.Drawing.Size(519, 116);
-            this.LstBxPublisher.TabIndex = 98;
-            this.TipforLstBxPublisher.SetToolTip(this.LstBxPublisher, "Double click a publisher to remove");
-            // 
-            // CmbBxPublisher
-            // 
-            this.CmbBxPublisher.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxPublisher.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxPublisher.FormattingEnabled = true;
-            this.CmbBxPublisher.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
-            this.CmbBxPublisher.Location = new System.Drawing.Point(201, 682);
-            this.CmbBxPublisher.Name = "CmbBxPublisher";
-            this.CmbBxPublisher.Size = new System.Drawing.Size(263, 36);
-            this.CmbBxPublisher.TabIndex = 99;
-            this.CmbBxPublisher.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // CmbBxEditor
-            // 
-            this.CmbBxEditor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxEditor.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxEditor.FormattingEnabled = true;
-            this.CmbBxEditor.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
-            this.CmbBxEditor.Location = new System.Drawing.Point(201, 485);
-            this.CmbBxEditor.Name = "CmbBxEditor";
-            this.CmbBxEditor.Size = new System.Drawing.Size(263, 36);
-            this.CmbBxEditor.TabIndex = 100;
-            // 
-            // CmbBxAuthors
-            // 
-            this.CmbBxAuthors.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxAuthors.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxAuthors.FormattingEnabled = true;
-            this.CmbBxAuthors.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
-            this.CmbBxAuthors.Location = new System.Drawing.Point(201, 289);
-            this.CmbBxAuthors.Name = "CmbBxAuthors";
-            this.CmbBxAuthors.Size = new System.Drawing.Size(263, 36);
-            this.CmbBxAuthors.TabIndex = 101;
             // 
             // AddBook
             // 
@@ -1276,8 +1245,6 @@
         private System.Windows.Forms.Label LblNote1;
         private System.Windows.Forms.Label LblNote;
         private System.Windows.Forms.Label LblNote2;
-        private System.Windows.Forms.Button BtnAddPublisher;
-        private System.Windows.Forms.ListBox LstBxPublisher;
         private System.Windows.Forms.ToolTip TipforLstBxPublisher;
         private System.Windows.Forms.ComboBox CmbBxPublisher;
         private System.Windows.Forms.ComboBox CmbBxEditor;

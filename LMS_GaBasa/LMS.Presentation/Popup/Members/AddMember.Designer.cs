@@ -166,6 +166,7 @@
             // 
             // CmbBxMemberType
             // 
+            this.CmbBxMemberType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbBxMemberType.ForeColor = System.Drawing.Color.Black;
             this.CmbBxMemberType.FormattingEnabled = true;
             this.CmbBxMemberType.Items.AddRange(new object[] {

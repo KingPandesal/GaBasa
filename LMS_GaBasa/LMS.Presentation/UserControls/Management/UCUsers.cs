@@ -19,7 +19,7 @@ namespace LMS.Presentation.UserControls.Management
 
         // Pagination state
         private int _currentPage = 1;
-        private int _pageSize = 5;
+        private int _pageSize = 10;
         private int _totalPages = 1;
 
         public UCUsers() : this(
@@ -69,12 +69,11 @@ namespace LMS.Presentation.UserControls.Management
 
         private void SetupPagination()
         {
-            // Set default page size
-            CmbBxPaginationNumbers.SelectedIndex = 0; // "5"
-            _pageSize = 5;
+            // Set default page size to 10 (designer items are "10","20","30")
+            CmbBxPaginationNumbers.SelectedIndex = 0; // selects "10"
+            _pageSize = 10;
 
-            // Wire up pagination events
-            CmbBxPaginationNumbers.SelectedIndexChanged += CmbBxPaginationNumbers_SelectedIndexChanged;
+            // Do not re-wire SelectedIndexChanged here — designer wires the event to CmbBxPaginationNumbers_SelectedIndexChanged_1.
             LblPaginationPrevious.Click += LblPaginationPrevious_Click;
             LblPaginationNext.Click += LblPaginationNext_Click;
         }
@@ -232,13 +231,19 @@ namespace LMS.Presentation.UserControls.Management
 
         private void CmbBxPaginationNumbers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedValue = CmbBxPaginationNumbers.SelectedItem?.ToString() ?? "5";
+            string selectedValue = CmbBxPaginationNumbers.SelectedItem?.ToString() ?? "10";
             if (int.TryParse(selectedValue, out int pageSize))
             {
                 _pageSize = pageSize;
                 _currentPage = 1; // Reset to first page
                 ApplyFilters();
             }
+        }
+
+        // Designer wires SelectedIndexChanged to this method; delegate to the implemented logic above.
+        private void CmbBxPaginationNumbers_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            CmbBxPaginationNumbers_SelectedIndexChanged(sender, e);
         }
 
         private void LblPaginationPrevious_Click(object sender, EventArgs e)
@@ -350,11 +355,6 @@ namespace LMS.Presentation.UserControls.Management
         }
 
         private void LblEntries_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CmbBxPaginationNumbers_SelectedIndexChanged_1(object sender, EventArgs e)
         {
 
         }

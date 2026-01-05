@@ -71,6 +71,66 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        public bool Update(Book book)
+        {
+            if (book == null)
+                throw new ArgumentNullException(nameof(book));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"UPDATE [Book]
+                                    SET ISBN = @ISBN,
+                                        CallNumber = @CallNumber,
+                                        Title = @Title,
+                                        Subtitle = @Subtitle,
+                                        PublisherID = @PublisherID,
+                                        CategoryID = @CategoryID,
+                                        Language = @Language,
+                                        Pages = @Pages,
+                                        Edition = @Edition,
+                                        PublicationYear = @PublicationYear,
+                                        PhysicalDescription = @PhysicalDescription,
+                                        ResourceType = @ResourceType,
+                                        CoverImage = @CoverImage,
+                                        LoanType = @LoanType,
+                                        DownloadURL = @DownloadURL
+                                    WHERE BookID = @BookID";
+
+                AddParameter(cmd, "@ISBN", DbType.String, book.ISBN, 20);
+                AddParameter(cmd, "@CallNumber", DbType.String, book.CallNumber, 50);
+                AddParameter(cmd, "@Title", DbType.String, book.Title, 500);
+                AddParameter(cmd, "@Subtitle", DbType.String, book.Subtitle, 500);
+                AddParameter(cmd, "@PublisherID", DbType.Int32, book.PublisherID, 0);
+                AddParameter(cmd, "@CategoryID", DbType.Int32, book.CategoryID, 0);
+                AddParameter(cmd, "@Language", DbType.String, book.Language, 50);
+                AddParameter(cmd, "@Pages", DbType.Int32, book.Pages, 0);
+                AddParameter(cmd, "@Edition", DbType.String, book.Edition, 50);
+                AddParameter(cmd, "@PublicationYear", DbType.Int32, book.PublicationYear, 0);
+                AddParameter(cmd, "@PhysicalDescription", DbType.String, book.PhysicalDescription, 500);
+
+                string resourceTypeDbValue = MapResourceTypeToDbValue(book.ResourceType);
+                AddParameter(cmd, "@ResourceType", DbType.String, resourceTypeDbValue, 50);
+
+                AddParameter(cmd, "@CoverImage", DbType.String, book.CoverImage, 500);
+                AddParameter(cmd, "@LoanType", DbType.String, book.LoanType, 50);
+                AddParameter(cmd, "@DownloadURL", DbType.String, book.DownloadURL, 500);
+
+                AddParameter(cmd, "@BookID", DbType.Int32, book.BookID, 0);
+
+                try
+                {
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+                catch (System.Data.SqlClient.SqlException sqlEx)
+                {
+                    throw new Exception($"Failed updating Book. ResourceType sent: '{resourceTypeDbValue}'. DB error: {sqlEx.Message}", sqlEx);
+                }
+            }
+        }
+
         public Book GetById(int bookId)
         {
             using (var conn = _db.GetConnection())
@@ -151,8 +211,10 @@ namespace LMS.DataAccess.Repositories
 
         private Book MapReaderToBook(IDataReader reader)
         {
-            string resourceTypeStr = reader.IsDBNull(12) ? "PhysicalBook" : reader.GetString(12);
-            Enum.TryParse(resourceTypeStr, out ResourceType resourceType);
+            string resourceTypeStr = reader.IsDBNull(12) ? "Book" : reader.GetString(12);
+
+            // Map DB string values to enum explicitly (DB uses user-friendly literals like 'E-Book', 'Book', 'Periodical', etc.)
+            ResourceType resourceType = MapDbValueToResourceType(resourceTypeStr);
 
             Book book = CreateBookByResourceType(resourceType);
 
@@ -174,6 +236,39 @@ namespace LMS.DataAccess.Repositories
             book.DownloadURL = reader.IsDBNull(15) ? null : reader.GetString(15);
 
             return book;
+        }
+
+        private ResourceType MapDbValueToResourceType(string dbValue)
+        {
+            if (string.IsNullOrWhiteSpace(dbValue)) return ResourceType.PhysicalBook;
+
+            switch (dbValue.Trim())
+            {
+                case "E-Book":
+                case "EBook":
+                case "EB":
+                    return ResourceType.EBook;
+
+                case "Thesis":
+                case "Theses":
+                case "TH":
+                    return ResourceType.Thesis;
+
+                case "AV":
+                case "Audio-Visual":
+                    return ResourceType.AV;
+
+                case "Periodical":
+                case "Periodicals":
+                case "PR":
+                    return ResourceType.Periodical;
+
+                case "Book":
+                case "PhysicalBook":
+                case "Physical Book":
+                default:
+                    return ResourceType.PhysicalBook;
+            }
         }
 
         private Book CreateBookByResourceType(ResourceType type)

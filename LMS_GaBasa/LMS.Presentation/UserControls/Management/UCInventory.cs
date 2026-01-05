@@ -24,6 +24,17 @@ namespace LMS.Presentation.UserControls.Management
         private readonly BookAuthorRepository _bookAuthorRepo;
         private readonly AuthorRepository _authorRepo;
         private readonly PublisherRepository _publisherRepo;
+        private readonly CategoryRepository _categoryRepo;
+
+        // simple in-memory cache to avoid repeated DB lookups for category names
+        private readonly Dictionary<int, string> _categoryNameCache = new Dictionary<int, string>();
+
+        // Pagination state
+        private List<Book> _allBooks;
+        private List<Book> _filteredBooks;
+        private int _currentPage = 1;
+        private int _pageSize = 10;
+        private int _totalPages = 1;
 
         public UCInventory()
         {
@@ -32,9 +43,11 @@ namespace LMS.Presentation.UserControls.Management
             // Default repository instances (keeps current project style).
             _bookRepo = new BookRepository();
             _bookCopyRepo = new BookCopyRepository();
+            _bookAuthor_repo_init();
             _bookAuthorRepo = new BookAuthorRepository();
             _authorRepo = new AuthorRepository();
             _publisherRepo = new PublisherRepository();
+            _categoryRepo = new CategoryRepository(); // <- new repo for categories
 
             // Ensure button columns show their text (designer set Text but not UseColumnTextForButtonValue)
             if (DgwInventory.Columns.Contains("ColumnBtnCoverImage"))
@@ -53,81 +66,331 @@ namespace LMS.Presentation.UserControls.Management
             this.Load += UCInventory_Load;
         }
 
+        private void _bookAuthor_repo_init()
+        {
+            // placeholder to keep style consistent if extra wiring needed later
+        }
+
         private void UCInventory_Load(object sender, EventArgs e)
         {
+            // Initialize pagination controls and wire events
+            SetupPagination();
+
+            // Wire filter/apply events
+            BtnApply.Click += BtnApply_Click;
+            TxtSearchBar.TextChanged += TxtSearchBar_TextChanged;
+
             LoadInventory();
         }
 
+        private void SetupPagination()
+        {
+            // Ensure the combo has a selected value and wire events
+            // Designer sets items and Text; sync _pageSize from Text if possible
+            if (!int.TryParse(CmbBxPaginationNumbers.Text, out _pageSize))
+                _pageSize = 10;
+
+            // Prevent duplicate event subscriptions by removing first, then adding.
+            CmbBxPaginationNumbers.SelectedIndexChanged -= CmbBxPaginationNumbers_SelectedIndexChanged;
+            CmbBxPaginationNumbers.SelectedIndexChanged += CmbBxPaginationNumbers_SelectedIndexChanged;
+
+            LblPaginationPrevious.Click -= LblPaginationPrevious_Click;
+            LblPaginationPrevious.Click += LblPaginationPrevious_Click;
+
+            LblPaginationNext.Click -= LblPaginationNext_Click;
+            LblPaginationNext.Click += LblPaginationNext_Click;
+        }
+
         /// <summary>
-        /// Loads all books and populates the grid with formatted values.
-        /// Keeps mapping logic in small helper methods so class follows SRP and is testable.
+        /// Loads all books into memory and applies filters/paging.
         /// </summary>
         private void LoadInventory()
         {
             try
             {
-                DgwInventory.Rows.Clear();
-
-                var books = _bookRepo.GetAll() ?? new List<Book>();
-                int rowNumber = 1;
-
-                foreach (var book in books)
-                {
-                    // Authors / Editors / Publisher strings
-                    string authors = GetAuthorsCsv(book.BookID);
-                    string editors = GetEditorsCsv(book.BookID);
-                    string publishers = GetPublisherString(book.PublisherID);
-
-                    // Copies -> totals and availability
-                    var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
-                    int totalCopies = copies.Count;
-                    int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
-                    string status = availableCopies > 0 ? "Available" : "Out of Stock";
-
-                    // Book ID formatted (INV-0001)
-                    string formattedBookId = $"INV-{book.BookID:D4}";
-
-                    // Add to grid (use column names to stay resilient to column order)
-                    int rowIndex = DgwInventory.Rows.Add();
-                    var row = DgwInventory.Rows[rowIndex];
-
-                    // Standard fields
-                    SetCellValue(row, "ColumnNumbering", rowNumber.ToString());
-                    SetCellValue(row, "ColumnBookID", formattedBookId);
-                    SetCellValue(row, "ColumnISBN", book.ISBN);
-                    SetCellValue(row, "ColumnCallNo", book.CallNumber);
-                    SetCellValue(row, "ColumnTitle", book.Title);
-                    SetCellValue(row, "ColumnSubtitle", book.Subtitle);
-                    SetCellValue(row, "ColumnAuthors", authors);
-                    SetCellValue(row, "ColumnEditors", editors);
-                    SetCellValue(row, "ColumnPublishers", publishers);
-                    SetCellValue(row, "ColumnCategory", book.Category?.Name);
-                    SetCellValue(row, "ColumnLanguage", book.Language);
-                    SetCellValue(row, "ColumnPages", book.Pages > 0 ? book.Pages.ToString() : string.Empty);
-                    SetCellValue(row, "ColumnEdition", book.Edition);
-                    SetCellValue(row, "ColumnPublicationYear", book.PublicationYear > 0 ? book.PublicationYear.ToString() : string.Empty);
-                    SetCellValue(row, "ColumnDescription", book.PhysicalDescription);
-                    SetCellValue(row, "ColumnResourceType", book.ResourceType.ToString());
-                    SetCellValue(row, "ColumnDLURL", book.DownloadURL);
-                    SetCellValue(row, "ColumnLoanType", book.LoanType);
-
-                    // Copies / status fields
-                    SetCellValue(row, "ColumnTotalCopies", totalCopies.ToString());
-                    SetCellValue(row, "ColumnAvailableCopies", availableCopies.ToString());
-                    SetCellValue(row, "ColumnStatus", status);
-
-                    // Buttons - store Book object on the row Tag so click handlers can find the right book
-                    row.Tag = book;
-
-                    // The button columns will display text due to UseColumnTextForButtonValue being enabled earlier
-
-                    rowNumber++;
-                }
+                _allBooks = _bookRepo.GetAll() ?? new List<Book>();
+                _currentPage = 1;
+                ApplyFilters();
             }
             catch (Exception ex)
             {
-                // Fail gracefully in UI, but show error for debugging
                 MessageBox.Show($"Failed to load inventory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ApplyFilters()
+        {
+            if (_allBooks == null)
+                _allBooks = new List<Book>();
+
+            var filtered = _allBooks.AsEnumerable();
+
+            // Search text (match Title, ISBN, CallNumber, Authors)
+            string searchText = TxtSearchBar.Text?.Trim() ?? "";
+            if (!string.IsNullOrEmpty(searchText) && !string.Equals(searchText, ""))
+            {
+                string s = searchText;
+                filtered = filtered.Where(b =>
+                    (!string.IsNullOrEmpty(b.Title) && b.Title.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (!string.IsNullOrEmpty(b.ISBN) && b.ISBN.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (!string.IsNullOrEmpty(b.CallNumber) && b.CallNumber.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (!string.IsNullOrEmpty(GetAuthorsCsv(b.BookID)) && GetAuthorsCsv(b.BookID).IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                );
+            }
+
+            // Category filter
+            string selectedCategory = CmbBxCategoryFilter.SelectedItem?.ToString() ?? CmbBxCategoryFilter.Text;
+            if (!string.IsNullOrWhiteSpace(selectedCategory) && !selectedCategory.Equals("All Category", StringComparison.OrdinalIgnoreCase))
+            {
+                filtered = filtered.Where(b => GetCategoryName(b.CategoryID).Equals(selectedCategory, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Resource type filter
+            string selectedResourceType = CmbBxResourceTypeFilter.SelectedItem?.ToString() ?? CmbBxResourceTypeFilter.Text;
+            if (!string.IsNullOrWhiteSpace(selectedResourceType) && !selectedResourceType.Equals("All Resource Type", StringComparison.OrdinalIgnoreCase))
+            {
+                filtered = filtered.Where(b => b.ResourceType.ToString().Equals(selectedResourceType, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Status filter (use available copies to decide status)
+            string selectedStatus = CmbBxStatusFilter.SelectedItem?.ToString() ?? CmbBxStatusFilter.Text;
+            if (!string.IsNullOrWhiteSpace(selectedStatus) && !selectedStatus.Equals("All Status", StringComparison.OrdinalIgnoreCase))
+            {
+                filtered = filtered.Where(b =>
+                {
+                    var copies = _bookCopyRepo.GetByBookId(b.BookID) ?? new List<BookCopy>();
+                    int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
+                    string status = availableCopies > 0 ? "Available" : "Out of Stock";
+                    return status.Equals(selectedStatus, StringComparison.OrdinalIgnoreCase);
+                });
+            }
+
+            _filteredBooks = filtered.ToList();
+            CalculatePagination();
+            DisplayCurrentPage();
+        }
+
+        private void CalculatePagination()
+        {
+            int totalRecords = _filteredBooks?.Count ?? 0;
+            _totalPages = (int)Math.Ceiling((double)totalRecords / _pageSize);
+            if (_totalPages == 0) _totalPages = 1;
+
+            if (_currentPage > _totalPages) _currentPage = _totalPages;
+            if (_currentPage < 1) _currentPage = 1;
+
+            UpdatePaginationButtons();
+        }
+
+        private void DisplayCurrentPage()
+        {
+            if (_filteredBooks == null)
+                _filteredBooks = new List<Book>();
+
+            var paged = _filteredBooks
+                .Skip((_currentPage - 1) * _pageSize)
+                .Take(_pageSize)
+                .ToList();
+
+            DisplayBooks(paged);
+            UpdatePaginationLabel();
+            UpdatePaginationButtons();
+        }
+
+        /// <summary>
+        /// Populates DgwInventory with the provided subset of books.
+        /// </summary>
+        private void DisplayBooks(List<Book> books)
+        {
+            DgwInventory.Rows.Clear();
+
+            int startIndex = (_currentPage - 1) * _pageSize;
+            int rowNumber = startIndex + 1;
+
+            foreach (var book in books)
+            {
+                // Authors / Editors / Publisher strings
+                string authors = GetAuthorsCsv(book.BookID);
+                string editors = GetEditorsCsv(book.BookID);
+                string publishers = GetPublisherString(book.PublisherID);
+
+                // Copies -> totals and availability
+                var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                int totalCopies = copies.Count;
+                int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
+                string status = availableCopies > 0 ? "Available" : "Out of Stock";
+
+                // Book ID formatted (INV-0001)
+                string formattedBookId = $"INV-{book.BookID:D4}";
+
+                // Category: use CategoryID and cache lookup (Book.Category may be null because repository doesn't populate navigation)
+                string categoryName = GetCategoryName(book.CategoryID);
+
+                // Add to grid (use column names to stay resilient to column order)
+                int rowIndex = DgwInventory.Rows.Add();
+                var row = DgwInventory.Rows[rowIndex];
+
+                // Standard fields
+                SetCellValue(row, "ColumnNumbering", rowNumber.ToString());
+                SetCellValue(row, "ColumnBookID", formattedBookId);
+                SetCellValue(row, "ColumnISBN", book.ISBN);
+                SetCellValue(row, "ColumnCallNo", book.CallNumber);
+                SetCellValue(row, "ColumnTitle", book.Title);
+                SetCellValue(row, "ColumnSubtitle", book.Subtitle);
+                SetCellValue(row, "ColumnAuthors", authors);
+                SetCellValue(row, "ColumnEditors", editors);
+                SetCellValue(row, "ColumnPublishers", publishers);
+                SetCellValue(row, "ColumnCategory", categoryName);
+                SetCellValue(row, "ColumnLanguage", book.Language);
+                SetCellValue(row, "ColumnPages", book.Pages > 0 ? book.Pages.ToString() : string.Empty);
+                SetCellValue(row, "ColumnEdition", book.Edition);
+                SetCellValue(row, "ColumnPublicationYear", book.PublicationYear > 0 ? book.PublicationYear.ToString() : string.Empty);
+                SetCellValue(row, "ColumnDescription", book.PhysicalDescription);
+                SetCellValue(row, "ColumnResourceType", book.ResourceType.ToString());
+                SetCellValue(row, "ColumnDLURL", book.DownloadURL);
+                SetCellValue(row, "ColumnLoanType", book.LoanType);
+
+                // Copies / status fields
+                SetCellValue(row, "ColumnTotalCopies", totalCopies.ToString());
+                SetCellValue(row, "ColumnAvailableCopies", availableCopies.ToString());
+                SetCellValue(row, "ColumnStatus", status);
+
+                // Buttons - store Book object on the row Tag so click handlers can find the right book
+                row.Tag = book;
+
+                rowNumber++;
+            }
+        }
+
+        private void UpdatePaginationLabel()
+        {
+            int totalRecords = _filteredBooks?.Count ?? 0;
+            int startRecord = totalRecords == 0 ? 0 : ((_currentPage - 1) * _pageSize) + 1;
+            int endRecord = Math.Min(_currentPage * _pageSize, totalRecords);
+
+            LblPaginationShowEntries.Text = $"Showing {startRecord} to {endRecord} of {totalRecords} entries";
+        }
+
+        private void UpdatePaginationButtons()
+        {
+            LblPaginationPrevious.Enabled = _currentPage > 1;
+            LblPaginationNext.Enabled = _currentPage < _totalPages;
+        }
+
+        private void CmbBxPaginationNumbers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = CmbBxPaginationNumbers.SelectedItem?.ToString() ?? CmbBxPaginationNumbers.Text;
+            if (int.TryParse(selectedValue, out int pageSize))
+            {
+                _pageSize = pageSize;
+                _currentPage = 1;
+                CalculatePagination();
+                DisplayCurrentPage();
+            }
+        }
+
+        private void LblPaginationPrevious_Click(object sender, EventArgs e)
+        {
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                DisplayCurrentPage();
+            }
+        }
+
+        private void LblPaginationNext_Click(object sender, EventArgs e)
+        {
+            if (_currentPage < _totalPages)
+            {
+                _currentPage++;
+                DisplayCurrentPage();
+            }
+        }
+
+        private void BtnApply_Click(object sender, EventArgs e)
+        {
+            _currentPage = 1;
+            ApplyFilters();
+        }
+
+        private void TxtSearchBar_TextChanged(object sender, EventArgs e)
+        {
+            _currentPage = 1;
+            ApplyFilters();
+        }
+
+        /// <summary>
+        /// Handle clicks on the DataGridView's button/image columns.
+        /// For now we only open the relevant forms (ViewCoverImage / ViewBookCopy) as requested.
+        /// Row.Tag contains the Book object we stored earlier.
+        /// </summary>
+        private void DgwInventory_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var column = DgwInventory.Columns[e.ColumnIndex];
+            var row = DgwInventory.Rows[e.RowIndex];
+            if (row == null) return;
+
+            var book = row.Tag as Book;
+            if (book == null) return;
+
+            // Identify columns by name (designer names)
+            string colName = column.Name;
+
+            if (colName == "ColumnBtnCoverImage")
+            {
+                // Build full path from stored relative cover image if available
+                string fullPath = null;
+                if (!string.IsNullOrWhiteSpace(book.CoverImage))
+                {
+                    try
+                    {
+                        // CoverImage stored as relative path like "Assets/dataimages/Books/xxx.jpg"
+                        fullPath = Path.Combine(Application.StartupPath, book.CoverImage.Replace('/', Path.DirectorySeparatorChar));
+                        if (!File.Exists(fullPath))
+                            fullPath = null;
+                    }
+                    catch
+                    {
+                        fullPath = null;
+                    }
+                }
+
+                // Open cover image viewer with image path and book title
+                using (var view = new ViewCoverImage())
+                {
+                    view.LoadCover(fullPath, book.Title);
+                    view.ShowDialog();
+                }
+            }
+            else if (colName == "ColumnBtnCopies")
+            {
+                // Open view copies form. For now just show the form and pass book id as TODO later
+                using (var view = new ViewBookCopy())
+                {
+                    // TODO: pass book.BookID to ViewBookCopy when that form accepts it.
+                    view.ShowDialog();
+                }
+            }
+            else if (colName == "Edit")
+            {
+                // Open EditBook form with the Book object and refresh grid if user saved changes
+                try
+                {
+                    using (var editForm = new EditBook(book))
+                    {
+                        var result = editForm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            LoadInventory();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to open edit form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -137,6 +400,27 @@ namespace LMS.Presentation.UserControls.Management
             if (DgwInventory.Columns.Contains(columnName))
             {
                 row.Cells[columnName].Value = value ?? string.Empty;
+            }
+        }
+
+        // Category lookup with caching. Returns empty string when not found or id <= 0.
+        private string GetCategoryName(int categoryId)
+        {
+            if (categoryId <= 0) return string.Empty;
+
+            if (_categoryNameCache.TryGetValue(categoryId, out string cached)) return cached ?? string.Empty;
+
+            try
+            {
+                var cat = _categoryRepo.GetById(categoryId);
+                var name = cat?.Name ?? string.Empty;
+                _categoryNameCache[categoryId] = name;
+                return name;
+            }
+            catch
+            {
+                _categoryNameCache[categoryId] = string.Empty;
+                return string.Empty;
             }
         }
 
@@ -241,72 +525,6 @@ namespace LMS.Presentation.UserControls.Management
         {
             ImportBook importBookForm = new ImportBook();
             importBookForm.ShowDialog();
-        }
-
-        private void LblPaginationPrevious_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Handle clicks on the DataGridView's button/image columns.
-        /// For now we only open the relevant forms (ViewCoverImage / ViewBookCopy) as requested.
-        /// Row.Tag contains the Book object we stored earlier.
-        /// </summary>
-        private void DgwInventory_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            var column = DgwInventory.Columns[e.ColumnIndex];
-            var row = DgwInventory.Rows[e.RowIndex];
-            if (row == null) return;
-
-            var book = row.Tag as Book;
-            if (book == null) return;
-
-            // Identify columns by name (designer names)
-            string colName = column.Name;
-
-            if (colName == "ColumnBtnCoverImage")
-            {
-                // Build full path from stored relative cover image if available
-                string fullPath = null;
-                if (!string.IsNullOrWhiteSpace(book.CoverImage))
-                {
-                    try
-                    {
-                        // CoverImage stored as relative path like "Assets/dataimages/Books/xxx.jpg"
-                        fullPath = Path.Combine(Application.StartupPath, book.CoverImage.Replace('/', Path.DirectorySeparatorChar));
-                        if (!File.Exists(fullPath))
-                            fullPath = null;
-                    }
-                    catch
-                    {
-                        fullPath = null;
-                    }
-                }
-
-                // Open cover image viewer with image path and book title
-                using (var view = new ViewCoverImage())
-                {
-                    view.LoadCover(fullPath, book.Title);
-                    view.ShowDialog();
-                }
-            }
-            else if (colName == "ColumnBtnCopies")
-            {
-                // Open view copies form. For now just show the form and pass book id as TODO later
-                using (var view = new ViewBookCopy())
-                {
-                    // TODO: pass book.BookID to ViewBookCopy when that form accepts it.
-                    view.ShowDialog();
-                }
-            }
-            else if (colName == "Edit")
-            {
-                // Edit icon clicked - future implementation
-                MessageBox.Show("Edit not implemented yet.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
 
         // end code

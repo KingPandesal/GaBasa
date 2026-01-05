@@ -41,10 +41,6 @@
             this.LblShow = new System.Windows.Forms.Label();
             this.BtnApply = new System.Windows.Forms.Button();
             this.DgwMembers = new System.Windows.Forms.DataGridView();
-            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,6 +61,10 @@
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             this.RenewMembership = new System.Windows.Forms.DataGridViewImageColumn();
+            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgwMembers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -126,7 +126,7 @@
             this.LblPaginationPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblPaginationPrevious.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblPaginationPrevious.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblPaginationPrevious.Location = new System.Drawing.Point(1276, 557);
+            this.LblPaginationPrevious.Location = new System.Drawing.Point(1276, 715);
             this.LblPaginationPrevious.Margin = new System.Windows.Forms.Padding(4);
             this.LblPaginationPrevious.Name = "LblPaginationPrevious";
             this.LblPaginationPrevious.Size = new System.Drawing.Size(125, 46);
@@ -141,7 +141,7 @@
             this.LblPaginationNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblPaginationNext.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblPaginationNext.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblPaginationNext.Location = new System.Drawing.Point(1420, 557);
+            this.LblPaginationNext.Location = new System.Drawing.Point(1420, 715);
             this.LblPaginationNext.Margin = new System.Windows.Forms.Padding(4);
             this.LblPaginationNext.Name = "LblPaginationNext";
             this.LblPaginationNext.Size = new System.Drawing.Size(125, 46);
@@ -153,7 +153,7 @@
             // 
             this.LblPaginationShowEntries.AutoSize = true;
             this.LblPaginationShowEntries.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblPaginationShowEntries.Location = new System.Drawing.Point(31, 566);
+            this.LblPaginationShowEntries.Location = new System.Drawing.Point(31, 724);
             this.LblPaginationShowEntries.Name = "LblPaginationShowEntries";
             this.LblPaginationShowEntries.Size = new System.Drawing.Size(268, 28);
             this.LblPaginationShowEntries.TabIndex = 47;
@@ -163,7 +163,7 @@
             // 
             this.LblEntries.AutoSize = true;
             this.LblEntries.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblEntries.Location = new System.Drawing.Point(150, 131);
+            this.LblEntries.Location = new System.Drawing.Point(172, 131);
             this.LblEntries.Name = "LblEntries";
             this.LblEntries.Size = new System.Drawing.Size(70, 28);
             this.LblEntries.TabIndex = 46;
@@ -174,17 +174,14 @@
             this.CmbBxPaginationNumbers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.CmbBxPaginationNumbers.FormattingEnabled = true;
             this.CmbBxPaginationNumbers.Items.AddRange(new object[] {
-            "5",
             "10",
-            "15",
             "20",
-            "25",
             "30"});
             this.CmbBxPaginationNumbers.Location = new System.Drawing.Point(93, 131);
             this.CmbBxPaginationNumbers.Name = "CmbBxPaginationNumbers";
-            this.CmbBxPaginationNumbers.Size = new System.Drawing.Size(52, 33);
+            this.CmbBxPaginationNumbers.Size = new System.Drawing.Size(75, 33);
             this.CmbBxPaginationNumbers.TabIndex = 45;
-            this.CmbBxPaginationNumbers.Text = "5";
+            this.CmbBxPaginationNumbers.Text = "10";
             // 
             // LblShow
             // 
@@ -242,58 +239,8 @@
             this.DgwMembers.Name = "DgwMembers";
             this.DgwMembers.RowHeadersWidth = 62;
             this.DgwMembers.RowTemplate.Height = 28;
-            this.DgwMembers.Size = new System.Drawing.Size(1509, 317);
+            this.DgwMembers.Size = new System.Drawing.Size(1509, 490);
             this.DgwMembers.TabIndex = 43;
-            // 
-            // TxtSearchBar
-            // 
-            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
-            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
-            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
-            this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(155, 31);
-            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
-            this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
-            this.TxtSearchBar.Multiline = false;
-            this.TxtSearchBar.Name = "TxtSearchBar";
-            this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(897, 40);
-            this.TxtSearchBar.TabIndex = 42;
-            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.TxtSearchBar.UseSystemPasswordChar = false;
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn1.HeaderText = "";
-            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
-            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn1.MinimumWidth = 8;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ToolTipText = "Edit member";
-            this.dataGridViewImageColumn1.Width = 150;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn2.HeaderText = "";
-            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
-            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn2.MinimumWidth = 8;
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ToolTipText = "Archive member";
-            this.dataGridViewImageColumn2.Width = 150;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(34, 33);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 55;
-            this.pictureBox1.TabStop = false;
             // 
             // Column17
             // 
@@ -446,6 +393,56 @@
             this.RenewMembership.MinimumWidth = 8;
             this.RenewMembership.Name = "RenewMembership";
             this.RenewMembership.Width = 8;
+            // 
+            // TxtSearchBar
+            // 
+            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
+            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
+            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
+            this.TxtSearchBar.Image = null;
+            this.TxtSearchBar.Location = new System.Drawing.Point(155, 31);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.MaxLength = 32767;
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
+            this.TxtSearchBar.Multiline = false;
+            this.TxtSearchBar.Name = "TxtSearchBar";
+            this.TxtSearchBar.ReadOnly = false;
+            this.TxtSearchBar.Size = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.TabIndex = 42;
+            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.TxtSearchBar.UseSystemPasswordChar = false;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn1.HeaderText = "";
+            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
+            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn1.MinimumWidth = 8;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ToolTipText = "Edit member";
+            this.dataGridViewImageColumn1.Width = 150;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn2.HeaderText = "";
+            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
+            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn2.MinimumWidth = 8;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ToolTipText = "Archive member";
+            this.dataGridViewImageColumn2.Width = 150;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(34, 33);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 55;
+            this.pictureBox1.TabStop = false;
             // 
             // UCMembers
             // 

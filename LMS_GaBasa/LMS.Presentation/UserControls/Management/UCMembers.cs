@@ -26,7 +26,7 @@ namespace LMS.Presentation.UserControls.Management
 
         // Pagination state
         private int _currentPage = 1;
-        private int _pageSize = 5;
+        private int _pageSize = 10;
         private int _totalPages = 1;
 
         // Column indices - updated for LastLogin column
@@ -121,7 +121,7 @@ namespace LMS.Presentation.UserControls.Management
         private void SetupPagination()
         {
             CmbBxPaginationNumbers.SelectedIndex = 0;
-            _pageSize = 5;
+            _pageSize = 10;
 
             CmbBxPaginationNumbers.SelectedIndexChanged += CmbBxPaginationNumbers_SelectedIndexChanged;
             LblPaginationPrevious.Click += LblPaginationPrevious_Click;
@@ -263,7 +263,7 @@ namespace LMS.Presentation.UserControls.Management
 
         private void CmbBxPaginationNumbers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedValue = CmbBxPaginationNumbers.SelectedItem?.ToString() ?? "5";
+            string selectedValue = CmbBxPaginationNumbers.SelectedItem?.ToString() ?? "10";
             if (int.TryParse(selectedValue, out int pageSize))
             {
                 _pageSize = pageSize;
