@@ -123,6 +123,8 @@ namespace LMS.Presentation.Forms
                 return;
             }
 
+            Program.CurrentUserId = result.User.UserID; // <-- Set the current user ID
+
             OpenDashboard(result.User);
             this.Hide();
         }

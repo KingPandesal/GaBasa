@@ -57,17 +57,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\BookFactory.cs" />
+    <Compile Include="Factories\IBookFactory.cs" />
     <Compile Include="Hashing\BcryptPasswordHasher.cs" />
     <Compile Include="Hashing\IPasswordHasher.cs" />
     <Compile Include="Helpers\UserIDFormatter.cs" />
     <Compile Include="Helpers\UserImageHelper.cs" />
+    <Compile Include="Managers\CatalogManager.cs" />
     <Compile Include="Managers\IMemberManager.cs" />
+    <Compile Include="Managers\Interfaces\ICatalogManager.cs" />
+    <Compile Include="Managers\Interfaces\IInventoryManager.cs" />
+    <Compile Include="Managers\InventoryManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
     <Compile Include="Services\AddMember\AddMemberService.cs" />
     <Compile Include="Services\AddMember\IAddMemberService.cs" />
     <Compile Include="Services\AddUser\AddUserService.cs" />
     <Compile Include="Services\AddUser\IAddUserService.cs" />
     <Compile Include="Services\ArchiveUser\ArchiveUserService.cs" />
+    <Compile Include="Services\BarcodeGenerator\IBarcodeGenerator.cs" />
+    <Compile Include="Services\Book\AddBook\AddBookService.cs" />
+    <Compile Include="Services\Book\AddBook\BookCreationResultService.cs" />
+    <Compile Include="Services\Book\AddBook\IAddBookService.cs" />
     <Compile Include="Services\EditMember\EditMemberService.cs" />
     <Compile Include="Services\EditMember\IEditMemberService.cs" />
     <Compile Include="Services\EditUser\EditUserService.cs" />

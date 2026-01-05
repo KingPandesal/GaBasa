@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\Book\DTOCreateBook.cs" />
     <Compile Include="DTOs\Member\DTOCreateMember.cs" />
     <Compile Include="DTOs\Member\DTOCreateMemberResult.cs" />
     <Compile Include="DTOs\Member\DTOEditMember.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Models\Catalog\Books\AV.cs" />
     <Compile Include="Models\Catalog\Books\Book.cs" />
     <Compile Include="Models\Catalog\BookCopy.cs" />
+    <Compile Include="Models\Catalog\Books\BookAuthor.cs" />
     <Compile Include="Models\Catalog\Books\EBook.cs" />
     <Compile Include="Models\Catalog\Books\Periodical.cs" />
     <Compile Include="Models\Catalog\Books\PhysicalBook.cs" />

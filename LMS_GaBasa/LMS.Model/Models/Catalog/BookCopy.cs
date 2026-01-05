@@ -16,6 +16,9 @@ namespace LMS.Model.Models.Catalog
         public string Status { get; set; } 
         // Enum: Available, Borrowed, Reserved, Lost, Damaged, Repair
         public string Location { get; set; }
+        public string Barcode { get; set; }
+        public DateTime DateAdded { get; set; }
+        public int AddedByID { get; set; }
     }
 
 }

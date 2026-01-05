@@ -10,6 +10,10 @@ namespace LMS.Presentation
 {
     internal static class Program
     {
+        // Simple global current user id (0 = none)
+        // Set this from your login form after successful authentication.
+        public static int CurrentUserId { get; set; } = 0;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
