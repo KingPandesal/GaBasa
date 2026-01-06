@@ -168,23 +168,98 @@ namespace LMS.Presentation.Popup.Inventory
             PicBxBookCover.Click += PicBxBookCover_Click;
             BtnBKAddAuthor.Click += BtnAddAuthor_Click;
             BtnBKAddEditor.Click += BtnAddEditor_Click;
-            // BtnAddPublisher removed: publisher is single combobox now
             LstBxBKAuthor.DoubleClick += LstBxAuthor_DoubleClick;
             LstBxBKEditor.DoubleClick += LstBxEditor_DoubleClick;
-            // LstBxPublisher removed from UI; do not subscribe
             BtnCancel.Click += BtnCancel_Click;
 
+            // wire up resource-type radios (already present in file) — these show/hide main detail groupboxes
+            RdoBtnPhysicalBook.CheckedChanged += RdoBtnPhysicalBook_CheckedChanged;
+            RdoBtnEBook.CheckedChanged += RdoBtnEBook_CheckedChanged;
+            RdoBtnTheses.CheckedChanged += RdoBtnTheses_CheckedChanged;
+            RdoBtnPeriodical.CheckedChanged += RdoBtnPeriodical_CheckedChanged;
+            RdoBtnAV.CheckedChanged += RdoBtnAV_CheckedChanged;
+
+            // wire up periodical material-format radios to toggle their panels
+            RdoBtnPRPhysical.CheckedChanged += PRMaterialFormat_CheckedChanged;
+            RdoBtnPRDigital.CheckedChanged += PRMaterialFormat_CheckedChanged;
+
+            // wire up thesis material-format radios
+            RdoBtnTHPhysical.CheckedChanged += THMaterialFormat_CheckedChanged;
+            RdoBtnTHDigital.CheckedChanged += THMaterialFormat_CheckedChanged;
+
+            // wire up audio-visual material-format radios
+            RdoBtnAVPhysical.CheckedChanged += AVMaterialFormat_CheckedChanged;
+            RdoBtnAVDigital.CheckedChanged += AVMaterialFormat_CheckedChanged;
+
+            // wire up copy-information toggle for all PR/TH/AV radios (physical OR digital change may affect visibility)
+            RdoBtnPRPhysical.CheckedChanged += CopyInfoRadio_CheckedChanged;
+            RdoBtnPRDigital.CheckedChanged += CopyInfoRadio_CheckedChanged;
+            RdoBtnTHPhysical.CheckedChanged += CopyInfoRadio_CheckedChanged;
+            RdoBtnTHDigital.CheckedChanged += CopyInfoRadio_CheckedChanged;
+            RdoBtnAVPhysical.CheckedChanged += CopyInfoRadio_CheckedChanged;
+            RdoBtnAVDigital.CheckedChanged += CopyInfoRadio_CheckedChanged;
+
             // Enable editable/combo behaviour and Enter-to-add
-            // DO NOT clear previously populated author/editor items here
             SetupComboBoxForAutocomplete(CmbBxBKPublisher, _publisherRepo != null ? _publisherRepo.GetAll().Select(p => p.Name) : null);
 
-            // Hide sub-panels initially
+            // Ensure GrpBxCopyInformation is hidden initially
+            if (GrpBxCopyInformation != null) GrpBxCopyInformation.Visible = false;
 
-            // Default to Physical Book
-            RdoBtnPhysicalBook.Checked = true;
+            // Do NOT force any resource-type radio to Checked here — leave them unselected initially.
+            // Ensure visibility matches current (possibly no) selection -> this will hide all detail panels when none selected.
+            SetVisibleResourceGroup(GetSelectedResourceType());
 
-            // Enforce maximum of 10 digits for No. of Pages (prevents typing an 11th digit)
+            // Ensure material-format panels visibility matches current radio selections (may be none)
+            PRMaterialFormat_CheckedChanged(this, EventArgs.Empty);
+            THMaterialFormat_CheckedChanged(this, EventArgs.Empty);
+            AVMaterialFormat_CheckedChanged(this, EventArgs.Empty);
+
+            // Ensure copy info visibility matches current material-format radios
+            UpdateCopyInformationVisibility();
+
+            // Enforce maximum of 10 digits for No. of Pages
             EnforceDigitsLimit(TxtBKNoOfPages, 10);
+        }
+
+        private void AddBook_Load(object sender, EventArgs e)
+        {
+            // Keep radios untouched. Update UI to reflect current radio state (none selected => hide detail panels).
+            SetVisibleResourceGroup(GetSelectedResourceType());
+            PRMaterialFormat_CheckedChanged(this, EventArgs.Empty);
+            THMaterialFormat_CheckedChanged(this, EventArgs.Empty);
+            AVMaterialFormat_CheckedChanged(this, EventArgs.Empty);
+
+            // Update copy information visibility based on current material-format radios
+            UpdateCopyInformationVisibility();
+        }
+
+        /// <summary>
+        /// Shared handler wired to all PR/TH/AV material radios (physical and digital).
+        /// Updates the visibility of GrpBxCopyInformation when any physical radio is checked.
+        /// </summary>
+        private void CopyInfoRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCopyInformationVisibility();
+        }
+
+        /// <summary>
+        /// Sets GrpBxCopyInformation.Visible = true if any of PR/TH/AV physical radios are checked.
+        /// Otherwise hides the group box.
+        /// </summary>
+        private void UpdateCopyInformationVisibility()
+        {
+            bool showCopyInfo = false;
+
+            if (RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked) showCopyInfo = true;
+            if (RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked) showCopyInfo = true;
+            if (RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked) showCopyInfo = true;
+
+            if (GrpBxCopyInformation != null)
+                GrpBxCopyInformation.Visible = showCopyInfo;
+
+            // refresh layout so visibility change is reflected immediately
+            flowLayoutPanel1?.PerformLayout();
+            flowLayoutPanel1?.Refresh();
         }
 
         private void LoadCategories()
@@ -359,22 +434,57 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void RdoBtnPhysicalBook_CheckedChanged(object sender, EventArgs e)
         {
+            if (RdoBtnPhysicalBook.Checked)
+                SetVisibleResourceGroup(ResourceType.PhysicalBook);
         }
 
         private void RdoBtnEBook_CheckedChanged(object sender, EventArgs e)
         {
+            if (RdoBtnEBook.Checked)
+                SetVisibleResourceGroup(ResourceType.EBook);
         }
 
         private void RdoBtnTheses_CheckedChanged(object sender, EventArgs e)
         {
+            if (RdoBtnTheses.Checked)
+                SetVisibleResourceGroup(ResourceType.Thesis);
         }
 
         private void RdoBtnPeriodical_CheckedChanged(object sender, EventArgs e)
         {
+            if (RdoBtnPeriodical.Checked)
+                SetVisibleResourceGroup(ResourceType.Periodical);
         }
 
         private void RdoBtnAV_CheckedChanged(object sender, EventArgs e)
         {
+            if (RdoBtnAV.Checked)
+                SetVisibleResourceGroup(ResourceType.AV);
+        }
+
+        /// <summary>
+        /// Show exactly the GroupBox matching the selected resource type and hide the others.
+        /// Copy information panel remains visible for all types.
+        /// </summary>
+        /// <param name="type">Selected ResourceType</param>
+        private void SetVisibleResourceGroup(ResourceType? type)
+        {
+            // If no resource type selected, hide all specific detail groupboxes.
+            bool showPhysical = type.HasValue && type.Value == ResourceType.PhysicalBook;
+            bool showPeriodical = type.HasValue && type.Value == ResourceType.Periodical;
+            bool showThesis = type.HasValue && type.Value == ResourceType.Thesis;
+            bool showAV = type.HasValue && type.Value == ResourceType.AV;
+            bool showEBook = type.HasValue && type.Value == ResourceType.EBook;
+
+            if (GrpBxPhysicalBook != null) GrpBxPhysicalBook.Visible = showPhysical;
+            if (GrpBxPeriodicals != null) GrpBxPeriodicals.Visible = showPeriodical;
+            if (GrpBxThesis != null) GrpBxThesis.Visible = showThesis;
+            if (GrpBxAV != null) GrpBxAV.Visible = showAV;
+            if (GrpBxEBook != null) GrpBxEBook.Visible = showEBook;
+
+            // Refresh layout so FlowLayoutPanel updates the scroll area correctly.
+            flowLayoutPanel1?.PerformLayout();
+            flowLayoutPanel1?.Refresh();
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -493,7 +603,8 @@ namespace LMS.Presentation.Popup.Inventory
                 PhysicalDescription = TxtBKPhysicalDescription.Text.Trim(),
                 CallNumber = TxtBKCallNumber.Text.Trim(),
                 CoverImage = SaveCoverImage(),
-                ResourceType = GetSelectedResourceType(),
+                // If user hasn't selected a resource type, default to PhysicalBook for saving to preserve backwards compatibility.
+                ResourceType = GetSelectedResourceType() ?? ResourceType.PhysicalBook,
                 InitialCopyCount = NumPckNoOfCopies.Value,
                 CopyStatus = CmbBxCopyStatus.Text,
                 CopyLocation = TxtLocation.Text.Trim()
@@ -548,49 +659,17 @@ namespace LMS.Presentation.Popup.Inventory
             return dto;
         }
 
-        private ResourceType GetSelectedResourceType()
+        private ResourceType? GetSelectedResourceType()
         {
-            // If a radio is explicitly checked, return the corresponding enum directly.
-            if (RdoBtnPhysicalBook.Checked) return ResourceType.PhysicalBook;
-            if (RdoBtnEBook.Checked) return ResourceType.EBook;
-            if (RdoBtnTheses.Checked) return ResourceType.Thesis;
-            if (RdoBtnPeriodical.Checked) return ResourceType.Periodical;
-            if (RdoBtnAV.Checked) return ResourceType.AV;
+            if (RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked) return ResourceType.PhysicalBook;
+            if (RdoBtnEBook != null && RdoBtnEBook.Checked) return ResourceType.EBook;
+            if (RdoBtnTheses != null && RdoBtnTheses.Checked) return ResourceType.Thesis;
+            if (RdoBtnPeriodical != null && RdoBtnPeriodical.Checked) return ResourceType.Periodical;
+            if (RdoBtnAV != null && RdoBtnAV.Checked) return ResourceType.AV;
 
-            // Fallback: try to map by label text if UI changed to display "Audio-Visual" (or similar)
-            string label = null;
-            if (RdoBtnAV != null) label = RdoBtnAV.Text?.Trim();
-
-            if (!string.IsNullOrWhiteSpace(label))
-            {
-                switch (label.Trim())
-                {
-                    case "AV":
-                    case "Audio-Visual":
-                    case "Audio Visual":
-                    case "AudioVisual":
-                        return ResourceType.AV;
-                    case "E-Book":
-                    case "EBook":
-                        return ResourceType.EBook;
-                    case "Thesis":
-                    case "Theses":
-                        return ResourceType.Thesis;
-                    case "Periodical":
-                    case "Periodicals":
-                        return ResourceType.Periodical;
-                    case "Physical Book":
-                    case "PhysicalBook":
-                    case "Book":
-                    default:
-                        return ResourceType.PhysicalBook;
-                }
-            }
-
-            // Default
-            return ResourceType.PhysicalBook;
+            // No radio selected -> return null so callers can decide behaviour.
+            return null;
         }
-
 
         private string SaveCoverImage()
         {
@@ -921,6 +1000,34 @@ namespace LMS.Presentation.Popup.Inventory
         private void label43_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void PRMaterialFormat_CheckedChanged(object sender, EventArgs e)
+        {
+            // periodicals: panel3 = physical controls, panel4 = digital controls (designer names)
+            if (PnlPRPhysicalFormat != null) PnlPRPhysicalFormat.Visible = RdoBtnPRPhysical.Checked;
+            if (PnlPRDigitalFormat != null) PnlPRDigitalFormat.Visible = RdoBtnPRDigital.Checked;
+
+            // make sure copy information visibility is updated when material format changes
+            UpdateCopyInformationVisibility();
+        }
+
+        private void THMaterialFormat_CheckedChanged(object sender, EventArgs e)
+        {
+            // thesis: panel1 = physical controls, panel2 = digital controls (designer names)
+            if (PnlTHPhysicalFormat != null) PnlTHPhysicalFormat.Visible = RdoBtnTHPhysical.Checked;
+            if (PnlTHDigitalFormat != null) PnlTHDigitalFormat.Visible = RdoBtnTHDigital.Checked;
+
+            UpdateCopyInformationVisibility();
+        }
+
+        private void AVMaterialFormat_CheckedChanged(object sender, EventArgs e)
+        {
+            // audio-visual: panel5 = physical controls, panel6 = digital controls (designer names)
+            if (PnlAVPhysicalFormat != null) PnlAVPhysicalFormat.Visible = RdoBtnAVPhysical.Checked;
+            if (PnlAVDigitalFormat != null) PnlAVDigitalFormat.Visible = RdoBtnAVDigital.Checked;
+
+            UpdateCopyInformationVisibility();
         }
     }
 }
