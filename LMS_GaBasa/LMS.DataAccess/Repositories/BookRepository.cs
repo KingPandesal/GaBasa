@@ -44,7 +44,10 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@Title", DbType.String, book.Title, 500);
                 AddParameter(cmd, "@Subtitle", DbType.String, book.Subtitle, 500);
                 AddParameter(cmd, "@PublisherID", DbType.Int32, book.PublisherID, 0);
-                AddParameter(cmd, "@CategoryID", DbType.Int32, book.CategoryID, 0);
+
+                // If no category provided (CategoryID <= 0) pass NULL to DB so FK is not violated.
+                AddParameter(cmd, "@CategoryID", DbType.Int32, book.CategoryID > 0 ? (object)book.CategoryID : null, 0);
+
                 AddParameter(cmd, "@Language", DbType.String, book.Language, 50);
                 AddParameter(cmd, "@Pages", DbType.Int32, book.Pages, 0);
                 AddParameter(cmd, "@Edition", DbType.String, book.Edition, 50);
@@ -104,7 +107,10 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@Title", DbType.String, book.Title, 500);
                 AddParameter(cmd, "@Subtitle", DbType.String, book.Subtitle, 500);
                 AddParameter(cmd, "@PublisherID", DbType.Int32, book.PublisherID, 0);
-                AddParameter(cmd, "@CategoryID", DbType.Int32, book.CategoryID, 0);
+
+                // Pass NULL when CategoryID not provided so FK constraint is not violated for optional category cases.
+                AddParameter(cmd, "@CategoryID", DbType.Int32, book.CategoryID > 0 ? (object)book.CategoryID : null, 0);
+
                 AddParameter(cmd, "@Language", DbType.String, book.Language, 50);
                 AddParameter(cmd, "@Pages", DbType.Int32, book.Pages, 0);
                 AddParameter(cmd, "@Edition", DbType.String, book.Edition, 50);

@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using ZXing;
+using System.Text.RegularExpressions;
 
 namespace LMS.Presentation.Popup.Inventory
 {
@@ -237,8 +238,7 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Wire up other Add buttons and list double-click removals
             BtnPRAddAuthors.Click += (s, e) => AddFromCombo(CmbBxPRAuthors, LstBxPRAuthors, _prAuthors);
-            BtnPRAddEditors.Click += (s, e) => AddFromCombo(CmbBxPREditors, LstBxPRAuthors, _prEditors);
-            LstBxPRAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPRAuthors, _prAuthors);
+            BtnPRAddEditors.Click += (s, e) => AddFromCombo(CmbBxPREditors, LstBxPREditors, _prEditors); LstBxPRAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPRAuthors, _prAuthors);
             LstBxPREditors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPREditors, _prEditors);
 
             BtnTHAddAuthors.Click += (s, e) => AddFromCombo(CmbBxTHAuthors, LstBxTHAuthors, _thAuthors);
@@ -599,6 +599,60 @@ namespace LMS.Presentation.Popup.Inventory
         {
             try
             {
+                var selectedType = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
+
+                // --- Publication year/date validation per selected resource-type control ---
+                string pubYearText = null;
+                Control pubYearControl = null;
+                string label = "Publication year";
+
+                switch (selectedType)
+                {
+                    case ResourceType.PhysicalBook:
+                        pubYearText = TxtBKPublicationYear.Text;
+                        pubYearControl = TxtBKPublicationYear;
+                        label = "Publication year";
+                        break;
+                    case ResourceType.Periodical:
+                        pubYearText = TxtPRPubDate.Text;
+                        pubYearControl = TxtPRPubDate;
+                        label = "Publication date";
+                        break;
+                    case ResourceType.Thesis:
+                        pubYearText = TxtBxTHPublicationYear.Text;
+                        pubYearControl = TxtBxTHPublicationYear;
+                        label = "Publication year";
+                        break;
+                    case ResourceType.AV:
+                        pubYearText = TxtAVPublicationYear.Text;
+                        pubYearControl = TxtAVPublicationYear;
+                        label = "Publication year";
+                        break;
+                    case ResourceType.EBook:
+                        pubYearText = TxtEBPublicationYear.Text;
+                        pubYearControl = TxtEBPublicationYear;
+                        label = "Publication year";
+                        break;
+                }
+
+                // Validate presence first
+                if (string.IsNullOrWhiteSpace(pubYearText))
+                {
+                    MessageBox.Show($"{label} is required.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    pubYearControl?.Focus();
+                    return;
+                }
+
+                // If contains letters, show digits-only error
+                if (pubYearText.Any(char.IsLetter))
+                {
+                    MessageBox.Show($"{label} must contain digits only.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    pubYearControl?.Focus();
+                    return;
+                }
+
                 // Validate pages input: allow large numbers and common formatting (commas), clamp if too large.
                 var pagesText = TxtBKNoOfPages.Text?.Trim();
                 if (!string.IsNullOrEmpty(pagesText))
@@ -623,8 +677,32 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
+                // Periodical-specific: ISSN required (do this before BuildDTOFromForm so message uses ISSN)
+                if (selectedType == ResourceType.Periodical)
+                {
+                    if (string.IsNullOrWhiteSpace(TxtPRISSN.Text))
+                    {
+                        MessageBox.Show("ISSN is required.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRISSN.Focus();
+                        return;
+                    }
+
+                    // Require volume and issue for periodicals
+                    var volText = TxtPRVolume.Text?.Trim();
+                    var issueText = TxtPRIssue.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(volText) || string.IsNullOrWhiteSpace(issueText))
+                    {
+                        MessageBox.Show("Volume and issue are required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        if (string.IsNullOrWhiteSpace(volText)) TxtPRVolume.Focus();
+                        else TxtPRIssue.Focus();
+                        return;
+                    }
+                }
+
                 // LoanType is required when Physical Book selected
-                if (GetSelectedResourceType() == ResourceType.PhysicalBook)
+                if (selectedType == ResourceType.PhysicalBook)
                 {
                     // RdoBtnBKCirculation and RdoBtnBKReference are the two radios introduced for loan type.
                     if ((RdoBtnBKCirculation == null || !RdoBtnBKCirculation.Checked)
@@ -638,6 +716,79 @@ namespace LMS.Presentation.Popup.Inventory
 
                 var dto = BuildDTOFromForm();
 
+                // Additional periodical-specific validation depending on material format
+                if (dto.ResourceType == ResourceType.Periodical)
+                {
+                    // If PR physical is selected → require physical description AND copy info
+                    if (RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked)
+                    {
+                        // physical: require physical description and copy information
+                        if (string.IsNullOrWhiteSpace(dto.PhysicalDescription))
+                        {
+                            MessageBox.Show("Please select a physical description for the periodical.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxPRPhysicalDescription?.Focus();
+                            return;
+                        }
+
+                        // copies must be > 0 for physical periodicals
+                        if (dto.InitialCopyCount <= 0)
+                        {
+                            MessageBox.Show("Please specify the number of copies for a physical periodical.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            NumPckNoOfCopies.Focus();
+                            return;
+                        }
+
+                        // require status and location for physical copies
+                        if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+                        {
+                            MessageBox.Show("Please select a copy status for the periodical copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxCopyStatus.Focus();
+                            return;
+                        }
+                        if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+                        {
+                            MessageBox.Show("Please provide a location for the periodical copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtLocation.Focus();
+                            return;
+                        }
+                    }
+                    // If PR digital is selected → require only format + download URL, explicitly ignore copy info
+                    else if (RdoBtnPRDigital != null && RdoBtnPRDigital.Checked)
+                    {
+                        if (string.IsNullOrWhiteSpace(CmbBxPRFormat.Text))
+                        {
+                            MessageBox.Show("Please select a digital format for the periodical.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxPRFormat.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(TxtPRDownloadURL.Text))
+                        {
+                            MessageBox.Show("Please provide a Download URL for the digital periodical.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtPRDownloadURL.Focus();
+                            return;
+                        }
+
+                        // Ensure DTO won't create copies for digital periodicals
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                    // If neither material-format radio is chosen, require the user to choose one
+                    else
+                    {
+                        MessageBox.Show("Please select material format (Physical or Digital) for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 // Set the AddedByID to the currently logged in user id (Program.CurrentUserId).
                 dto.AddedByID = Program.CurrentUserId;
 
@@ -649,7 +800,7 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                // Validate
+                // Validate (shared validation)
                 if (!_inventoryManager.ValidateBookData(dto, out string errorMessage))
                 {
                     MessageBox.Show(errorMessage, "Validation Error",
@@ -662,12 +813,11 @@ namespace LMS.Presentation.Popup.Inventory
 
                 if (result.Success)
                 {
-                    // Only generate barcodes for physical books (per requirement).
+                    // Generate barcodes only when BookCopy accessions were created (service returns accession list only when copies were made).
                     try
                     {
-                        if (dto.ResourceType == ResourceType.PhysicalBook && result.AccessionNumbers != null && result.AccessionNumbers.Count > 0)
+                        if (result.AccessionNumbers != null && result.AccessionNumbers.Count > 0)
                         {
-                            // generator created in constructor, reuse here
                             var map = _barcodeGenerator.GenerateMany(result.AccessionNumbers);
 
                             // persist barcode image paths to DB
@@ -742,21 +892,49 @@ namespace LMS.Presentation.Popup.Inventory
                     break;
 
                 case ResourceType.Periodical:
-                    dto.ISBN = TxtPRISSN.Text.Trim(); // use ISSN in ISBN slot
+                    // Store ISSN in ISBN DB column
+                    dto.ISBN = TxtPRISSN.Text.Trim();
+
+                    // Publication date -> store year only. Try to extract a 4-digit year from the input.
+                    dto.PublicationYear = ExtractYearFromString(TxtPRPubDate.Text.Trim());
+
+                    // Title / subtitle / publisher / language / call number / pages
                     dto.Title = TxtPRTitle.Text.Trim();
                     dto.Subtitle = TxtPRSubtitle.Text.Trim();
                     dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxPRPublisher.Text) ? CmbBxPRPublisher.Text.Trim() : string.Empty;
                     dto.Language = CmbBxPRLanguage.Text.Trim();
                     dto.CallNumber = TxtPRCsllNumber.Text.Trim(); // designer name uses TxtPRCsllNumber
                     dto.Pages = ParseInt(TxtPRPages.Text);
-                    // PublicationYear may be M/Y; attempt parse, else leave as 0
-                    dto.PublicationYear = ParseInt(TxtPRPubDate.Text);
-                    // PhysicalDescription or format depending on material format
-                    if (RdoBtnPRPhysical.Checked)
+
+                    // Edition should be "Vol. xx, No. xx" (combine volume + issue)
+                    var vol = TxtPRVolume.Text?.Trim() ?? string.Empty;
+                    var issue = TxtPRIssue.Text?.Trim() ?? string.Empty;
+                    var editionParts = new List<string>();
+                    if (!string.IsNullOrEmpty(vol)) editionParts.Add($"Vol. {vol}");
+                    if (!string.IsNullOrEmpty(issue)) editionParts.Add($"No. {issue}");
+                    dto.Edition = editionParts.Count > 0 ? string.Join(", ", editionParts) : string.Empty;
+
+                    // Material format: physical vs digital
+                    if (RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked)
+                    {
+                        // physical: use selected physical description, keep copy info
                         dto.PhysicalDescription = CmbBxPRPhysicalDescription.Text.Trim();
+                        // keep copy information / counts as provided by Number control and Copy group
+                        dto.InitialCopyCount = NumPckNoOfCopies.Value;
+                        dto.CopyStatus = CmbBxCopyStatus.Text;
+                        dto.CopyLocation = TxtLocation.Text.Trim();
+                    }
                     else
+                    {
+                        // digital: store format and download URL; do NOT create copies
                         dto.PhysicalDescription = CmbBxPRFormat.Text.Trim();
-                    // Periodical not using LoanType
+                        dto.DownloadURL = TxtPRDownloadURL.Text.Trim();
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+
+                    // Periodical doesn't use LoanType
                     dto.LoanType = null;
                     break;
 
@@ -1018,6 +1196,29 @@ namespace LMS.Presentation.Popup.Inventory
             }
 
             return dto;
+        }
+
+        private int ExtractYearFromString(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s)) return 0;
+
+            // Try to find a 4-digit year like 1900-2099
+            var m = Regex.Match(s, @"\b(19|20)\d{2}\b");
+            if (m.Success)
+            {
+                if (int.TryParse(m.Value, out int y)) return y;
+            }
+
+            // Fallback: take last 4 digits from numeric characters if present
+            var digits = new string((s ?? string.Empty).Where(char.IsDigit).ToArray());
+            if (digits.Length >= 4)
+            {
+                var last4 = digits.Substring(digits.Length - 4);
+                if (int.TryParse(last4, out int y2)) return y2;
+            }
+
+            // final fallback to ParseInt (may return 0)
+            return ParseInt(s);
         }
 
         private ResourceType? GetSelectedResourceType()

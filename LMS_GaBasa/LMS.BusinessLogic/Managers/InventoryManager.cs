@@ -96,7 +96,9 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
-            if (dto.CategoryID <= 0 && string.IsNullOrWhiteSpace(dto.CategoryName))
+            // Category is required for all resource types except Periodical
+            if (dto.ResourceType != ResourceType.Periodical
+                && dto.CategoryID <= 0 && string.IsNullOrWhiteSpace(dto.CategoryName))
             {
                 errorMessage = "Category is required.";
                 return false;
@@ -133,23 +135,44 @@ namespace LMS.BusinessLogic.Managers
                 }
             }
 
-            // Copy information
-            if (dto.InitialCopyCount <= 0)
-            {
-                errorMessage = "Number of copies is required.";
-                return false;
-            }
+            // Copy information:
+            // - Require copies only when copies are expected.
+            // - E-books and digital periodicals (which set DownloadURL) do NOT require copies.
+            bool copiesExpected = dto.InitialCopyCount > 0;
 
-            if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+            if (!copiesExpected)
             {
-                errorMessage = "Copy status is required.";
-                return false;
+                // If no copies requested, ensure this is allowed for the resource type:
+                // allow when EBook OR (Periodical AND DownloadURL provided)
+                if (dto.ResourceType == ResourceType.EBook)
+                {
+                    // ok: e-books don't require copies
+                }
+                else if (dto.ResourceType == ResourceType.Periodical && !string.IsNullOrWhiteSpace(dto.DownloadURL))
+                {
+                    // ok: digital periodicals don't require copies
+                }
+                else
+                {
+                    // For other cases, still require copies (e.g., physical book / periodical physical)
+                    errorMessage = "Number of copies is required.";
+                    return false;
+                }
             }
-
-            if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+            else
             {
-                errorMessage = "Location is required.";
-                return false;
+                // If copies are present (>0), require status and location
+                if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+                {
+                    errorMessage = "Copy status is required.";
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+                {
+                    errorMessage = "Location is required.";
+                    return false;
+                }
             }
 
             return true;
