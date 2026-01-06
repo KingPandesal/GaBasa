@@ -252,6 +252,9 @@
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.LblBKLoanType = new System.Windows.Forms.Label();
+            this.RdoBtnBKCirculation = new System.Windows.Forms.RadioButton();
+            this.RdoBtnBKReference = new System.Windows.Forms.RadioButton();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -468,6 +471,8 @@
             // 
             // GrpBxPhysicalBook
             // 
+            this.GrpBxPhysicalBook.Controls.Add(this.RdoBtnBKReference);
+            this.GrpBxPhysicalBook.Controls.Add(this.RdoBtnBKCirculation);
             this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKAuthors);
             this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKEditor);
             this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKPublisher);
@@ -479,6 +484,7 @@
             this.GrpBxPhysicalBook.Controls.Add(this.TxtBKCallNumber);
             this.GrpBxPhysicalBook.Controls.Add(this.LblBKCallNumber);
             this.GrpBxPhysicalBook.Controls.Add(this.TxtBKPhysicalDescription);
+            this.GrpBxPhysicalBook.Controls.Add(this.LblBKLoanType);
             this.GrpBxPhysicalBook.Controls.Add(this.LblBKPhysicalDescription);
             this.GrpBxPhysicalBook.Controls.Add(this.TxtBKNoOfPages);
             this.GrpBxPhysicalBook.Controls.Add(this.LblBKNoOfPages);
@@ -502,7 +508,7 @@
             this.GrpBxPhysicalBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxPhysicalBook.Location = new System.Drawing.Point(3, 280);
             this.GrpBxPhysicalBook.Name = "GrpBxPhysicalBook";
-            this.GrpBxPhysicalBook.Size = new System.Drawing.Size(629, 1048);
+            this.GrpBxPhysicalBook.Size = new System.Drawing.Size(629, 1150);
             this.GrpBxPhysicalBook.TabIndex = 72;
             this.GrpBxPhysicalBook.TabStop = false;
             this.GrpBxPhysicalBook.Text = "Physical Book Details";
@@ -1029,7 +1035,7 @@
             this.GrpBxPeriodicals.Controls.Add(this.TxtPRISSN);
             this.GrpBxPeriodicals.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxPeriodicals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxPeriodicals.Location = new System.Drawing.Point(3, 1334);
+            this.GrpBxPeriodicals.Location = new System.Drawing.Point(3, 1436);
             this.GrpBxPeriodicals.Name = "GrpBxPeriodicals";
             this.GrpBxPeriodicals.Size = new System.Drawing.Size(629, 1286);
             this.GrpBxPeriodicals.TabIndex = 76;
@@ -1492,7 +1498,7 @@
             this.GrpBxThesis.Controls.Add(this.TxtTHDOI);
             this.GrpBxThesis.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxThesis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxThesis.Location = new System.Drawing.Point(3, 2626);
+            this.GrpBxThesis.Location = new System.Drawing.Point(3, 2728);
             this.GrpBxThesis.Name = "GrpBxThesis";
             this.GrpBxThesis.Size = new System.Drawing.Size(629, 1287);
             this.GrpBxThesis.TabIndex = 77;
@@ -1945,7 +1951,7 @@
             this.GrpBxAV.Controls.Add(this.TxtAVUPCISAN);
             this.GrpBxAV.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxAV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxAV.Location = new System.Drawing.Point(3, 3919);
+            this.GrpBxAV.Location = new System.Drawing.Point(3, 4021);
             this.GrpBxAV.Name = "GrpBxAV";
             this.GrpBxAV.Size = new System.Drawing.Size(629, 1226);
             this.GrpBxAV.TabIndex = 101;
@@ -2364,7 +2370,7 @@
             this.GrpBxEBook.Controls.Add(this.TxtEBISBN);
             this.GrpBxEBook.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxEBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5151);
+            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5253);
             this.GrpBxEBook.Name = "GrpBxEBook";
             this.GrpBxEBook.Size = new System.Drawing.Size(629, 992);
             this.GrpBxEBook.TabIndex = 102;
@@ -2662,7 +2668,7 @@
             this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
             this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6149);
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6251);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
             this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
             this.GrpBxCopyInformation.TabIndex = 103;
@@ -2922,6 +2928,45 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(353, 36);
             this.comboBox2.TabIndex = 68;
+            // 
+            // LblBKLoanType
+            // 
+            this.LblBKLoanType.AutoSize = true;
+            this.LblBKLoanType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBKLoanType.ForeColor = System.Drawing.Color.Black;
+            this.LblBKLoanType.Location = new System.Drawing.Point(27, 1045);
+            this.LblBKLoanType.Name = "LblBKLoanType";
+            this.LblBKLoanType.Size = new System.Drawing.Size(100, 28);
+            this.LblBKLoanType.TabIndex = 89;
+            this.LblBKLoanType.Text = "Loan Type";
+            this.LblBKLoanType.Click += new System.EventHandler(this.LblPhysicalDescription_Click);
+            // 
+            // RdoBtnBKCirculation
+            // 
+            this.RdoBtnBKCirculation.AutoSize = true;
+            this.RdoBtnBKCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnBKCirculation.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnBKCirculation.Location = new System.Drawing.Point(103, 1083);
+            this.RdoBtnBKCirculation.Name = "RdoBtnBKCirculation";
+            this.RdoBtnBKCirculation.Size = new System.Drawing.Size(131, 32);
+            this.RdoBtnBKCirculation.TabIndex = 102;
+            this.RdoBtnBKCirculation.TabStop = true;
+            this.RdoBtnBKCirculation.Text = "Circulation";
+            this.RdoBtnBKCirculation.UseVisualStyleBackColor = true;
+            // 
+            // RdoBtnBKReference
+            // 
+            this.RdoBtnBKReference.AutoSize = true;
+            this.RdoBtnBKReference.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnBKReference.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnBKReference.Location = new System.Drawing.Point(318, 1083);
+            this.RdoBtnBKReference.Name = "RdoBtnBKReference";
+            this.RdoBtnBKReference.Size = new System.Drawing.Size(121, 32);
+            this.RdoBtnBKReference.TabIndex = 102;
+            this.RdoBtnBKReference.TabStop = true;
+            this.RdoBtnBKReference.Text = "Reference";
+            this.RdoBtnBKReference.UseVisualStyleBackColor = true;
+            this.RdoBtnBKReference.CheckedChanged += new System.EventHandler(this.RdoBtnBKReference_CheckedChanged);
             // 
             // AddBook
             // 
@@ -3209,5 +3254,8 @@
         private System.Windows.Forms.TextBox textBox22;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.RadioButton RdoBtnBKReference;
+        private System.Windows.Forms.RadioButton RdoBtnBKCirculation;
+        private System.Windows.Forms.Label LblBKLoanType;
     }
 }

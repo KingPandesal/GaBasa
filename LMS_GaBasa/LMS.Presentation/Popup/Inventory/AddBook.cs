@@ -237,7 +237,7 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Wire up other Add buttons and list double-click removals
             BtnPRAddAuthors.Click += (s, e) => AddFromCombo(CmbBxPRAuthors, LstBxPRAuthors, _prAuthors);
-            BtnPRAddEditors.Click += (s, e) => AddFromCombo(CmbBxPREditors, LstBxPREditors, _prEditors);
+            BtnPRAddEditors.Click += (s, e) => AddFromCombo(CmbBxPREditors, LstBxPRAuthors, _prEditors);
             LstBxPRAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPRAuthors, _prAuthors);
             LstBxPREditors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPREditors, _prEditors);
 
@@ -364,6 +364,8 @@ namespace LMS.Presentation.Popup.Inventory
         private void UpdateCopyInformationVisibility()
         {
             bool showCopyInfo = false;
+
+            if (RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked) showCopyInfo = true;
 
             if (RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked) showCopyInfo = true;
             if (RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked) showCopyInfo = true;
@@ -540,6 +542,8 @@ namespace LMS.Presentation.Popup.Inventory
         {
             if (RdoBtnPhysicalBook.Checked)
                 SetVisibleResourceGroup(ResourceType.PhysicalBook);
+
+            UpdateCopyInformationVisibility();
         }
 
         private void RdoBtnEBook_CheckedChanged(object sender, EventArgs e)
@@ -619,6 +623,19 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
+                // LoanType is required when Physical Book selected
+                if (GetSelectedResourceType() == ResourceType.PhysicalBook)
+                {
+                    // RdoBtnBKCirculation and RdoBtnBKReference are the two radios introduced for loan type.
+                    if ((RdoBtnBKCirculation == null || !RdoBtnBKCirculation.Checked)
+                        && (RdoBtnBKReference == null || !RdoBtnBKReference.Checked))
+                    {
+                        MessageBox.Show("Please select a loan type (Circulation or Reference) for physical books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 var dto = BuildDTOFromForm();
 
                 // Set the AddedByID to the currently logged in user id (Program.CurrentUserId).
@@ -645,10 +662,10 @@ namespace LMS.Presentation.Popup.Inventory
 
                 if (result.Success)
                 {
-                    // Generate barcode images for created accession numbers
+                    // Only generate barcodes for physical books (per requirement).
                     try
                     {
-                        if (result.AccessionNumbers != null && result.AccessionNumbers.Count > 0)
+                        if (dto.ResourceType == ResourceType.PhysicalBook && result.AccessionNumbers != null && result.AccessionNumbers.Count > 0)
                         {
                             // generator created in constructor, reuse here
                             var map = _barcodeGenerator.GenerateMany(result.AccessionNumbers);
@@ -688,17 +705,13 @@ namespace LMS.Presentation.Popup.Inventory
 
         private DTOCreateBook BuildDTOFromForm()
         {
-            // Determine publisher name: prefer combobox text only (single publisher)
-            string publisherName = !string.IsNullOrWhiteSpace(CmbBxBKPublisher.Text)
-                ? CmbBxBKPublisher.Text.Trim()
-                : string.Empty;
-
+            // Create a DTO with defaults from physical (BK) controls — we will overwrite fields if a different resource type is selected.
             var dto = new DTOCreateBook
             {
                 ISBN = TxtBKISBN.Text.Trim(),
                 Title = TxtBKTitle.Text.Trim(),
                 Subtitle = TxtBKSubtitle.Text.Trim(),
-                Publisher = publisherName,
+                Publisher = !string.IsNullOrWhiteSpace(CmbBxBKPublisher.Text) ? CmbBxBKPublisher.Text.Trim() : string.Empty,
                 PublicationYear = ParseInt(TxtBKPublicationYear.Text),
                 Edition = TxtBKEdition.Text.Trim(),
                 CategoryName = CmbBxBKCategory.Text.Trim(),
@@ -713,6 +726,86 @@ namespace LMS.Presentation.Popup.Inventory
                 CopyStatus = CmbBxCopyStatus.Text,
                 CopyLocation = TxtLocation.Text.Trim()
             };
+
+            // Now, if a specific resource type is selected (other than PhysicalBook), overwrite DTO fields using that group's controls.
+            var selectedType = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
+            dto.ResourceType = selectedType;
+
+            switch (selectedType)
+            {
+                case ResourceType.PhysicalBook:
+                    // already initialized from BK controls above
+                    // Set LoanType from the new radio buttons - required for physical books
+                    if (RdoBtnBKCirculation != null && RdoBtnBKCirculation.Checked) dto.LoanType = "Circulation";
+                    else if (RdoBtnBKReference != null && RdoBtnBKReference.Checked) dto.LoanType = "Reference";
+                    else dto.LoanType = null;
+                    break;
+
+                case ResourceType.Periodical:
+                    dto.ISBN = TxtPRISSN.Text.Trim(); // use ISSN in ISBN slot
+                    dto.Title = TxtPRTitle.Text.Trim();
+                    dto.Subtitle = TxtPRSubtitle.Text.Trim();
+                    dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxPRPublisher.Text) ? CmbBxPRPublisher.Text.Trim() : string.Empty;
+                    dto.Language = CmbBxPRLanguage.Text.Trim();
+                    dto.CallNumber = TxtPRCsllNumber.Text.Trim(); // designer name uses TxtPRCsllNumber
+                    dto.Pages = ParseInt(TxtPRPages.Text);
+                    // PublicationYear may be M/Y; attempt parse, else leave as 0
+                    dto.PublicationYear = ParseInt(TxtPRPubDate.Text);
+                    // PhysicalDescription or format depending on material format
+                    if (RdoBtnPRPhysical.Checked)
+                        dto.PhysicalDescription = CmbBxPRPhysicalDescription.Text.Trim();
+                    else
+                        dto.PhysicalDescription = CmbBxPRFormat.Text.Trim();
+                    // Periodical not using LoanType
+                    dto.LoanType = null;
+                    break;
+
+                case ResourceType.Thesis:
+                    dto.Title = TxtTHTitle.Text.Trim();
+                    dto.Subtitle = TxtTHSubtitle.Text.Trim();
+                    dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxTHPublisher.Text) ? CmbBxTHPublisher.Text.Trim() : string.Empty;
+                    dto.Language = CmbBxTHLanguage.Text.Trim();
+                    dto.CallNumber = TxtTHCallNumber.Text.Trim();
+                    dto.Pages = ParseInt(TxtBxTHNoOfPages.Text);
+                    dto.PublicationYear = ParseInt(TxtBxTHPublicationYear.Text);
+                    if (RdoBtnTHPhysical.Checked)
+                        dto.PhysicalDescription = CmbBxTHPhysicalDescription.Text.Trim();
+                    else
+                        dto.PhysicalDescription = CmbBxTHFormat.Text.Trim();
+                    dto.LoanType = null;
+                    break;
+
+                case ResourceType.AV:
+                    dto.Title = TxtAVTitle.Text.Trim();
+                    dto.Subtitle = TxtAVSubtitle.Text.Trim();
+                    dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxAVPublisher.Text) ? CmbBxAVPublisher.Text.Trim() : string.Empty;
+                    dto.Language = CmbBxAVLanguage.Text.Trim();
+                    dto.CallNumber = TxtAVCallNumber.Text.Trim();
+                    // AV duration exists; DTO doesn't have duration property — leave Pages = 0
+                    dto.Pages = 0;
+                    dto.PublicationYear = ParseInt(TxtAVPublicationYear.Text);
+                    if (RdoBtnAVPhysical.Checked)
+                        dto.PhysicalDescription = CmbBxAVPhysicalDescription.Text.Trim();
+                    else
+                        dto.PhysicalDescription = CmbBxAVFormat.Text.Trim();
+                    dto.LoanType = null;
+                    break;
+
+                case ResourceType.EBook:
+                    dto.ISBN = TxtEBISBN.Text.Trim();
+                    dto.Title = TxtEBTitle.Text.Trim();
+                    dto.Subtitle = TxtEBSubtitle.Text.Trim();
+                    dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxEBPublisher.Text) ? CmbBxEBPublisher.Text.Trim() : string.Empty;
+                    dto.Language = CmbBxEBLanguage.Text.Trim();
+                    dto.CallNumber = TxtEBCallNumber.Text.Trim();
+                    dto.Pages = ParseInt(TxtEBNoOfPages.Text);
+                    dto.PublicationYear = ParseInt(TxtEBPublicationYear.Text);
+                    // E-Book format in CmbBxEBFormat
+                    dto.PhysicalDescription = CmbBxEBFormat.Text.Trim();
+                    // No barcodes will be generated for eBooks (handled in save)
+                    dto.LoanType = null;
+                    break;
+            }
 
             // If publisher name maps to an existing publisher in DB, set PublisherID.
             // If not, create it now (user requested missing publishers be saved on Save).
@@ -768,8 +861,9 @@ namespace LMS.Presentation.Popup.Inventory
             }
 
             // Add authors/editors depending on selected resource group.
+
             // Physical book
-            if (GetSelectedResourceType() == ResourceType.PhysicalBook || GetSelectedResourceType() == null)
+            if (selectedType == ResourceType.PhysicalBook)
             {
                 foreach (var authorName in _authors)
                 {
@@ -791,7 +885,7 @@ namespace LMS.Presentation.Popup.Inventory
                     });
                 }
             }
-            else if (GetSelectedResourceType() == ResourceType.Periodical)
+            else if (selectedType == ResourceType.Periodical)
             {
                 foreach (var authorName in _prAuthors)
                 {
@@ -813,7 +907,7 @@ namespace LMS.Presentation.Popup.Inventory
                     });
                 }
             }
-            else if (GetSelectedResourceType() == ResourceType.Thesis)
+            else if (selectedType == ResourceType.Thesis)
             {
                 foreach (var authorName in _thAuthors)
                 {
@@ -835,7 +929,7 @@ namespace LMS.Presentation.Popup.Inventory
                     });
                 }
             }
-            else if (GetSelectedResourceType() == ResourceType.AV)
+            else if (selectedType == ResourceType.AV)
             {
                 foreach (var authorName in _avAuthors)
                 {
@@ -857,7 +951,7 @@ namespace LMS.Presentation.Popup.Inventory
                     });
                 }
             }
-            else if (GetSelectedResourceType() == ResourceType.EBook)
+            else if (selectedType == ResourceType.EBook)
             {
                 foreach (var authorName in _ebAuthors)
                 {
@@ -1303,6 +1397,13 @@ namespace LMS.Presentation.Popup.Inventory
             if (PnlAVDigitalFormat != null) PnlAVDigitalFormat.Visible = RdoBtnAVDigital.Checked;
 
             UpdateCopyInformationVisibility();
+        }
+
+        private void RdoBtnBKReference_CheckedChanged(object sender, EventArgs e)
+        {
+            // No UI side-effects required here; the LoanType is read during Save/BuildDTO.
+            // This handler exists only to satisfy the designer event wiring and avoid the compile error.
+            // If you want immediate behavior when switching to Reference (e.g., toggle controls), add it here.
         }
     }
 }

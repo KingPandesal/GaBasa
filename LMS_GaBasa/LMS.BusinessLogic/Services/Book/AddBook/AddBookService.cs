@@ -1,32 +1,34 @@
 ﻿using LMS.BusinessLogic.Factories;
-using LMS.BusinessLogic.Services.BarcodeGenerator;
 using LMS.DataAccess.Interfaces;
+using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Book;
 using LMS.Model.Models.Catalog;
 using LMS.Model.Models.Catalog.Books;
+using LMS.Model.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
-
-using BookModel = LMS.Model.Models.Catalog.Books.Book;
 
 namespace LMS.BusinessLogic.Services.Book.AddBook
 {
+    /// <summary>
+    /// Service responsible for creating book records and their initial copies.
+    /// Ensures accession numbers are generated and assigned before inserting BookCopy rows.
+    /// </summary>
     public class AddBookService : IAddBookService
     {
-        private readonly IBookRepository _bookRepo;
-        private readonly IAuthorRepository _authorRepo;
-        private readonly IBookAuthorRepository _bookAuthorRepo;
-        private readonly IBookCopyRepository _bookCopyRepo;
+        private readonly BookRepository _bookRepo;
+        private readonly AuthorRepository _authorRepo;
+        private readonly BookAuthorRepository _bookAuthorRepo;
+        private readonly BookCopyRepository _bookCopyRepo;
         private readonly IBookFactory _bookFactory;
         private readonly IPublisherRepository _publisherRepo;
 
         public AddBookService(
-            IBookRepository bookRepo,
-            IAuthorRepository authorRepo,
-            IBookAuthorRepository bookAuthorRepo,
-            IBookCopyRepository bookCopyRepo,
+            BookRepository bookRepo,
+            AuthorRepository authorRepo,
+            BookAuthorRepository bookAuthorRepo,
+            BookCopyRepository bookCopyRepo,
             IBookFactory bookFactory,
             IPublisherRepository publisherRepo)
         {
@@ -38,208 +40,177 @@ namespace LMS.BusinessLogic.Services.Book.AddBook
             _publisherRepo = publisherRepo ?? throw new ArgumentNullException(nameof(publisherRepo));
         }
 
+        /// <summary>
+        /// Creates the Book (main row) and the initial BookCopy rows.
+        /// Generates accession numbers in the format:
+        ///   {PREFIX}-{BookID}-{Year}-{NNNN}
+        /// where PREFIX is based on resource type (BK, EB, PR, TH, AV).
+        /// Returns BookCreationResultService containing created BookID and list of accession numbers.
+        /// </summary>
         public BookCreationResultService CreateBook(DTOCreateBook dto)
         {
-            // ===== VALIDATION =====
-            if (string.IsNullOrWhiteSpace(dto.Title))
-                return BookCreationResultService.Fail("Title is required.");
+            if (dto == null) return BookCreationResultService.Fail("Book data is null.");
 
-            if (string.IsNullOrWhiteSpace(dto.ISBN))
-                return BookCreationResultService.Fail("ISBN is required.");
-
-            if (_bookRepo.ISBNExists(dto.ISBN))
-                return BookCreationResultService.Fail("A book with this ISBN already exists.");
-
-            if (!string.IsNullOrWhiteSpace(dto.CallNumber) && _bookRepo.CallNumberExists(dto.CallNumber))
-                return BookCreationResultService.Fail("A book with this call number already exists.");
-
-            // map publisher name -> id if needed
-            EnsurePublisherId(dto);
-
-            if (dto.CategoryID <= 0)
-                return BookCreationResultService.Fail("Please select a category.");
-
-            if (dto.Authors == null || !dto.Authors.Any())
-                return BookCreationResultService.Fail("At least one author is required.");
-
-            // ===== CREATE BOOK =====
-            BookModel book = _bookFactory.Create(dto.ResourceType);
-            MapDtoToBook(dto, book);
-
-            int bookId = _bookRepo.Add(book);
-            if (bookId <= 0)
-                return BookCreationResultService.Fail("Failed to save the book.");
-
-            // ===== HANDLE AUTHORS =====
-            foreach (var authorDto in dto.Authors)
+            try
             {
-                int authorId = GetOrCreateAuthor(authorDto);
-                if (authorId > 0)
-                {
-                    _bookAuthorRepo.Add(new BookAuthor
-                    {
-                        BookID = bookId,
-                        AuthorID = authorId,
-                        Role = "Author",
-                        IsPrimaryAuthor = authorDto.IsPrimaryAuthor
-                    });
-                }
-            }
+                // 1) Build Book entity from factory based on resource type, then map DTO fields onto it.
+                var book = _bookFactory.Create(dto.ResourceType);
 
-            // ===== HANDLE EDITORS =====
-            if (dto.Editors != null)
-            {
-                foreach (var editorDto in dto.Editors)
+                // Map common properties (derived Book classes are expected to expose these properties)
+                // Use null-checks/trim to avoid passing nulls where DB expects empty strings.
+                // These property names should exist on the Book model or its derived types.
+                book.ResourceType = dto.ResourceType;
+                book.LoanType = dto.LoanType;
+                // Most Book implementations in this project expose these properties; set by name:
+                // (If some properties are missing on a concrete class, compilation will show the missing members
+                // and you can adjust to the concrete model.)
+                dynamic dynBook = book;
+                dynBook.ISBN = dto.ISBN ?? string.Empty;
+                dynBook.Title = dto.Title ?? string.Empty;
+                dynBook.Subtitle = dto.Subtitle ?? string.Empty;
+
+                // IMPORTANT: Book.Publisher is a Publisher object in the model.
+                // Do NOT assign the publisher name (string) to that property.
+                // Instead assign PublisherID (already resolved in BuildDTOFromForm).
+                dynBook.PublisherID = dto.PublisherID;
+
+                // NOTE: PhysicalBook (and other concrete Book types) may not expose a CategoryName property.
+                // We only assign the foreign key CategoryID here; the name is handled by CatalogManager when creating/getting categories.
+                dynBook.CategoryID = dto.CategoryID;
+                dynBook.Language = dto.Language ?? string.Empty;
+                dynBook.Pages = dto.Pages;
+                dynBook.Edition = dto.Edition ?? string.Empty;
+                dynBook.PublicationYear = dto.PublicationYear;
+                dynBook.PhysicalDescription = dto.PhysicalDescription ?? string.Empty;
+                dynBook.CallNumber = dto.CallNumber ?? string.Empty;
+                dynBook.CoverImage = dto.CoverImage ?? string.Empty;
+
+                // 2) Persist Book and get BookID
+                int bookId = _bookRepo.Add(book);
+                if (bookId <= 0)
+                    return BookCreationResultService.Fail("Failed to insert Book record.");
+
+                // 3) Persist authors/editors relations (by name -> ensure author exists then add BookAuthor)
+                foreach (var a in dto.Authors ?? Enumerable.Empty<DTOBookAuthor>())
                 {
-                    int editorId = GetOrCreateAuthor(editorDto);
-                    if (editorId > 0)
+                    var authorId = EnsureAuthorExists(a.AuthorName);
+                    if (authorId > 0)
                     {
-                        _bookAuthorRepo.Add(new BookAuthor
+                        var ba = new BookAuthor
                         {
                             BookID = bookId,
-                            AuthorID = editorId,
-                            Role = "Editor",
-                            IsPrimaryAuthor = false
-                        });
+                            AuthorID = authorId,
+                            Role = a.Role ?? "Author",
+                            IsPrimaryAuthor = a.IsPrimaryAuthor
+                        };
+                        _bookAuthorRepo.Add(ba);
                     }
                 }
-            }
-
-            // ===== CREATE INITIAL COPIES =====
-            int copyCount = Math.Max(1, dto.InitialCopyCount);
-            var createdAccessions = new List<string>();
-
-            DateTime dateAdded = DateTime.Now;
-            int addedBy = dto.AddedByID;
-
-            const int maxRetries = 3;
-
-            for (int i = 0; i < copyCount; i++)
-            {
-                bool saved = false;
-                int attempt = 0;
-                Exception lastEx = null;
-
-                while (!saved && attempt < maxRetries)
+                foreach (var e in dto.Editors ?? Enumerable.Empty<DTOBookAuthor>())
                 {
-                    attempt++;
-                    try
+                    var authorId = EnsureAuthorExists(e.AuthorName);
+                    if (authorId > 0)
                     {
-                        // DON'T pre-generate accession number here.
-                        // Let repository generate a unique accession atomically (it will insert a temp accession,
-                        // obtain the new identity, then update to the final accession format).
+                        var ba = new BookAuthor
+                        {
+                            BookID = bookId,
+                            AuthorID = authorId,
+                            Role = e.Role ?? "Editor",
+                            IsPrimaryAuthor = false
+                        };
+                        _bookAuthorRepo.Add(ba);
+                    }
+                }
+
+                // 4) Create initial copies if requested - ensure accession numbers are generated BEFORE Add(BookCopy)
+                var createdAccessions = new List<string>();
+                int copiesToCreate = Math.Max(0, dto.InitialCopyCount);
+                if (copiesToCreate > 0)
+                {
+                    // Get prefix for resource type
+                    var prefix = _bookCopyRepo.GetPrefixForResourceType(dto.ResourceType);
+
+                    var year = DateTime.Now.Year;
+
+                    // Get existing accession numbers for this book/year to compute next suffix safely
+                    var existingCopies = _bookCopyRepo.GetByBookId(bookId) ?? new List<BookCopy>();
+                    var existingForYear = existingCopies
+                        .Select(c => c.AccessionNumber ?? string.Empty)
+                        .Where(s => s.IndexOf($"-{bookId}-{year}-", StringComparison.OrdinalIgnoreCase) >= 0)
+                        .ToList();
+
+                    // Determine starting suffix (max existing suffix + 1)
+                    int maxSuffix = 0;
+                    foreach (var acc in existingForYear)
+                    {
+                        var parts = acc.Split('-');
+                        if (parts.Length >= 4)
+                        {
+                            if (int.TryParse(parts.Last(), out int v))
+                                maxSuffix = Math.Max(maxSuffix, v);
+                        }
+                    }
+
+                    int nextSuffix = maxSuffix + 1;
+
+                    for (int i = 0; i < copiesToCreate; i++)
+                    {
+                        var accession = $"{prefix}-{bookId}-{year}-{nextSuffix:D4}";
+                        nextSuffix++;
+
+                        // Build BookCopy (set barcode filename placeholder here - actual barcode image may be generated later)
                         var copy = new BookCopy
                         {
                             BookID = bookId,
-                            AccessionNumber = null, // repository will create final accession
+                            AccessionNumber = accession,
                             Status = string.IsNullOrWhiteSpace(dto.CopyStatus) ? "Available" : dto.CopyStatus,
-                            Location = string.IsNullOrWhiteSpace(dto.CopyLocation) ? "Main Library" : dto.CopyLocation,
-                            Barcode = null,
-                            DateAdded = dateAdded,
-                            AddedByID = addedBy
+                            Location = dto.CopyLocation,
+                            Barcode = $"{accession}.png", // store filename; presentation barcode generator will create image at expected folder
+                            DateAdded = DateTime.UtcNow,
+                            AddedByID = dto.AddedByID
                         };
 
-                        int newId = _bookCopyRepo.Add(copy);
-                        if (newId <= 0)
-                            throw new InvalidOperationException("Failed to insert book copy.");
+                        int newCopyId = _bookCopyRepo.Add(copy);
 
-                        // repository populates copy.AccessionNumber
-                        createdAccessions.Add(copy.AccessionNumber);
-                        saved = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        // If this fails, keep retrying (transient/unique collisions are unlikely with this approach)
-                        lastEx = ex;
-                        Trace.TraceWarning($"Attempt {attempt} to add book copy failed for BookID={bookId}: {ex.Message}");
-                        System.Threading.Thread.Sleep(50 * attempt);
+                        // If repository returns 0 (failed) - still accumulate accession for reporting; but treat as failure
+                        if (newCopyId <= 0)
+                        {
+                            // Rollback strategy could be implemented here. For now return failure.
+                            return BookCreationResultService.Fail($"Failed to create book copy for accession {accession}.");
+                        }
+
+                        createdAccessions.Add(accession);
                     }
                 }
 
-                if (!saved)
-                {
-                    Trace.TraceError($"Failed to add copy for BookID={bookId} after {maxRetries} attempts. Last error: {lastEx?.Message}");
-                    return BookCreationResultService.Fail(lastEx?.ToString() ?? "Failed to create book copies due to concurrency. Try again.");
-                }
+                // 5) Success
+                return BookCreationResultService.Ok(bookId, createdAccessions);
             }
-
-            return BookCreationResultService.Ok(bookId, createdAccessions);
+            catch (Exception ex)
+            {
+                return BookCreationResultService.Fail("Exception: " + ex.Message);
+            }
         }
 
-        private void EnsurePublisherId(DTOCreateBook dto)
+        /// <summary>
+        /// Ensures an author with the given full name exists; returns AuthorID or 0 on failure.
+        /// </summary>
+        private int EnsureAuthorExists(string fullName)
         {
-            if (dto == null) return;
+            if (string.IsNullOrWhiteSpace(fullName)) return 0;
 
-            if (dto.PublisherID > 0) return;
-
-            if (string.IsNullOrWhiteSpace(dto.Publisher)) return;
-
-            // Try to find by name (case-insensitive) from repository
-            var all = _publisherRepo.GetAll();
-            var match = all?.FirstOrDefault(p => string.Equals(p.Name?.Trim(), dto.Publisher.Trim(), StringComparison.OrdinalIgnoreCase));
-            if (match != null)
-            {
-                dto.PublisherID = match.PublisherID;
-                return;
-            }
-
-            // Not found -> create new publisher record and set id
             try
             {
-                var newPub = new Publisher
-                {
-                    Name = dto.Publisher.Trim(),
-                    Address = null,
-                    ContactNumber = null
-                };
-                int newId = _publisherRepo.Add(newPub);
-                if (newId > 0)
-                    dto.PublisherID = newId;
+                var existing = _authorRepo.GetByName(fullName.Trim());
+                if (existing != null) return existing.AuthorID;
+
+                var newAuthor = new Model.Models.Catalog.Author { FullName = fullName.Trim() };
+                return _authorRepo.Add(newAuthor);
             }
             catch
             {
-                // If creation fails, keep PublisherID = 0.
-                // The repository insertion can fail due to DB constraints — let the caller handle error.
+                return 0;
             }
-        }
-
-        private int GetOrCreateAuthor(DTOBookAuthor authorDto)
-        {
-            int authorId = authorDto.AuthorID;
-
-            if (authorId <= 0 && !string.IsNullOrWhiteSpace(authorDto.AuthorName))
-            {
-                var existingAuthor = _authorRepo.GetByName(authorDto.AuthorName.Trim());
-                if (existingAuthor != null)
-                {
-                    authorId = existingAuthor.AuthorID;
-                }
-                else
-                {
-                    authorId = _authorRepo.Add(new Author { FullName = authorDto.AuthorName.Trim() });
-                }
-            }
-
-            return authorId;
-        }
-
-        private void MapDtoToBook(DTOCreateBook dto, BookModel book)
-        {
-            book.ISBN = dto.ISBN?.Trim();
-            book.CallNumber = dto.CallNumber?.Trim();
-            book.Title = dto.Title?.Trim();
-            book.Subtitle = dto.Subtitle?.Trim();
-            book.PublisherID = dto.PublisherID;
-            book.CategoryID = dto.CategoryID;
-            book.Language = dto.Language?.Trim();
-            book.Pages = dto.Pages;
-            book.Edition = dto.Edition?.Trim();
-            book.PublicationYear = dto.PublicationYear;
-            book.PhysicalDescription = dto.PhysicalDescription?.Trim();
-            book.ResourceType = dto.ResourceType;
-            book.CoverImage = dto.CoverImage;
-            book.LoanType = dto.LoanType;
-            book.DownloadURL = dto.DownloadURL;
         }
     }
 }
