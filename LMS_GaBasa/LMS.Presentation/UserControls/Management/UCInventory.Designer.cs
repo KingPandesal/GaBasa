@@ -40,13 +40,6 @@
             this.CmbBxPaginationNumbers = new System.Windows.Forms.ComboBox();
             this.LblShow = new System.Windows.Forms.Label();
             this.DgwInventory = new System.Windows.Forms.DataGridView();
-            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
-            this.BtnImport = new System.Windows.Forms.Button();
-            this.CmbBxCategoryFilter = new System.Windows.Forms.ComboBox();
-            this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnISBN = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,6 +64,13 @@
             this.ColumnBtnCoverImage = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ColumnBtnCopies = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
+            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.BtnImport = new System.Windows.Forms.Button();
+            this.CmbBxCategoryFilter = new System.Windows.Forms.ComboBox();
+            this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgwInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.SuspendLayout();
@@ -85,7 +85,7 @@
             "Theses / Dissertations",
             "Audio-Visual Materials",
             "E-Books"});
-            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1179, 35);
+            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1187, 35);
             this.CmbBxResourceTypeFilter.Name = "CmbBxResourceTypeFilter";
             this.CmbBxResourceTypeFilter.Size = new System.Drawing.Size(247, 36);
             this.CmbBxResourceTypeFilter.TabIndex = 69;
@@ -246,95 +246,6 @@
             this.DgwInventory.TabIndex = 58;
             this.DgwInventory.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwInventory_CellContentClick);
             // 
-            // TxtSearchBar
-            // 
-            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
-            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
-            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
-            this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(155, 32);
-            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
-            this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
-            this.TxtSearchBar.Multiline = false;
-            this.TxtSearchBar.Name = "TxtSearchBar";
-            this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(490, 40);
-            this.TxtSearchBar.TabIndex = 57;
-            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.TxtSearchBar.UseSystemPasswordChar = false;
-            // 
-            // BtnImport
-            // 
-            this.BtnImport.BackColor = System.Drawing.Color.White;
-            this.BtnImport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnImport.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnImport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnImport.Location = new System.Drawing.Point(1236, 123);
-            this.BtnImport.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnImport.Name = "BtnImport";
-            this.BtnImport.Size = new System.Drawing.Size(135, 46);
-            this.BtnImport.TabIndex = 71;
-            this.BtnImport.Text = "📥 Import";
-            this.BtnImport.UseVisualStyleBackColor = false;
-            this.BtnImport.Click += new System.EventHandler(this.BtnImport_Click);
-            // 
-            // CmbBxCategoryFilter
-            // 
-            this.CmbBxCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxCategoryFilter.FormattingEnabled = true;
-            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(922, 35);
-            this.CmbBxCategoryFilter.Name = "CmbBxCategoryFilter";
-            this.CmbBxCategoryFilter.Size = new System.Drawing.Size(247, 36);
-            this.CmbBxCategoryFilter.TabIndex = 73;
-            this.CmbBxCategoryFilter.Text = "All Category";
-            // 
-            // CmbBxStatusFilter
-            // 
-            this.CmbBxStatusFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxStatusFilter.FormattingEnabled = true;
-            this.CmbBxStatusFilter.Items.AddRange(new object[] {
-            "Available",
-            "Out of Stock"});
-            this.CmbBxStatusFilter.Location = new System.Drawing.Point(663, 36);
-            this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
-            this.CmbBxStatusFilter.Size = new System.Drawing.Size(247, 36);
-            this.CmbBxStatusFilter.TabIndex = 74;
-            this.CmbBxStatusFilter.Text = "All Status";
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn1.HeaderText = "";
-            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
-            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn1.MinimumWidth = 8;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ToolTipText = "Edit user";
-            this.dataGridViewImageColumn1.Width = 8;
-            // 
-            // PicBxSearchIcon
-            // 
-            this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
-            this.PicBxSearchIcon.Location = new System.Drawing.Point(36, 35);
-            this.PicBxSearchIcon.Name = "PicBxSearchIcon";
-            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
-            this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicBxSearchIcon.TabIndex = 70;
-            this.PicBxSearchIcon.TabStop = false;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn2.HeaderText = "";
-            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
-            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn2.MinimumWidth = 8;
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ToolTipText = "Archive user";
-            this.dataGridViewImageColumn2.Width = 150;
-            // 
             // ColumnNumbering
             // 
             this.ColumnNumbering.HeaderText = "#";
@@ -351,7 +262,7 @@
             // 
             // ColumnISBN
             // 
-            this.ColumnISBN.HeaderText = "ISBN";
+            this.ColumnISBN.HeaderText = "Standard ID";
             this.ColumnISBN.MinimumWidth = 8;
             this.ColumnISBN.Name = "ColumnISBN";
             this.ColumnISBN.Width = 150;
@@ -421,7 +332,7 @@
             // 
             // ColumnEdition
             // 
-            this.ColumnEdition.HeaderText = "Edition";
+            this.ColumnEdition.HeaderText = "Edition / Vol";
             this.ColumnEdition.MinimumWidth = 8;
             this.ColumnEdition.Name = "ColumnEdition";
             this.ColumnEdition.Width = 150;
@@ -435,7 +346,7 @@
             // 
             // ColumnDescription
             // 
-            this.ColumnDescription.HeaderText = "Description";
+            this.ColumnDescription.HeaderText = "Description /  Format";
             this.ColumnDescription.MinimumWidth = 8;
             this.ColumnDescription.Name = "ColumnDescription";
             this.ColumnDescription.Width = 150;
@@ -508,6 +419,95 @@
             this.Edit.Name = "Edit";
             this.Edit.ToolTipText = "Edit book";
             this.Edit.Width = 8;
+            // 
+            // TxtSearchBar
+            // 
+            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
+            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
+            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
+            this.TxtSearchBar.Image = null;
+            this.TxtSearchBar.Location = new System.Drawing.Point(155, 32);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.MaxLength = 32767;
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
+            this.TxtSearchBar.Multiline = false;
+            this.TxtSearchBar.Name = "TxtSearchBar";
+            this.TxtSearchBar.ReadOnly = false;
+            this.TxtSearchBar.Size = new System.Drawing.Size(570, 40);
+            this.TxtSearchBar.TabIndex = 57;
+            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.TxtSearchBar.UseSystemPasswordChar = false;
+            // 
+            // BtnImport
+            // 
+            this.BtnImport.BackColor = System.Drawing.Color.White;
+            this.BtnImport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnImport.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnImport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnImport.Location = new System.Drawing.Point(1236, 123);
+            this.BtnImport.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnImport.Name = "BtnImport";
+            this.BtnImport.Size = new System.Drawing.Size(135, 46);
+            this.BtnImport.TabIndex = 71;
+            this.BtnImport.Text = "📥 Import";
+            this.BtnImport.UseVisualStyleBackColor = false;
+            this.BtnImport.Click += new System.EventHandler(this.BtnImport_Click);
+            // 
+            // CmbBxCategoryFilter
+            // 
+            this.CmbBxCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CmbBxCategoryFilter.FormattingEnabled = true;
+            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(966, 35);
+            this.CmbBxCategoryFilter.Name = "CmbBxCategoryFilter";
+            this.CmbBxCategoryFilter.Size = new System.Drawing.Size(215, 36);
+            this.CmbBxCategoryFilter.TabIndex = 73;
+            this.CmbBxCategoryFilter.Text = "All Category";
+            // 
+            // CmbBxStatusFilter
+            // 
+            this.CmbBxStatusFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CmbBxStatusFilter.FormattingEnabled = true;
+            this.CmbBxStatusFilter.Items.AddRange(new object[] {
+            "Available",
+            "Out of Stock"});
+            this.CmbBxStatusFilter.Location = new System.Drawing.Point(745, 35);
+            this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
+            this.CmbBxStatusFilter.Size = new System.Drawing.Size(215, 36);
+            this.CmbBxStatusFilter.TabIndex = 74;
+            this.CmbBxStatusFilter.Text = "All Status";
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn1.HeaderText = "";
+            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
+            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn1.MinimumWidth = 8;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ToolTipText = "Edit user";
+            this.dataGridViewImageColumn1.Width = 150;
+            // 
+            // PicBxSearchIcon
+            // 
+            this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
+            this.PicBxSearchIcon.Location = new System.Drawing.Point(36, 35);
+            this.PicBxSearchIcon.Name = "PicBxSearchIcon";
+            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
+            this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxSearchIcon.TabIndex = 70;
+            this.PicBxSearchIcon.TabStop = false;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn2.HeaderText = "";
+            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
+            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn2.MinimumWidth = 8;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ToolTipText = "Archive user";
+            this.dataGridViewImageColumn2.Width = 150;
             // 
             // UCInventory
             // 

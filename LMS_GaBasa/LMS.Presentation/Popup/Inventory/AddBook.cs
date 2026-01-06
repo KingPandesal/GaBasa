@@ -109,12 +109,12 @@ namespace LMS.Presentation.Popup.Inventory
                     .ToArray();
 
                 // Populate authors combo with DB values so users can select instead of typing
-                SetupComboBoxForAutocomplete(CmbBxAuthors, authorNames);
+                SetupComboBoxForAutocomplete(CmbBxBKAuthors, authorNames);
                 if (authorNames != null && authorNames.Length > 0)
                 {
                     // Ensure dropdown shows the items
-                    CmbBxAuthors.Items.Clear();
-                    CmbBxAuthors.Items.AddRange(authorNames);
+                    CmbBxBKAuthors.Items.Clear();
+                    CmbBxBKAuthors.Items.AddRange(authorNames);
                 }
 
                 // Editors: find distinct author IDs that appear with Role = "Editor",
@@ -146,18 +146,18 @@ namespace LMS.Presentation.Popup.Inventory
                 }
 
                 var editorNames = editorNamesSet.ToArray();
-                SetupComboBoxForAutocomplete(CmbBxEditor, editorNames);
+                SetupComboBoxForAutocomplete(CmbBxBKEditor, editorNames);
                 if (editorNames.Length > 0)
                 {
-                    CmbBxEditor.Items.Clear();
-                    CmbBxEditor.Items.AddRange(editorNames);
+                    CmbBxBKEditor.Items.Clear();
+                    CmbBxBKEditor.Items.AddRange(editorNames);
                 }
             }
             catch
             {
                 // Non-fatal: if DB lookup fails keep existing behavior (empty suggestion list)
-                SetupComboBoxForAutocomplete(CmbBxAuthors, null);
-                SetupComboBoxForAutocomplete(CmbBxEditor, null);
+                SetupComboBoxForAutocomplete(CmbBxBKAuthors, null);
+                SetupComboBoxForAutocomplete(CmbBxBKEditor, null);
             }
 
             // Set default values
@@ -166,43 +166,44 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Wire up events
             PicBxBookCover.Click += PicBxBookCover_Click;
-            BtnAddAuthor.Click += BtnAddAuthor_Click;
-            BtnAddEditor.Click += BtnAddEditor_Click;
+            BtnBKAddAuthor.Click += BtnAddAuthor_Click;
+            BtnBKAddEditor.Click += BtnAddEditor_Click;
             // BtnAddPublisher removed: publisher is single combobox now
-            LstBxAuthor.DoubleClick += LstBxAuthor_DoubleClick;
-            LstBxEditor.DoubleClick += LstBxEditor_DoubleClick;
+            LstBxBKAuthor.DoubleClick += LstBxAuthor_DoubleClick;
+            LstBxBKEditor.DoubleClick += LstBxEditor_DoubleClick;
             // LstBxPublisher removed from UI; do not subscribe
             BtnCancel.Click += BtnCancel_Click;
 
             // Enable editable/combo behaviour and Enter-to-add
             // DO NOT clear previously populated author/editor items here
-            SetupComboBoxForAutocomplete(CmbBxPublisher, _publisherRepo != null ? _publisherRepo.GetAll().Select(p => p.Name) : null);
+            SetupComboBoxForAutocomplete(CmbBxBKPublisher, _publisherRepo != null ? _publisherRepo.GetAll().Select(p => p.Name) : null);
 
             // Hide sub-panels initially
-            PnlforRdoBtnPhysicalBooks.Visible = false;
-            PnlforRdoBtnEBook.Visible = false;
 
             // Default to Physical Book
             RdoBtnPhysicalBook.Checked = true;
+
+            // Enforce maximum of 10 digits for No. of Pages (prevents typing an 11th digit)
+            EnforceDigitsLimit(TxtBKNoOfPages, 10);
         }
 
         private void LoadCategories()
         {
-            CmbBxCategory.Items.Clear();
+            CmbBxBKCategory.Items.Clear();
             var categories = _catalogManager.GetAllCategories();
             foreach (var cat in categories)
             {
-                CmbBxCategory.Items.Add(cat.Name);
+                CmbBxBKCategory.Items.Add(cat.Name);
             }
         }
 
         private void LoadLanguages()
         {
-            CmbBxLanguage.Items.Clear();
+            CmbBxBKLanguage.Items.Clear();
             var languages = _catalogManager.GetAllLanguages();
             foreach (var lang in languages)
             {
-                CmbBxLanguage.Items.Add(lang);
+                CmbBxBKLanguage.Items.Add(lang);
             }
         }
 
@@ -224,7 +225,7 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void BtnAddAuthor_Click(object sender, EventArgs e)
         {
-            string authorName = CmbBxAuthors.Text.Trim();
+            string authorName = CmbBxBKAuthors.Text.Trim();
             if (string.IsNullOrWhiteSpace(authorName))
             {
                 MessageBox.Show("Please enter an author name.", "Validation",
@@ -236,7 +237,7 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 MessageBox.Show("Author name must contain at least one letter and may include digits.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                CmbBxAuthors.Focus();
+                CmbBxBKAuthors.Focus();
                 return;
             }
 
@@ -257,11 +258,11 @@ namespace LMS.Presentation.Popup.Inventory
                 _authors.Add(authorName);
                 RefreshAuthorListBox();
                 // keep the suggestion list updated
-                if (!CmbBxAuthors.Items.Contains(authorName))
-                    CmbBxAuthors.Items.Add(authorName);
+                if (!CmbBxBKAuthors.Items.Contains(authorName))
+                    CmbBxBKAuthors.Items.Add(authorName);
 
-                CmbBxAuthors.Text = string.Empty;
-                CmbBxAuthors.Focus();
+                CmbBxBKAuthors.Text = string.Empty;
+                CmbBxBKAuthors.Focus();
             }
             else
             {
@@ -272,7 +273,7 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void BtnAddEditor_Click(object sender, EventArgs e)
         {
-            string editorName = CmbBxEditor.Text.Trim();
+            string editorName = CmbBxBKEditor.Text.Trim();
             if (string.IsNullOrWhiteSpace(editorName))
             {
                 MessageBox.Show("Please enter an editor name.", "Validation",
@@ -284,7 +285,7 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 MessageBox.Show("Editor name must contain at least one letter and may include digits.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                CmbBxEditor.Focus();
+                CmbBxBKEditor.Focus();
                 return;
             }
 
@@ -304,11 +305,11 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 _editors.Add(editorName);
                 RefreshEditorListBox();
-                if (!CmbBxEditor.Items.Contains(editorName))
-                    CmbBxEditor.Items.Add(editorName);
+                if (!CmbBxBKEditor.Items.Contains(editorName))
+                    CmbBxBKEditor.Items.Add(editorName);
 
-                CmbBxEditor.Text = string.Empty;
-                CmbBxEditor.Focus();
+                CmbBxBKEditor.Text = string.Empty;
+                CmbBxBKEditor.Focus();
             }
             else
             {
@@ -322,92 +323,58 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void LstBxAuthor_DoubleClick(object sender, EventArgs e)
         {
-            if (LstBxAuthor.SelectedIndex >= 0)
+            if (LstBxBKAuthor.SelectedIndex >= 0)
             {
-                _authors.RemoveAt(LstBxAuthor.SelectedIndex);
+                _authors.RemoveAt(LstBxBKAuthor.SelectedIndex);
                 RefreshAuthorListBox();
             }
         }
 
         private void LstBxEditor_DoubleClick(object sender, EventArgs e)
         {
-            if (LstBxEditor.SelectedIndex >= 0)
+            if (LstBxBKEditor.SelectedIndex >= 0)
             {
-                _editors.RemoveAt(LstBxEditor.SelectedIndex);
+                _editors.RemoveAt(LstBxBKEditor.SelectedIndex);
                 RefreshEditorListBox();
             }
         }
 
         private void RefreshAuthorListBox()
         {
-            LstBxAuthor.Items.Clear();
+            LstBxBKAuthor.Items.Clear();
             foreach (var author in _authors)
             {
-                LstBxAuthor.Items.Add(author);
+                LstBxBKAuthor.Items.Add(author);
             }
         }
 
         private void RefreshEditorListBox()
         {
-            LstBxEditor.Items.Clear();
+            LstBxBKEditor.Items.Clear();
             foreach (var editor in _editors)
             {
-                LstBxEditor.Items.Add(editor);
+                LstBxBKEditor.Items.Add(editor);
             }
         }
 
         private void RdoBtnPhysicalBook_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdoBtnPhysicalBook.Checked)
-            {
-                PnlforRdoBtnPhysicalBooks.Visible = true;
-                PnlforRdoBtnEBook.Visible = false;
-            }
         }
 
         private void RdoBtnEBook_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdoBtnEBook.Checked)
-            {
-                PnlforRdoBtnEBook.Visible = true;
-                PnlforRdoBtnPhysicalBooks.Visible = false;
-                // Deselect reference/circulation
-                RdoBtnReference.Checked = false;
-                RdoBtnCirculation.Checked = false;
-            }
         }
 
         private void RdoBtnTheses_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdoBtnTheses.Checked)
-            {
-                PnlforRdoBtnEBook.Visible = false;
-                PnlforRdoBtnPhysicalBooks.Visible = false;
-                RdoBtnReference.Checked = false;
-                RdoBtnCirculation.Checked = false;
-            }
         }
 
         private void RdoBtnPeriodical_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdoBtnPeriodical.Checked)
-            {
-                PnlforRdoBtnEBook.Visible = false;
-                PnlforRdoBtnPhysicalBooks.Visible = false;
-                RdoBtnReference.Checked = false;
-                RdoBtnCirculation.Checked = false;
-            }
         }
 
         private void RdoBtnAV_CheckedChanged(object sender, EventArgs e)
         {
-            if (RdoBtnAV.Checked)
-            {
-                PnlforRdoBtnEBook.Visible = false;
-                PnlforRdoBtnPhysicalBooks.Visible = false;
-                RdoBtnReference.Checked = false;
-                RdoBtnCirculation.Checked = false;
-            }
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -415,7 +382,7 @@ namespace LMS.Presentation.Popup.Inventory
             try
             {
                 // Validate pages input: allow large numbers and common formatting (commas), clamp if too large.
-                var pagesText = TxtNoOfPages.Text?.Trim();
+                var pagesText = TxtBKNoOfPages.Text?.Trim();
                 if (!string.IsNullOrEmpty(pagesText))
                 {
                     int pages = ParseInt(pagesText);
@@ -423,18 +390,18 @@ namespace LMS.Presentation.Popup.Inventory
                     {
                         MessageBox.Show("Number of pages should be a positive integer.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtNoOfPages.Focus();
+                        TxtBKNoOfPages.Focus();
                         return;
                     }
                 }
 
                 // Publisher validation: must contain at least one letter if provided
-                var publisherText = CmbBxPublisher.Text?.Trim();
+                var publisherText = CmbBxBKPublisher.Text?.Trim();
                 if (!string.IsNullOrWhiteSpace(publisherText) && !ContainsLetter(publisherText))
                 {
                     MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    CmbBxPublisher.Focus();
+                    CmbBxBKPublisher.Focus();
                     return;
                 }
 
@@ -508,27 +475,25 @@ namespace LMS.Presentation.Popup.Inventory
         private DTOCreateBook BuildDTOFromForm()
         {
             // Determine publisher name: prefer combobox text only (single publisher)
-            string publisherName = !string.IsNullOrWhiteSpace(CmbBxPublisher.Text)
-                ? CmbBxPublisher.Text.Trim()
+            string publisherName = !string.IsNullOrWhiteSpace(CmbBxBKPublisher.Text)
+                ? CmbBxBKPublisher.Text.Trim()
                 : string.Empty;
 
             var dto = new DTOCreateBook
             {
-                ISBN = TxtISBN.Text.Trim(),
-                Title = TxtTitle.Text.Trim(),
-                Subtitle = TxtSubtitle.Text.Trim(),
+                ISBN = TxtBKISBN.Text.Trim(),
+                Title = TxtBKTitle.Text.Trim(),
+                Subtitle = TxtBKSubtitle.Text.Trim(),
                 Publisher = publisherName,
-                PublicationYear = ParseInt(TxtPublicationYear.Text),
-                Edition = TxtEdition.Text.Trim(),
-                CategoryName = CmbBxCategory.Text.Trim(),
-                Language = CmbBxLanguage.Text.Trim(),
-                Pages = ParseInt(TxtNoOfPages.Text),
-                PhysicalDescription = TxtPhysicalDescription.Text.Trim(),
-                CallNumber = TxtCallNumber.Text.Trim(),
+                PublicationYear = ParseInt(TxtBKPublicationYear.Text),
+                Edition = TxtBKEdition.Text.Trim(),
+                CategoryName = CmbBxBKCategory.Text.Trim(),
+                Language = CmbBxBKLanguage.Text.Trim(),
+                Pages = ParseInt(TxtBKNoOfPages.Text),
+                PhysicalDescription = TxtBKPhysicalDescription.Text.Trim(),
+                CallNumber = TxtBKCallNumber.Text.Trim(),
                 CoverImage = SaveCoverImage(),
                 ResourceType = GetSelectedResourceType(),
-                LoanType = GetLoanType(),
-                DownloadURL = TxtDownloadLink.Text.Trim(),
                 InitialCopyCount = NumPckNoOfCopies.Value,
                 CopyStatus = CmbBxCopyStatus.Text,
                 CopyLocation = TxtLocation.Text.Trim()
@@ -569,11 +534,11 @@ namespace LMS.Presentation.Popup.Inventory
             }
 
             // Get category ID if existing category selected
-            if (CmbBxCategory.SelectedIndex >= 0)
+            if (CmbBxBKCategory.SelectedIndex >= 0)
             {
                 var categories = _catalogManager.GetAllCategories();
                 var selectedCat = categories.FirstOrDefault(c =>
-                    c.Name.Equals(CmbBxCategory.Text, StringComparison.OrdinalIgnoreCase));
+                    c.Name.Equals(CmbBxBKCategory.Text, StringComparison.OrdinalIgnoreCase));
                 if (selectedCat != null)
                 {
                     dto.CategoryID = selectedCat.CategoryID;
@@ -626,15 +591,6 @@ namespace LMS.Presentation.Popup.Inventory
             return ResourceType.PhysicalBook;
         }
 
-        private string GetLoanType()
-        {
-            if (RdoBtnPhysicalBook.Checked)
-            {
-                if (RdoBtnReference.Checked) return "Reference";
-                if (RdoBtnCirculation.Checked) return "Circulation";
-            }
-            return null;
-        }
 
         private string SaveCoverImage()
         {
@@ -821,8 +777,8 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    if (comboBox == CmbBxAuthors) BtnAddAuthor.PerformClick();
-                    else if (comboBox == CmbBxEditor) BtnAddEditor.PerformClick();
+                    if (comboBox == CmbBxBKAuthors) BtnBKAddAuthor.PerformClick();
+                    else if (comboBox == CmbBxBKEditor) BtnBKAddEditor.PerformClick();
                     // publisher combobox no longer has an "Add" button
 
                     e.Handled = true;
@@ -831,9 +787,140 @@ namespace LMS.Presentation.Popup.Inventory
             };
         }
 
+        // Limit number of digit characters that can be entered into a textbox.
+        // Allows control keys and non-digit formatting (commas) but prevents entering more than maxDigits digits.
+        private void EnforceDigitsLimit(TextBox tb, int maxDigits)
+        {
+            if (tb == null) return;
+
+            tb.KeyPress += (s, e) =>
+            {
+                if (char.IsControl(e.KeyChar)) return;
+
+                if (char.IsDigit(e.KeyChar))
+                {
+                    int currentDigits = tb.Text.Count(char.IsDigit);
+                    // if replacing a selection, subtract digits in the selection
+                    if (tb.SelectionLength > 0)
+                    {
+                        var sel = tb.SelectedText ?? string.Empty;
+                        int selDigits = sel.Count(char.IsDigit);
+                        if (currentDigits - selDigits >= maxDigits)
+                        {
+                            e.Handled = true;
+                        }
+                    }
+                    else if (currentDigits >= maxDigits)
+                    {
+                        e.Handled = true;
+                    }
+                }
+            };
+
+            tb.TextChanged += (s, e) =>
+            {
+                var txt = tb.Text ?? string.Empty;
+                int digits = 0;
+                var buf = new System.Text.StringBuilder(txt.Length);
+                foreach (var ch in txt)
+                {
+                    if (char.IsDigit(ch))
+                    {
+                        if (digits < maxDigits)
+                        {
+                            buf.Append(ch);
+                            digits++;
+                        }
+                        // else skip extra digits
+                    }
+                    else
+                    {
+                        buf.Append(ch);
+                    }
+                }
+
+                var newText = buf.ToString();
+                if (!string.Equals(newText, txt, StringComparison.Ordinal))
+                {
+                    int selStart = tb.SelectionStart;
+                    tb.Text = newText;
+                    tb.SelectionStart = Math.Min(selStart, tb.Text.Length);
+                }
+            };
+        }
+
         private bool ContainsLetter(string value)
         {
             return !string.IsNullOrWhiteSpace(value) && value.Any(char.IsLetter);
+        }
+
+        private void GrpBxCopyInformation_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GrpBxResourceType_Enter(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PnlforRdoBtnEBook_Paint(object sender, PaintEventArgs e)
+        {
+                    }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void GrpBxPeriodicals_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label35_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox17_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox22_SelectedIndexChanged(object sender, EventArgs e)
+        {
+                    }
+
+        private void label63_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label43_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -58,6 +58,8 @@ namespace LMS.Presentation.Popup.Inventory
             // Populate comboboxes similar to AddBook so UI suggestions match behavior
             LoadCategories();
             LoadLanguages(); // <-- added: populate language combobox
+            // Enforce maximum of 10 digits for No. of Pages (prevents typing an 11th digit)
+            EnforceDigitsLimit(TxtNoOfPages, 10);
 
             if (_book != null)
                 LoadBookToForm(_book);
@@ -1035,6 +1037,68 @@ namespace LMS.Presentation.Popup.Inventory
 
                     e.Handled = true;
                     e.SuppressKeyPress = true;
+                }
+            };
+        }
+
+        // Limit number of digit characters that can be entered into a textbox.
+        // Allows control keys and non-digit formatting (commas) but prevents entering more than maxDigits digits.
+        private void EnforceDigitsLimit(TextBox tb, int maxDigits)
+        {
+            if (tb == null) return;
+
+            tb.KeyPress += (s, e) =>
+            {
+                if (char.IsControl(e.KeyChar)) return;
+
+                if (char.IsDigit(e.KeyChar))
+                {
+                    int currentDigits = tb.Text.Count(char.IsDigit);
+                    // if replacing a selection, subtract digits in the selection
+                    if (tb.SelectionLength > 0)
+                    {
+                        var sel = tb.SelectedText ?? string.Empty;
+                        int selDigits = sel.Count(char.IsDigit);
+                        if (currentDigits - selDigits >= maxDigits)
+                        {
+                            e.Handled = true;
+                        }
+                    }
+                    else if (currentDigits >= maxDigits)
+                    {
+                        e.Handled = true;
+                    }
+                }
+            };
+
+            tb.TextChanged += (s, e) =>
+            {
+                var txt = tb.Text ?? string.Empty;
+                int digits = 0;
+                var buf = new System.Text.StringBuilder(txt.Length);
+                foreach (var ch in txt)
+                {
+                    if (char.IsDigit(ch))
+                    {
+                        if (digits < maxDigits)
+                        {
+                            buf.Append(ch);
+                            digits++;
+                        }
+                        // else skip extra digits
+                    }
+                    else
+                    {
+                        buf.Append(ch);
+                    }
+                }
+
+                var newText = buf.ToString();
+                if (!string.Equals(newText, txt, StringComparison.Ordinal))
+                {
+                    int selStart = tb.SelectionStart;
+                    tb.Text = newText;
+                    tb.SelectionStart = Math.Min(selStart, tb.Text.Length);
                 }
             };
         }

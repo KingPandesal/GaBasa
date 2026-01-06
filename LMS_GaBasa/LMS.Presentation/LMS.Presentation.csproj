@@ -424,6 +424,7 @@
     <Folder Include="Assets\dataimages\Users\" />
     <Folder Include="Assets\dataimages\ValidIDs\" />
     <Folder Include="Assets\ico\" />
+    <Folder Include="Popup\Catalog\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LMS.BusinessLogic\LMS.BusinessLogic.csproj">
