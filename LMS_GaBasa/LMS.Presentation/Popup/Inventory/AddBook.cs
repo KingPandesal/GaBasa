@@ -37,6 +37,16 @@ namespace LMS.Presentation.Popup.Inventory
         private List<string> _editors = new List<string>();
         private string _coverImagePath = null;
 
+        // Per-resource lists (keep names aligned with controls so we don't mix them up)
+        private List<string> _prAuthors = new List<string>();
+        private List<string> _prEditors = new List<string>();
+        private List<string> _thAuthors = new List<string>();
+        private List<string> _thAdvisers = new List<string>();
+        private List<string> _avAuthors = new List<string>();
+        private List<string> _avEditors = new List<string>();
+        private List<string> _ebAuthors = new List<string>();
+        private List<string> _ebEditors = new List<string>();
+
         // Designer / backwards-compatible ctor (keeps current behavior)
         public AddBook()
         {
@@ -96,68 +106,121 @@ namespace LMS.Presentation.Popup.Inventory
             LoadCategories();
 
             // Load predefined languages
-            LoadLanguages();
+            LoadLanguages(); // fills CmbBxBKLanguage
 
-            // Populate author/editor suggestion lists from DB
+            // Populate author/editor/adviser suggestion lists from DB for all resource-types
             try
             {
-                // Authors: all names from Author table
+                // Authors: all names from Author table -> reuse for all author comboboxes
                 var authorNames = _authorRepo?.GetAll()
                     .Where(a => !string.IsNullOrWhiteSpace(a.FullName))
                     .Select(a => a.FullName.Trim())
                     .Distinct(StringComparer.OrdinalIgnoreCase)
                     .ToArray();
 
-                // Populate authors combo with DB values so users can select instead of typing
+                // Setup BK authors
                 SetupComboBoxForAutocomplete(CmbBxBKAuthors, authorNames);
                 if (authorNames != null && authorNames.Length > 0)
                 {
-                    // Ensure dropdown shows the items
                     CmbBxBKAuthors.Items.Clear();
                     CmbBxBKAuthors.Items.AddRange(authorNames);
                 }
 
-                // Editors: find distinct author IDs that appear with Role = "Editor",
-                // then map to author names and avoid duplicates.
-                var editorNamesSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                try
-                {
-                    var editorIds = _bookAuthorRepo?.GetDistinctAuthorIdsByRole("Editor");
-                    if (editorIds != null)
-                    {
-                        foreach (var id in editorIds)
-                        {
-                            try
-                            {
-                                var author = _authorRepo?.GetById(id);
-                                if (author != null && !string.IsNullOrWhiteSpace(author.FullName))
-                                    editorNamesSet.Add(author.FullName.Trim());
-                            }
-                            catch
-                            {
-                                // Skip any single lookup failure
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // ignore role-query failures
-                }
+                // Periodical / AV / EBook / Thesis author combos
+                SetupComboBoxForAutocomplete(CmbBxPRAuthors, authorNames);
+                SetupComboBoxForAutocomplete(CmbBxTHAuthors, authorNames);
+                SetupComboBoxForAutocomplete(CmbBxAVAuthors, authorNames);
+                SetupComboBoxForAutocomplete(CmbBxEBAuthors, authorNames);
 
+                // Editors: query BookAuthor table for role = "Editor"
+                var editorNamesSet = GetNamesByRole("Editor");
                 var editorNames = editorNamesSet.ToArray();
                 SetupComboBoxForAutocomplete(CmbBxBKEditor, editorNames);
+                SetupComboBoxForAutocomplete(CmbBxPREditors, editorNames);
+                SetupComboBoxForAutocomplete(CmbBxAVEditors, editorNames);
+                SetupComboBoxForAutocomplete(CmbBxEBEditors, editorNames);
+
                 if (editorNames.Length > 0)
                 {
-                    CmbBxBKEditor.Items.Clear();
-                    CmbBxBKEditor.Items.AddRange(editorNames);
+                    CmbBxBKEditor.Items.Clear(); CmbBxBKEditor.Items.AddRange(editorNames);
+                    CmbBxPREditors.Items.Clear(); CmbBxPREditors.Items.AddRange(editorNames);
+                    CmbBxAVEditors.Items.Clear(); CmbBxAVEditors.Items.AddRange(editorNames);
+                    CmbBxEBEditors.Items.Clear(); CmbBxEBEditors.Items.AddRange(editorNames);
+                }
+
+                // Advisers: query BookAuthor table for role = "Adviser" (Thesis)
+                var adviserNames = GetNamesByRole("Adviser").ToArray();
+                SetupComboBoxForAutocomplete(CmbBxTHAdvisers, adviserNames);
+                if (adviserNames.Length > 0)
+                {
+                    CmbBxTHAdvisers.Items.Clear();
+                    CmbBxTHAdvisers.Items.AddRange(adviserNames);
+                }
+
+                // Publishers: load from publisher table into all publisher comboboxes
+                var publishers = _publisherRepo != null ? _publisherRepo.GetAll().Select(p => p.Name) : null;
+                SetupComboBoxForAutocomplete(CmbBxBKPublisher, publishers);
+                SetupComboBoxForAutocomplete(CmbBxPRPublisher, publishers);
+                SetupComboBoxForAutocomplete(CmbBxTHPublisher, publishers);
+                SetupComboBoxForAutocomplete(CmbBxAVPublisher, publishers);
+                SetupComboBoxForAutocomplete(CmbBxEBPublisher, publishers);
+
+                if (publishers != null)
+                {
+                    var pubArr = publishers.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
+                    if (pubArr.Length > 0)
+                    {
+                        CmbBxBKPublisher.Items.Clear(); CmbBxBKPublisher.Items.AddRange(pubArr);
+                        CmbBxPRPublisher.Items.Clear(); CmbBxPRPublisher.Items.AddRange(pubArr);
+                        CmbBxTHPublisher.Items.Clear(); CmbBxTHPublisher.Items.AddRange(pubArr);
+                        CmbBxAVPublisher.Items.Clear(); CmbBxAVPublisher.Items.AddRange(pubArr);
+                        CmbBxEBPublisher.Items.Clear(); CmbBxEBPublisher.Items.AddRange(pubArr);
+                    }
+                }
+
+                // Languages: use catalog manager languages for every language combobox
+                var languages = _catalogManager?.GetAllLanguages();
+                if (languages != null && languages.Count > 0)
+                {
+                    SetupComboBoxForAutocomplete(CmbBxBKLanguage, languages);
+                    SetupComboBoxForAutocomplete(CmbBxPRLanguage, languages);
+                    SetupComboBoxForAutocomplete(CmbBxTHLanguage, languages);
+                    SetupComboBoxForAutocomplete(CmbBxAVLanguage, languages);
+                    SetupComboBoxForAutocomplete(CmbBxEBLanguage, languages);
+
+                    CmbBxBKLanguage.Items.Clear(); CmbBxBKLanguage.Items.AddRange(languages.ToArray());
+                    CmbBxPRLanguage.Items.Clear(); CmbBxPRLanguage.Items.AddRange(languages.ToArray());
+                    CmbBxTHLanguage.Items.Clear(); CmbBxTHLanguage.Items.AddRange(languages.ToArray());
+                    CmbBxAVLanguage.Items.Clear(); CmbBxAVLanguage.Items.AddRange(languages.ToArray());
+                    CmbBxEBLanguage.Items.Clear(); CmbBxEBLanguage.Items.AddRange(languages.ToArray());
+                }
+                else
+                {
+                    // still ensure auto-complete is set
+                    SetupComboBoxForAutocomplete(CmbBxPRLanguage, null);
+                    SetupComboBoxForAutocomplete(CmbBxTHLanguage, null);
+                    SetupComboBoxForAutocomplete(CmbBxAVLanguage, null);
+                    SetupComboBoxForAutocomplete(CmbBxEBLanguage, null);
                 }
             }
             catch
             {
-                // Non-fatal: if DB lookup fails keep existing behavior (empty suggestion list)
+                // Non-fatal: keep existing behavior and empty suggestion lists if DB lookup fails
                 SetupComboBoxForAutocomplete(CmbBxBKAuthors, null);
                 SetupComboBoxForAutocomplete(CmbBxBKEditor, null);
+                SetupComboBoxForAutocomplete(CmbBxPRAuthors, null);
+                SetupComboBoxForAutocomplete(CmbBxPREditors, null);
+                SetupComboBoxForAutocomplete(CmbBxTHAuthors, null);
+                SetupComboBoxForAutocomplete(CmbBxTHAdvisers, null);
+                SetupComboBoxForAutocomplete(CmbBxAVAuthors, null);
+                SetupComboBoxForAutocomplete(CmbBxAVEditors, null);
+                SetupComboBoxForAutocomplete(CmbBxEBAuthors, null);
+                SetupComboBoxForAutocomplete(CmbBxEBEditors, null);
+                SetupComboBoxForAutocomplete(CmbBxBKPublisher, null);
+                SetupComboBoxForAutocomplete(CmbBxPRPublisher, null);
+                SetupComboBoxForAutocomplete(CmbBxTHPublisher, null);
+                SetupComboBoxForAutocomplete(CmbBxAVPublisher, null);
+                SetupComboBoxForAutocomplete(CmbBxEBPublisher, null);
             }
 
             // Set default values
@@ -171,6 +234,27 @@ namespace LMS.Presentation.Popup.Inventory
             LstBxBKAuthor.DoubleClick += LstBxAuthor_DoubleClick;
             LstBxBKEditor.DoubleClick += LstBxEditor_DoubleClick;
             BtnCancel.Click += BtnCancel_Click;
+
+            // Wire up other Add buttons and list double-click removals
+            BtnPRAddAuthors.Click += (s, e) => AddFromCombo(CmbBxPRAuthors, LstBxPRAuthors, _prAuthors);
+            BtnPRAddEditors.Click += (s, e) => AddFromCombo(CmbBxPREditors, LstBxPREditors, _prEditors);
+            LstBxPRAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPRAuthors, _prAuthors);
+            LstBxPREditors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxPREditors, _prEditors);
+
+            BtnTHAddAuthors.Click += (s, e) => AddFromCombo(CmbBxTHAuthors, LstBxTHAuthors, _thAuthors);
+            BtnTHAddAdvisers.Click += (s, e) => AddFromCombo(CmbBxTHAdvisers, LstBxTHAdvisers, _thAdvisers);
+            LstBxTHAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxTHAuthors, _thAuthors);
+            LstBxTHAdvisers.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxTHAdvisers, _thAdvisers);
+
+            BtnAVAddAuthors.Click += (s, e) => AddFromCombo(CmbBxAVAuthors, LstBxAVAuthors, _avAuthors);
+            BtnAVAddEditors.Click += (s, e) => AddFromCombo(CmbBxAVEditors, LstBxAVEditors, _avEditors);
+            LstBxAVAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxAVAuthors, _avAuthors);
+            LstBxAVEditors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxAVEditors, _avEditors);
+
+            BtnEBAddAuthors.Click += (s, e) => AddFromCombo(CmbBxEBAuthors, LstBxEBAuthors, _ebAuthors);
+            BtnEBAddEditors.Click += (s, e) => AddFromCombo(CmbBxEBEditors, LstBxEBeditors, _ebEditors);
+            LstBxEBAuthors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxEBAuthors, _ebAuthors);
+            LstBxEBeditors.DoubleClick += (s, e) => RemoveSelectedFromList(LstBxEBeditors, _ebEditors);
 
             // wire up resource-type radios (already present in file) — these show/hide main detail groupboxes
             RdoBtnPhysicalBook.CheckedChanged += RdoBtnPhysicalBook_CheckedChanged;
@@ -199,7 +283,7 @@ namespace LMS.Presentation.Popup.Inventory
             RdoBtnAVPhysical.CheckedChanged += CopyInfoRadio_CheckedChanged;
             RdoBtnAVDigital.CheckedChanged += CopyInfoRadio_CheckedChanged;
 
-            // Enable editable/combo behaviour and Enter-to-add
+            // Enable editable/combo behaviour and Enter-to-add for publisher too
             SetupComboBoxForAutocomplete(CmbBxBKPublisher, _publisherRepo != null ? _publisherRepo.GetAll().Select(p => p.Name) : null);
 
             // Ensure GrpBxCopyInformation is hidden initially
@@ -219,6 +303,37 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Enforce maximum of 10 digits for No. of Pages
             EnforceDigitsLimit(TxtBKNoOfPages, 10);
+        }
+
+        private IEnumerable<string> GetNamesByRole(string role)
+        {
+            var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            try
+            {
+                var ids = _bookAuthorRepo?.GetDistinctAuthorIdsByRole(role);
+                if (ids != null)
+                {
+                    foreach (var id in ids)
+                    {
+                        try
+                        {
+                            var author = _authorRepo?.GetById(id);
+                            if (author != null && !string.IsNullOrWhiteSpace(author.FullName))
+                                set.Add(author.FullName.Trim());
+                        }
+                        catch
+                        {
+                            // ignore single lookup failures
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+
+            return set;
         }
 
         private void AddBook_Load(object sender, EventArgs e)
@@ -300,101 +415,90 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void BtnAddAuthor_Click(object sender, EventArgs e)
         {
-            string authorName = CmbBxBKAuthors.Text.Trim();
-            if (string.IsNullOrWhiteSpace(authorName))
-            {
-                MessageBox.Show("Please enter an author name.", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!ContainsLetter(authorName))
-            {
-                MessageBox.Show("Author name must contain at least one letter and may include digits.", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                CmbBxBKAuthors.Focus();
-                return;
-            }
-
-            // Prefer existing DB author (lookup) — don't create DB record here.
-            try
-            {
-                var existing = _authorRepo?.GetByName(authorName.Trim());
-                if (existing != null)
-                    authorName = existing.FullName?.Trim() ?? authorName;
-            }
-            catch
-            {
-                // Ignore DB lookup error — fall back to typed name
-            }
-
-            if (!_authors.Contains(authorName, StringComparer.OrdinalIgnoreCase))
-            {
-                _authors.Add(authorName);
-                RefreshAuthorListBox();
-                // keep the suggestion list updated
-                if (!CmbBxBKAuthors.Items.Contains(authorName))
-                    CmbBxBKAuthors.Items.Add(authorName);
-
-                CmbBxBKAuthors.Text = string.Empty;
-                CmbBxBKAuthors.Focus();
-            }
-            else
-            {
-                MessageBox.Show("This author is already added.", "Duplicate",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            AddFromCombo(CmbBxBKAuthors, LstBxBKAuthor, _authors);
         }
 
         private void BtnAddEditor_Click(object sender, EventArgs e)
         {
-            string editorName = CmbBxBKEditor.Text.Trim();
-            if (string.IsNullOrWhiteSpace(editorName))
+            AddFromCombo(CmbBxBKEditor, LstBxBKEditor, _editors);
+        }
+
+        /// <summary>
+        /// Generic add-from-combobox implementation used by all resource groups.
+        /// Validates input, prefers existing DB author name, updates suggestion list and backing listbox.
+        /// </summary>
+        private void AddFromCombo(ComboBox combo, ListBox targetListBox, List<string> backingList)
+        {
+            if (combo == null || targetListBox == null || backingList == null) return;
+
+            string name = combo.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Please enter an editor name.", "Validation",
+                MessageBox.Show("Please enter a name.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                combo.Focus();
                 return;
             }
 
-            if (!ContainsLetter(editorName))
+            if (!ContainsLetter(name))
             {
-                MessageBox.Show("Editor name must contain at least one letter and may include digits.", "Validation",
+                MessageBox.Show("Name must contain at least one letter and may include digits.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                CmbBxBKEditor.Focus();
+                combo.Focus();
                 return;
             }
 
-            // Prefer existing DB author record for editor as well
             try
             {
-                var existing = _authorRepo?.GetByName(editorName.Trim());
+                var existing = _authorRepo?.GetByName(name);
                 if (existing != null)
-                    editorName = existing.FullName?.Trim() ?? editorName;
+                    name = existing.FullName?.Trim() ?? name;
             }
             catch
             {
-                // Ignore lookup errors
+                // ignore lookup failure
             }
 
-            if (!_editors.Contains(editorName, StringComparer.OrdinalIgnoreCase))
+            if (!backingList.Contains(name, StringComparer.OrdinalIgnoreCase))
             {
-                _editors.Add(editorName);
-                RefreshEditorListBox();
-                if (!CmbBxBKEditor.Items.Contains(editorName))
-                    CmbBxBKEditor.Items.Add(editorName);
+                backingList.Add(name);
+                RefreshListBox(targetListBox, backingList);
 
-                CmbBxBKEditor.Text = string.Empty;
-                CmbBxBKEditor.Focus();
+                // keep combo suggestion list updated
+                if (!combo.Items.Contains(name))
+                    combo.Items.Add(name);
+
+                combo.Text = string.Empty;
+                combo.Focus();
             }
             else
             {
-                MessageBox.Show("This editor is already added.", "Duplicate",
+                MessageBox.Show("This entry is already added.", "Duplicate",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void RefreshListBox(ListBox lb, List<string> values)
+        {
+            if (lb == null || values == null) return;
+            lb.Items.Clear();
+            foreach (var v in values)
+                lb.Items.Add(v);
+        }
+
+        private void RemoveSelectedFromList(ListBox lb, List<string> backingList)
+        {
+            if (lb == null || backingList == null) return;
+            if (lb.SelectedIndex >= 0)
+            {
+                backingList.RemoveAt(lb.SelectedIndex);
+                RefreshListBox(lb, backingList);
             }
         }
 
         // Publisher add/remove UI removed — publisher is single combobox input now.
         // Any persistence (create publisher) is handled in BuildDTOFromForm -> AddBookService.
+        // For other groups we have wired add buttons above.
 
         private void LstBxAuthor_DoubleClick(object sender, EventArgs e)
         {
@@ -531,7 +635,7 @@ namespace LMS.Presentation.Popup.Inventory
                 // Validate
                 if (!_inventoryManager.ValidateBookData(dto, out string errorMessage))
                 {
-                    MessageBox.Show(errorMessage, "Validation Error", 
+                    MessageBox.Show(errorMessage, "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -565,14 +669,14 @@ namespace LMS.Presentation.Popup.Inventory
                         // Non-fatal: barcode generation failed, but book was saved.
                     }
 
-                    MessageBox.Show("Book added successfully!", "Success", 
+                    MessageBox.Show("Book added successfully!", "Success",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show(result.ErrorMessage, "Error", 
+                    MessageBox.Show(result.ErrorMessage, "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -610,7 +714,8 @@ namespace LMS.Presentation.Popup.Inventory
                 CopyLocation = TxtLocation.Text.Trim()
             };
 
-            // If publisher name maps to an existing publisher in DB, set PublisherID
+            // If publisher name maps to an existing publisher in DB, set PublisherID.
+            // If not, create it now (user requested missing publishers be saved on Save).
             if (!string.IsNullOrWhiteSpace(dto.Publisher) && _publisherRepo != null)
             {
                 var match = _publisherRepo.GetAll()
@@ -619,32 +724,194 @@ namespace LMS.Presentation.Popup.Inventory
                 {
                     dto.PublisherID = match.PublisherID;
                 }
-                // if match == null, AddBookService will create it (EnsurePublisherId) before inserting
-            }
-
-            // Add authors
-            foreach (var authorName in _authors)
-            {
-                dto.Authors.Add(new DTOBookAuthor
+                else
                 {
-                    AuthorName = authorName,
-                    Role = "Author",
-                    IsPrimaryAuthor = dto.Authors.Count == 0 // First author is primary
-                });
+                    try
+                    {
+                        var newPub = new Publisher { Name = dto.Publisher };
+                        int newId = _publisherRepo.Add(newPub);
+                        if (newId > 0) dto.PublisherID = newId;
+                    }
+                    catch
+                    {
+                        // ignore create failure - AddBookService may handle it too
+                    }
+                }
             }
 
-            // Add editors
-            foreach (var editorName in _editors)
+            // If category name provided but not selected from existing list, ensure it exists (will create if necessary)
+            if (!string.IsNullOrWhiteSpace(dto.CategoryName))
             {
-                dto.Editors.Add(new DTOBookAuthor
+                try
                 {
-                    AuthorName = editorName,
-                    Role = "Editor",
-                    IsPrimaryAuthor = false
-                });
+                    // GetOrCreateCategory returns existing or newly created Category
+                    var cat = _catalogManager.GetOrCreateCategory(dto.CategoryName);
+                    if (cat != null) dto.CategoryID = cat.CategoryID;
+                }
+                catch
+                {
+                    // ignore
+                }
             }
 
-            // Get category ID if existing category selected
+            // Ensure language exists in catalog (add if missing)
+            if (!string.IsNullOrWhiteSpace(dto.Language))
+            {
+                try
+                {
+                    _catalogManager.AddLanguageIfNotExists(dto.Language);
+                }
+                catch
+                {
+                    // ignore
+                }
+            }
+
+            // Add authors/editors depending on selected resource group.
+            // Physical book
+            if (GetSelectedResourceType() == ResourceType.PhysicalBook || GetSelectedResourceType() == null)
+            {
+                foreach (var authorName in _authors)
+                {
+                    dto.Authors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = authorName,
+                        Role = "Author",
+                        IsPrimaryAuthor = dto.Authors.Count == 0 // First author is primary
+                    });
+                }
+
+                foreach (var editorName in _editors)
+                {
+                    dto.Editors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = editorName,
+                        Role = "Editor",
+                        IsPrimaryAuthor = false
+                    });
+                }
+            }
+            else if (GetSelectedResourceType() == ResourceType.Periodical)
+            {
+                foreach (var authorName in _prAuthors)
+                {
+                    dto.Authors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = authorName,
+                        Role = "Author",
+                        IsPrimaryAuthor = dto.Authors.Count == 0
+                    });
+                }
+
+                foreach (var editorName in _prEditors)
+                {
+                    dto.Editors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = editorName,
+                        Role = "Editor",
+                        IsPrimaryAuthor = false
+                    });
+                }
+            }
+            else if (GetSelectedResourceType() == ResourceType.Thesis)
+            {
+                foreach (var authorName in _thAuthors)
+                {
+                    dto.Authors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = authorName,
+                        Role = "Author",
+                        IsPrimaryAuthor = dto.Authors.Count == 0
+                    });
+                }
+
+                foreach (var adviserName in _thAdvisers)
+                {
+                    dto.Editors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = adviserName,
+                        Role = "Adviser",
+                        IsPrimaryAuthor = false
+                    });
+                }
+            }
+            else if (GetSelectedResourceType() == ResourceType.AV)
+            {
+                foreach (var authorName in _avAuthors)
+                {
+                    dto.Authors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = authorName,
+                        Role = "Author",
+                        IsPrimaryAuthor = dto.Authors.Count == 0
+                    });
+                }
+
+                foreach (var editorName in _avEditors)
+                {
+                    dto.Editors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = editorName,
+                        Role = "Editor",
+                        IsPrimaryAuthor = false
+                    });
+                }
+            }
+            else if (GetSelectedResourceType() == ResourceType.EBook)
+            {
+                foreach (var authorName in _ebAuthors)
+                {
+                    dto.Authors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = authorName,
+                        Role = "Author",
+                        IsPrimaryAuthor = dto.Authors.Count == 0
+                    });
+                }
+
+                foreach (var editorName in _ebEditors)
+                {
+                    dto.Editors.Add(new DTOBookAuthor
+                    {
+                        AuthorName = editorName,
+                        Role = "Editor",
+                        IsPrimaryAuthor = false
+                    });
+                }
+            }
+
+            // Ensure any authors/editors/advisers that don't exist in DB are created now (user requested)
+            try
+            {
+                var namesToEnsure = dto.Authors.Select(a => a.AuthorName)
+                    .Concat(dto.Editors.Select(e => e.AuthorName))
+                    .Where(n => !string.IsNullOrWhiteSpace(n))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                foreach (var name in namesToEnsure)
+                {
+                    try
+                    {
+                        var existing = _authorRepo?.GetByName(name);
+                        if (existing == null)
+                        {
+                            var newAuthorId = _authorRepo.Add(new Model.Models.Catalog.Author { FullName = name });
+                            // we do not need to propagate the id into DTOBookAuthor since AddBookService will match by name
+                        }
+                    }
+                    catch
+                    {
+                        // ignore single create failure
+                    }
+                }
+            }
+            catch
+            {
+                // ignore
+            }
+
+            // Get category ID if existing category selected (redundant with GetOrCreate but keep for safety)
             if (CmbBxBKCategory.SelectedIndex >= 0)
             {
                 var categories = _catalogManager.GetAllCategories();
@@ -851,14 +1118,22 @@ namespace LMS.Presentation.Popup.Inventory
 
             comboBox.AutoCompleteCustomSource = ac;
 
-            // Enter key should act like pressing Add button
+            // Enter key should act like pressing Add button where applicable
             comboBox.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
                     if (comboBox == CmbBxBKAuthors) BtnBKAddAuthor.PerformClick();
                     else if (comboBox == CmbBxBKEditor) BtnBKAddEditor.PerformClick();
-                    // publisher combobox no longer has an "Add" button
+                    else if (comboBox == CmbBxPRAuthors) BtnPRAddAuthors.PerformClick();
+                    else if (comboBox == CmbBxPREditors) BtnPRAddEditors.PerformClick();
+                    else if (comboBox == CmbBxTHAuthors) BtnTHAddAuthors.PerformClick();
+                    else if (comboBox == CmbBxTHAdvisers) BtnTHAddAdvisers.PerformClick();
+                    else if (comboBox == CmbBxAVAuthors) BtnAVAddAuthors.PerformClick();
+                    else if (comboBox == CmbBxAVEditors) BtnAVAddEditors.PerformClick();
+                    else if (comboBox == CmbBxEBAuthors) BtnEBAddAuthors.PerformClick();
+                    else if (comboBox == CmbBxEBEditors) BtnEBAddEditors.PerformClick();
+                    // publisher combobox has no "Add" button; languages/categories not add-buttons
 
                     e.Handled = true;
                     e.SuppressKeyPress = true;

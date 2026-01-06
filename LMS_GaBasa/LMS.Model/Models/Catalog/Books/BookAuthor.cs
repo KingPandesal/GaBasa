@@ -14,7 +14,7 @@ namespace LMS.Model.Models.Catalog.Books
         public int AuthorID { get; set; }
         public Author Author { get; set; }
 
-        public string Role { get; set; }  // e.g., "Author","Editor"
+        public string Role { get; set; }  // e.g., "Author","Editor", "Adviser"
         public bool IsPrimaryAuthor { get; set; }
     }
 }
