@@ -303,6 +303,8 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Enforce maximum of 10 digits for No. of Pages
             EnforceDigitsLimit(TxtBKNoOfPages, 10);
+            // Thesis pages also limited to 10 digits as requested
+            EnforceDigitsLimit(TxtBxTHNoOfPages, 10);
         }
 
         private IEnumerable<string> GetNamesByRole(string role)
@@ -789,6 +791,152 @@ namespace LMS.Presentation.Popup.Inventory
                     }
                 }
 
+                // --- Thesis validation and material-format handling per guide ---
+                if (dto.ResourceType == ResourceType.Thesis)
+                {
+                    // Required fields
+                    if (string.IsNullOrWhiteSpace(dto.ISBN)) // DOI stored in ISBN
+                    {
+                        MessageBox.Show("DOI is required for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtTHDOI?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(dto.CallNumber))
+                    {
+                        MessageBox.Show("Call number is required for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtTHCallNumber?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(dto.Title))
+                    {
+                        MessageBox.Show("Title is required for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtTHTitle?.Focus();
+                        return;
+                    }
+
+                    if (dto.Authors == null || dto.Authors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one author for the thesis.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxTHAuthors?.Focus();
+                        return;
+                    }
+
+                    if (dto.Editors == null || dto.Editors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one adviser for the thesis.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxTHAdvisers?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(dto.Publisher))
+                    {
+                        MessageBox.Show("Publisher is required for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxTHPublisher?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(CmbBxTHDegreeLevel.Text))
+                    {
+                        MessageBox.Show("Degree level is required for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxTHDegreeLevel?.Focus();
+                        return;
+                    }
+
+                    // Publication year should not be greater than current year
+                    if (dto.PublicationYear > DateTime.Now.Year)
+                    {
+                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBxTHPublicationYear?.Focus();
+                        return;
+                    }
+
+                    // Pages required and positive
+                    if (dto.Pages <= 0)
+                    {
+                        MessageBox.Show("Number of pages is required and must be a positive integer for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBxTHNoOfPages?.Focus();
+                        return;
+                    }
+
+                    // Material format handling
+                    if (RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked)
+                    {
+                        // physical: require physical description and copy information
+                        if (string.IsNullOrWhiteSpace(CmbBxTHPhysicalDescription.Text))
+                        {
+                            MessageBox.Show("Please select a physical description for the thesis.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxTHPhysicalDescription?.Focus();
+                            return;
+                        }
+
+                        if (dto.InitialCopyCount <= 0)
+                        {
+                            MessageBox.Show("Please specify the number of copies for a physical thesis.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            NumPckNoOfCopies.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+                        {
+                            MessageBox.Show("Please select a copy status for the thesis copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxCopyStatus.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+                        {
+                            MessageBox.Show("Please provide a location for the thesis copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtLocation.Focus();
+                            return;
+                        }
+                    }
+                    else if (RdoBtnTHDigital != null && RdoBtnTHDigital.Checked)
+                    {
+                        // digital: require format and download URL, explicitly ignore copy info
+                        if (string.IsNullOrWhiteSpace(CmbBxTHFormat.Text))
+                        {
+                            MessageBox.Show("Please select a digital format for the thesis.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxTHFormat.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(TxtTHDownloadURL.Text))
+                        {
+                            MessageBox.Show("Please provide a Download URL for the digital thesis.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtTHDownloadURL.Focus();
+                            return;
+                        }
+
+                        // ensure no copies are created for digital theses
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select material format (Physical or Digital) for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 // Set the AddedByID to the currently logged in user id (Program.CurrentUserId).
                 dto.AddedByID = Program.CurrentUserId;
 
@@ -939,6 +1087,9 @@ namespace LMS.Presentation.Popup.Inventory
                     break;
 
                 case ResourceType.Thesis:
+                    // DOI stored in ISBN field
+                    dto.ISBN = TxtTHDOI.Text.Trim();
+
                     dto.Title = TxtTHTitle.Text.Trim();
                     dto.Subtitle = TxtTHSubtitle.Text.Trim();
                     dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxTHPublisher.Text) ? CmbBxTHPublisher.Text.Trim() : string.Empty;
@@ -946,10 +1097,33 @@ namespace LMS.Presentation.Popup.Inventory
                     dto.CallNumber = TxtTHCallNumber.Text.Trim();
                     dto.Pages = ParseInt(TxtBxTHNoOfPages.Text);
                     dto.PublicationYear = ParseInt(TxtBxTHPublicationYear.Text);
-                    if (RdoBtnTHPhysical.Checked)
+
+                    // Degree level stored in Edition
+                    dto.Edition = CmbBxTHDegreeLevel.Text.Trim();
+
+                    // Material format handling for Thesis: ensure DownloadURL set for digital and copy info is cleared
+                    if (RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked)
+                    {
                         dto.PhysicalDescription = CmbBxTHPhysicalDescription.Text.Trim();
-                    else
+                        // keep copy information for physical theses
+                        dto.InitialCopyCount = NumPckNoOfCopies.Value;
+                        dto.CopyStatus = CmbBxCopyStatus.Text;
+                        dto.CopyLocation = TxtLocation.Text.Trim();
+                    }
+                    else if (RdoBtnTHDigital != null && RdoBtnTHDigital.Checked)
+                    {
                         dto.PhysicalDescription = CmbBxTHFormat.Text.Trim();
+                        dto.DownloadURL = TxtTHDownloadURL.Text.Trim();
+                        // Do not create copies for digital thesis
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                    else
+                    {
+                        // default behaviour if no material format selected: preserve values already in dto (NumPckNoOfCopies etc.)
+                    }
+
                     dto.LoanType = null;
                     break;
 
@@ -1245,7 +1419,6 @@ namespace LMS.Presentation.Popup.Inventory
                 if (!Directory.Exists(coversDirFull))
                     Directory.CreateDirectory(coversDirFull);
 
-                // Ensure we preserve extension and avoid collisions
                 string ext = Path.GetExtension(_coverImagePath);
                 if (string.IsNullOrWhiteSpace(ext))
                     ext = ".jpg";

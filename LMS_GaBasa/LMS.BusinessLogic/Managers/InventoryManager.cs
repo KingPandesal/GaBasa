@@ -34,10 +34,6 @@ namespace LMS.BusinessLogic.Managers
                     dto.CategoryID = category.CategoryID;
             }
 
-            // Do NOT try to persist language to a separate table here.
-            // Language is stored as a string on the Book model (Book.Language).
-            // Removed call: _catalogManager.AddLanguageIfNotExists(dto.Language);
-
             return _addBookService.CreateBook(dto);
         }
 
@@ -51,8 +47,9 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
-            // ISBN must contain digits only
-            if (!dto.ISBN.All(char.IsDigit))
+            // ISBN must contain digits only for non-thesis resources.
+            // Theses store DOI in ISBN field which can contain letters and punctuation.
+            if (dto.ResourceType != ResourceType.Thesis && !dto.ISBN.All(char.IsDigit))
             {
                 errorMessage = "ISBN must contain digits only.";
                 return false;
@@ -96,8 +93,9 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
-            // Category is required for all resource types except Periodical
+            // Category is required for all resource types except Periodical and Thesis
             if (dto.ResourceType != ResourceType.Periodical
+                && dto.ResourceType != ResourceType.Thesis
                 && dto.CategoryID <= 0 && string.IsNullOrWhiteSpace(dto.CategoryName))
             {
                 errorMessage = "Category is required.";
@@ -138,12 +136,13 @@ namespace LMS.BusinessLogic.Managers
             // Copy information:
             // - Require copies only when copies are expected.
             // - E-books and digital periodicals (which set DownloadURL) do NOT require copies.
+            // - Digital theses (Thesis with DownloadURL) also should NOT require copies.
             bool copiesExpected = dto.InitialCopyCount > 0;
 
             if (!copiesExpected)
             {
                 // If no copies requested, ensure this is allowed for the resource type:
-                // allow when EBook OR (Periodical AND DownloadURL provided)
+                // allow when EBook OR (Periodical AND DownloadURL provided) OR (Thesis AND DownloadURL provided)
                 if (dto.ResourceType == ResourceType.EBook)
                 {
                     // ok: e-books don't require copies
@@ -152,9 +151,13 @@ namespace LMS.BusinessLogic.Managers
                 {
                     // ok: digital periodicals don't require copies
                 }
+                else if (dto.ResourceType == ResourceType.Thesis && !string.IsNullOrWhiteSpace(dto.DownloadURL))
+                {
+                    // ok: digital theses don't require copies
+                }
                 else
                 {
-                    // For other cases, still require copies (e.g., physical book / periodical physical)
+                    // For other cases, still require copies (e.g., physical book / periodical physical / thesis physical)
                     errorMessage = "Number of copies is required.";
                     return false;
                 }

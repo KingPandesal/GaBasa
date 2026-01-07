@@ -23,6 +23,38 @@ namespace LMS.DataAccess.Repositories
             if (bookAuthor == null)
                 throw new ArgumentNullException(nameof(bookAuthor));
 
+            // Normalize role to a DB-friendly canonical value that matches the CHECK constraint.
+            // Your DB constraint allows: 'Author', 'Editor', 'Adviser'
+            string role = (bookAuthor.Role ?? string.Empty).Trim();
+
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                role = "Author";
+            }
+            else
+            {
+                // Accept common synonyms and normalize to the literal the DB expects.
+                // IMPORTANT: your DB CHECK uses 'Adviser' (British spelling), so normalize to that.
+                if (string.Equals(role, "adviser", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(role, "advisor", StringComparison.OrdinalIgnoreCase))
+                {
+                    role = "Adviser";
+                }
+                else if (string.Equals(role, "editor", StringComparison.OrdinalIgnoreCase))
+                {
+                    role = "Editor";
+                }
+                else if (string.Equals(role, "author", StringComparison.OrdinalIgnoreCase))
+                {
+                    role = "Author";
+                }
+                else
+                {
+                    // Fallback to "Author" to avoid CHECK constraint violations.
+                    role = "Author";
+                }
+            }
+
             using (var conn = _db.GetConnection())
             using (var cmd = conn.CreateCommand())
             {
@@ -32,7 +64,7 @@ namespace LMS.DataAccess.Repositories
 
                 AddParameter(cmd, "@BookID", DbType.Int32, bookAuthor.BookID, 0);
                 AddParameter(cmd, "@AuthorID", DbType.Int32, bookAuthor.AuthorID, 0);
-                AddParameter(cmd, "@Role", DbType.String, bookAuthor.Role, 50);
+                AddParameter(cmd, "@Role", DbType.String, role, 50);
                 AddParameter(cmd, "@IsPrimaryAuthor", DbType.Boolean, bookAuthor.IsPrimaryAuthor, 0);
 
                 cmd.ExecuteNonQuery();
