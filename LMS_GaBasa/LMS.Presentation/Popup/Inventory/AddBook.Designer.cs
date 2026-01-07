@@ -173,6 +173,7 @@
             this.LblTHDOI = new System.Windows.Forms.Label();
             this.TxtTHDOI = new System.Windows.Forms.TextBox();
             this.GrpBxAV = new System.Windows.Forms.GroupBox();
+            this.LblAVCategory = new System.Windows.Forms.Label();
             this.FlwPnlAVMaterialFormat = new System.Windows.Forms.FlowLayoutPanel();
             this.RdoBtnAVPhysical = new System.Windows.Forms.RadioButton();
             this.PnlAVPhysicalFormat = new System.Windows.Forms.Panel();
@@ -184,6 +185,7 @@
             this.LblAVDownloadURL = new System.Windows.Forms.Label();
             this.CmbBxAVFormat = new System.Windows.Forms.ComboBox();
             this.LblAVFormat = new System.Windows.Forms.Label();
+            this.CmbBxAVCategory = new System.Windows.Forms.ComboBox();
             this.LblAVMaterialFormat = new System.Windows.Forms.Label();
             this.CmbBxAVAuthors = new System.Windows.Forms.ComboBox();
             this.CmbBxAVEditors = new System.Windows.Forms.ComboBox();
@@ -208,6 +210,10 @@
             this.LblAVUPCISAN = new System.Windows.Forms.Label();
             this.TxtAVUPCISAN = new System.Windows.Forms.TextBox();
             this.GrpBxEBook = new System.Windows.Forms.GroupBox();
+            this.TxtEBDownloadURL = new System.Windows.Forms.TextBox();
+            this.LblEBDownloadURL = new System.Windows.Forms.Label();
+            this.LblEBCategory = new System.Windows.Forms.Label();
+            this.CmbBxEBCategory = new System.Windows.Forms.ComboBox();
             this.CmbBxEBAuthors = new System.Windows.Forms.ComboBox();
             this.CmbBxEBEditors = new System.Windows.Forms.ComboBox();
             this.CmbBxEBPublisher = new System.Windows.Forms.ComboBox();
@@ -255,12 +261,7 @@
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.LblAVCategory = new System.Windows.Forms.Label();
-            this.CmbBxAVCategory = new System.Windows.Forms.ComboBox();
-            this.LblEBCategory = new System.Windows.Forms.Label();
-            this.CmbBxEBCategory = new System.Windows.Forms.ComboBox();
-            this.TxtEBDownloadURL = new System.Windows.Forms.TextBox();
-            this.LblEBDownloadURL = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -320,11 +321,12 @@
             this.GrpBxResourceType.Controls.Add(this.label15);
             this.GrpBxResourceType.Controls.Add(this.textBox13);
             this.GrpBxResourceType.Controls.Add(this.label16);
+            this.GrpBxResourceType.Controls.Add(this.label1);
             this.GrpBxResourceType.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxResourceType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxResourceType.Location = new System.Drawing.Point(3, 3);
             this.GrpBxResourceType.Name = "GrpBxResourceType";
-            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 271);
+            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 352);
             this.GrpBxResourceType.TabIndex = 75;
             this.GrpBxResourceType.TabStop = false;
             this.GrpBxResourceType.Text = "Resource Type";
@@ -512,7 +514,7 @@
             this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKCategory);
             this.GrpBxPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxPhysicalBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxPhysicalBook.Location = new System.Drawing.Point(3, 280);
+            this.GrpBxPhysicalBook.Location = new System.Drawing.Point(3, 361);
             this.GrpBxPhysicalBook.Name = "GrpBxPhysicalBook";
             this.GrpBxPhysicalBook.Size = new System.Drawing.Size(629, 1150);
             this.GrpBxPhysicalBook.TabIndex = 72;
@@ -1080,7 +1082,7 @@
             this.GrpBxPeriodicals.Controls.Add(this.TxtPRISSN);
             this.GrpBxPeriodicals.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxPeriodicals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxPeriodicals.Location = new System.Drawing.Point(3, 1436);
+            this.GrpBxPeriodicals.Location = new System.Drawing.Point(3, 1517);
             this.GrpBxPeriodicals.Name = "GrpBxPeriodicals";
             this.GrpBxPeriodicals.Size = new System.Drawing.Size(629, 1286);
             this.GrpBxPeriodicals.TabIndex = 76;
@@ -1543,7 +1545,7 @@
             this.GrpBxThesis.Controls.Add(this.TxtTHDOI);
             this.GrpBxThesis.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxThesis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxThesis.Location = new System.Drawing.Point(3, 2728);
+            this.GrpBxThesis.Location = new System.Drawing.Point(3, 2809);
             this.GrpBxThesis.Name = "GrpBxThesis";
             this.GrpBxThesis.Size = new System.Drawing.Size(629, 1287);
             this.GrpBxThesis.TabIndex = 77;
@@ -1998,12 +2000,23 @@
             this.GrpBxAV.Controls.Add(this.TxtAVUPCISAN);
             this.GrpBxAV.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxAV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxAV.Location = new System.Drawing.Point(3, 4021);
+            this.GrpBxAV.Location = new System.Drawing.Point(3, 4102);
             this.GrpBxAV.Name = "GrpBxAV";
             this.GrpBxAV.Size = new System.Drawing.Size(629, 1284);
             this.GrpBxAV.TabIndex = 101;
             this.GrpBxAV.TabStop = false;
             this.GrpBxAV.Text = "Audio-Visual Details";
+            // 
+            // LblAVCategory
+            // 
+            this.LblAVCategory.AutoSize = true;
+            this.LblAVCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblAVCategory.ForeColor = System.Drawing.Color.Black;
+            this.LblAVCategory.Location = new System.Drawing.Point(28, 824);
+            this.LblAVCategory.Name = "LblAVCategory";
+            this.LblAVCategory.Size = new System.Drawing.Size(92, 28);
+            this.LblAVCategory.TabIndex = 96;
+            this.LblAVCategory.Text = "Category";
             // 
             // FlwPnlAVMaterialFormat
             // 
@@ -2136,6 +2149,16 @@
             this.LblAVFormat.Size = new System.Drawing.Size(75, 28);
             this.LblAVFormat.TabIndex = 90;
             this.LblAVFormat.Text = "Format";
+            // 
+            // CmbBxAVCategory
+            // 
+            this.CmbBxAVCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxAVCategory.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxAVCategory.FormattingEnabled = true;
+            this.CmbBxAVCategory.Location = new System.Drawing.Point(201, 820);
+            this.CmbBxAVCategory.Name = "CmbBxAVCategory";
+            this.CmbBxAVCategory.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxAVCategory.TabIndex = 95;
             // 
             // LblAVMaterialFormat
             // 
@@ -2422,12 +2445,53 @@
             this.GrpBxEBook.Controls.Add(this.TxtEBISBN);
             this.GrpBxEBook.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxEBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5311);
+            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5392);
             this.GrpBxEBook.Name = "GrpBxEBook";
             this.GrpBxEBook.Size = new System.Drawing.Size(629, 1099);
             this.GrpBxEBook.TabIndex = 102;
             this.GrpBxEBook.TabStop = false;
             this.GrpBxEBook.Text = "E-Book Details";
+            // 
+            // TxtEBDownloadURL
+            // 
+            this.TxtEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtEBDownloadURL.ForeColor = System.Drawing.Color.Black;
+            this.TxtEBDownloadURL.Location = new System.Drawing.Point(201, 1045);
+            this.TxtEBDownloadURL.Name = "TxtEBDownloadURL";
+            this.TxtEBDownloadURL.Size = new System.Drawing.Size(353, 34);
+            this.TxtEBDownloadURL.TabIndex = 104;
+            // 
+            // LblEBDownloadURL
+            // 
+            this.LblEBDownloadURL.AutoSize = true;
+            this.LblEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblEBDownloadURL.ForeColor = System.Drawing.Color.Black;
+            this.LblEBDownloadURL.Location = new System.Drawing.Point(28, 1048);
+            this.LblEBDownloadURL.Name = "LblEBDownloadURL";
+            this.LblEBDownloadURL.Size = new System.Drawing.Size(142, 28);
+            this.LblEBDownloadURL.TabIndex = 103;
+            this.LblEBDownloadURL.Text = "Download URL";
+            // 
+            // LblEBCategory
+            // 
+            this.LblEBCategory.AutoSize = true;
+            this.LblEBCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblEBCategory.ForeColor = System.Drawing.Color.Black;
+            this.LblEBCategory.Location = new System.Drawing.Point(28, 811);
+            this.LblEBCategory.Name = "LblEBCategory";
+            this.LblEBCategory.Size = new System.Drawing.Size(92, 28);
+            this.LblEBCategory.TabIndex = 102;
+            this.LblEBCategory.Text = "Category";
+            // 
+            // CmbBxEBCategory
+            // 
+            this.CmbBxEBCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxEBCategory.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxEBCategory.FormattingEnabled = true;
+            this.CmbBxEBCategory.Location = new System.Drawing.Point(201, 807);
+            this.CmbBxEBCategory.Name = "CmbBxEBCategory";
+            this.CmbBxEBCategory.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxEBCategory.TabIndex = 101;
             // 
             // CmbBxEBAuthors
             // 
@@ -2720,7 +2784,7 @@
             this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
             this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6416);
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6497);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
             this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
             this.GrpBxCopyInformation.TabIndex = 103;
@@ -2981,67 +3045,19 @@
             this.comboBox2.Size = new System.Drawing.Size(353, 36);
             this.comboBox2.TabIndex = 68;
             // 
-            // LblAVCategory
+            // label1
             // 
-            this.LblAVCategory.AutoSize = true;
-            this.LblAVCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblAVCategory.ForeColor = System.Drawing.Color.Black;
-            this.LblAVCategory.Location = new System.Drawing.Point(28, 824);
-            this.LblAVCategory.Name = "LblAVCategory";
-            this.LblAVCategory.Size = new System.Drawing.Size(92, 28);
-            this.LblAVCategory.TabIndex = 96;
-            this.LblAVCategory.Text = "Category";
-            // 
-            // CmbBxAVCategory
-            // 
-            this.CmbBxAVCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxAVCategory.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxAVCategory.FormattingEnabled = true;
-            this.CmbBxAVCategory.Location = new System.Drawing.Point(201, 820);
-            this.CmbBxAVCategory.Name = "CmbBxAVCategory";
-            this.CmbBxAVCategory.Size = new System.Drawing.Size(353, 36);
-            this.CmbBxAVCategory.TabIndex = 95;
-            // 
-            // LblEBCategory
-            // 
-            this.LblEBCategory.AutoSize = true;
-            this.LblEBCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblEBCategory.ForeColor = System.Drawing.Color.Black;
-            this.LblEBCategory.Location = new System.Drawing.Point(28, 811);
-            this.LblEBCategory.Name = "LblEBCategory";
-            this.LblEBCategory.Size = new System.Drawing.Size(92, 28);
-            this.LblEBCategory.TabIndex = 102;
-            this.LblEBCategory.Text = "Category";
-            // 
-            // CmbBxEBCategory
-            // 
-            this.CmbBxEBCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxEBCategory.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxEBCategory.FormattingEnabled = true;
-            this.CmbBxEBCategory.Location = new System.Drawing.Point(201, 807);
-            this.CmbBxEBCategory.Name = "CmbBxEBCategory";
-            this.CmbBxEBCategory.Size = new System.Drawing.Size(353, 36);
-            this.CmbBxEBCategory.TabIndex = 101;
-            // 
-            // TxtEBDownloadURL
-            // 
-            this.TxtEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.TxtEBDownloadURL.ForeColor = System.Drawing.Color.Black;
-            this.TxtEBDownloadURL.Location = new System.Drawing.Point(201, 1045);
-            this.TxtEBDownloadURL.Name = "TxtEBDownloadURL";
-            this.TxtEBDownloadURL.Size = new System.Drawing.Size(353, 34);
-            this.TxtEBDownloadURL.TabIndex = 104;
-            // 
-            // LblEBDownloadURL
-            // 
-            this.LblEBDownloadURL.AutoSize = true;
-            this.LblEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblEBDownloadURL.ForeColor = System.Drawing.Color.Black;
-            this.LblEBDownloadURL.Location = new System.Drawing.Point(28, 1048);
-            this.LblEBDownloadURL.Name = "LblEBDownloadURL";
-            this.LblEBDownloadURL.Size = new System.Drawing.Size(142, 28);
-            this.LblEBDownloadURL.TabIndex = 103;
-            this.LblEBDownloadURL.Text = "Download URL";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label1.Location = new System.Drawing.Point(33, 257);
+            this.label1.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(528, 75);
+            this.label1.TabIndex = 91;
+            this.label1.Text = "*Resource type cannot be edited later. Once saved, this choice cannot be changed." +
+    " Please make sure you’ve selected the correct type before continuing.";
+            this.label1.Click += new System.EventHandler(this.LblCallNumber_Click);
             // 
             // AddBook
             // 
@@ -3338,5 +3354,6 @@
         private System.Windows.Forms.ComboBox CmbBxEBCategory;
         private System.Windows.Forms.TextBox TxtEBDownloadURL;
         private System.Windows.Forms.Label LblEBDownloadURL;
+        private System.Windows.Forms.Label label1;
     }
 }

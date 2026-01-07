@@ -431,7 +431,7 @@ namespace LMS.Presentation.UserControls.Management
                 SetCellValue(row, "ColumnSubtitle", book.Subtitle);
                 SetCellValue(row, "ColumnAuthors", authors);
                 SetCellValue(row, "ColumnEditors", editors);
-                SetCellValue(row, "ColumnAdvisers", advisers); // new adviser column
+                SetCellValue(row, "ColumnAdviser", advisers); // fixed: match designer column name (singular)
                 SetCellValue(row, "ColumnPublishers", publishers);
                 SetCellValue(row, "ColumnCategory", categoryName);
                 SetCellValue(row, "ColumnLanguage", book.Language);

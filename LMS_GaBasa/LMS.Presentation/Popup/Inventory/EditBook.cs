@@ -203,12 +203,51 @@ namespace LMS.Presentation.Popup.Inventory
             if (BtnCancel != null) { BtnCancel.Click -= BtnCancel_Click; BtnCancel.Click += BtnCancel_Click; }
             if (BtnSave != null) { BtnSave.Click -= BtnSave_Click; BtnSave.Click += BtnSave_Click; }
 
-            // Resource type radio handlers (keep UI panels and required-field state in sync)
-            if (RdoBtnPhysicalBook != null) { RdoBtnPhysicalBook.CheckedChanged -= RdoBtnPhysicalBook_CheckedChanged; RdoBtnPhysicalBook.CheckedChanged += RdoBtnPhysicalBook_CheckedChanged; }
-            if (RdoBtnEBook != null) { RdoBtnEBook.CheckedChanged -= RdoBtnEBook_CheckedChanged; RdoBtnEBook.CheckedChanged += RdoBtnEBook_CheckedChanged; }
-            if (RdoBtnTheses != null) { RdoBtnTheses.CheckedChanged -= RdoBtnTheses_CheckedChanged; RdoBtnTheses.CheckedChanged += RdoBtnTheses_CheckedChanged; }
-            if (RdoBtnPeriodical != null) { RdoBtnPeriodical.CheckedChanged -= RdoBtnPeriodical_CheckedChanged; RdoBtnPeriodical.CheckedChanged += RdoBtnPeriodical_CheckedChanged; }
-            if (RdoBtnAV != null) { RdoBtnAV.CheckedChanged -= RdoBtnAV_CheckedChanged; RdoBtnAV.CheckedChanged += RdoBtnAV_CheckedChanged; }
+            // Note: resource-type radio controls were removed from the designer by your change.
+            // Do not wire non-existent controls here; panels will be shown based on the book being edited.
+
+            // Material-format radios (Thesis / Periodical / AV) -> toggle physical/digital panels
+            if (RdoBtnTHPhysical != null) { RdoBtnTHPhysical.CheckedChanged -= MaterialFormat_CheckedChanged; RdoBtnTHPhysical.CheckedChanged += MaterialFormat_CheckedChanged; }
+            if (RdoBtnTHDigital != null) { RdoBtnTHDigital.CheckedChanged -= MaterialFormat_CheckedChanged; RdoBtnTHDigital.CheckedChanged += MaterialFormat_CheckedChanged; }
+
+            if (RdoBtnPRPhysical != null) { RdoBtnPRPhysical.CheckedChanged -= MaterialFormat_CheckedChanged; RdoBtnPRPhysical.CheckedChanged += MaterialFormat_CheckedChanged; }
+            if (RdoBtnPRDigital != null) { RdoBtnPRDigital.CheckedChanged -= MaterialFormat_CheckedChanged; RdoBtnPRDigital.CheckedChanged += MaterialFormat_CheckedChanged; }
+
+            if (RdoBtnAVPhysical != null) { RdoBtnAVPhysical.CheckedChanged -= MaterialFormat_CheckedChanged; RdoBtnAVPhysical.CheckedChanged += MaterialFormat_CheckedChanged; }
+            if (RdoBtnAVDigital != null) { RdoBtnAVDigital.CheckedChanged -= MaterialFormat_CheckedChanged; RdoBtnAVDigital.CheckedChanged += MaterialFormat_CheckedChanged; }
+        }
+
+        private void MaterialFormat_CheckedChanged(object sender, EventArgs e)
+        {
+            // Any material-format radio changed -> sync material format panels
+            SyncMaterialFormatPanels();
+        }
+
+        private void SyncMaterialFormatPanels()
+        {
+            // Thesis: show/hide physical/digital format panels
+            if (RdoBtnTHPhysical != null && PnlTHPhysicalFormat != null) PnlTHPhysicalFormat.Visible = RdoBtnTHPhysical.Checked;
+            if (RdoBtnTHDigital != null && PnlTHDigitalFormat != null) PnlTHDigitalFormat.Visible = RdoBtnTHDigital.Checked;
+
+            // Periodical: show/hide physical/digital format panels
+            if (RdoBtnPRPhysical != null && PnlPRPhysicalFormat != null) PnlPRPhysicalFormat.Visible = RdoBtnPRPhysical.Checked;
+            if (RdoBtnPRDigital != null && PnlPRDigitalFormat != null) PnlPRDigitalFormat.Visible = RdoBtnPRDigital.Checked;
+
+            // AV: show/hide physical/digital format panels
+            if (RdoBtnAVPhysical != null && PnlAVPhysicalFormat != null) PnlAVPhysicalFormat.Visible = RdoBtnAVPhysical.Checked;
+            if (RdoBtnAVDigital != null && PnlAVDigitalFormat != null) PnlAVDigitalFormat.Visible = RdoBtnAVDigital.Checked;
+
+            // Enable/clear download URL fields when appropriate
+            if (TxtTHDownloadURL != null) TxtTHDownloadURL.Enabled = RdoBtnTHDigital != null && RdoBtnTHDigital.Checked;
+            if (TxtPRDownloadURL != null) TxtPRDownloadURL.Enabled = RdoBtnPRDigital != null && RdoBtnPRDigital.Checked;
+            if (TxtAVDownloadURL != null) TxtAVDownloadURL.Enabled = RdoBtnAVDigital != null && RdoBtnAVDigital.Checked;
+
+            if (TxtTHDownloadURL != null && (RdoBtnTHDigital == null || !RdoBtnTHDigital.Checked)) TxtTHDownloadURL.Text = string.Empty;
+            if (TxtPRDownloadURL != null && (RdoBtnPRDigital == null || !RdoBtnPRDigital.Checked)) TxtPRDownloadURL.Text = string.Empty;
+            if (TxtAVDownloadURL != null && (RdoBtnAVDigital == null || !RdoBtnAVDigital.Checked)) TxtAVDownloadURL.Text = string.Empty;
+
+            // Ensure copy-info visibility updated because material format may affect it
+            UpdateCopyInformationVisibility();
         }
 
         private int ExtractYearFromString(string s)
@@ -477,6 +516,101 @@ namespace LMS.Presentation.Popup.Inventory
         {
             if (book == null) return;
 
+            // helper: ensure combo contains value (case-insensitive) and set Text
+            void EnsureComboContainsAndSet(ComboBox combo, string value)
+            {
+                if (combo == null) return;
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    combo.Text = string.Empty;
+                    return;
+                }
+
+                // check case-insensitively among existing string items
+                bool exists = combo.Items.Cast<object>()
+                                 .OfType<string>()
+                                 .Any(x => string.Equals(x?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
+                if (!exists) combo.Items.Add(value.Trim());
+                combo.Text = value.Trim();
+            }
+
+            // helper: try to resolve publisher name from repository when navigation property is null
+            Func<int, string> GetPublisherNameById = id =>
+            {
+                if (id <= 0) return null;
+                try
+                {
+                    var p = _publisherRepo?.GetById(id);
+                    return p?.Name;
+                }
+                catch
+                {
+                    return null;
+                }
+            };
+
+            // helper: try to resolve category name from repository when navigation property is null
+            Func<int, string> GetCategoryNameById = id =>
+            {
+                if (id <= 0) return null;
+                try
+                {
+                    var c = _categoryRepo?.GetById(id);
+                    return c?.Name;
+                }
+                catch
+                {
+                    return null;
+                }
+            };
+
+            // helper: parse Edition like "Vol. 2, No. 3" or "Vol 2 No 3" or "Vol.2 No.3" into volume/issue
+            void ParseVolumeIssue(string edition, out string volume, out string issue)
+            {
+                volume = string.Empty;
+                issue = string.Empty;
+                if (string.IsNullOrWhiteSpace(edition)) return;
+
+                try
+                {
+                    var s = edition;
+
+                    // Try common patterns: Vol(. )?number and No(. )?number
+                    var volMatch = Regex.Match(s, @"\bVol(?:ume)?\.?\s*(\d+)\b", RegexOptions.IgnoreCase);
+                    if (volMatch.Success) volume = volMatch.Groups[1].Value;
+
+                    var noMatch = Regex.Match(s, @"\bNo(?:\.|)?\s*(\d+)\b", RegexOptions.IgnoreCase);
+                    if (noMatch.Success) issue = noMatch.Groups[1].Value;
+
+                    // Fallback: if not found, try "Vol. X, No. Y" with non-digits allowed
+                    if (string.IsNullOrWhiteSpace(volume) || string.IsNullOrWhiteSpace(issue))
+                    {
+                        var parts = s.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                                     .Select(p => p.Trim()).ToArray();
+                        foreach (var p in parts)
+                        {
+                            if (string.IsNullOrWhiteSpace(volume))
+                            {
+                                var m = Regex.Match(p, @"\b(\d+)\b");
+                                if (m.Success) volume = m.Groups[1].Value;
+                            }
+                        }
+
+                        // if there are two numeric parts assume first=volume second=issue
+                        var allNums = Regex.Matches(s, @"\d+").Cast<Match>().Select(m => m.Value).ToArray();
+                        if (allNums.Length >= 2)
+                        {
+                            if (string.IsNullOrWhiteSpace(volume)) volume = allNums[0];
+                            if (string.IsNullOrWhiteSpace(issue)) issue = allNums[1];
+                        }
+                    }
+                }
+                catch
+                {
+                    // ignore parser errors; leave volume/issue empty
+                }
+            }
+
             // Map fields depending on resource type (each control belongs to a resource group).
             switch (book.ResourceType)
             {
@@ -489,12 +623,19 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtEBNoOfPages.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty;
                     CmbBxEBLanguage.Text = book.Language;
                     TxtEBDownloadURL.Text = book.DownloadURL;
-                    if (!string.IsNullOrWhiteSpace(book.Publisher?.Name))
-                    {
-                        if (!CmbBxEBPublisher.Items.Contains(book.Publisher.Name)) CmbBxEBPublisher.Items.Add(book.Publisher.Name);
-                        CmbBxEBPublisher.Text = book.Publisher.Name;
-                    }
-                    if (!string.IsNullOrWhiteSpace(book.Category?.Name) && !CmbBxEBCategory.Items.Contains(book.Category.Name)) CmbBxEBCategory.Items.Add(book.Category.Name);
+
+                    // ensure publisher shown and selectable (try navigation then id)
+                    EnsureComboContainsAndSet(CmbBxEBPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
+
+                    // category: try navigation then id
+                    EnsureComboContainsAndSet(CmbBxEBCategory, book.Category?.Name ?? GetCategoryNameById(book.CategoryID));
+
+                    // format (stored in PhysicalDescription for e-book in this app)
+                    if (!string.IsNullOrWhiteSpace(book.PhysicalDescription))
+                        EnsureComboContainsAndSet(CmbBxEBFormat, book.PhysicalDescription.Trim());
+                    else
+                        CmbBxEBFormat.Text = string.Empty;
+
                     break;
 
                 case ResourceType.Thesis:
@@ -505,7 +646,10 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtBxTHPublicationYear.Text = book.PublicationYear > 0 ? book.PublicationYear.ToString() : string.Empty;
                     TxtBxTHNoOfPages.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty;
                     CmbBxTHLanguage.Text = book.Language;
-                    CmbBxTHPublisher.Text = book.Publisher?.Name ?? string.Empty;
+
+                    // ensure publisher shown and selectable
+                    EnsureComboContainsAndSet(CmbBxTHPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
+
                     // degree stored in Edition
                     if (!string.IsNullOrWhiteSpace(book.Edition)) CmbBxTHDegreeLevel.Text = book.Edition;
                     break;
@@ -518,7 +662,18 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtPRPubDate.Text = book.PublicationYear > 0 ? book.PublicationYear.ToString() : string.Empty;
                     TxtPRPages.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty;
                     CmbBxPRLanguage.Text = book.Language;
-                    CmbBxPRPublisher.Text = book.Publisher?.Name ?? string.Empty;
+
+                    // ensure publisher shown and selectable
+                    EnsureComboContainsAndSet(CmbBxPRPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
+
+                    // Parse volume/issue from Edition (if present)
+                    string vol, issue;
+                    ParseVolumeIssue(book.Edition, out vol, out issue);
+                    if (!string.IsNullOrWhiteSpace(vol)) TxtPRVolume.Text = vol;
+                    else TxtPRVolume.Text = string.Empty;
+
+                    if (!string.IsNullOrWhiteSpace(issue)) TxtPRIssue.Text = issue;
+                    else TxtPRIssue.Text = string.Empty;
                     break;
 
                 case ResourceType.AV:
@@ -529,8 +684,13 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtAVPublicationYear.Text = book.PublicationYear > 0 ? book.PublicationYear.ToString() : string.Empty;
                     TxtAVDuration.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty; // duration stored in Pages column
                     CmbBxAVLanguage.Text = book.Language;
-                    CmbBxAVPublisher.Text = book.Publisher?.Name ?? string.Empty;
-                    CmbBxAVCategory.Text = book.Category?.Name ?? string.Empty;
+
+                    // ensure publisher shown and selectable
+                    EnsureComboContainsAndSet(CmbBxAVPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
+
+                    // category: try navigation then id
+                    EnsureComboContainsAndSet(CmbBxAVCategory, book.Category?.Name ?? GetCategoryNameById(book.CategoryID));
+
                     break;
 
                 case ResourceType.PhysicalBook:
@@ -544,8 +704,12 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtBKNoOfPages.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty;
                     TxtBKPhysicalDescription.Text = book.PhysicalDescription;
                     CmbBxBKLanguage.Text = book.Language;
-                    CmbBxBKPublisher.Text = book.Publisher?.Name ?? string.Empty;
-                    if (!string.IsNullOrWhiteSpace(book.Category?.Name) && !CmbBxBKCategory.Items.Contains(book.Category.Name)) CmbBxBKCategory.Items.Add(book.Category.Name);
+
+                    // ensure publisher shown and selectable
+                    EnsureComboContainsAndSet(CmbBxBKPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
+
+                    // category: try navigation then id
+                    EnsureComboContainsAndSet(CmbBxBKCategory, book.Category?.Name ?? GetCategoryNameById(book.CategoryID));
                     break;
             }
 
@@ -758,12 +922,18 @@ namespace LMS.Presentation.Popup.Inventory
 
         private ResourceType? GetSelectedResourceType()
         {
-            if (RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked) return ResourceType.PhysicalBook;
-            if (RdoBtnEBook != null && RdoBtnEBook.Checked) return ResourceType.EBook;
-            if (RdoBtnTheses != null && RdoBtnTheses.Checked) return ResourceType.Thesis;
-            if (RdoBtnPeriodical != null && RdoBtnPeriodical.Checked) return ResourceType.Periodical;
-            if (RdoBtnAV != null && RdoBtnAV.Checked) return ResourceType.AV;
-            return null;
+            // If a book is loaded, use its resource type (Edit scenario).
+            if (_book != null) return _book.ResourceType;
+
+            // Fallback: infer from visible group boxes (useful if panels are manually shown/hidden)
+            if (GrpBxPhysicalBook != null && GrpBxPhysicalBook.Visible) return ResourceType.PhysicalBook;
+            if (GrpBxEBook != null && GrpBxEBook.Visible) return ResourceType.EBook;
+            if (GrpBxThesis != null && GrpBxThesis.Visible) return ResourceType.Thesis;
+            if (GrpBxPeriodicals != null && GrpBxPeriodicals.Visible) return ResourceType.Periodical;
+            if (GrpBxAV != null && GrpBxAV.Visible) return ResourceType.AV;
+
+            // Default when nothing indicates a type
+            return ResourceType.PhysicalBook;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -1199,24 +1369,41 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void SyncPanelsForResourceType()
         {
-            // Show/hide the GroupBoxes that correspond to each resource type (match designer names)
-            if (RdoBtnPhysicalBook != null && GrpBxPhysicalBook != null)
-                GrpBxPhysicalBook.Visible = RdoBtnPhysicalBook.Checked;
+            // Hide all resource group boxes first so only the selected one is visible.
+            if (GrpBxPhysicalBook != null) GrpBxPhysicalBook.Visible = false;
+            if (GrpBxPeriodicals != null) GrpBxPeriodicals.Visible = false;
+            if (GrpBxThesis != null) GrpBxThesis.Visible = false;
+            if (GrpBxAV != null) GrpBxAV.Visible = false;
+            if (GrpBxEBook != null) GrpBxEBook.Visible = false;
 
-            if (RdoBtnEBook != null && GrpBxEBook != null)
-                GrpBxEBook.Visible = RdoBtnEBook.Checked;
+            // Decide which resource is selected (fall back to PhysicalBook when unknown)
+            var selected = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
 
-            if (RdoBtnTheses != null && GrpBxThesis != null)
-                GrpBxThesis.Visible = RdoBtnTheses.Checked;
+            switch (selected)
+            {
+                case ResourceType.PhysicalBook:
+                    if (GrpBxPhysicalBook != null) GrpBxPhysicalBook.Visible = true;
+                    break;
 
-            if (RdoBtnPeriodical != null && GrpBxPeriodicals != null)
-                GrpBxPeriodicals.Visible = RdoBtnPeriodical.Checked;
+                case ResourceType.Periodical:
+                    if (GrpBxPeriodicals != null) GrpBxPeriodicals.Visible = true;
+                    break;
 
-            if (RdoBtnAV != null && GrpBxAV != null)
-                GrpBxAV.Visible = RdoBtnAV.Checked;
+                case ResourceType.Thesis:
+                    if (GrpBxThesis != null) GrpBxThesis.Visible = true;
+                    break;
 
-            // Loan radios enabled only when physical book selected (designer uses BK-prefixed radios)
-            bool physical = RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked;
+                case ResourceType.AV:
+                    if (GrpBxAV != null) GrpBxAV.Visible = true;
+                    break;
+
+                case ResourceType.EBook:
+                    if (GrpBxEBook != null) GrpBxEBook.Visible = true;
+                    break;
+            }
+
+            // Loan radios enabled only when physical book selected
+            bool physical = selected == ResourceType.PhysicalBook;
             if (RdoBtnBKReference != null) RdoBtnBKReference.Enabled = physical;
             if (RdoBtnBKCirculation != null) RdoBtnBKCirculation.Enabled = physical;
 
@@ -1228,20 +1415,20 @@ namespace LMS.Presentation.Popup.Inventory
             }
 
             // Enable/disable download URL controls according to the selected resource and material-format radios.
-            // E-Book download
-            bool ebook = RdoBtnEBook != null && RdoBtnEBook.Checked;
+            bool ebook = selected == ResourceType.EBook;
             if (TxtEBDownloadURL != null) TxtEBDownloadURL.Enabled = ebook;
             if (!ebook && TxtEBDownloadURL != null) TxtEBDownloadURL.Text = string.Empty;
 
-            // Thesis digital download
-            bool thDigital = RdoBtnTheses != null && RdoBtnTheses.Checked && RdoBtnTHDigital != null && RdoBtnTHDigital.Checked;
+            bool thDigital = selected == ResourceType.Thesis && RdoBtnTHDigital != null && RdoBtnTHDigital.Checked;
             if (TxtTHDownloadURL != null) TxtTHDownloadURL.Enabled = thDigital;
             if (!thDigital && TxtTHDownloadURL != null) TxtTHDownloadURL.Text = string.Empty;
 
-            // AV digital download
-            bool avDigital = RdoBtnAV != null && RdoBtnAV.Checked && RdoBtnAVDigital != null && RdoBtnAVDigital.Checked;
+            bool avDigital = selected == ResourceType.AV && RdoBtnAVDigital != null && RdoBtnAVDigital.Checked;
             if (TxtAVDownloadURL != null) TxtAVDownloadURL.Enabled = avDigital;
             if (!avDigital && TxtAVDownloadURL != null) TxtAVDownloadURL.Text = string.Empty;
+
+            // Sync material-format sub-panels (physical vs digital controls inside each resource group)
+            SyncMaterialFormatPanels();
 
             // Ensure copy-info visibility updated as resource-type/panel state may have changed
             UpdateCopyInformationVisibility();
@@ -1258,7 +1445,8 @@ namespace LMS.Presentation.Popup.Inventory
         {
             bool show = false;
 
-            if (RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked) show = true;
+            var selected = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
+            if (selected == ResourceType.PhysicalBook) show = true;
 
             // If Periodical/Thesis/AV have material-format radios, you could check them here similar to AddBook.
             if (GrpBxCopyInformation != null)
