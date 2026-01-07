@@ -113,11 +113,25 @@ namespace LMS.Presentation.Popup.Inventory
             try
             {
                 // Authors: all names from Author table -> reuse for all author comboboxes
-                var authorNames = _authorRepo?.GetAll()
-                    .Where(a => !string.IsNullOrWhiteSpace(a.FullName))
-                    .Select(a => a.FullName.Trim())
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToArray();
+                // Exclude any authors who appear in BookAuthor with role = "Editor" or role = "Adviser"
+                string[] authorNames;
+                try
+                {
+                    var allAuthors = _authorRepo?.GetAll() ?? new List<Model.Models.Catalog.Author>();
+
+                    var editorIds = new HashSet<int>(_bookAuthorRepo?.GetDistinctAuthorIdsByRole("Editor") ?? Enumerable.Empty<int>());
+                    var adviserIds = new HashSet<int>(_bookAuthorRepo?.GetDistinctAuthorIdsByRole("Adviser") ?? Enumerable.Empty<int>());
+
+                    authorNames = allAuthors
+                        .Where(a => !string.IsNullOrWhiteSpace(a.FullName) && !editorIds.Contains(a.AuthorID) && !adviserIds.Contains(a.AuthorID))
+                        .Select(a => a.FullName.Trim())
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                }
+                catch
+                {
+                    authorNames = new string[0];
+                }
 
                 // Setup BK authors
                 SetupComboBoxForAutocomplete(CmbBxBKAuthors, authorNames);

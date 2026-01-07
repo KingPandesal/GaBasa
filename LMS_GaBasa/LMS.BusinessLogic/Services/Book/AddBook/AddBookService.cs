@@ -85,6 +85,20 @@ namespace LMS.BusinessLogic.Services.Book.AddBook
                 dynBook.CallNumber = dto.CallNumber ?? string.Empty;
                 dynBook.CoverImage = dto.CoverImage ?? string.Empty;
 
+                // Ensure DownloadURL from DTO is persisted to the Book model when present (fix for bug:
+                // DownloadURL was not being mapped and therefore never saved).
+                // Many concrete Book types (EBook, Thesis digital, AV digital, Periodical digital) expose a DownloadURL property.
+                // Assign empty string when null to avoid nulls.
+                try
+                {
+                    dynBook.DownloadURL = dto.DownloadURL ?? string.Empty;
+                }
+                catch
+                {
+                    // If a concrete Book type doesn't expose DownloadURL, ignore — it's optional for that type.
+                    // But for types that do expose it (EBook, AV digital, Thesis digital, Periodical digital) this will persist.
+                }
+
                 // 2) Persist Book and get BookID
                 int bookId = _bookRepo.Add(book);
                 if (bookId <= 0)
