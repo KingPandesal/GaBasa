@@ -77,6 +77,12 @@
     <Compile Include="Popup\Catalog\ViewBookDetails.Designer.cs">
       <DependentUpon>ViewBookDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Catalog\ViewBookDownloadLink.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Catalog\ViewBookDownloadLink.Designer.cs">
+      <DependentUpon>ViewBookDownloadLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Inventory\AddBook.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,12 @@
     </Compile>
     <Compile Include="Popup\Members\AddMember.Designer.cs">
       <DependentUpon>AddMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\Members\AllMemberTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Members\AllMemberTransaction.Designer.cs">
+      <DependentUpon>AllMemberTransaction.cs</DependentUpon>
     </Compile>
     <Compile Include="Popup\Members\EditMember.cs">
       <SubType>Form</SubType>
@@ -304,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Catalog\ViewBookDetails.resx">
       <DependentUpon>ViewBookDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Catalog\ViewBookDownloadLink.resx">
+      <DependentUpon>ViewBookDownloadLink.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
