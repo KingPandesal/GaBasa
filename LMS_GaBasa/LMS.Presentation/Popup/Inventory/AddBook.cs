@@ -305,6 +305,12 @@ namespace LMS.Presentation.Popup.Inventory
             EnforceDigitsLimit(TxtBKNoOfPages, 10);
             // Thesis pages also limited to 10 digits as requested
             EnforceDigitsLimit(TxtBxTHNoOfPages, 10);
+
+            // EB pages limit: enforce max 10 digits for eBook pages input
+            EnforceDigitsLimit(TxtEBNoOfPages, 10);
+
+            // AV duration should accept digits only (no unit suffix). Limit to reasonable number of digits (e.g. 6)
+            EnforceDigitsLimit(TxtAVDuration, 6);
         }
 
         private IEnumerable<string> GetNamesByRole(string role)
@@ -367,11 +373,30 @@ namespace LMS.Presentation.Popup.Inventory
         {
             bool showCopyInfo = false;
 
-            if (RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked) showCopyInfo = true;
+            // Always show for physical books
+            if (RdoBtnPhysicalBook != null && RdoBtnPhysicalBook.Checked)
+                showCopyInfo = true;
 
-            if (RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked) showCopyInfo = true;
-            if (RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked) showCopyInfo = true;
-            if (RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked) showCopyInfo = true;
+            // Show copy info for Periodical only when Periodical is the selected resource type and its Physical radio is checked
+            if (GetSelectedResourceType() == ResourceType.Periodical
+                && RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked)
+            {
+                showCopyInfo = true;
+            }
+
+            // Show copy info for Thesis only when Thesis is the selected resource type and its Physical radio is checked
+            if (GetSelectedResourceType() == ResourceType.Thesis
+                && RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked)
+            {
+                showCopyInfo = true;
+            }
+
+            // Show copy info for AV only when AV is the selected resource type and its Physical radio is checked
+            if (GetSelectedResourceType() == ResourceType.AV
+                && RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked)
+            {
+                showCopyInfo = true;
+            }
 
             if (GrpBxCopyInformation != null)
                 GrpBxCopyInformation.Visible = showCopyInfo;
@@ -810,6 +835,163 @@ namespace LMS.Presentation.Popup.Inventory
                     }
                 }
 
+                // --- Audio-Visual validation and material-format handling ---
+                if (dto.ResourceType == ResourceType.AV)
+                {
+                    // Required: UPC/ISAN stored in ISBN
+                    if (string.IsNullOrWhiteSpace(dto.ISBN))
+                    {
+                        MessageBox.Show("UPC/ISAN is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVUPCISAN?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(dto.CallNumber))
+                    {
+                        MessageBox.Show("Call number is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVCallNumber?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(dto.Title))
+                    {
+                        MessageBox.Show("Title is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVTitle?.Focus();
+                        return;
+                    }
+
+                    if (dto.Authors == null || dto.Authors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one author for the audio-visual resource.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVAuthors?.Focus();
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(dto.Publisher))
+                    {
+                        MessageBox.Show("Publisher is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVPublisher?.Focus();
+                        return;
+                    }
+
+                    // Publication year should not be greater than current year
+                    if (dto.PublicationYear > DateTime.Now.Year)
+                    {
+                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVPublicationYear?.Focus();
+                        return;
+                    }
+
+                    // Category required for AV
+                    if (string.IsNullOrWhiteSpace(CmbBxAVCategory.Text))
+                    {
+                        MessageBox.Show("Category is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVCategory?.Focus();
+                        return;
+                    }
+
+                    // Duration: user should enter number only (we store it in Pages column).
+                    var durationRaw = TxtAVDuration.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(durationRaw))
+                    {
+                        MessageBox.Show("Duration is required. Enter a number (seconds).", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVDuration?.Focus();
+                        return;
+                    }
+
+                    // Ensure digits only
+                    if (!durationRaw.All(char.IsDigit))
+                    {
+                        MessageBox.Show("Duration must contain digits only. Do not include H/M/S suffix.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVDuration?.Focus();
+                        return;
+                    }
+
+                    int durationSeconds = ParseInt(durationRaw);
+                    if (durationSeconds <= 0)
+                    {
+                        MessageBox.Show("Duration must be a positive integer (seconds).", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVDuration?.Focus();
+                        return;
+                    }
+
+                    // Material format handling
+                    if (RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked)
+                    {
+                        // physical: require physical description and copy information
+                        if (string.IsNullOrWhiteSpace(CmbBxAVPhysicalDescription.Text))
+                        {
+                            MessageBox.Show("Please select a physical description for the AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxAVPhysicalDescription?.Focus();
+                            return;
+                        }
+
+                        if (dto.InitialCopyCount <= 0)
+                        {
+                            MessageBox.Show("Please specify the number of copies for a physical AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            NumPckNoOfCopies.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+                        {
+                            MessageBox.Show("Please select a copy status for the AV copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxCopyStatus.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+                        {
+                            MessageBox.Show("Please provide a location for the AV copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtLocation.Focus();
+                            return;
+                        }
+                    }
+                    else if (RdoBtnAVDigital != null && RdoBtnAVDigital.Checked)
+                    {
+                        // digital: require format and download URL, explicitly ignore copy info
+                        if (string.IsNullOrWhiteSpace(CmbBxAVFormat.Text))
+                        {
+                            MessageBox.Show("Please select a digital format for the AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxAVFormat.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(TxtAVDownloadURL.Text))
+                        {
+                            MessageBox.Show("Please provide a Download URL for the digital AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtAVDownloadURL.Focus();
+                            return;
+                        }
+
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select material format (Physical or Digital) for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 // --- Thesis validation and material-format handling per guide ---
                 if (dto.ResourceType == ResourceType.Thesis)
                 {
@@ -1148,22 +1330,40 @@ namespace LMS.Presentation.Popup.Inventory
                     break;
 
                 case ResourceType.AV:
+                    // UPC/ISAN stored in ISBN DB column
+                    dto.ISBN = TxtAVUPCISAN.Text.Trim();
+
                     dto.Title = TxtAVTitle.Text.Trim();
                     dto.Subtitle = TxtAVSubtitle.Text.Trim();
                     dto.Publisher = !string.IsNullOrWhiteSpace(CmbBxAVPublisher.Text) ? CmbBxAVPublisher.Text.Trim() : string.Empty;
                     dto.Language = CmbBxAVLanguage.Text.Trim();
                     dto.CallNumber = TxtAVCallNumber.Text.Trim();
-                    // AV duration exists; DTO doesn't have duration property — leave Pages = 0
-                    dto.Pages = 0;
+                    // AV duration: user now enters a number only (seconds). Store directly in Pages column.
+                    dto.Pages = ParseInt(TxtAVDuration.Text.Trim());
                     dto.PublicationYear = ParseInt(TxtAVPublicationYear.Text);
 
-                    // Use AV category combobox value as category for AV resources
+                    // AV-specific category
                     dto.CategoryName = CmbBxAVCategory.Text.Trim();
 
-                    if (RdoBtnAVPhysical.Checked)
+                    // Material format: physical vs digital for AV
+                    if (RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked)
+                    {
                         dto.PhysicalDescription = CmbBxAVPhysicalDescription.Text.Trim();
-                    else
+                        // keep copy information for physical AV
+                        dto.InitialCopyCount = NumPckNoOfCopies.Value;
+                        dto.CopyStatus = CmbBxCopyStatus.Text;
+                        dto.CopyLocation = TxtLocation.Text.Trim();
+                    }
+                    else if (RdoBtnAVDigital != null && RdoBtnAVDigital.Checked)
+                    {
+                        // digital: record format + download URL and ensure no copies are created
                         dto.PhysicalDescription = CmbBxAVFormat.Text.Trim();
+                        dto.DownloadURL = TxtAVDownloadURL.Text.Trim();
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+
                     dto.LoanType = null;
                     break;
 
@@ -1180,12 +1380,23 @@ namespace LMS.Presentation.Popup.Inventory
                     // Use EB category combobox value as category for eBooks
                     dto.CategoryName = CmbBxEBCategory.Text.Trim();
 
+                    // Format is stored in PhysicalDescription for consistency with validation
                     dto.PhysicalDescription = CmbBxEBFormat.Text.Trim();
+
+                    // Download URL for eBooks (make sure we populate this so validation sees it)
+                    dto.DownloadURL = TxtEBDownloadURL.Text.Trim();
+
+                    // eBooks are digital: do not create physical copies
+                    dto.InitialCopyCount = 0;
+                    dto.CopyStatus = string.Empty;
+                    dto.CopyLocation = string.Empty;
+
                     dto.LoanType = null;
                     break;
             }
 
             // If publisher name maps to an existing publisher in DB, set PublisherID.
+            // If not, create it now (user requested missing publishers be saved on Save).
             if (!string.IsNullOrWhiteSpace(dto.Publisher) && _publisherRepo != null)
             {
                 var match = _publisherRepo.GetAll()
@@ -1808,7 +2019,55 @@ namespace LMS.Presentation.Popup.Inventory
             if (PnlAVPhysicalFormat != null) PnlAVPhysicalFormat.Visible = RdoBtnAVPhysical.Checked;
             if (PnlAVDigitalFormat != null) PnlAVDigitalFormat.Visible = RdoBtnAVDigital.Checked;
 
+            // When switching format adjust copy-info visibility and enable/disable AV-specific controls
+            // so AV Digital does NOT require copies/status/location and AV Physical DOES require them.
+            SetAVDigitalUIState(RdoBtnAVDigital != null && RdoBtnAVDigital.Checked);
+
             UpdateCopyInformationVisibility();
+        }
+
+        private void SetAVDigitalUIState(bool isDigital)
+        {
+            // If the AV resource group is not the current selection, don't force UI state for copy group
+            // The caller still calls UpdateCopyInformationVisibility afterwards.
+            // Enable/disable AV-specific format/download vs physical-description & copy controls.
+            try
+            {
+                if (CmbBxAVFormat != null) CmbBxAVFormat.Enabled = isDigital;
+                if (TxtAVDownloadURL != null) TxtAVDownloadURL.Enabled = isDigital;
+
+                if (CmbBxAVPhysicalDescription != null) CmbBxAVPhysicalDescription.Enabled = !isDigital;
+
+                // Copy-related controls are grouped in GrpBxCopyInformation — toggle their enabled state
+                // but leave actual Visible decision to UpdateCopyInformationVisibility (it considers selected resource).
+                if (NumPckNoOfCopies != null) NumPckNoOfCopies.Enabled = !isDigital;
+                if (CmbBxCopyStatus != null) CmbBxCopyStatus.Enabled = !isDigital;
+                if (TxtLocation != null) TxtLocation.Enabled = !isDigital;
+
+                if (isDigital)
+                {
+                    // Clear copy inputs to avoid accidental validation / retention when switching back and forth.
+                    try { NumPckNoOfCopies.Value = 0; } catch { /* ignore if control absent */ }
+                    if (CmbBxCopyStatus != null) CmbBxCopyStatus.Text = string.Empty;
+                    if (TxtLocation != null) TxtLocation.Text = string.Empty;
+                }
+                else
+                {
+                    // When switching back to physical, restore sensible defaults if empty
+                    if (NumPckNoOfCopies != null && NumPckNoOfCopies.Value <= 0)
+                    {
+                        try { NumPckNoOfCopies.Value = 1; } catch { /* ignore */ }
+                    }
+                    if (string.IsNullOrWhiteSpace(CmbBxCopyStatus?.Text) && CmbBxCopyStatus != null)
+                    {
+                        CmbBxCopyStatus.SelectedIndex = Math.Max(0, CmbBxCopyStatus.SelectedIndex);
+                    }
+                }
+            }
+            catch
+            {
+                // Non-fatal: don't let UI errors block user flow.
+            }
         }
 
         private void RdoBtnBKReference_CheckedChanged(object sender, EventArgs e)

@@ -259,6 +259,8 @@
             this.CmbBxAVCategory = new System.Windows.Forms.ComboBox();
             this.LblEBCategory = new System.Windows.Forms.Label();
             this.CmbBxEBCategory = new System.Windows.Forms.ComboBox();
+            this.TxtEBDownloadURL = new System.Windows.Forms.TextBox();
+            this.LblEBDownloadURL = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -2388,6 +2390,8 @@
             // 
             // GrpBxEBook
             // 
+            this.GrpBxEBook.Controls.Add(this.TxtEBDownloadURL);
+            this.GrpBxEBook.Controls.Add(this.LblEBDownloadURL);
             this.GrpBxEBook.Controls.Add(this.LblEBCategory);
             this.GrpBxEBook.Controls.Add(this.CmbBxEBCategory);
             this.GrpBxEBook.Controls.Add(this.CmbBxEBAuthors);
@@ -2420,7 +2424,7 @@
             this.GrpBxEBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxEBook.Location = new System.Drawing.Point(3, 5311);
             this.GrpBxEBook.Name = "GrpBxEBook";
-            this.GrpBxEBook.Size = new System.Drawing.Size(629, 1039);
+            this.GrpBxEBook.Size = new System.Drawing.Size(629, 1099);
             this.GrpBxEBook.TabIndex = 102;
             this.GrpBxEBook.TabStop = false;
             this.GrpBxEBook.Text = "E-Book Details";
@@ -2510,7 +2514,7 @@
             "TXT",
             "HTML",
             "IBA"});
-            this.CmbBxEBFormat.Location = new System.Drawing.Point(201, 976);
+            this.CmbBxEBFormat.Location = new System.Drawing.Point(201, 998);
             this.CmbBxEBFormat.Name = "CmbBxEBFormat";
             this.CmbBxEBFormat.Size = new System.Drawing.Size(353, 36);
             this.CmbBxEBFormat.TabIndex = 93;
@@ -2540,7 +2544,7 @@
             this.LblEBFormat.AutoSize = true;
             this.LblEBFormat.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblEBFormat.ForeColor = System.Drawing.Color.Black;
-            this.LblEBFormat.Location = new System.Drawing.Point(28, 981);
+            this.LblEBFormat.Location = new System.Drawing.Point(28, 1003);
             this.LblEBFormat.Name = "LblEBFormat";
             this.LblEBFormat.Size = new System.Drawing.Size(75, 28);
             this.LblEBFormat.TabIndex = 89;
@@ -2716,7 +2720,7 @@
             this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
             this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6356);
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6416);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
             this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
             this.GrpBxCopyInformation.TabIndex = 103;
@@ -3019,6 +3023,26 @@
             this.CmbBxEBCategory.Size = new System.Drawing.Size(353, 36);
             this.CmbBxEBCategory.TabIndex = 101;
             // 
+            // TxtEBDownloadURL
+            // 
+            this.TxtEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TxtEBDownloadURL.ForeColor = System.Drawing.Color.Black;
+            this.TxtEBDownloadURL.Location = new System.Drawing.Point(201, 1045);
+            this.TxtEBDownloadURL.Name = "TxtEBDownloadURL";
+            this.TxtEBDownloadURL.Size = new System.Drawing.Size(353, 34);
+            this.TxtEBDownloadURL.TabIndex = 104;
+            // 
+            // LblEBDownloadURL
+            // 
+            this.LblEBDownloadURL.AutoSize = true;
+            this.LblEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblEBDownloadURL.ForeColor = System.Drawing.Color.Black;
+            this.LblEBDownloadURL.Location = new System.Drawing.Point(28, 1048);
+            this.LblEBDownloadURL.Name = "LblEBDownloadURL";
+            this.LblEBDownloadURL.Size = new System.Drawing.Size(142, 28);
+            this.LblEBDownloadURL.TabIndex = 103;
+            this.LblEBDownloadURL.Text = "Download URL";
+            // 
             // AddBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -3312,5 +3336,7 @@
         private System.Windows.Forms.ComboBox CmbBxAVCategory;
         private System.Windows.Forms.Label LblEBCategory;
         private System.Windows.Forms.ComboBox CmbBxEBCategory;
+        private System.Windows.Forms.TextBox TxtEBDownloadURL;
+        private System.Windows.Forms.Label LblEBDownloadURL;
     }
 }

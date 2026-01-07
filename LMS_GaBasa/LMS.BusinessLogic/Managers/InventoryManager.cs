@@ -14,6 +14,9 @@ namespace LMS.BusinessLogic.Managers
         private readonly IBookRepository _bookRepo;
         private readonly ICatalogManager _catalogManager;
 
+        // Maximum allowed pages for e-books (adjustable)
+        private const int MaxEBookPages = 2000;
+
         public InventoryManager(
             IAddBookService addBookService,
             IBookRepository bookRepo,
@@ -102,18 +105,33 @@ namespace LMS.BusinessLogic.Managers
                 return false;
             }
 
+            // Pages: must be positive for all resources that require pages.
             if (dto.Pages <= 0)
             {
                 errorMessage = "Number of pages is required.";
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(dto.PhysicalDescription))
+            // Enforce ebook pages limit
+            if (dto.ResourceType == ResourceType.EBook)
             {
-                errorMessage = "Physical description is required.";
-                return false;
+                if (dto.Pages > MaxEBookPages)
+                {
+                    errorMessage = $"E-book number of pages cannot exceed {MaxEBookPages}.";
+                    return false;
+                }
             }
 
+            // Physical description / format is required. Provide clearer message for e-books (format).
+            if (string.IsNullOrWhiteSpace(dto.PhysicalDescription))
+            {
+                if (dto.ResourceType == ResourceType.EBook)
+                    errorMessage = "Format is required for e-books.";
+                else
+                    errorMessage = "Physical description is required.";
+
+                return false;
+            }
 
             // Resource type specific validation
             if (dto.ResourceType == ResourceType.PhysicalBook)
@@ -126,23 +144,27 @@ namespace LMS.BusinessLogic.Managers
             }
             else if (dto.ResourceType == ResourceType.EBook)
             {
+                // Make sure download URL is provided for ebooks
                 if (string.IsNullOrWhiteSpace(dto.DownloadURL))
                 {
                     errorMessage = "Download link is required for e-books.";
                     return false;
                 }
+
+                // Format (CmbBxEBFormat) is validated above via PhysicalDescription check and message.
             }
 
             // Copy information:
             // - Require copies only when copies are expected.
             // - E-books and digital periodicals (which set DownloadURL) do NOT require copies.
             // - Digital theses (Thesis with DownloadURL) also should NOT require copies.
+            // - Digital AV resources (AV with DownloadURL) also should NOT require copies.
             bool copiesExpected = dto.InitialCopyCount > 0;
 
             if (!copiesExpected)
             {
                 // If no copies requested, ensure this is allowed for the resource type:
-                // allow when EBook OR (Periodical AND DownloadURL provided) OR (Thesis AND DownloadURL provided)
+                // allow when EBook OR (Periodical AND DownloadURL provided) OR (Thesis AND DownloadURL provided) OR (AV AND DownloadURL provided)
                 if (dto.ResourceType == ResourceType.EBook)
                 {
                     // ok: e-books don't require copies
@@ -155,9 +177,13 @@ namespace LMS.BusinessLogic.Managers
                 {
                     // ok: digital theses don't require copies
                 }
+                else if (dto.ResourceType == ResourceType.AV && !string.IsNullOrWhiteSpace(dto.DownloadURL))
+                {
+                    // ok: digital AV don't require copies
+                }
                 else
                 {
-                    // For other cases, still require copies (e.g., physical book / periodical physical / thesis physical)
+                    // For other cases, still require copies (e.g., physical book / periodical physical / thesis physical / AV physical)
                     errorMessage = "Number of copies is required.";
                     return false;
                 }
