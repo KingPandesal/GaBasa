@@ -133,6 +133,7 @@ namespace LMS.Presentation.UserControls.Management
             CmbBxStatusFilter.Items.Clear();
             CmbBxStatusFilter.Items.Add("All Status");
             CmbBxStatusFilter.Items.Add("Available");
+            CmbBxStatusFilter.Items.Add("Available Online"); // <- added: digital availability
             CmbBxStatusFilter.Items.Add("Out of Stock");
             CmbBxStatusFilter.SelectedIndex = 0;
         }
@@ -218,6 +219,11 @@ namespace LMS.Presentation.UserControls.Management
                     if (!string.IsNullOrEmpty(editorsCsv) && editorsCsv.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
                         return true;
 
+                    // Advisers (search advisers too)
+                    var advisersCsv = GetAdvisersCsv(b.BookID);
+                    if (!string.IsNullOrEmpty(advisersCsv) && advisersCsv.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+
                     // Category / Subject
                     var categoryName = GetCategoryName(b.CategoryID);
                     if (!string.IsNullOrEmpty(categoryName) && categoryName.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -231,8 +237,8 @@ namespace LMS.Presentation.UserControls.Management
                     // Accession number (search copies for matching accession)
                     try
                     {
-                        // For e-books there are no copies; for others check copies
-                        if (b.ResourceType != ResourceType.EBook)
+                        // For e-books / digital resources there are no physical copies; for others check copies
+                        if (b.ResourceType != ResourceType.EBook && string.IsNullOrWhiteSpace(b.DownloadURL))
                         {
                             var copies = _bookCopyRepo.GetByBookId(b.BookID) ?? new List<BookCopy>();
                             if (copies.Any(c => !string.IsNullOrWhiteSpace(c.AccessionNumber) &&
@@ -265,17 +271,19 @@ namespace LMS.Presentation.UserControls.Management
                 filtered = filtered.Where(b => b.ResourceType.ToString().Equals(selectedResourceType, StringComparison.OrdinalIgnoreCase));
             }
 
-            // Status filter (use available copies to decide status; for E-Books use DownloadURL)
+            // Status filter (use available copies to decide status; for digital resources use DownloadURL -> Available Online)
             string selectedStatus = CmbBxStatusFilter.SelectedItem?.ToString() ?? CmbBxStatusFilter.Text;
             if (!string.IsNullOrWhiteSpace(selectedStatus) && !selectedStatus.Equals("All Status", StringComparison.OrdinalIgnoreCase))
             {
                 filtered = filtered.Where(b =>
                 {
                     string status;
-                    if (b.ResourceType == ResourceType.EBook)
+                    bool isDigital = b.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(b.DownloadURL);
+
+                    if (isDigital)
                     {
-                        // E-Book is available if a download URL is present; otherwise consider unavailable
-                        status = !string.IsNullOrWhiteSpace(b.DownloadURL) ? "Available" : "Out of Stock";
+                        // Digital resources -> Available Online when DownloadURL present
+                        status = !string.IsNullOrWhiteSpace(b.DownloadURL) ? "Available Online" : "Out of Stock";
                     }
                     else
                     {
@@ -335,20 +343,25 @@ namespace LMS.Presentation.UserControls.Management
                 // Authors / Editors / Publisher strings
                 string authors = GetAuthorsCsv(book.BookID);
                 string editors = GetEditorsCsv(book.BookID);
+                string advisers = GetAdvisersCsv(book.BookID);
                 string publishers = GetPublisherString(book.PublisherID);
 
                 // Copies -> totals and availability
-                // If book is an E-Book treat as having zero copies (no copies allowed)
-                bool isEbook = book.ResourceType == ResourceType.EBook;
-                var copies = isEbook ? new List<BookCopy>() : _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                // A resource is considered digital if it's an E-Book or has a DownloadURL (periodical/thesis/AV digital)
+                bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
+
+                var copies = (isDigital) ? new List<BookCopy>() : _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
                 int totalCopies = copies.Count;
                 int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
 
-                // Determine status: for e-books rely on DownloadURL; for physical use copies
+                // Determine status:
+                // - Digital with DownloadURL => "Available Online"
+                // - Digital without DownloadURL => "Out of Stock"
+                // - Physical => "Available" if at least one available else "Out of Stock"
                 string status;
-                if (isEbook)
+                if (isDigital)
                 {
-                    status = !string.IsNullOrWhiteSpace(book.DownloadURL) ? "Available" : "Out of Stock";
+                    status = !string.IsNullOrWhiteSpace(book.DownloadURL) ? "Available Online" : "Out of Stock";
                 }
                 else
                 {
@@ -374,6 +387,7 @@ namespace LMS.Presentation.UserControls.Management
                 SetCellValue(row, "ColumnSubtitle", book.Subtitle);
                 SetCellValue(row, "ColumnAuthors", authors);
                 SetCellValue(row, "ColumnEditors", editors);
+                SetCellValue(row, "ColumnAdvisers", advisers); // new adviser column
                 SetCellValue(row, "ColumnPublishers", publishers);
                 SetCellValue(row, "ColumnCategory", categoryName);
                 SetCellValue(row, "ColumnLanguage", book.Language);
@@ -385,19 +399,29 @@ namespace LMS.Presentation.UserControls.Management
                 SetCellValue(row, "ColumnDLURL", book.DownloadURL);
                 SetCellValue(row, "ColumnLoanType", book.LoanType);
 
-                // Copies / status fields
-                SetCellValue(row, "ColumnTotalCopies", totalCopies.ToString());
-                SetCellValue(row, "ColumnAvailableCopies", availableCopies.ToString());
-                SetCellValue(row, "ColumnStatus", status);
+                // Copies / status fields - apply digital/physical rules per your spec
+                if (isDigital)
+                {
+                    // For digital resources show N/A for copy counts and "Available Online" (when URL present)
+                    SetCellValue(row, "ColumnTotalCopies", "N/A");
+                    SetCellValue(row, "ColumnAvailableCopies", "N/A");
+                    SetCellValue(row, "ColumnStatus", status);
+                }
+                else
+                {
+                    SetCellValue(row, "ColumnTotalCopies", totalCopies.ToString());
+                    SetCellValue(row, "ColumnAvailableCopies", availableCopies.ToString());
+                    SetCellValue(row, "ColumnStatus", status);
+                }
 
                 // Buttons - store Book object on the row Tag so click handlers can find the right book
                 row.Tag = book;
 
-                // Visually disable the "View Copies" button for e-books:
+                // Visually disable the "View Copies" button for digital resources:
                 if (DgwInventory.Columns.Contains("ColumnBtnCopies"))
                 {
                     var cell = row.Cells["ColumnBtnCopies"];
-                    if (isEbook)
+                    if (isDigital)
                     {
                         // mark cell read-only and gray it out; clicking will be ignored in CellContentClick handler
                         cell.ReadOnly = true;
@@ -413,6 +437,32 @@ namespace LMS.Presentation.UserControls.Management
                 }
 
                 rowNumber++;
+            }
+        }
+
+        /// <summary>
+        /// Returns comma-separated adviser full names for a book (Role = "Adviser")
+        /// </summary>
+        private string GetAdvisersCsv(int bookId)
+        {
+            try
+            {
+                var bookAuthors = _bookAuthorRepo.GetByBookId(bookId);
+                if (bookAuthors == null || bookAuthors.Count == 0) return string.Empty;
+
+                var names = new List<string>();
+                foreach (var ba in bookAuthors.Where(x => string.Equals(x.Role, "Adviser", StringComparison.OrdinalIgnoreCase)))
+                {
+                    var author = _authorRepo.GetById(ba.AuthorID);
+                    if (author != null && !string.IsNullOrWhiteSpace(author.FullName))
+                        names.Add(author.FullName.Trim());
+                }
+
+                return string.Join(", ", names.Distinct(StringComparer.OrdinalIgnoreCase));
+            }
+            catch
+            {
+                return string.Empty;
             }
         }
 
@@ -520,15 +570,16 @@ namespace LMS.Presentation.UserControls.Management
             }
             else if (colName == "ColumnBtnCopies")
             {
-                // Do not open ViewBookCopy for e-books
-                if (book.ResourceType == ResourceType.EBook)
+                // Treat as digital if E-Book OR resource has a DownloadURL (digital periodical/thesis/AV)
+                bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
+
+                if (isDigital)
                 {
-                    MessageBox.Show("This is an E-Book and has no physical copies.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("This book is a digital resource. Copy information is not applicable.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 // Open view copies form and pass book id and title.
-                // If the view returned DialogResult.OK (user saved), refresh inventory to reflect changes.
                 try
                 {
                     using (var view = new ViewBookCopy(book.BookID, book.Title))
@@ -567,12 +618,16 @@ namespace LMS.Presentation.UserControls.Management
             }
         }
 
-        // Helper: set cell value only if the column exists (keeps code robust to designer changes)
+        // Helper: set cell value only if the column exists (keeps code robust to designer changes).
+        // All empty/null values are displayed as "N/A" per requirement.
         private void SetCellValue(DataGridViewRow row, string columnName, object value)
         {
             if (DgwInventory.Columns.Contains(columnName))
             {
-                row.Cells[columnName].Value = value ?? string.Empty;
+                var s = value?.ToString() ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(s))
+                    s = "N/A";
+                row.Cells[columnName].Value = s;
             }
         }
 

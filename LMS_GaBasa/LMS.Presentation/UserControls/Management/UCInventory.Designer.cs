@@ -470,6 +470,7 @@
             this.CmbBxStatusFilter.FormattingEnabled = true;
             this.CmbBxStatusFilter.Items.AddRange(new object[] {
             "Available",
+            "Available Online",
             "Out of Stock"});
             this.CmbBxStatusFilter.Location = new System.Drawing.Point(745, 35);
             this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
