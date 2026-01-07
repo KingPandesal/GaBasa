@@ -19,7 +19,7 @@ namespace LMS.Presentation.UserControls
             // Force horizontal scrollbars by setting minimum content width
             // Width = rightmost panel X (1078) + panel width (533) = 1611
             var scrollWidth = new Size(1620, 0);
-            panel5.AutoScrollMinSize = scrollWidth;
+            PnlNewArrivalsSection.AutoScrollMinSize = scrollWidth;
             PnlPopularBooksSection.AutoScrollMinSize = scrollWidth;
         }
 
@@ -121,6 +121,11 @@ namespace LMS.Presentation.UserControls
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
         {
 
         }
