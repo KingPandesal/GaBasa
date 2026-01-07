@@ -93,7 +93,6 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Make sure panels / copy info reflect current (possibly none) selection
             SyncPanelsForResourceType();
-            UpdateCopyInformationVisibility();
 
             if (_book != null)
                 LoadBookToForm(_book);
@@ -246,8 +245,6 @@ namespace LMS.Presentation.Popup.Inventory
             if (TxtPRDownloadURL != null && (RdoBtnPRDigital == null || !RdoBtnPRDigital.Checked)) TxtPRDownloadURL.Text = string.Empty;
             if (TxtAVDownloadURL != null && (RdoBtnAVDigital == null || !RdoBtnAVDigital.Checked)) TxtAVDownloadURL.Text = string.Empty;
 
-            // Ensure copy-info visibility updated because material format may affect it
-            UpdateCopyInformationVisibility();
         }
 
         private int ExtractYearFromString(string s)
@@ -526,7 +523,6 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                // check case-insensitively among existing string items
                 bool exists = combo.Items.Cast<object>()
                                  .OfType<string>()
                                  .Any(x => string.Equals(x?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
@@ -574,15 +570,12 @@ namespace LMS.Presentation.Popup.Inventory
                 try
                 {
                     var s = edition;
-
-                    // Try common patterns: Vol(. )?number and No(. )?number
                     var volMatch = Regex.Match(s, @"\bVol(?:ume)?\.?\s*(\d+)\b", RegexOptions.IgnoreCase);
                     if (volMatch.Success) volume = volMatch.Groups[1].Value;
 
                     var noMatch = Regex.Match(s, @"\bNo(?:\.|)?\s*(\d+)\b", RegexOptions.IgnoreCase);
                     if (noMatch.Success) issue = noMatch.Groups[1].Value;
 
-                    // Fallback: if not found, try "Vol. X, No. Y" with non-digits allowed
                     if (string.IsNullOrWhiteSpace(volume) || string.IsNullOrWhiteSpace(issue))
                     {
                         var parts = s.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
@@ -596,7 +589,6 @@ namespace LMS.Presentation.Popup.Inventory
                             }
                         }
 
-                        // if there are two numeric parts assume first=volume second=issue
                         var allNums = Regex.Matches(s, @"\d+").Cast<Match>().Select(m => m.Value).ToArray();
                         if (allNums.Length >= 2)
                         {
@@ -607,7 +599,7 @@ namespace LMS.Presentation.Popup.Inventory
                 }
                 catch
                 {
-                    // ignore parser errors; leave volume/issue empty
+                    // ignore parser errors
                 }
             }
 
@@ -624,18 +616,13 @@ namespace LMS.Presentation.Popup.Inventory
                     CmbBxEBLanguage.Text = book.Language;
                     TxtEBDownloadURL.Text = book.DownloadURL;
 
-                    // ensure publisher shown and selectable (try navigation then id)
                     EnsureComboContainsAndSet(CmbBxEBPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
-
-                    // category: try navigation then id
                     EnsureComboContainsAndSet(CmbBxEBCategory, book.Category?.Name ?? GetCategoryNameById(book.CategoryID));
 
-                    // format (stored in PhysicalDescription for e-book in this app)
                     if (!string.IsNullOrWhiteSpace(book.PhysicalDescription))
                         EnsureComboContainsAndSet(CmbBxEBFormat, book.PhysicalDescription.Trim());
-                    else
+                    else if (CmbBxEBFormat != null)
                         CmbBxEBFormat.Text = string.Empty;
-
                     break;
 
                 case ResourceType.Thesis:
@@ -647,11 +634,30 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtBxTHNoOfPages.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty;
                     CmbBxTHLanguage.Text = book.Language;
 
-                    // ensure publisher shown and selectable
                     EnsureComboContainsAndSet(CmbBxTHPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
 
-                    // degree stored in Edition
                     if (!string.IsNullOrWhiteSpace(book.Edition)) CmbBxTHDegreeLevel.Text = book.Edition;
+
+                    // Material-format: decide digital vs physical by DownloadURL presence (digital) or absence (physical)
+                    bool thIsDigital = !string.IsNullOrWhiteSpace(book.DownloadURL);
+                    if (RdoBtnTHDigital != null && RdoBtnTHPhysical != null)
+                    {
+                        RdoBtnTHDigital.Checked = thIsDigital;
+                        RdoBtnTHPhysical.Checked = !thIsDigital;
+                        // SyncMaterialFormatPanels will be invoked by CheckedChanged handlers if wired; ensure fields populated afterwards
+                    }
+
+                    if (thIsDigital)
+                    {
+                        if (!string.IsNullOrWhiteSpace(book.PhysicalDescription))
+                            EnsureComboContainsAndSet(CmbBxTHFormat, book.PhysicalDescription.Trim());
+                        TxtTHDownloadURL.Text = book.DownloadURL ?? string.Empty;
+                    }
+                    else
+                    {
+                        EnsureComboContainsAndSet(CmbBxTHPhysicalDescription, book.PhysicalDescription);
+                        if (TxtTHDownloadURL != null) TxtTHDownloadURL.Text = string.Empty;
+                    }
                     break;
 
                 case ResourceType.Periodical:
@@ -663,17 +669,31 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtPRPages.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty;
                     CmbBxPRLanguage.Text = book.Language;
 
-                    // ensure publisher shown and selectable
                     EnsureComboContainsAndSet(CmbBxPRPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
 
-                    // Parse volume/issue from Edition (if present)
                     string vol, issue;
                     ParseVolumeIssue(book.Edition, out vol, out issue);
-                    if (!string.IsNullOrWhiteSpace(vol)) TxtPRVolume.Text = vol;
-                    else TxtPRVolume.Text = string.Empty;
+                    TxtPRVolume.Text = !string.IsNullOrWhiteSpace(vol) ? vol : string.Empty;
+                    TxtPRIssue.Text = !string.IsNullOrWhiteSpace(issue) ? issue : string.Empty;
 
-                    if (!string.IsNullOrWhiteSpace(issue)) TxtPRIssue.Text = issue;
-                    else TxtPRIssue.Text = string.Empty;
+                    bool prIsDigital = !string.IsNullOrWhiteSpace(book.DownloadURL);
+                    if (RdoBtnPRDigital != null && RdoBtnPRPhysical != null)
+                    {
+                        RdoBtnPRDigital.Checked = prIsDigital;
+                        RdoBtnPRPhysical.Checked = !prIsDigital;
+                    }
+
+                    if (prIsDigital)
+                    {
+                        if (!string.IsNullOrWhiteSpace(book.PhysicalDescription))
+                            EnsureComboContainsAndSet(CmbBxPRFormat, book.PhysicalDescription.Trim());
+                        TxtPRDownloadURL.Text = book.DownloadURL ?? string.Empty;
+                    }
+                    else
+                    {
+                        EnsureComboContainsAndSet(CmbBxPRPhysicalDescription, book.PhysicalDescription);
+                        if (TxtPRDownloadURL != null) TxtPRDownloadURL.Text = string.Empty;
+                    }
                     break;
 
                 case ResourceType.AV:
@@ -685,12 +705,27 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtAVDuration.Text = book.Pages > 0 ? book.Pages.ToString() : string.Empty; // duration stored in Pages column
                     CmbBxAVLanguage.Text = book.Language;
 
-                    // ensure publisher shown and selectable
                     EnsureComboContainsAndSet(CmbBxAVPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
-
-                    // category: try navigation then id
                     EnsureComboContainsAndSet(CmbBxAVCategory, book.Category?.Name ?? GetCategoryNameById(book.CategoryID));
 
+                    bool avIsDigital = !string.IsNullOrWhiteSpace(book.DownloadURL);
+                    if (RdoBtnAVDigital != null && RdoBtnAVPhysical != null)
+                    {
+                        RdoBtnAVDigital.Checked = avIsDigital;
+                        RdoBtnAVPhysical.Checked = !avIsDigital;
+                    }
+
+                    if (avIsDigital)
+                    {
+                        if (!string.IsNullOrWhiteSpace(book.PhysicalDescription))
+                            EnsureComboContainsAndSet(CmbBxAVFormat, book.PhysicalDescription.Trim());
+                        TxtAVDownloadURL.Text = book.DownloadURL ?? string.Empty;
+                    }
+                    else
+                    {
+                        EnsureComboContainsAndSet(CmbBxAVPhysicalDescription, book.PhysicalDescription);
+                        if (TxtAVDownloadURL != null) TxtAVDownloadURL.Text = string.Empty;
+                    }
                     break;
 
                 case ResourceType.PhysicalBook:
@@ -705,10 +740,7 @@ namespace LMS.Presentation.Popup.Inventory
                     TxtBKPhysicalDescription.Text = book.PhysicalDescription;
                     CmbBxBKLanguage.Text = book.Language;
 
-                    // ensure publisher shown and selectable
                     EnsureComboContainsAndSet(CmbBxBKPublisher, book.Publisher?.Name ?? GetPublisherNameById(book.PublisherID));
-
-                    // category: try navigation then id
                     EnsureComboContainsAndSet(CmbBxBKCategory, book.Category?.Name ?? GetCategoryNameById(book.CategoryID));
                     break;
             }
@@ -825,7 +857,6 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Ensure UI panels are synced
             SyncPanelsForResourceType();
-            UpdateCopyInformationVisibility();
         }
 
         #region Add-from-combo handlers (per resource)
@@ -942,6 +973,33 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 var selectedType = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
 
+                // determine original material-format (digital if DownloadURL present OR book is EBook)
+                bool originalIsDigital = _book != null && (_book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(_book.DownloadURL));
+
+                // determine current material-format from material-format radios (fall back to DownloadURL textbox when radios not present)
+                bool currentIsDigital = false;
+                switch (selectedType)
+                {
+                    case ResourceType.Periodical:
+                        if (RdoBtnPRDigital != null) currentIsDigital = RdoBtnPRDigital.Checked;
+                        else currentIsDigital = !string.IsNullOrWhiteSpace(TxtPRDownloadURL?.Text);
+                        break;
+                    case ResourceType.Thesis:
+                        if (RdoBtnTHDigital != null) currentIsDigital = RdoBtnTHDigital.Checked;
+                        else currentIsDigital = !string.IsNullOrWhiteSpace(TxtTHDownloadURL?.Text);
+                        break;
+                    case ResourceType.AV:
+                        if (RdoBtnAVDigital != null) currentIsDigital = RdoBtnAVDigital.Checked;
+                        else currentIsDigital = !string.IsNullOrWhiteSpace(TxtAVDownloadURL?.Text);
+                        break;
+                    case ResourceType.EBook:
+                        currentIsDigital = true;
+                        break;
+                    default:
+                        currentIsDigital = false;
+                        break;
+                }
+
                 // Publication year validation per selected resource-type control
                 string pubYearText = null;
                 Control pubYearControl = null;
@@ -1015,39 +1073,107 @@ namespace LMS.Presentation.Popup.Inventory
                     if (!durationRaw.All(char.IsDigit)) { MessageBox.Show("Duration must contain digits only.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning); TxtAVDuration?.Focus(); return; }
                 }
 
-                // Publisher validation per selected combobox
-                string pubText = selectedType == ResourceType.PhysicalBook ? CmbBxBKPublisher.Text : selectedType == ResourceType.Periodical ? CmbBxPRPublisher.Text :
-                    selectedType == ResourceType.Thesis ? CmbBxTHPublisher.Text : selectedType == ResourceType.AV ? CmbBxAVPublisher.Text : CmbBxEBPublisher.Text;
+                // Validate material-format specific required fields
+                // For physical -> require physical description combobox to be inputted
+                // For digital -> require format combobox and download url textbox to be inputted
+                string formatValue = null;
+                string physicalDescValue = null;
+                string downloadUrlValue = null;
 
-                if (!string.IsNullOrWhiteSpace(pubText) && !ContainsLetter(pubText))
-                {
-                    MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    // focus relevant publisher combo
-                    switch (selectedType)
-                    {
-                        case ResourceType.PhysicalBook: CmbBxBKPublisher.Focus(); break;
-                        case ResourceType.Periodical: CmbBxPRPublisher.Focus(); break;
-                        case ResourceType.Thesis: CmbBxTHPublisher.Focus(); break;
-                        case ResourceType.AV: CmbBxAVPublisher.Focus(); break;
-                        case ResourceType.EBook: CmbBxEBPublisher.Focus(); break;
-                    }
-                    return;
-                }
+                // helpers: safely read controls (null-check)
+                string SafeText(Control c) => c == null ? string.Empty : (c is ComboBox cb ? cb.Text?.Trim() : (c is TextBox tb ? tb.Text?.Trim() : c.Text?.Trim()));
 
-                // Basic required fields per resource type
-                if (selectedType == ResourceType.Periodical)
+                switch (selectedType)
                 {
-                    if (string.IsNullOrWhiteSpace(TxtPRISSN.Text)) { MessageBox.Show("ISSN is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning); TxtPRISSN.Focus(); return; }
-                    if (string.IsNullOrWhiteSpace(TxtPRVolume.Text) || string.IsNullOrWhiteSpace(TxtPRIssue.Text)) { MessageBox.Show("Volume and issue are required for periodicals.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-                }
+                    case ResourceType.Periodical:
+                        formatValue = SafeText(CmbBxPRFormat);
+                        physicalDescValue = SafeText(CmbBxPRPhysicalDescription);
+                        downloadUrlValue = SafeText(TxtPRDownloadURL);
+                        if (currentIsDigital)
+                        {
+                            if (string.IsNullOrWhiteSpace(formatValue))
+                            {
+                                MessageBox.Show("Format is required for digital periodicals.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                CmbBxPRFormat?.Focus();
+                                return;
+                            }
+                            if (string.IsNullOrWhiteSpace(downloadUrlValue))
+                            {
+                                MessageBox.Show("Download URL is required for digital periodicals.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                TxtPRDownloadURL?.Focus();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(physicalDescValue))
+                            {
+                                MessageBox.Show("Physical description is required for physical periodicals.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                CmbBxPRPhysicalDescription?.Focus();
+                                return;
+                            }
+                        }
+                        break;
 
-                if (selectedType == ResourceType.PhysicalBook)
-                {
-                    if ((RdoBtnBKCirculation == null || !RdoBtnBKCirculation.Checked) && (RdoBtnBKReference == null || !RdoBtnBKReference.Checked))
-                    {
-                        MessageBox.Show("Please select a loan type (Circulation or Reference) for physical books.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    case ResourceType.Thesis:
+                        formatValue = SafeText(CmbBxTHFormat);
+                        physicalDescValue = SafeText(CmbBxTHPhysicalDescription);
+                        downloadUrlValue = SafeText(TxtTHDownloadURL);
+                        if (currentIsDigital)
+                        {
+                            if (string.IsNullOrWhiteSpace(formatValue))
+                            {
+                                MessageBox.Show("Format is required for digital theses.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                CmbBxTHFormat?.Focus();
+                                return;
+                            }
+                            if (string.IsNullOrWhiteSpace(downloadUrlValue))
+                            {
+                                MessageBox.Show("Download URL is required for digital theses.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                TxtTHDownloadURL?.Focus();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(physicalDescValue))
+                            {
+                                MessageBox.Show("Physical description is required for physical theses.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                CmbBxTHPhysicalDescription?.Focus();
+                                return;
+                            }
+                        }
+                        break;
+
+                    case ResourceType.AV:
+                        formatValue = SafeText(CmbBxAVFormat);
+                        physicalDescValue = SafeText(CmbBxAVPhysicalDescription);
+                        downloadUrlValue = SafeText(TxtAVDownloadURL);
+                        if (currentIsDigital)
+                        {
+                            if (string.IsNullOrWhiteSpace(formatValue))
+                            {
+                                MessageBox.Show("Format is required for digital AV materials.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                CmbBxAVFormat?.Focus();
+                                return;
+                            }
+                            if (string.IsNullOrWhiteSpace(downloadUrlValue))
+                            {
+                                MessageBox.Show("Download URL is required for digital AV materials.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                TxtAVDownloadURL?.Focus();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            if (string.IsNullOrWhiteSpace(physicalDescValue))
+                            {
+                                MessageBox.Show("Physical description is required for physical AV materials.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                CmbBxAVPhysicalDescription?.Focus();
+                                return;
+                            }
+                        }
+                        break;
                 }
 
                 // Map UI -> book depending on selectedType
@@ -1080,6 +1206,20 @@ namespace LMS.Presentation.Popup.Inventory
                         if (!string.IsNullOrWhiteSpace(TxtPRVolume.Text)) volParts.Add($"Vol. {TxtPRVolume.Text.Trim()}");
                         if (!string.IsNullOrWhiteSpace(TxtPRIssue.Text)) volParts.Add($"No. {TxtPRIssue.Text.Trim()}");
                         _book.Edition = volParts.Count > 0 ? string.Join(", ", volParts) : _book.Edition;
+
+                        // set PhysicalDescription depending on selected material-format
+                        if (currentIsDigital)
+                        {
+                            // store selected format in PhysicalDescription to keep the "format" information (per your spec)
+                            _book.PhysicalDescription = formatValue;
+                            _book.DownloadURL = downloadUrlValue;
+                        }
+                        else
+                        {
+                            _book.PhysicalDescription = physicalDescValue;
+                            // clear download url when switching/keeping physical
+                            _book.DownloadURL = null;
+                        }
                         break;
 
                     case ResourceType.Thesis:
@@ -1091,6 +1231,17 @@ namespace LMS.Presentation.Popup.Inventory
                         _book.Pages = ParseInt(TxtBxTHNoOfPages.Text);
                         _book.Language = CmbBxTHLanguage.Text?.Trim();
                         _book.Edition = CmbBxTHDegreeLevel.Text?.Trim(); // degree stored in edition
+
+                        if (currentIsDigital)
+                        {
+                            _book.PhysicalDescription = formatValue;
+                            _book.DownloadURL = downloadUrlValue;
+                        }
+                        else
+                        {
+                            _book.PhysicalDescription = physicalDescValue;
+                            _book.DownloadURL = null;
+                        }
                         break;
 
                     case ResourceType.AV:
@@ -1101,8 +1252,17 @@ namespace LMS.Presentation.Popup.Inventory
                         _book.PublicationYear = ParseInt(TxtAVPublicationYear.Text);
                         _book.Pages = ParseInt(TxtAVDuration.Text); // duration stored in Pages column
                         _book.Language = CmbBxAVLanguage.Text?.Trim();
-                        _book.PhysicalDescription = RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked ? CmbBxAVPhysicalDescription.Text.Trim() : CmbBxAVFormat.Text.Trim();
-                        _book.Category = null; // category id set below
+
+                        if (currentIsDigital)
+                        {
+                            _book.PhysicalDescription = formatValue;
+                            _book.DownloadURL = downloadUrlValue;
+                        }
+                        else
+                        {
+                            _book.PhysicalDescription = physicalDescValue;
+                            _book.DownloadURL = null;
+                        }
                         break;
 
                     case ResourceType.EBook:
@@ -1205,34 +1365,172 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                // Handle resource-type changes affecting copies / accessions
-                if (_originalResourceType != _book.ResourceType)
+                // Handle material-format transitions that affect copies / download URL
+                var bookCopyRepo = new BookCopyRepository(new DbConnection());
+
+                // physical -> digital (delete copies after confirmation)
+                if (!originalIsDigital && currentIsDigital && (selectedType == ResourceType.Periodical || selectedType == ResourceType.Thesis || selectedType == ResourceType.AV))
                 {
+                    var dlg = MessageBox.Show(
+                        "Are you sure you want to switch from physical to digital? All of the book's physical copies will be deleted.",
+                        "Confirm change to digital",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (dlg != DialogResult.Yes)
+                    {
+                        // user cancelled the destructive step; roll back download url/physicalDescription changes by reloading original book values
+                        LoadBookToForm(_bookRepo.GetById(_book.BookID));
+                        return;
+                    }
+
                     try
                     {
-                        if (_book.ResourceType == ResourceType.EBook && _originalResourceType != ResourceType.EBook)
-                        {
-                            var bookCopyRepo = new BookCopyRepository(new DbConnection());
-                            bookCopyRepo.DeleteByBookId(_book.BookID);
-                        }
-                        else
-                        {
-                            RegenerateAccessionsAndBarcodes(_book.BookID, _originalResourceType, _book.ResourceType);
-                        }
-                        _originalResourceType = _book.ResourceType;
+                        bookCopyRepo.DeleteByBookId(_book.BookID);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Book updated but regenerating copy accessions/barcodes failed: {ex.Message}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"Book updated but deleting copies failed: {ex.Message}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
+
+                // digital -> physical (clear DownloadURL, ensure physical description already set from UI)
+                if (originalIsDigital && !currentIsDigital && (selectedType == ResourceType.Periodical || selectedType == ResourceType.Thesis || selectedType == ResourceType.AV))
+                {
+                    try
+                    {
+                        _bookRepo.Update(_book); // ensure DownloadURL cleared
+                    }
+                    catch { }
+                }
+
+                // After successful update, if the transition was digital->physical ask about adding copies
+                if (originalIsDigital && !currentIsDigital && (selectedType == ResourceType.Periodical || selectedType == ResourceType.Thesis || selectedType == ResourceType.AV))
+                {
+                    var res = MessageBox.Show("Do you want to add copies now?", "Add copies", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (res == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            // Prepare base data
+                            int year = DateTime.UtcNow.Year;
+                            string prefix = bookCopyRepo.GetPrefixForResourceType(_book.ResourceType);
+
+                            // Determine AddedByID (reuse existing resolution logic)
+                            int addedBy = 0;
+                            try { addedBy = Program.CurrentUserId; } catch { addedBy = 0; }
+                            if (addedBy <= 0)
+                            {
+                                try
+                                {
+                                    var userRepo = new UserRepository(new DbConnection());
+                                    var staff = userRepo.GetAllStaffUsers();
+                                    var first = staff?.FirstOrDefault();
+                                    if (first != null) addedBy = first.UserID;
+                                }
+                                catch { /* ignore */ }
+                            }
+
+                            if (addedBy <= 0)
+                            {
+                                MessageBox.Show("Unable to determine the current user. Please login or ensure a staff user exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                // Show edit dialog to get status/location and copies requested
+                                var templateCopy = new BookCopy
+                                {
+                                    BookID = _book.BookID,
+                                    Status = "Available",
+                                    Location = null,
+                                    DateAdded = DateTime.UtcNow,
+                                    AddedByID = addedBy
+                                };
+
+                                using (var dlg = new EditBookCopy(templateCopy))
+                                {
+                                    var dlgRes = dlg.ShowDialog();
+                                    if (dlgRes != DialogResult.OK) { /* user cancelled */ }
+                                    else
+                                    {
+                                        int copiesToCreate = Math.Max(1, dlg.CopiesRequested);
+
+                                        // Fetch existing copies once to compute starting suffix
+                                        var existing = bookCopyRepo.GetByBookId(_book.BookID) ?? new List<BookCopy>();
+                                        int maxSuffix = 0;
+                                        foreach (var c in existing)
+                                        {
+                                            if (c == null || string.IsNullOrWhiteSpace(c.AccessionNumber)) continue;
+                                            var parts = c.AccessionNumber.Split('-');
+                                            if (parts.Length >= 4)
+                                            {
+                                                if (int.TryParse(parts.Last(), out int v))
+                                                    maxSuffix = Math.Max(maxSuffix, v);
+                                            }
+                                        }
+
+                                        var accessions = new List<string>(copiesToCreate);
+                                        for (int i = 0; i < copiesToCreate; i++)
+                                        {
+                                            int suffix = maxSuffix + 1 + i;
+                                            accessions.Add($"{prefix}-{_book.BookID}-{year}-{suffix:D4}");
+                                        }
+
+                                        // Generate barcodes in batch
+                                        IDictionary<string, string> barcodeMap = null;
+                                        try
+                                        {
+                                            var gen = _barcode_generator_or_default();
+                                            barcodeMap = gen.GenerateMany(accessions);
+                                        }
+                                        catch
+                                        {
+                                            barcodeMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                                        }
+
+                                        // Persist copies
+                                        int created = 0;
+                                        for (int i = 0; i < copiesToCreate; i++)
+                                        {
+                                            var accession = accessions[i];
+                                            var copy = new BookCopy
+                                            {
+                                                BookID = _book.BookID,
+                                                AccessionNumber = accession,
+                                                Status = templateCopy.Status ?? "Available",
+                                                Location = templateCopy.Location,
+                                                Barcode = barcodeMap != null && barcodeMap.ContainsKey(accession) ? barcodeMap[accession] : null,
+                                                DateAdded = DateTime.UtcNow,
+                                                AddedByID = addedBy
+                                            };
+
+                                            int newId = bookCopyRepo.Add(copy);
+                                            if (newId > 0) created++;
+                                        }
+
+                                        if (created > 0)
+                                            MessageBox.Show($"{created} copy(ies) added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        else
+                                            MessageBox.Show("Failed to save copies.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to open copies editor or save copy: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+
+                // Update original resource-type/material-format marker
+                _originalResourceType = _book.ResourceType;
 
                 // Replace BookAuthor associations based on current resource-specific listboxes
                 try
                 {
                     _bookAuthorRepo.DeleteByBookId(_book.BookID);
 
-                    // Helper to iterate a listbox and create BookAuthor entries
                     void PersistListBoxAuthors(ListBox lb, string role, bool primaryByIndex)
                     {
                         for (int i = 0; i < lb.Items.Count; i++)
@@ -1429,9 +1727,6 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Sync material-format sub-panels (physical vs digital controls inside each resource group)
             SyncMaterialFormatPanels();
-
-            // Ensure copy-info visibility updated as resource-type/panel state may have changed
-            UpdateCopyInformationVisibility();
         }
 
         private void RdoBtnPhysicalBook_CheckedChanged(object sender, EventArgs e) => SyncPanelsForResourceType();
@@ -1441,21 +1736,7 @@ namespace LMS.Presentation.Popup.Inventory
         private void RdoBtnAV_CheckedChanged(object sender, EventArgs e) => SyncPanelsForResourceType();
 
         // Show/hide copy information group when appropriate (Physical books and when selected resource's physical format is chosen)
-        private void UpdateCopyInformationVisibility()
-        {
-            bool show = false;
-
-            var selected = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
-            if (selected == ResourceType.PhysicalBook) show = true;
-
-            // If Periodical/Thesis/AV have material-format radios, you could check them here similar to AddBook.
-            if (GrpBxCopyInformation != null)
-                GrpBxCopyInformation.Visible = show;
-
-            flowLayoutPanel1?.PerformLayout();
-            flowLayoutPanel1?.Refresh();
-        }
-
+        
         private int EnsureAuthorExists(string fullName)
         {
             if (string.IsNullOrWhiteSpace(fullName)) return 0;

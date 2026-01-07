@@ -10,6 +10,9 @@ namespace LMS.Presentation.Popup.Inventory
         private readonly BookCopyRepository _bookCopyRepo;
         private BookCopy _copy;
 
+        // Number of copies the user requests (defaults to 1)
+        public int CopiesRequested { get; private set; } = 1;
+
         public EditBookCopy() : this(null) { }
 
         public EditBookCopy(BookCopy copy)
@@ -45,6 +48,15 @@ namespace LMS.Presentation.Popup.Inventory
                     CmbBxStatus.SelectedIndex = 0;
 
                 TxtLocation.Text = copy.Location ?? string.Empty;
+
+                // If editing an existing copy leave CopiesRequested at 1 (no multi-create when editing)
+                CopiesRequested = 1;
+                try
+                {
+                    // Populate numeric control with 1 by default
+                    NumPckNoOfCopies.Value = 1;
+                }
+                catch { }
             }
             catch
             {
@@ -70,11 +82,32 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
+                // Validate NumPckNoOfCopies (ensure minimum 1)
+                int requested = 1;
+                try
+                {
+                    requested = (int)NumPckNoOfCopies.Value;
+                }
+                catch
+                {
+                    requested = 1;
+                }
+
+                if (requested < 1)
+                {
+                    MessageBox.Show("Please specify at least 1 copy.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    NumPckNoOfCopies.Focus();
+                    return;
+                }
+
+                // Save the requested count for the caller to consume
+                CopiesRequested = requested;
+
                 // Apply edits to the in-memory object only.
                 _copy.Status = CmbBxStatus.Text?.Trim();
                 _copy.Location = TxtLocation.Text?.Trim();
 
-                // Return OK so the caller (ViewBookCopy) can decide when to persist.
+                // Return OK so the caller (EditBook) can decide when to persist and how many copies to create.
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

@@ -74,7 +74,6 @@
             this.LblAVUPCISAN = new System.Windows.Forms.Label();
             this.TxtAVUPCISAN = new System.Windows.Forms.TextBox();
             this.LblTHSubtitle = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
             this.CmbBxTHFormat = new System.Windows.Forms.ComboBox();
             this.LblTHDegreeLevel = new System.Windows.Forms.Label();
             this.LblTHTitle = new System.Windows.Forms.Label();
@@ -95,18 +94,12 @@
             this.TxtTHCallNumber = new System.Windows.Forms.TextBox();
             this.LblTHCallNumber = new System.Windows.Forms.Label();
             this.LblTHAuthors = new System.Windows.Forms.Label();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.textBox20 = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
             this.TxtEBDownloadURL = new System.Windows.Forms.TextBox();
             this.LblEBDownloadURL = new System.Windows.Forms.Label();
             this.LblEBCategory = new System.Windows.Forms.Label();
             this.CmbBxEBCategory = new System.Windows.Forms.ComboBox();
             this.CmbBxEBAuthors = new System.Windows.Forms.ComboBox();
             this.CmbBxEBEditors = new System.Windows.Forms.ComboBox();
-            this.NumPckNoOfCopies = new ReaLTaiizor.Controls.FoxNumeric();
-            this.textBox18 = new System.Windows.Forms.TextBox();
             this.CmbBxEBPublisher = new System.Windows.Forms.ComboBox();
             this.BtnEBAddEditors = new System.Windows.Forms.Button();
             this.BtnEBAddAuthors = new System.Windows.Forms.Button();
@@ -114,10 +107,6 @@
             this.CmbBxEBFormat = new System.Windows.Forms.ComboBox();
             this.TxtEBCallNumber = new System.Windows.Forms.TextBox();
             this.LblEBCallNumber = new System.Windows.Forms.Label();
-            this.LblCopyStatus = new System.Windows.Forms.Label();
-            this.LblLocation = new System.Windows.Forms.Label();
-            this.LblNoOfCopies = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
             this.LblEBFormat = new System.Windows.Forms.Label();
             this.TxtEBNoOfPages = new System.Windows.Forms.TextBox();
             this.LblEBNoOfPages = new System.Windows.Forms.Label();
@@ -126,14 +115,7 @@
             this.LblEBPublisher = new System.Windows.Forms.Label();
             this.LblEBEditors = new System.Windows.Forms.Label();
             this.LblEBAuthors = new System.Windows.Forms.Label();
-            this.TxtLocation = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.textBox21 = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.textBox22 = new System.Windows.Forms.TextBox();
             this.TxtEBPublicationYear = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.TxtEBSubtitle = new System.Windows.Forms.TextBox();
             this.GrpBxEBook = new System.Windows.Forms.GroupBox();
             this.LstBxEBeditors = new System.Windows.Forms.ListBox();
@@ -143,11 +125,6 @@
             this.LblEBTitle = new System.Windows.Forms.Label();
             this.LblEBISBN = new System.Windows.Forms.Label();
             this.TxtEBISBN = new System.Windows.Forms.TextBox();
-            this.CmbBxCopyStatus = new System.Windows.Forms.ComboBox();
-            this.GrpBxCopyInformation = new System.Windows.Forms.GroupBox();
-            this.LblNote = new System.Windows.Forms.Label();
-            this.LblNote2 = new System.Windows.Forms.Label();
-            this.LblNote1 = new System.Windows.Forms.Label();
             this.TxtTHDownloadURL = new System.Windows.Forms.TextBox();
             this.RdoBtnBKReference = new System.Windows.Forms.RadioButton();
             this.RdoBtnBKCirculation = new System.Windows.Forms.RadioButton();
@@ -253,7 +230,6 @@
             this.PnlAVPhysicalFormat.SuspendLayout();
             this.PnlAVDigitalFormat.SuspendLayout();
             this.GrpBxEBook.SuspendLayout();
-            this.GrpBxCopyInformation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
             this.GrpBxPhysicalBook.SuspendLayout();
             this.PnlDesign.SuspendLayout();
@@ -789,17 +765,6 @@
             this.LblTHSubtitle.TabIndex = 71;
             this.LblTHSubtitle.Text = "Subtitle";
             // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label31.ForeColor = System.Drawing.Color.Black;
-            this.label31.Location = new System.Drawing.Point(30, 439);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(151, 28);
-            this.label31.TabIndex = 79;
-            this.label31.Text = "Publication Year";
-            // 
             // CmbBxTHFormat
             // 
             this.CmbBxTHFormat.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -1022,46 +987,6 @@
             this.LblTHAuthors.TabIndex = 73;
             this.LblTHAuthors.Text = "Author(s)";
             // 
-            // textBox19
-            // 
-            this.textBox19.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox19.ForeColor = System.Drawing.Color.Black;
-            this.textBox19.Location = new System.Drawing.Point(232, 750);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(325, 34);
-            this.textBox19.TabIndex = 90;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label26.ForeColor = System.Drawing.Color.Black;
-            this.label26.Location = new System.Drawing.Point(30, 754);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(186, 28);
-            this.label26.TabIndex = 89;
-            this.label26.Text = "Physical Description";
-            // 
-            // textBox20
-            // 
-            this.textBox20.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox20.ForeColor = System.Drawing.Color.Black;
-            this.textBox20.Location = new System.Drawing.Point(204, 690);
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(123, 34);
-            this.textBox20.TabIndex = 88;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label27.ForeColor = System.Drawing.Color.Black;
-            this.label27.Location = new System.Drawing.Point(30, 694);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(121, 28);
-            this.label27.TabIndex = 87;
-            this.label27.Text = "No. of Pages";
-            // 
             // TxtEBDownloadURL
             // 
             this.TxtEBDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -1122,35 +1047,6 @@
             this.CmbBxEBEditors.Name = "CmbBxEBEditors";
             this.CmbBxEBEditors.Size = new System.Drawing.Size(263, 36);
             this.CmbBxEBEditors.TabIndex = 100;
-            // 
-            // NumPckNoOfCopies
-            // 
-            this.NumPckNoOfCopies.BackColor = System.Drawing.Color.Transparent;
-            this.NumPckNoOfCopies.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.NumPckNoOfCopies.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(98)))), ((int)(((byte)(110)))));
-            this.NumPckNoOfCopies.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.NumPckNoOfCopies.DisabledButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(198)))), ((int)(((byte)(210)))));
-            this.NumPckNoOfCopies.DisabledTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(178)))), ((int)(((byte)(190)))));
-            this.NumPckNoOfCopies.EnabledCalc = true;
-            this.NumPckNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.NumPckNoOfCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(78)))), ((int)(((byte)(90)))));
-            this.NumPckNoOfCopies.Location = new System.Drawing.Point(204, 68);
-            this.NumPckNoOfCopies.Max = 100;
-            this.NumPckNoOfCopies.Min = 0;
-            this.NumPckNoOfCopies.Name = "NumPckNoOfCopies";
-            this.NumPckNoOfCopies.Size = new System.Drawing.Size(75, 27);
-            this.NumPckNoOfCopies.TabIndex = 104;
-            this.NumPckNoOfCopies.Text = "foxNumeric1";
-            this.NumPckNoOfCopies.Value = 0;
-            // 
-            // textBox18
-            // 
-            this.textBox18.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox18.ForeColor = System.Drawing.Color.Black;
-            this.textBox18.Location = new System.Drawing.Point(204, 818);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(353, 34);
-            this.textBox18.TabIndex = 92;
             // 
             // CmbBxEBPublisher
             // 
@@ -1242,50 +1138,6 @@
             this.LblEBCallNumber.TabIndex = 91;
             this.LblEBCallNumber.Text = "Call Number";
             // 
-            // LblCopyStatus
-            // 
-            this.LblCopyStatus.AutoSize = true;
-            this.LblCopyStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblCopyStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblCopyStatus.Location = new System.Drawing.Point(31, 121);
-            this.LblCopyStatus.Name = "LblCopyStatus";
-            this.LblCopyStatus.Size = new System.Drawing.Size(65, 28);
-            this.LblCopyStatus.TabIndex = 107;
-            this.LblCopyStatus.Text = "Status";
-            // 
-            // LblLocation
-            // 
-            this.LblLocation.AutoSize = true;
-            this.LblLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblLocation.ForeColor = System.Drawing.Color.Black;
-            this.LblLocation.Location = new System.Drawing.Point(32, 173);
-            this.LblLocation.Name = "LblLocation";
-            this.LblLocation.Size = new System.Drawing.Size(87, 28);
-            this.LblLocation.TabIndex = 106;
-            this.LblLocation.Text = "Location";
-            // 
-            // LblNoOfCopies
-            // 
-            this.LblNoOfCopies.AutoSize = true;
-            this.LblNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblNoOfCopies.ForeColor = System.Drawing.Color.Black;
-            this.LblNoOfCopies.Location = new System.Drawing.Point(32, 68);
-            this.LblNoOfCopies.Name = "LblNoOfCopies";
-            this.LblNoOfCopies.Size = new System.Drawing.Size(130, 28);
-            this.LblNoOfCopies.TabIndex = 105;
-            this.LblNoOfCopies.Text = "No. of Copies";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label25.ForeColor = System.Drawing.Color.Black;
-            this.label25.Location = new System.Drawing.Point(30, 821);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(121, 28);
-            this.label25.TabIndex = 91;
-            this.label25.Text = "Call Number";
-            // 
             // LblEBFormat
             // 
             this.LblEBFormat.AutoSize = true;
@@ -1372,66 +1224,6 @@
             this.LblEBAuthors.TabIndex = 73;
             this.LblEBAuthors.Text = "Author(s)";
             // 
-            // TxtLocation
-            // 
-            this.TxtLocation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.TxtLocation.ForeColor = System.Drawing.Color.Black;
-            this.TxtLocation.Location = new System.Drawing.Point(205, 170);
-            this.TxtLocation.Name = "TxtLocation";
-            this.TxtLocation.Size = new System.Drawing.Size(354, 34);
-            this.TxtLocation.TabIndex = 100;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label28.ForeColor = System.Drawing.Color.Black;
-            this.label28.Location = new System.Drawing.Point(30, 593);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(97, 28);
-            this.label28.TabIndex = 85;
-            this.label28.Text = "Language";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label29.ForeColor = System.Drawing.Color.Black;
-            this.label29.Location = new System.Drawing.Point(30, 532);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(92, 28);
-            this.label29.TabIndex = 83;
-            this.label29.Text = "Category";
-            // 
-            // textBox21
-            // 
-            this.textBox21.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox21.ForeColor = System.Drawing.Color.Black;
-            this.textBox21.Location = new System.Drawing.Point(434, 436);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(123, 34);
-            this.textBox21.TabIndex = 82;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label30.ForeColor = System.Drawing.Color.Black;
-            this.label30.Location = new System.Drawing.Point(354, 439);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(74, 28);
-            this.label30.TabIndex = 81;
-            this.label30.Text = "Edition";
-            // 
-            // textBox22
-            // 
-            this.textBox22.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBox22.ForeColor = System.Drawing.Color.Black;
-            this.textBox22.Location = new System.Drawing.Point(204, 436);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(123, 34);
-            this.textBox22.TabIndex = 80;
-            // 
             // TxtEBPublicationYear
             // 
             this.TxtEBPublicationYear.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -1440,21 +1232,6 @@
             this.TxtEBPublicationYear.Name = "TxtEBPublicationYear";
             this.TxtEBPublicationYear.Size = new System.Drawing.Size(353, 34);
             this.TxtEBPublicationYear.TabIndex = 80;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBox2.ForeColor = System.Drawing.Color.Black;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "Staff",
-            "Faculty",
-            "Student",
-            "Guest"});
-            this.comboBox2.Location = new System.Drawing.Point(204, 529);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(353, 36);
-            this.comboBox2.TabIndex = 68;
             // 
             // TxtEBSubtitle
             // 
@@ -1578,94 +1355,6 @@
             this.TxtEBISBN.Name = "TxtEBISBN";
             this.TxtEBISBN.Size = new System.Drawing.Size(353, 34);
             this.TxtEBISBN.TabIndex = 63;
-            // 
-            // CmbBxCopyStatus
-            // 
-            this.CmbBxCopyStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxCopyStatus.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxCopyStatus.FormattingEnabled = true;
-            this.CmbBxCopyStatus.Items.AddRange(new object[] {
-            "Available",
-            "Borrowed",
-            "Reserved",
-            "Lost",
-            "Damaged",
-            "Repair"});
-            this.CmbBxCopyStatus.Location = new System.Drawing.Point(205, 117);
-            this.CmbBxCopyStatus.Name = "CmbBxCopyStatus";
-            this.CmbBxCopyStatus.Size = new System.Drawing.Size(353, 36);
-            this.CmbBxCopyStatus.TabIndex = 108;
-            // 
-            // GrpBxCopyInformation
-            // 
-            this.GrpBxCopyInformation.Controls.Add(this.LblNote);
-            this.GrpBxCopyInformation.Controls.Add(this.LblNote2);
-            this.GrpBxCopyInformation.Controls.Add(this.LblNote1);
-            this.GrpBxCopyInformation.Controls.Add(this.CmbBxCopyStatus);
-            this.GrpBxCopyInformation.Controls.Add(this.LblCopyStatus);
-            this.GrpBxCopyInformation.Controls.Add(this.TxtLocation);
-            this.GrpBxCopyInformation.Controls.Add(this.LblLocation);
-            this.GrpBxCopyInformation.Controls.Add(this.LblNoOfCopies);
-            this.GrpBxCopyInformation.Controls.Add(this.NumPckNoOfCopies);
-            this.GrpBxCopyInformation.Controls.Add(this.textBox18);
-            this.GrpBxCopyInformation.Controls.Add(this.label25);
-            this.GrpBxCopyInformation.Controls.Add(this.textBox19);
-            this.GrpBxCopyInformation.Controls.Add(this.label26);
-            this.GrpBxCopyInformation.Controls.Add(this.textBox20);
-            this.GrpBxCopyInformation.Controls.Add(this.label27);
-            this.GrpBxCopyInformation.Controls.Add(this.label28);
-            this.GrpBxCopyInformation.Controls.Add(this.label29);
-            this.GrpBxCopyInformation.Controls.Add(this.textBox21);
-            this.GrpBxCopyInformation.Controls.Add(this.label30);
-            this.GrpBxCopyInformation.Controls.Add(this.textBox22);
-            this.GrpBxCopyInformation.Controls.Add(this.label31);
-            this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
-            this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6139);
-            this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
-            this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
-            this.GrpBxCopyInformation.TabIndex = 103;
-            this.GrpBxCopyInformation.TabStop = false;
-            this.GrpBxCopyInformation.Text = "Copy Information";
-            this.GrpBxCopyInformation.Visible = false;
-            // 
-            // LblNote
-            // 
-            this.LblNote.AutoSize = true;
-            this.LblNote.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.LblNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LblNote.Location = new System.Drawing.Point(33, 231);
-            this.LblNote.MaximumSize = new System.Drawing.Size(550, 0);
-            this.LblNote.Name = "LblNote";
-            this.LblNote.Size = new System.Drawing.Size(55, 25);
-            this.LblNote.TabIndex = 111;
-            this.LblNote.Text = "Note:";
-            // 
-            // LblNote2
-            // 
-            this.LblNote2.AutoSize = true;
-            this.LblNote2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.LblNote2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LblNote2.Location = new System.Drawing.Point(33, 316);
-            this.LblNote2.MaximumSize = new System.Drawing.Size(550, 0);
-            this.LblNote2.Name = "LblNote2";
-            this.LblNote2.Size = new System.Drawing.Size(468, 25);
-            this.LblNote2.TabIndex = 110;
-            this.LblNote2.Text = "• Each book copy receives a unique barcode upon saving.";
-            // 
-            // LblNote1
-            // 
-            this.LblNote1.AutoSize = true;
-            this.LblNote1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.LblNote1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LblNote1.Location = new System.Drawing.Point(33, 260);
-            this.LblNote1.MaximumSize = new System.Drawing.Size(550, 0);
-            this.LblNote1.Name = "LblNote1";
-            this.LblNote1.Size = new System.Drawing.Size(524, 50);
-            this.LblNote1.TabIndex = 109;
-            this.LblNote1.Text = "• Status and location are applied to all copies initially and can be edited per c" +
-    "opy later.";
             // 
             // TxtTHDownloadURL
             // 
@@ -2826,7 +2515,6 @@
             this.flowLayoutPanel1.Controls.Add(this.GrpBxThesis);
             this.flowLayoutPanel1.Controls.Add(this.GrpBxAV);
             this.flowLayoutPanel1.Controls.Add(this.GrpBxEBook);
-            this.flowLayoutPanel1.Controls.Add(this.GrpBxCopyInformation);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(442, 127);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(699, 409);
@@ -2860,8 +2548,6 @@
             this.PnlAVDigitalFormat.PerformLayout();
             this.GrpBxEBook.ResumeLayout(false);
             this.GrpBxEBook.PerformLayout();
-            this.GrpBxCopyInformation.ResumeLayout(false);
-            this.GrpBxCopyInformation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).EndInit();
             this.GrpBxPhysicalBook.ResumeLayout(false);
             this.GrpBxPhysicalBook.PerformLayout();
@@ -2937,7 +2623,6 @@
         private System.Windows.Forms.Label LblAVUPCISAN;
         private System.Windows.Forms.TextBox TxtAVUPCISAN;
         private System.Windows.Forms.Label LblTHSubtitle;
-        private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox CmbBxTHFormat;
         private System.Windows.Forms.Label LblTHDegreeLevel;
         private System.Windows.Forms.Label LblTHTitle;
@@ -2958,18 +2643,12 @@
         private System.Windows.Forms.TextBox TxtTHCallNumber;
         private System.Windows.Forms.Label LblTHCallNumber;
         private System.Windows.Forms.Label LblTHAuthors;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox textBox20;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TextBox TxtEBDownloadURL;
         private System.Windows.Forms.Label LblEBDownloadURL;
         private System.Windows.Forms.Label LblEBCategory;
         private System.Windows.Forms.ComboBox CmbBxEBCategory;
         private System.Windows.Forms.ComboBox CmbBxEBAuthors;
         private System.Windows.Forms.ComboBox CmbBxEBEditors;
-        private ReaLTaiizor.Controls.FoxNumeric NumPckNoOfCopies;
-        private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.ComboBox CmbBxEBPublisher;
         private System.Windows.Forms.Button BtnEBAddEditors;
         private System.Windows.Forms.Button BtnEBAddAuthors;
@@ -2977,10 +2656,6 @@
         private System.Windows.Forms.ComboBox CmbBxEBFormat;
         private System.Windows.Forms.TextBox TxtEBCallNumber;
         private System.Windows.Forms.Label LblEBCallNumber;
-        private System.Windows.Forms.Label LblCopyStatus;
-        private System.Windows.Forms.Label LblLocation;
-        private System.Windows.Forms.Label LblNoOfCopies;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label LblEBFormat;
         private System.Windows.Forms.TextBox TxtEBNoOfPages;
         private System.Windows.Forms.Label LblEBNoOfPages;
@@ -2989,14 +2664,7 @@
         private System.Windows.Forms.Label LblEBPublisher;
         private System.Windows.Forms.Label LblEBEditors;
         private System.Windows.Forms.Label LblEBAuthors;
-        private System.Windows.Forms.TextBox TxtLocation;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox21;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox textBox22;
         private System.Windows.Forms.TextBox TxtEBPublicationYear;
-        private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.TextBox TxtEBSubtitle;
         private System.Windows.Forms.GroupBox GrpBxEBook;
         private System.Windows.Forms.ListBox LstBxEBeditors;
@@ -3006,11 +2674,6 @@
         private System.Windows.Forms.Label LblEBTitle;
         private System.Windows.Forms.Label LblEBISBN;
         private System.Windows.Forms.TextBox TxtEBISBN;
-        private System.Windows.Forms.ComboBox CmbBxCopyStatus;
-        private System.Windows.Forms.GroupBox GrpBxCopyInformation;
-        private System.Windows.Forms.Label LblNote;
-        private System.Windows.Forms.Label LblNote2;
-        private System.Windows.Forms.Label LblNote1;
         private System.Windows.Forms.TextBox TxtTHDownloadURL;
         private System.Windows.Forms.RadioButton RdoBtnBKReference;
         private System.Windows.Forms.RadioButton RdoBtnBKCirculation;
