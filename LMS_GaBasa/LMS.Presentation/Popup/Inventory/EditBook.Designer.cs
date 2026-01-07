@@ -1865,6 +1865,7 @@
             this.PicBxBookCover.Location = new System.Drawing.Point(65, 68);
             this.PicBxBookCover.Name = "PicBxBookCover";
             this.PicBxBookCover.Size = new System.Drawing.Size(349, 463);
+            this.PicBxBookCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxBookCover.TabIndex = 79;
             this.PicBxBookCover.TabStop = false;
             this.TipforPicBxBookCover.SetToolTip(this.PicBxBookCover, "Click to add picture");

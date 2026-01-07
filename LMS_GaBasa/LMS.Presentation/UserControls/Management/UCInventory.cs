@@ -41,6 +41,10 @@ namespace LMS.Presentation.UserControls.Management
         {
             InitializeComponent();
 
+            // Ensure DataGridView shows cell tooltips for Standard ID column
+            if (DgwInventory != null)
+                DgwInventory.ShowCellToolTips = true;
+
             // Default repository instances (keeps current project style).
             _bookRepo = new BookRepository();
             _bookCopyRepo = new BookCopyRepository();
@@ -382,6 +386,46 @@ namespace LMS.Presentation.UserControls.Management
                 SetCellValue(row, "ColumnNumbering", rowNumber.ToString());
                 SetCellValue(row, "ColumnBookID", formattedBookId);
                 SetCellValue(row, "ColumnISBN", book.ISBN);
+
+                // Set tooltip for the Standard ID column according to resource type:
+                // - PhysicalBook -> ISBN
+                // - Thesis -> DOI
+                // - Periodical -> ISSN
+                // - AV -> UPC/ISAN
+                // - EBook -> ISBN
+                if (DgwInventory.Columns.Contains("ColumnISBN"))
+                {
+                    try
+                    {
+                        var idCell = row.Cells["ColumnISBN"];
+                        string idTooltipLabel;
+                        switch (book.ResourceType)
+                        {
+                            case ResourceType.Thesis:
+                                idTooltipLabel = "DOI";
+                                break;
+                            case ResourceType.Periodical:
+                                idTooltipLabel = "ISSN";
+                                break;
+                            case ResourceType.AV:
+                                idTooltipLabel = "UPC/ISAN";
+                                break;
+                            case ResourceType.EBook:
+                            case ResourceType.PhysicalBook:
+                            default:
+                                idTooltipLabel = "ISBN";
+                                break;
+                        }
+
+                        // Always set the tooltip label so hovering the Standard ID cell clarifies what the value represents.
+                        idCell.ToolTipText = idTooltipLabel;
+                    }
+                    catch
+                    {
+                        // ignore tooltip setting errors
+                    }
+                }
+
                 SetCellValue(row, "ColumnCallNo", book.CallNumber);
                 SetCellValue(row, "ColumnTitle", book.Title);
                 SetCellValue(row, "ColumnSubtitle", book.Subtitle);

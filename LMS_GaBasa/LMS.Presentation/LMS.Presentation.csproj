@@ -71,6 +71,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Catalog\ViewBookDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Catalog\ViewBookDetails.Designer.cs">
+      <DependentUpon>ViewBookDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Inventory\AddBook.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -296,6 +302,9 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Catalog\ViewBookDetails.resx">
+      <DependentUpon>ViewBookDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
     </EmbeddedResource>
@@ -424,7 +433,6 @@
     <Folder Include="Assets\dataimages\Users\" />
     <Folder Include="Assets\dataimages\ValidIDs\" />
     <Folder Include="Assets\ico\" />
-    <Folder Include="Popup\Catalog\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LMS.BusinessLogic\LMS.BusinessLogic.csproj">
