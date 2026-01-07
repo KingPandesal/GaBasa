@@ -1437,23 +1437,21 @@ namespace LMS.Presentation.Popup.Inventory
                             }
                             else
                             {
-                                // Show edit dialog to get status/location and copies requested
-                                var templateCopy = new BookCopy
-                                {
-                                    BookID = _book.BookID,
-                                    Status = "Available",
-                                    Location = null,
-                                    DateAdded = DateTime.UtcNow,
-                                    AddedByID = addedBy
-                                };
-
-                                using (var dlg = new EditBookCopy(templateCopy))
+                                using (var dlg = new AddBookCopy(_book.BookID))
                                 {
                                     var dlgRes = dlg.ShowDialog();
-                                    if (dlgRes != DialogResult.OK) { /* user cancelled */ }
+                                    if (dlgRes != DialogResult.OK)
+                                    {
+                                        // user cancelled
+                                    }
                                     else
                                     {
-                                        int copiesToCreate = Math.Max(1, dlg.CopiesRequested);
+                                        // Respect user-selected number of copies (minimum 1)
+                                        int copiesToCreate = Math.Max(1, dlg.SelectedCopies);
+
+                                        // Use values returned by AddBookCopy
+                                        var statusToUse = string.IsNullOrWhiteSpace(dlg.SelectedStatus) ? "Available" : dlg.SelectedStatus;
+                                        var locationToUse = dlg.SelectedLocation;
 
                                         // Fetch existing copies once to compute starting suffix
                                         var existing = bookCopyRepo.GetByBookId(_book.BookID) ?? new List<BookCopy>();
@@ -1497,8 +1495,8 @@ namespace LMS.Presentation.Popup.Inventory
                                             {
                                                 BookID = _book.BookID,
                                                 AccessionNumber = accession,
-                                                Status = templateCopy.Status ?? "Available",
-                                                Location = templateCopy.Location,
+                                                Status = statusToUse,
+                                                Location = locationToUse,
                                                 Barcode = barcodeMap != null && barcodeMap.ContainsKey(accession) ? barcodeMap[accession] : null,
                                                 DateAdded = DateTime.UtcNow,
                                                 AddedByID = addedBy

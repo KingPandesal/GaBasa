@@ -34,15 +34,13 @@
             this.TxtLocation = new System.Windows.Forms.TextBox();
             this.LblStatus = new System.Windows.Forms.Label();
             this.GrpBxEditCopyDetails = new System.Windows.Forms.GroupBox();
-            this.LblNoOfCopies = new System.Windows.Forms.Label();
-            this.NumPckNoOfCopies = new ReaLTaiizor.Controls.FoxNumeric();
+            this.LblNote = new System.Windows.Forms.Label();
+            this.LblNote2 = new System.Windows.Forms.Label();
+            this.LblNote1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.TipPicBxProfilePic = new System.Windows.Forms.ToolTip(this.components);
             this.LblCancel = new System.Windows.Forms.Button();
             this.BtnOk = new System.Windows.Forms.Button();
-            this.LblNote = new System.Windows.Forms.Label();
-            this.LblNote2 = new System.Windows.Forms.Label();
-            this.LblNote1 = new System.Windows.Forms.Label();
             this.GrpBxEditCopyDetails.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +50,7 @@
             this.LblLocation.AutoSize = true;
             this.LblLocation.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblLocation.ForeColor = System.Drawing.Color.Black;
-            this.LblLocation.Location = new System.Drawing.Point(17, 167);
+            this.LblLocation.Location = new System.Drawing.Point(17, 120);
             this.LblLocation.Name = "LblLocation";
             this.LblLocation.Size = new System.Drawing.Size(69, 21);
             this.LblLocation.TabIndex = 61;
@@ -69,7 +67,7 @@
             "Lost",
             "Damaged",
             "Repair"});
-            this.CmbBxStatus.Location = new System.Drawing.Point(31, 115);
+            this.CmbBxStatus.Location = new System.Drawing.Point(31, 68);
             this.CmbBxStatus.Name = "CmbBxStatus";
             this.CmbBxStatus.Size = new System.Drawing.Size(413, 36);
             this.CmbBxStatus.TabIndex = 68;
@@ -77,7 +75,7 @@
             // TxtLocation
             // 
             this.TxtLocation.ForeColor = System.Drawing.Color.Black;
-            this.TxtLocation.Location = new System.Drawing.Point(31, 191);
+            this.TxtLocation.Location = new System.Drawing.Point(31, 144);
             this.TxtLocation.Name = "TxtLocation";
             this.TxtLocation.Size = new System.Drawing.Size(413, 34);
             this.TxtLocation.TabIndex = 65;
@@ -87,7 +85,7 @@
             this.LblStatus.AutoSize = true;
             this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblStatus.Location = new System.Drawing.Point(17, 91);
+            this.LblStatus.Location = new System.Drawing.Point(17, 44);
             this.LblStatus.Name = "LblStatus";
             this.LblStatus.Size = new System.Drawing.Size(52, 21);
             this.LblStatus.TabIndex = 67;
@@ -98,8 +96,6 @@
             this.GrpBxEditCopyDetails.Controls.Add(this.LblNote);
             this.GrpBxEditCopyDetails.Controls.Add(this.LblNote2);
             this.GrpBxEditCopyDetails.Controls.Add(this.LblNote1);
-            this.GrpBxEditCopyDetails.Controls.Add(this.LblNoOfCopies);
-            this.GrpBxEditCopyDetails.Controls.Add(this.NumPckNoOfCopies);
             this.GrpBxEditCopyDetails.Controls.Add(this.LblLocation);
             this.GrpBxEditCopyDetails.Controls.Add(this.CmbBxStatus);
             this.GrpBxEditCopyDetails.Controls.Add(this.TxtLocation);
@@ -108,48 +104,54 @@
             this.GrpBxEditCopyDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxEditCopyDetails.Location = new System.Drawing.Point(21, 10);
             this.GrpBxEditCopyDetails.Name = "GrpBxEditCopyDetails";
-            this.GrpBxEditCopyDetails.Size = new System.Drawing.Size(477, 358);
+            this.GrpBxEditCopyDetails.Size = new System.Drawing.Size(477, 308);
             this.GrpBxEditCopyDetails.TabIndex = 71;
             this.GrpBxEditCopyDetails.TabStop = false;
             this.GrpBxEditCopyDetails.Text = "Edit Copy Details";
             // 
-            // LblNoOfCopies
+            // LblNote
             // 
-            this.LblNoOfCopies.AutoSize = true;
-            this.LblNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblNoOfCopies.ForeColor = System.Drawing.Color.Black;
-            this.LblNoOfCopies.Location = new System.Drawing.Point(17, 51);
-            this.LblNoOfCopies.Name = "LblNoOfCopies";
-            this.LblNoOfCopies.Size = new System.Drawing.Size(103, 21);
-            this.LblNoOfCopies.TabIndex = 107;
-            this.LblNoOfCopies.Text = "No. of Copies";
+            this.LblNote.AutoSize = true;
+            this.LblNote.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.LblNote.Location = new System.Drawing.Point(27, 202);
+            this.LblNote.MaximumSize = new System.Drawing.Size(530, 0);
+            this.LblNote.Name = "LblNote";
+            this.LblNote.Size = new System.Drawing.Size(47, 21);
+            this.LblNote.TabIndex = 114;
+            this.LblNote.Text = "Note:";
             // 
-            // NumPckNoOfCopies
+            // LblNote2
             // 
-            this.NumPckNoOfCopies.BackColor = System.Drawing.Color.Transparent;
-            this.NumPckNoOfCopies.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.NumPckNoOfCopies.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(98)))), ((int)(((byte)(110)))));
-            this.NumPckNoOfCopies.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.NumPckNoOfCopies.DisabledButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(198)))), ((int)(((byte)(210)))));
-            this.NumPckNoOfCopies.DisabledTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(178)))), ((int)(((byte)(190)))));
-            this.NumPckNoOfCopies.EnabledCalc = true;
-            this.NumPckNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.NumPckNoOfCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(78)))), ((int)(((byte)(90)))));
-            this.NumPckNoOfCopies.Location = new System.Drawing.Point(148, 51);
-            this.NumPckNoOfCopies.Max = 100000;
-            this.NumPckNoOfCopies.Min = 1;
-            this.NumPckNoOfCopies.Name = "NumPckNoOfCopies";
-            this.NumPckNoOfCopies.Size = new System.Drawing.Size(75, 27);
-            this.NumPckNoOfCopies.TabIndex = 106;
-            this.NumPckNoOfCopies.Text = "foxNumeric1";
-            this.NumPckNoOfCopies.Value = 1;
+            this.LblNote2.AutoSize = true;
+            this.LblNote2.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblNote2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.LblNote2.Location = new System.Drawing.Point(27, 269);
+            this.LblNote2.MaximumSize = new System.Drawing.Size(530, 0);
+            this.LblNote2.Name = "LblNote2";
+            this.LblNote2.Size = new System.Drawing.Size(405, 21);
+            this.LblNote2.TabIndex = 113;
+            this.LblNote2.Text = "• Each book copy receives a unique barcode upon saving.";
+            // 
+            // LblNote1
+            // 
+            this.LblNote1.AutoSize = true;
+            this.LblNote1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblNote1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.LblNote1.Location = new System.Drawing.Point(27, 224);
+            this.LblNote1.MaximumSize = new System.Drawing.Size(410, 0);
+            this.LblNote1.Name = "LblNote1";
+            this.LblNote1.Size = new System.Drawing.Size(407, 42);
+            this.LblNote1.TabIndex = 112;
+            this.LblNote1.Text = "• Status and location are applied to all copies initially and can be edited per c" +
+    "opy later.";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.GrpBxEditCopyDetails);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(521, 372);
+            this.panel1.Size = new System.Drawing.Size(521, 320);
             this.panel1.TabIndex = 93;
             // 
             // LblCancel
@@ -159,7 +161,7 @@
             this.LblCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblCancel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblCancel.Location = new System.Drawing.Point(401, 379);
+            this.LblCancel.Location = new System.Drawing.Point(401, 327);
             this.LblCancel.Margin = new System.Windows.Forms.Padding(4);
             this.LblCancel.Name = "LblCancel";
             this.LblCancel.Size = new System.Drawing.Size(97, 43);
@@ -174,7 +176,7 @@
             this.BtnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnOk.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnOk.ForeColor = System.Drawing.Color.White;
-            this.BtnOk.Location = new System.Drawing.Point(296, 379);
+            this.BtnOk.Location = new System.Drawing.Point(296, 327);
             this.BtnOk.Margin = new System.Windows.Forms.Padding(4);
             this.BtnOk.Name = "BtnOk";
             this.BtnOk.Size = new System.Drawing.Size(97, 43);
@@ -182,49 +184,12 @@
             this.BtnOk.Text = "Ok";
             this.BtnOk.UseVisualStyleBackColor = false;
             // 
-            // LblNote
-            // 
-            this.LblNote.AutoSize = true;
-            this.LblNote.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LblNote.Location = new System.Drawing.Point(27, 249);
-            this.LblNote.MaximumSize = new System.Drawing.Size(530, 0);
-            this.LblNote.Name = "LblNote";
-            this.LblNote.Size = new System.Drawing.Size(47, 21);
-            this.LblNote.TabIndex = 114;
-            this.LblNote.Text = "Note:";
-            // 
-            // LblNote2
-            // 
-            this.LblNote2.AutoSize = true;
-            this.LblNote2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblNote2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LblNote2.Location = new System.Drawing.Point(27, 316);
-            this.LblNote2.MaximumSize = new System.Drawing.Size(530, 0);
-            this.LblNote2.Name = "LblNote2";
-            this.LblNote2.Size = new System.Drawing.Size(405, 21);
-            this.LblNote2.TabIndex = 113;
-            this.LblNote2.Text = "• Each book copy receives a unique barcode upon saving.";
-            // 
-            // LblNote1
-            // 
-            this.LblNote1.AutoSize = true;
-            this.LblNote1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblNote1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LblNote1.Location = new System.Drawing.Point(27, 271);
-            this.LblNote1.MaximumSize = new System.Drawing.Size(410, 0);
-            this.LblNote1.Name = "LblNote1";
-            this.LblNote1.Size = new System.Drawing.Size(407, 42);
-            this.LblNote1.TabIndex = 112;
-            this.LblNote1.Text = "• Status and location are applied to all copies initially and can be edited per c" +
-    "opy later.";
-            // 
             // EditBookCopy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(520, 433);
+            this.ClientSize = new System.Drawing.Size(520, 392);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.LblCancel);
             this.Controls.Add(this.BtnOk);
@@ -251,8 +216,6 @@
         private System.Windows.Forms.ToolTip TipPicBxProfilePic;
         private System.Windows.Forms.Button LblCancel;
         private System.Windows.Forms.Button BtnOk;
-        private System.Windows.Forms.Label LblNoOfCopies;
-        private ReaLTaiizor.Controls.FoxNumeric NumPckNoOfCopies;
         private System.Windows.Forms.Label LblNote;
         private System.Windows.Forms.Label LblNote2;
         private System.Windows.Forms.Label LblNote1;

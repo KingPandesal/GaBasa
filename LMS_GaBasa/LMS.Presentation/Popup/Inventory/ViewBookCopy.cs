@@ -375,32 +375,44 @@ namespace LMS.Presentation.Popup.Inventory
                         return;
                     }
 
-                    // Generate unique accession for this book and year
+                    // Respect user-selected number of copies (minimum 1)
+                    int copiesToCreate = Math.Max(1, dlg.SelectedCopies);
+
                     var dateAdded = DateTime.Now;
-                    string accession = GenerateUniqueAccession(_bookId, dateAdded);
+                    int created = 0;
 
-                    // Save barcode image
-                    string barcodeRelPath = TrySaveBarcodeImage(accession);
-
-                    // Build staged copy
-                    var copy = new BookCopy
+                    for (int i = 0; i < copiesToCreate; i++)
                     {
-                        CopyID = 0, // not yet persisted
-                        BookID = _bookId,
-                        AccessionNumber = accession,
-                        Status = dlg.SelectedStatus,
-                        Location = dlg.SelectedLocation,
-                        Barcode = barcodeRelPath,
-                        DateAdded = dateAdded,
-                        AddedByID = addedBy
-                    };
+                        // Generate unique accession for this book and date (method already ensures uniqueness against staged/new)
+                        string accession = GenerateUniqueAccession(_bookId, dateAdded);
 
-                    // Stage it
-                    _newCopies.Add(copy);
-                    _allCopies.Add(copy);
+                        // Save barcode image (returns filename or null)
+                        string barcodeRelPath = TrySaveBarcodeImage(accession);
+
+                        // Build staged copy
+                        var copy = new BookCopy
+                        {
+                            CopyID = 0, // not yet persisted
+                            BookID = _bookId,
+                            AccessionNumber = accession,
+                            Status = dlg.SelectedStatus,
+                            Location = dlg.SelectedLocation,
+                            Barcode = barcodeRelPath,
+                            DateAdded = dateAdded,
+                            AddedByID = addedBy
+                        };
+
+                        // Stage it
+                        _newCopies.Add(copy);
+                        _allCopies.Add(copy);
+                        created++;
+                    }
 
                     // Refresh view and visually mark staged new
                     ApplyFilters();
+
+                    if (created > 0)
+                        MessageBox.Show($"{created} copy(ies) staged.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)

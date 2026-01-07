@@ -45,6 +45,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.GrpBxPhysicalBook = new System.Windows.Forms.GroupBox();
             this.RdoBtnBKReference = new System.Windows.Forms.RadioButton();
             this.RdoBtnBKCirculation = new System.Windows.Forms.RadioButton();
@@ -261,7 +262,6 @@
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -326,7 +326,7 @@
             this.GrpBxResourceType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxResourceType.Location = new System.Drawing.Point(3, 3);
             this.GrpBxResourceType.Name = "GrpBxResourceType";
-            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 352);
+            this.GrpBxResourceType.Size = new System.Drawing.Size(629, 370);
             this.GrpBxResourceType.TabIndex = 75;
             this.GrpBxResourceType.TabStop = false;
             this.GrpBxResourceType.Text = "Resource Type";
@@ -477,6 +477,20 @@
             this.label16.TabIndex = 87;
             this.label16.Text = "No. of Pages";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label1.Location = new System.Drawing.Point(33, 275);
+            this.label1.MaximumSize = new System.Drawing.Size(550, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(528, 75);
+            this.label1.TabIndex = 91;
+            this.label1.Text = "*Resource type cannot be edited later. Once saved, this choice cannot be changed." +
+    " Please make sure you’ve selected the correct type before continuing.";
+            this.label1.Click += new System.EventHandler(this.LblCallNumber_Click);
+            // 
             // GrpBxPhysicalBook
             // 
             this.GrpBxPhysicalBook.Controls.Add(this.RdoBtnBKReference);
@@ -514,7 +528,7 @@
             this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKCategory);
             this.GrpBxPhysicalBook.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxPhysicalBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxPhysicalBook.Location = new System.Drawing.Point(3, 361);
+            this.GrpBxPhysicalBook.Location = new System.Drawing.Point(3, 379);
             this.GrpBxPhysicalBook.Name = "GrpBxPhysicalBook";
             this.GrpBxPhysicalBook.Size = new System.Drawing.Size(629, 1150);
             this.GrpBxPhysicalBook.TabIndex = 72;
@@ -1082,7 +1096,7 @@
             this.GrpBxPeriodicals.Controls.Add(this.TxtPRISSN);
             this.GrpBxPeriodicals.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxPeriodicals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxPeriodicals.Location = new System.Drawing.Point(3, 1517);
+            this.GrpBxPeriodicals.Location = new System.Drawing.Point(3, 1535);
             this.GrpBxPeriodicals.Name = "GrpBxPeriodicals";
             this.GrpBxPeriodicals.Size = new System.Drawing.Size(629, 1286);
             this.GrpBxPeriodicals.TabIndex = 76;
@@ -1545,7 +1559,7 @@
             this.GrpBxThesis.Controls.Add(this.TxtTHDOI);
             this.GrpBxThesis.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxThesis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxThesis.Location = new System.Drawing.Point(3, 2809);
+            this.GrpBxThesis.Location = new System.Drawing.Point(3, 2827);
             this.GrpBxThesis.Name = "GrpBxThesis";
             this.GrpBxThesis.Size = new System.Drawing.Size(629, 1287);
             this.GrpBxThesis.TabIndex = 77;
@@ -2000,7 +2014,7 @@
             this.GrpBxAV.Controls.Add(this.TxtAVUPCISAN);
             this.GrpBxAV.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxAV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxAV.Location = new System.Drawing.Point(3, 4102);
+            this.GrpBxAV.Location = new System.Drawing.Point(3, 4120);
             this.GrpBxAV.Name = "GrpBxAV";
             this.GrpBxAV.Size = new System.Drawing.Size(629, 1284);
             this.GrpBxAV.TabIndex = 101;
@@ -2445,7 +2459,7 @@
             this.GrpBxEBook.Controls.Add(this.TxtEBISBN);
             this.GrpBxEBook.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxEBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5392);
+            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5410);
             this.GrpBxEBook.Name = "GrpBxEBook";
             this.GrpBxEBook.Size = new System.Drawing.Size(629, 1099);
             this.GrpBxEBook.TabIndex = 102;
@@ -2784,7 +2798,7 @@
             this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
             this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6497);
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6515);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
             this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
             this.GrpBxCopyInformation.TabIndex = 103;
@@ -3044,20 +3058,6 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(353, 36);
             this.comboBox2.TabIndex = 68;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(33, 257);
-            this.label1.MaximumSize = new System.Drawing.Size(550, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(528, 75);
-            this.label1.TabIndex = 91;
-            this.label1.Text = "*Resource type cannot be edited later. Once saved, this choice cannot be changed." +
-    " Please make sure you’ve selected the correct type before continuing.";
-            this.label1.Click += new System.EventHandler(this.LblCallNumber_Click);
             // 
             // AddBook
             // 
