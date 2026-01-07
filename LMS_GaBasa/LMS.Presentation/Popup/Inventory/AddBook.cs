@@ -383,11 +383,30 @@ namespace LMS.Presentation.Popup.Inventory
 
         private void LoadCategories()
         {
-            CmbBxBKCategory.Items.Clear();
+            // Populate category comboboxes (BK, EB, AV) from catalog manager.
+            // Use distinct non-empty names and set up autocomplete for each combobox so user can pick existing or type a new one.
             var categories = _catalogManager.GetAllCategories();
-            foreach (var cat in categories)
+            var names = categories?
+                .Where(c => !string.IsNullOrWhiteSpace(c.Name))
+                .Select(c => c.Name.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray() ?? new string[0];
+
+            // Ensure autocomplete + editable behavior
+            SetupComboBoxForAutocomplete(CmbBxBKCategory, names);
+            SetupComboBoxForAutocomplete(CmbBxEBCategory, names);
+            SetupComboBoxForAutocomplete(CmbBxAVCategory, names);
+
+            // Fill dropdown items so the list is visible in the UI
+            CmbBxBKCategory.Items.Clear();
+            CmbBxEBCategory.Items.Clear();
+            CmbBxAVCategory.Items.Clear();
+
+            if (names.Length > 0)
             {
-                CmbBxBKCategory.Items.Add(cat.Name);
+                CmbBxBKCategory.Items.AddRange(names);
+                CmbBxEBCategory.Items.AddRange(names);
+                CmbBxAVCategory.Items.AddRange(names);
             }
         }
 
@@ -1012,6 +1031,7 @@ namespace LMS.Presentation.Popup.Inventory
                 Publisher = !string.IsNullOrWhiteSpace(CmbBxBKPublisher.Text) ? CmbBxBKPublisher.Text.Trim() : string.Empty,
                 PublicationYear = ParseInt(TxtBKPublicationYear.Text),
                 Edition = TxtBKEdition.Text.Trim(),
+                // default category comes from BK combobox; may be overwritten below for EB/AV
                 CategoryName = CmbBxBKCategory.Text.Trim(),
                 Language = CmbBxBKLanguage.Text.Trim(),
                 Pages = ParseInt(TxtBKNoOfPages.Text),
@@ -1136,6 +1156,10 @@ namespace LMS.Presentation.Popup.Inventory
                     // AV duration exists; DTO doesn't have duration property — leave Pages = 0
                     dto.Pages = 0;
                     dto.PublicationYear = ParseInt(TxtAVPublicationYear.Text);
+
+                    // Use AV category combobox value as category for AV resources
+                    dto.CategoryName = CmbBxAVCategory.Text.Trim();
+
                     if (RdoBtnAVPhysical.Checked)
                         dto.PhysicalDescription = CmbBxAVPhysicalDescription.Text.Trim();
                     else
@@ -1152,15 +1176,16 @@ namespace LMS.Presentation.Popup.Inventory
                     dto.CallNumber = TxtEBCallNumber.Text.Trim();
                     dto.Pages = ParseInt(TxtEBNoOfPages.Text);
                     dto.PublicationYear = ParseInt(TxtEBPublicationYear.Text);
-                    // E-Book format in CmbBxEBFormat
+
+                    // Use EB category combobox value as category for eBooks
+                    dto.CategoryName = CmbBxEBCategory.Text.Trim();
+
                     dto.PhysicalDescription = CmbBxEBFormat.Text.Trim();
-                    // No barcodes will be generated for eBooks (handled in save)
                     dto.LoanType = null;
                     break;
             }
 
             // If publisher name maps to an existing publisher in DB, set PublisherID.
-            // If not, create it now (user requested missing publishers be saved on Save).
             if (!string.IsNullOrWhiteSpace(dto.Publisher) && _publisherRepo != null)
             {
                 var match = _publisherRepo.GetAll()
@@ -1189,7 +1214,6 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 try
                 {
-                    // GetOrCreateCategory returns existing or newly created Category
                     var cat = _catalogManager.GetOrCreateCategory(dto.CategoryName);
                     if (cat != null) dto.CategoryID = cat.CategoryID;
                 }
@@ -1358,14 +1382,28 @@ namespace LMS.Presentation.Popup.Inventory
             }
 
             // Get category ID if existing category selected (redundant with GetOrCreate but keep for safety)
-            if (CmbBxBKCategory.SelectedIndex >= 0)
             {
-                var categories = _catalogManager.GetAllCategories();
-                var selectedCat = categories.FirstOrDefault(c =>
-                    c.Name.Equals(CmbBxBKCategory.Text, StringComparison.OrdinalIgnoreCase));
-                if (selectedCat != null)
+                string selectedCategoryText = null;
+                if (CmbBxBKCategory.SelectedIndex >= 0) selectedCategoryText = CmbBxBKCategory.Text;
+                else if (CmbBxEBCategory != null && CmbBxEBCategory.SelectedIndex >= 0) selectedCategoryText = CmbBxEBCategory.Text;
+                else if (CmbBxAVCategory != null && CmbBxAVCategory.SelectedIndex >= 0) selectedCategoryText = CmbBxAVCategory.Text;
+
+                if (!string.IsNullOrWhiteSpace(selectedCategoryText))
                 {
-                    dto.CategoryID = selectedCat.CategoryID;
+                    try
+                    {
+                        var categories = _catalogManager.GetAllCategories();
+                        var selectedCat = categories.FirstOrDefault(c =>
+                            c.Name.Equals(selectedCategoryText, StringComparison.OrdinalIgnoreCase));
+                        if (selectedCat != null)
+                        {
+                            dto.CategoryID = selectedCat.CategoryID;
+                        }
+                    }
+                    catch
+                    {
+                        // ignore
+                    }
                 }
             }
 
@@ -1778,6 +1816,11 @@ namespace LMS.Presentation.Popup.Inventory
             // No UI side-effects required here; the LoanType is read during Save/BuildDTO.
             // This handler exists only to satisfy the designer event wiring and avoid the compile error.
             // If you want immediate behavior when switching to Reference (e.g., toggle controls), add it here.
+        }
+
+        private void LblAVLanguage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

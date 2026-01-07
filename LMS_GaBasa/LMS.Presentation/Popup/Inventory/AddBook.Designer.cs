@@ -35,8 +35,8 @@
             this.GrpBxResourceType = new System.Windows.Forms.GroupBox();
             this.FlowPnlforRdoBtns = new System.Windows.Forms.FlowLayoutPanel();
             this.RdoBtnPhysicalBook = new System.Windows.Forms.RadioButton();
-            this.RdoBtnTheses = new System.Windows.Forms.RadioButton();
             this.RdoBtnPeriodical = new System.Windows.Forms.RadioButton();
+            this.RdoBtnTheses = new System.Windows.Forms.RadioButton();
             this.RdoBtnAV = new System.Windows.Forms.RadioButton();
             this.RdoBtnEBook = new System.Windows.Forms.RadioButton();
             this.textBox11 = new System.Windows.Forms.TextBox();
@@ -46,6 +46,8 @@
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.GrpBxPhysicalBook = new System.Windows.Forms.GroupBox();
+            this.RdoBtnBKReference = new System.Windows.Forms.RadioButton();
+            this.RdoBtnBKCirculation = new System.Windows.Forms.RadioButton();
             this.CmbBxBKAuthors = new System.Windows.Forms.ComboBox();
             this.CmbBxBKEditor = new System.Windows.Forms.ComboBox();
             this.CmbBxBKPublisher = new System.Windows.Forms.ComboBox();
@@ -57,6 +59,7 @@
             this.TxtBKCallNumber = new System.Windows.Forms.TextBox();
             this.LblBKCallNumber = new System.Windows.Forms.Label();
             this.TxtBKPhysicalDescription = new System.Windows.Forms.TextBox();
+            this.LblBKLoanType = new System.Windows.Forms.Label();
             this.LblBKPhysicalDescription = new System.Windows.Forms.Label();
             this.TxtBKNoOfPages = new System.Windows.Forms.TextBox();
             this.LblBKNoOfPages = new System.Windows.Forms.Label();
@@ -252,9 +255,10 @@
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.LblBKLoanType = new System.Windows.Forms.Label();
-            this.RdoBtnBKCirculation = new System.Windows.Forms.RadioButton();
-            this.RdoBtnBKReference = new System.Windows.Forms.RadioButton();
+            this.LblAVCategory = new System.Windows.Forms.Label();
+            this.CmbBxAVCategory = new System.Windows.Forms.ComboBox();
+            this.LblEBCategory = new System.Windows.Forms.Label();
+            this.CmbBxEBCategory = new System.Windows.Forms.ComboBox();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -353,20 +357,6 @@
             this.RdoBtnPhysicalBook.UseVisualStyleBackColor = true;
             this.RdoBtnPhysicalBook.CheckedChanged += new System.EventHandler(this.RdoBtnPhysicalBook_CheckedChanged);
             // 
-            // RdoBtnTheses
-            // 
-            this.RdoBtnTheses.AutoSize = true;
-            this.RdoBtnTheses.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnTheses.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnTheses.Location = new System.Drawing.Point(3, 79);
-            this.RdoBtnTheses.Name = "RdoBtnTheses";
-            this.RdoBtnTheses.Size = new System.Drawing.Size(211, 32);
-            this.RdoBtnTheses.TabIndex = 95;
-            this.RdoBtnTheses.TabStop = true;
-            this.RdoBtnTheses.Text = "Thesis / Dissertation";
-            this.RdoBtnTheses.UseVisualStyleBackColor = true;
-            this.RdoBtnTheses.CheckedChanged += new System.EventHandler(this.RdoBtnTheses_CheckedChanged);
-            // 
             // RdoBtnPeriodical
             // 
             this.RdoBtnPeriodical.AutoSize = true;
@@ -380,6 +370,20 @@
             this.RdoBtnPeriodical.Text = "Periodical / Magazine";
             this.RdoBtnPeriodical.UseVisualStyleBackColor = true;
             this.RdoBtnPeriodical.CheckedChanged += new System.EventHandler(this.RdoBtnPeriodical_CheckedChanged);
+            // 
+            // RdoBtnTheses
+            // 
+            this.RdoBtnTheses.AutoSize = true;
+            this.RdoBtnTheses.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnTheses.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnTheses.Location = new System.Drawing.Point(3, 79);
+            this.RdoBtnTheses.Name = "RdoBtnTheses";
+            this.RdoBtnTheses.Size = new System.Drawing.Size(211, 32);
+            this.RdoBtnTheses.TabIndex = 95;
+            this.RdoBtnTheses.TabStop = true;
+            this.RdoBtnTheses.Text = "Thesis / Dissertation";
+            this.RdoBtnTheses.UseVisualStyleBackColor = true;
+            this.RdoBtnTheses.CheckedChanged += new System.EventHandler(this.RdoBtnTheses_CheckedChanged);
             // 
             // RdoBtnAV
             // 
@@ -515,6 +519,33 @@
             this.GrpBxPhysicalBook.Visible = false;
             this.GrpBxPhysicalBook.Enter += new System.EventHandler(this.GrpBxBookInformation_Enter);
             // 
+            // RdoBtnBKReference
+            // 
+            this.RdoBtnBKReference.AutoSize = true;
+            this.RdoBtnBKReference.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnBKReference.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnBKReference.Location = new System.Drawing.Point(318, 1083);
+            this.RdoBtnBKReference.Name = "RdoBtnBKReference";
+            this.RdoBtnBKReference.Size = new System.Drawing.Size(121, 32);
+            this.RdoBtnBKReference.TabIndex = 102;
+            this.RdoBtnBKReference.TabStop = true;
+            this.RdoBtnBKReference.Text = "Reference";
+            this.RdoBtnBKReference.UseVisualStyleBackColor = true;
+            this.RdoBtnBKReference.CheckedChanged += new System.EventHandler(this.RdoBtnBKReference_CheckedChanged);
+            // 
+            // RdoBtnBKCirculation
+            // 
+            this.RdoBtnBKCirculation.AutoSize = true;
+            this.RdoBtnBKCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RdoBtnBKCirculation.ForeColor = System.Drawing.Color.Black;
+            this.RdoBtnBKCirculation.Location = new System.Drawing.Point(103, 1083);
+            this.RdoBtnBKCirculation.Name = "RdoBtnBKCirculation";
+            this.RdoBtnBKCirculation.Size = new System.Drawing.Size(131, 32);
+            this.RdoBtnBKCirculation.TabIndex = 102;
+            this.RdoBtnBKCirculation.TabStop = true;
+            this.RdoBtnBKCirculation.Text = "Circulation";
+            this.RdoBtnBKCirculation.UseVisualStyleBackColor = true;
+            // 
             // CmbBxBKAuthors
             // 
             this.CmbBxBKAuthors.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -646,6 +677,18 @@
             this.TxtBKPhysicalDescription.Size = new System.Drawing.Size(322, 34);
             this.TxtBKPhysicalDescription.TabIndex = 90;
             this.TxtBKPhysicalDescription.TextChanged += new System.EventHandler(this.TxtPhysicalDescription_TextChanged);
+            // 
+            // LblBKLoanType
+            // 
+            this.LblBKLoanType.AutoSize = true;
+            this.LblBKLoanType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBKLoanType.ForeColor = System.Drawing.Color.Black;
+            this.LblBKLoanType.Location = new System.Drawing.Point(27, 1045);
+            this.LblBKLoanType.Name = "LblBKLoanType";
+            this.LblBKLoanType.Size = new System.Drawing.Size(100, 28);
+            this.LblBKLoanType.TabIndex = 89;
+            this.LblBKLoanType.Text = "Loan Type";
+            this.LblBKLoanType.Click += new System.EventHandler(this.LblPhysicalDescription_Click);
             // 
             // LblBKPhysicalDescription
             // 
@@ -1923,7 +1966,9 @@
             // 
             // GrpBxAV
             // 
+            this.GrpBxAV.Controls.Add(this.LblAVCategory);
             this.GrpBxAV.Controls.Add(this.FlwPnlAVMaterialFormat);
+            this.GrpBxAV.Controls.Add(this.CmbBxAVCategory);
             this.GrpBxAV.Controls.Add(this.LblAVMaterialFormat);
             this.GrpBxAV.Controls.Add(this.CmbBxAVAuthors);
             this.GrpBxAV.Controls.Add(this.CmbBxAVEditors);
@@ -1953,7 +1998,7 @@
             this.GrpBxAV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxAV.Location = new System.Drawing.Point(3, 4021);
             this.GrpBxAV.Name = "GrpBxAV";
-            this.GrpBxAV.Size = new System.Drawing.Size(629, 1226);
+            this.GrpBxAV.Size = new System.Drawing.Size(629, 1284);
             this.GrpBxAV.TabIndex = 101;
             this.GrpBxAV.TabStop = false;
             this.GrpBxAV.Text = "Audio-Visual Details";
@@ -1967,7 +2012,7 @@
             this.FlwPnlAVMaterialFormat.Controls.Add(this.RdoBtnAVDigital);
             this.FlwPnlAVMaterialFormat.Controls.Add(this.PnlAVDigitalFormat);
             this.FlwPnlAVMaterialFormat.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.FlwPnlAVMaterialFormat.Location = new System.Drawing.Point(33, 988);
+            this.FlwPnlAVMaterialFormat.Location = new System.Drawing.Point(33, 1046);
             this.FlwPnlAVMaterialFormat.Name = "FlwPnlAVMaterialFormat";
             this.FlwPnlAVMaterialFormat.Size = new System.Drawing.Size(559, 232);
             this.FlwPnlAVMaterialFormat.TabIndex = 107;
@@ -2095,7 +2140,7 @@
             this.LblAVMaterialFormat.AutoSize = true;
             this.LblAVMaterialFormat.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAVMaterialFormat.ForeColor = System.Drawing.Color.Black;
-            this.LblAVMaterialFormat.Location = new System.Drawing.Point(28, 951);
+            this.LblAVMaterialFormat.Location = new System.Drawing.Point(28, 1009);
             this.LblAVMaterialFormat.Name = "LblAVMaterialFormat";
             this.LblAVMaterialFormat.Size = new System.Drawing.Size(152, 28);
             this.LblAVMaterialFormat.TabIndex = 106;
@@ -2168,7 +2213,7 @@
             this.CmbBxAVLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.CmbBxAVLanguage.ForeColor = System.Drawing.Color.Black;
             this.CmbBxAVLanguage.FormattingEnabled = true;
-            this.CmbBxAVLanguage.Location = new System.Drawing.Point(202, 808);
+            this.CmbBxAVLanguage.Location = new System.Drawing.Point(202, 868);
             this.CmbBxAVLanguage.Name = "CmbBxAVLanguage";
             this.CmbBxAVLanguage.Size = new System.Drawing.Size(353, 36);
             this.CmbBxAVLanguage.TabIndex = 93;
@@ -2197,7 +2242,7 @@
             // 
             this.TxtAVDuration.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtAVDuration.ForeColor = System.Drawing.Color.Black;
-            this.TxtAVDuration.Location = new System.Drawing.Point(201, 887);
+            this.TxtAVDuration.Location = new System.Drawing.Point(201, 945);
             this.TxtAVDuration.Name = "TxtAVDuration";
             this.TxtAVDuration.Size = new System.Drawing.Size(123, 34);
             this.TxtAVDuration.TabIndex = 88;
@@ -2208,7 +2253,7 @@
             this.LblAVDuration.AutoSize = true;
             this.LblAVDuration.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAVDuration.ForeColor = System.Drawing.Color.Black;
-            this.LblAVDuration.Location = new System.Drawing.Point(27, 891);
+            this.LblAVDuration.Location = new System.Drawing.Point(27, 949);
             this.LblAVDuration.Name = "LblAVDuration";
             this.LblAVDuration.Size = new System.Drawing.Size(89, 28);
             this.LblAVDuration.TabIndex = 87;
@@ -2220,11 +2265,12 @@
             this.LblAVLanguage.AutoSize = true;
             this.LblAVLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAVLanguage.ForeColor = System.Drawing.Color.Black;
-            this.LblAVLanguage.Location = new System.Drawing.Point(28, 811);
+            this.LblAVLanguage.Location = new System.Drawing.Point(28, 871);
             this.LblAVLanguage.Name = "LblAVLanguage";
             this.LblAVLanguage.Size = new System.Drawing.Size(97, 28);
             this.LblAVLanguage.TabIndex = 85;
             this.LblAVLanguage.Text = "Language";
+            this.LblAVLanguage.Click += new System.EventHandler(this.LblAVLanguage_Click);
             // 
             // TxtAVPublicationYear
             // 
@@ -2342,6 +2388,8 @@
             // 
             // GrpBxEBook
             // 
+            this.GrpBxEBook.Controls.Add(this.LblEBCategory);
+            this.GrpBxEBook.Controls.Add(this.CmbBxEBCategory);
             this.GrpBxEBook.Controls.Add(this.CmbBxEBAuthors);
             this.GrpBxEBook.Controls.Add(this.CmbBxEBEditors);
             this.GrpBxEBook.Controls.Add(this.CmbBxEBPublisher);
@@ -2370,9 +2418,9 @@
             this.GrpBxEBook.Controls.Add(this.TxtEBISBN);
             this.GrpBxEBook.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxEBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5253);
+            this.GrpBxEBook.Location = new System.Drawing.Point(3, 5311);
             this.GrpBxEBook.Name = "GrpBxEBook";
-            this.GrpBxEBook.Size = new System.Drawing.Size(629, 992);
+            this.GrpBxEBook.Size = new System.Drawing.Size(629, 1039);
             this.GrpBxEBook.TabIndex = 102;
             this.GrpBxEBook.TabStop = false;
             this.GrpBxEBook.Text = "E-Book Details";
@@ -2444,7 +2492,7 @@
             this.CmbBxEBLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.CmbBxEBLanguage.ForeColor = System.Drawing.Color.Black;
             this.CmbBxEBLanguage.FormattingEnabled = true;
-            this.CmbBxEBLanguage.Location = new System.Drawing.Point(201, 806);
+            this.CmbBxEBLanguage.Location = new System.Drawing.Point(201, 854);
             this.CmbBxEBLanguage.Name = "CmbBxEBLanguage";
             this.CmbBxEBLanguage.Size = new System.Drawing.Size(353, 36);
             this.CmbBxEBLanguage.TabIndex = 93;
@@ -2462,7 +2510,7 @@
             "TXT",
             "HTML",
             "IBA"});
-            this.CmbBxEBFormat.Location = new System.Drawing.Point(201, 928);
+            this.CmbBxEBFormat.Location = new System.Drawing.Point(201, 976);
             this.CmbBxEBFormat.Name = "CmbBxEBFormat";
             this.CmbBxEBFormat.Size = new System.Drawing.Size(353, 36);
             this.CmbBxEBFormat.TabIndex = 93;
@@ -2492,7 +2540,7 @@
             this.LblEBFormat.AutoSize = true;
             this.LblEBFormat.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblEBFormat.ForeColor = System.Drawing.Color.Black;
-            this.LblEBFormat.Location = new System.Drawing.Point(28, 933);
+            this.LblEBFormat.Location = new System.Drawing.Point(28, 981);
             this.LblEBFormat.Name = "LblEBFormat";
             this.LblEBFormat.Size = new System.Drawing.Size(75, 28);
             this.LblEBFormat.TabIndex = 89;
@@ -2502,7 +2550,7 @@
             // 
             this.TxtEBNoOfPages.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtEBNoOfPages.ForeColor = System.Drawing.Color.Black;
-            this.TxtEBNoOfPages.Location = new System.Drawing.Point(201, 880);
+            this.TxtEBNoOfPages.Location = new System.Drawing.Point(201, 928);
             this.TxtEBNoOfPages.Name = "TxtEBNoOfPages";
             this.TxtEBNoOfPages.Size = new System.Drawing.Size(123, 34);
             this.TxtEBNoOfPages.TabIndex = 88;
@@ -2512,7 +2560,7 @@
             this.LblEBNoOfPages.AutoSize = true;
             this.LblEBNoOfPages.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblEBNoOfPages.ForeColor = System.Drawing.Color.Black;
-            this.LblEBNoOfPages.Location = new System.Drawing.Point(27, 884);
+            this.LblEBNoOfPages.Location = new System.Drawing.Point(27, 932);
             this.LblEBNoOfPages.Name = "LblEBNoOfPages";
             this.LblEBNoOfPages.Size = new System.Drawing.Size(121, 28);
             this.LblEBNoOfPages.TabIndex = 87;
@@ -2523,7 +2571,7 @@
             this.LblEBLanguage.AutoSize = true;
             this.LblEBLanguage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblEBLanguage.ForeColor = System.Drawing.Color.Black;
-            this.LblEBLanguage.Location = new System.Drawing.Point(27, 807);
+            this.LblEBLanguage.Location = new System.Drawing.Point(27, 855);
             this.LblEBLanguage.Name = "LblEBLanguage";
             this.LblEBLanguage.Size = new System.Drawing.Size(97, 28);
             this.LblEBLanguage.TabIndex = 85;
@@ -2668,7 +2716,7 @@
             this.GrpBxCopyInformation.Controls.Add(this.comboBox2);
             this.GrpBxCopyInformation.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.GrpBxCopyInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6251);
+            this.GrpBxCopyInformation.Location = new System.Drawing.Point(3, 6356);
             this.GrpBxCopyInformation.Name = "GrpBxCopyInformation";
             this.GrpBxCopyInformation.Size = new System.Drawing.Size(629, 376);
             this.GrpBxCopyInformation.TabIndex = 103;
@@ -2929,44 +2977,47 @@
             this.comboBox2.Size = new System.Drawing.Size(353, 36);
             this.comboBox2.TabIndex = 68;
             // 
-            // LblBKLoanType
+            // LblAVCategory
             // 
-            this.LblBKLoanType.AutoSize = true;
-            this.LblBKLoanType.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblBKLoanType.ForeColor = System.Drawing.Color.Black;
-            this.LblBKLoanType.Location = new System.Drawing.Point(27, 1045);
-            this.LblBKLoanType.Name = "LblBKLoanType";
-            this.LblBKLoanType.Size = new System.Drawing.Size(100, 28);
-            this.LblBKLoanType.TabIndex = 89;
-            this.LblBKLoanType.Text = "Loan Type";
-            this.LblBKLoanType.Click += new System.EventHandler(this.LblPhysicalDescription_Click);
+            this.LblAVCategory.AutoSize = true;
+            this.LblAVCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblAVCategory.ForeColor = System.Drawing.Color.Black;
+            this.LblAVCategory.Location = new System.Drawing.Point(28, 824);
+            this.LblAVCategory.Name = "LblAVCategory";
+            this.LblAVCategory.Size = new System.Drawing.Size(92, 28);
+            this.LblAVCategory.TabIndex = 96;
+            this.LblAVCategory.Text = "Category";
             // 
-            // RdoBtnBKCirculation
+            // CmbBxAVCategory
             // 
-            this.RdoBtnBKCirculation.AutoSize = true;
-            this.RdoBtnBKCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnBKCirculation.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnBKCirculation.Location = new System.Drawing.Point(103, 1083);
-            this.RdoBtnBKCirculation.Name = "RdoBtnBKCirculation";
-            this.RdoBtnBKCirculation.Size = new System.Drawing.Size(131, 32);
-            this.RdoBtnBKCirculation.TabIndex = 102;
-            this.RdoBtnBKCirculation.TabStop = true;
-            this.RdoBtnBKCirculation.Text = "Circulation";
-            this.RdoBtnBKCirculation.UseVisualStyleBackColor = true;
+            this.CmbBxAVCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxAVCategory.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxAVCategory.FormattingEnabled = true;
+            this.CmbBxAVCategory.Location = new System.Drawing.Point(201, 820);
+            this.CmbBxAVCategory.Name = "CmbBxAVCategory";
+            this.CmbBxAVCategory.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxAVCategory.TabIndex = 95;
             // 
-            // RdoBtnBKReference
+            // LblEBCategory
             // 
-            this.RdoBtnBKReference.AutoSize = true;
-            this.RdoBtnBKReference.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RdoBtnBKReference.ForeColor = System.Drawing.Color.Black;
-            this.RdoBtnBKReference.Location = new System.Drawing.Point(318, 1083);
-            this.RdoBtnBKReference.Name = "RdoBtnBKReference";
-            this.RdoBtnBKReference.Size = new System.Drawing.Size(121, 32);
-            this.RdoBtnBKReference.TabIndex = 102;
-            this.RdoBtnBKReference.TabStop = true;
-            this.RdoBtnBKReference.Text = "Reference";
-            this.RdoBtnBKReference.UseVisualStyleBackColor = true;
-            this.RdoBtnBKReference.CheckedChanged += new System.EventHandler(this.RdoBtnBKReference_CheckedChanged);
+            this.LblEBCategory.AutoSize = true;
+            this.LblEBCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblEBCategory.ForeColor = System.Drawing.Color.Black;
+            this.LblEBCategory.Location = new System.Drawing.Point(28, 811);
+            this.LblEBCategory.Name = "LblEBCategory";
+            this.LblEBCategory.Size = new System.Drawing.Size(92, 28);
+            this.LblEBCategory.TabIndex = 102;
+            this.LblEBCategory.Text = "Category";
+            // 
+            // CmbBxEBCategory
+            // 
+            this.CmbBxEBCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxEBCategory.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxEBCategory.FormattingEnabled = true;
+            this.CmbBxEBCategory.Location = new System.Drawing.Point(201, 807);
+            this.CmbBxEBCategory.Name = "CmbBxEBCategory";
+            this.CmbBxEBCategory.Size = new System.Drawing.Size(353, 36);
+            this.CmbBxEBCategory.TabIndex = 101;
             // 
             // AddBook
             // 
@@ -3257,5 +3308,9 @@
         private System.Windows.Forms.RadioButton RdoBtnBKReference;
         private System.Windows.Forms.RadioButton RdoBtnBKCirculation;
         private System.Windows.Forms.Label LblBKLoanType;
+        private System.Windows.Forms.Label LblAVCategory;
+        private System.Windows.Forms.ComboBox CmbBxAVCategory;
+        private System.Windows.Forms.Label LblEBCategory;
+        private System.Windows.Forms.ComboBox CmbBxEBCategory;
     }
 }
