@@ -6,9 +6,11 @@ using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Member;
 using LMS.Model.Models.Enums;
 using LMS.Presentation.Popup.Members;
+using LMS.Presentation.Popup.Multipurpose;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -29,14 +31,16 @@ namespace LMS.Presentation.UserControls.Management
         private int _pageSize = 10;
         private int _totalPages = 1;
 
-        // Column indices - updated for LastLogin column
+        // Column indices (match designer column order)
         private const int ColMemberId = 1;
         private const int ColFullName = 2;
         private const int ColLastLogin = 15;
         private const int ColStatus = 16;
-        private const int ColEdit = 17;
-        private const int ColArchive = 18;
-        private const int ColRenew = 19;
+        private const int ColProfilePicture = 17;
+        private const int ColValidID = 18;
+        private const int ColEdit = 19;
+        private const int ColArchive = 20;
+        private const int ColRenew = 21;
 
         public UCMembers()
         {
@@ -318,13 +322,49 @@ namespace LMS.Presentation.UserControls.Management
 
             // Get the row number from the first column and find the member from filtered list
             int displayIndex = (_currentPage - 1) * _pageSize + e.RowIndex;
-            if (displayIndex >= _filteredMembers.Count)
+            if (_filteredMembers == null || displayIndex >= _filteredMembers.Count)
                 return;
 
             var member = _filteredMembers[displayIndex];
             int memberId = member.MemberID;
             string memberName = member.FullName ?? "this member";
             string currentStatus = member.Status ?? "";
+
+            // Profile picture button clicked
+            if (e.ColumnIndex == ColProfilePicture)
+            {
+                string resolved = ResolveMemberImagePath(member.PhotoPath, "Assets\\dataimages\\Members");
+                if (string.IsNullOrEmpty(resolved) || !File.Exists(resolved))
+                {
+                    MessageBox.Show("Profile picture not found for this member.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                using (var view = new ViewProfilePicture())
+                {
+                    view.LoadProfilePicture(resolved);
+                    view.ShowDialog();
+                }
+                return;
+            }
+
+            // Valid ID button clicked
+            if (e.ColumnIndex == ColValidID)
+            {
+                string resolved = ResolveMemberImagePath(member.ValidIdPath, "Assets\\dataimages\\ValidIDs");
+                if (string.IsNullOrEmpty(resolved) || !File.Exists(resolved))
+                {
+                    MessageBox.Show("Valid ID not found for this member.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                using (var view = new ViewValidID())
+                {
+                    view.LoadValidID(resolved);
+                    view.ShowDialog();
+                }
+                return;
+            }
 
             // Edit button clicked
             if (e.ColumnIndex == ColEdit)
@@ -334,6 +374,7 @@ namespace LMS.Presentation.UserControls.Management
 
                 if (editMemberForm.ShowDialog() == DialogResult.OK)
                 {
+                    // Reload member list so image / valid ID changes reflect immediately
                     LoadMembers();
                 }
             }
@@ -347,6 +388,46 @@ namespace LMS.Presentation.UserControls.Management
             {
                 HandleRenew(memberId, memberName, currentStatus);
             }
+        }
+
+        /// <summary>
+        /// Resolves a member image path. Accepts absolute path, app-relative path, or filename stored inside the specified assetsFolder.
+        /// Returns null if resolution failed.
+        /// </summary>
+        private string ResolveMemberImagePath(string storedPath, string assetsFolder)
+        {
+            if (string.IsNullOrEmpty(storedPath))
+                return null;
+
+            try
+            {
+                // If path already points to an existing file, use it
+                if (File.Exists(storedPath))
+                    return storedPath;
+
+                // Try interpreting as relative to the app base directory
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string relativeCandidate = Path.Combine(baseDir, storedPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+                if (File.Exists(relativeCandidate))
+                    return relativeCandidate;
+
+                // Try assets folder: <base>\Assets\dataimages\<assetsFolder>\<filename>
+                string filename = Path.GetFileName(storedPath);
+                string assetsCandidate = Path.Combine(baseDir, assetsFolder, filename);
+                if (File.Exists(assetsCandidate))
+                    return assetsCandidate;
+
+                // Last resort: try combining storedPath directly with baseDir (if storedPath was like Assets\dataimages\...)
+                string combined = Path.Combine(baseDir, storedPath);
+                if (File.Exists(combined))
+                    return combined;
+            }
+            catch
+            {
+                // ignore resolution errors
+            }
+
+            return null;
         }
 
         private void HandleArchive(int memberId, string memberName, string currentStatus)

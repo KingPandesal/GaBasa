@@ -21,5 +21,9 @@ namespace LMS.Model.DTOs.Member
         public DateTime ExpirationDate { get; set; }
         public string LastLogin { get; set; }
         public string Status { get; set; }
+
+        // Added so UCMembers can show the correct images
+        public string PhotoPath { get; set; }
+        public string ValidIdPath { get; set; }
     }
 }

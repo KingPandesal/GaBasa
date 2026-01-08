@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace LMS.Presentation.Popup.Multipurpose
 {
@@ -34,10 +29,9 @@ namespace LMS.Presentation.Popup.Multipurpose
         }
 
         /// <summary>
-        /// Loads a valid ID image into the picture box. Accepts absolute path or relative.
-        /// Disposes previous image safely to avoid file locks.
+        /// Load a valid ID image into the dialog. Accepts absolute or relative paths.
+        /// Disposes previous image to avoid file locks.
         /// </summary>
-        /// <param name="imagePath">Path to the image file.</param>
         public void LoadValidID(string imagePath)
         {
             if (PicBxValidID.Image != null)
@@ -58,7 +52,6 @@ namespace LMS.Presentation.Popup.Multipurpose
                 {
                     PicBxValidID.Image = Image.FromStream(fs);
                 }
-
                 PicBxValidID.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch (Exception ex)

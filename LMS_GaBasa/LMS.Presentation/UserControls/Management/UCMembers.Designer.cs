@@ -41,6 +41,10 @@
             this.LblShow = new System.Windows.Forms.Label();
             this.BtnApply = new System.Windows.Forms.Button();
             this.DgwMembers = new System.Windows.Forms.DataGridView();
+            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,13 +62,11 @@
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnLastLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnProfilePicture = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnValidID = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             this.RenewMembership = new System.Windows.Forms.DataGridViewImageColumn();
-            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgwMembers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -235,6 +237,8 @@
             this.Column10,
             this.ColumnLastLogin,
             this.Column5,
+            this.ColumnProfilePicture,
+            this.ColumnValidID,
             this.Edit,
             this.Archive,
             this.RenewMembership});
@@ -245,6 +249,56 @@
             this.DgwMembers.RowTemplate.Height = 28;
             this.DgwMembers.Size = new System.Drawing.Size(1509, 490);
             this.DgwMembers.TabIndex = 43;
+            // 
+            // TxtSearchBar
+            // 
+            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
+            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
+            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
+            this.TxtSearchBar.Image = null;
+            this.TxtSearchBar.Location = new System.Drawing.Point(155, 31);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.MaxLength = 32767;
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
+            this.TxtSearchBar.Multiline = false;
+            this.TxtSearchBar.Name = "TxtSearchBar";
+            this.TxtSearchBar.ReadOnly = false;
+            this.TxtSearchBar.Size = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.TabIndex = 42;
+            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.TxtSearchBar.UseSystemPasswordChar = false;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn1.HeaderText = "";
+            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
+            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn1.MinimumWidth = 8;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ToolTipText = "Edit member";
+            this.dataGridViewImageColumn1.Width = 150;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn2.HeaderText = "";
+            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
+            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn2.MinimumWidth = 8;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ToolTipText = "Archive member";
+            this.dataGridViewImageColumn2.Width = 150;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(34, 33);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 55;
+            this.pictureBox1.TabStop = false;
             // 
             // Column17
             // 
@@ -366,6 +420,24 @@
             this.Column5.Name = "Column5";
             this.Column5.Width = 150;
             // 
+            // ColumnProfilePicture
+            // 
+            this.ColumnProfilePicture.HeaderText = "Profile Picture";
+            this.ColumnProfilePicture.MinimumWidth = 8;
+            this.ColumnProfilePicture.Name = "ColumnProfilePicture";
+            this.ColumnProfilePicture.Text = "View Profile Picture";
+            this.ColumnProfilePicture.UseColumnTextForButtonValue = true;
+            this.ColumnProfilePicture.Width = 150;
+            // 
+            // ColumnValidID
+            // 
+            this.ColumnValidID.HeaderText = "Valid ID";
+            this.ColumnValidID.MinimumWidth = 8;
+            this.ColumnValidID.Name = "ColumnValidID";
+            this.ColumnValidID.Text = "View Valid ID";
+            this.ColumnValidID.UseColumnTextForButtonValue = true;
+            this.ColumnValidID.Width = 150;
+            // 
             // Edit
             // 
             this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -397,56 +469,6 @@
             this.RenewMembership.MinimumWidth = 8;
             this.RenewMembership.Name = "RenewMembership";
             this.RenewMembership.Width = 8;
-            // 
-            // TxtSearchBar
-            // 
-            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
-            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
-            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
-            this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(155, 31);
-            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
-            this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
-            this.TxtSearchBar.Multiline = false;
-            this.TxtSearchBar.Name = "TxtSearchBar";
-            this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(897, 40);
-            this.TxtSearchBar.TabIndex = 42;
-            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.TxtSearchBar.UseSystemPasswordChar = false;
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn1.HeaderText = "";
-            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
-            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn1.MinimumWidth = 8;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ToolTipText = "Edit member";
-            this.dataGridViewImageColumn1.Width = 150;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn2.HeaderText = "";
-            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
-            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn2.MinimumWidth = 8;
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ToolTipText = "Archive member";
-            this.dataGridViewImageColumn2.Width = 150;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(34, 33);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(33, 34);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 55;
-            this.pictureBox1.TabStop = false;
             // 
             // UCMembers
             // 
@@ -511,6 +533,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLastLogin;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnProfilePicture;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnValidID;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Archive;
         private System.Windows.Forms.DataGridViewImageColumn RenewMembership;

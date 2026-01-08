@@ -348,7 +348,9 @@ namespace LMS.DataAccess.Repositories
                         m.RegistrationDate,
                         m.ExpirationDate,
                         u.LastLogin,
-                        m.[Status]
+                        m.[Status],
+                        u.Photo,       -- added
+                        m.ValidID      -- added
                     FROM [Member] m
                     INNER JOIN [User] u ON m.UserID = u.UserID
                     INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
@@ -362,9 +364,12 @@ namespace LMS.DataAccess.Repositories
                         string lastName = reader.IsDBNull(reader.GetOrdinal("LastName")) ? "" : reader.GetString(reader.GetOrdinal("LastName"));
                         DateTime? lastLogin = reader.IsDBNull(reader.GetOrdinal("LastLogin")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("LastLogin"));
 
+                        int memberId = reader.GetInt32(reader.GetOrdinal("MemberID"));
+
                         members.Add(new DTOFetchAllMembers
                         {
-                            MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                            MemberID = memberId,
+                            FormattedID = memberId.ToString(), // or apply desired formatting here
                             FullName = $"{firstName} {lastName}".Trim(),
                             MemberType = reader.IsDBNull(reader.GetOrdinal("MemberType")) ? "" : reader.GetString(reader.GetOrdinal("MemberType")),
                             Username = reader.IsDBNull(reader.GetOrdinal("Username")) ? "" : reader.GetString(reader.GetOrdinal("Username")),
@@ -379,7 +384,9 @@ namespace LMS.DataAccess.Repositories
                             RegistrationDate = reader.IsDBNull(reader.GetOrdinal("RegistrationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("RegistrationDate")),
                             ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
                             LastLogin = lastLogin.HasValue ? lastLogin.Value.ToString("MMM dd, yyyy hh:mm tt") : "Never",
-                            Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "" : reader.GetString(reader.GetOrdinal("Status"))
+                            Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "" : reader.GetString(reader.GetOrdinal("Status")),
+                            PhotoPath = reader.IsDBNull(reader.GetOrdinal("Photo")) ? "" : reader.GetString(reader.GetOrdinal("Photo")),     // added
+                            ValidIdPath = reader.IsDBNull(reader.GetOrdinal("ValidID")) ? "" : reader.GetString(reader.GetOrdinal("ValidID"))  // added
                         });
                     }
                 }
