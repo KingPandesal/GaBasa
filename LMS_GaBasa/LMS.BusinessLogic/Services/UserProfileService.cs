@@ -1,4 +1,5 @@
-﻿using LMS.BusinessLogic.Helpers;
+﻿using System;
+using LMS.BusinessLogic.Helpers;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.User;
 using LMS.BusinessLogic.Hashing;
@@ -75,7 +76,10 @@ namespace LMS.BusinessLogic.Services
                     return false;
 
                 if (!_passwordHasher.Verify(currentHash, profile.OldPassword))
-                    return false;
+                {
+                    // Surface a clear message so the UI can show the requested phrasing.
+                    throw new InvalidOperationException("Old password does not match our records. Please verify and try again.");
+                }
 
                 // Hash and update new password
                 string newHash = _passwordHasher.Hash(profile.NewPassword);
