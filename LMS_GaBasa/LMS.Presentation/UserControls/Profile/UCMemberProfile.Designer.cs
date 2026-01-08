@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCMemberProfile));
             this.Design2 = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.LblActualContact = new System.Windows.Forms.Label();
+            this.LblActualAddress = new System.Windows.Forms.Label();
             this.PnlNameRoleStatus = new System.Windows.Forms.Panel();
             this.LblMemberType = new System.Windows.Forms.Label();
             this.LblFullname = new System.Windows.Forms.Label();
@@ -58,12 +60,12 @@
             this.LblContact = new System.Windows.Forms.Label();
             this.LblAddress = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
             this.Design1 = new System.Windows.Forms.Panel();
             this.LblEmail = new System.Windows.Forms.Label();
             this.LblIDNumber = new System.Windows.Forms.Label();
-            this.LblActualAddress = new System.Windows.Forms.Label();
-            this.LblActualContact = new System.Windows.Forms.Label();
+            this.LblValidID = new System.Windows.Forms.Label();
+            this.BtnViewValidID = new System.Windows.Forms.Button();
+            this.PicBxProfilePic = new System.Windows.Forms.PictureBox();
             this.Design2.SuspendLayout();
             this.PnlNameRoleStatus.SuspendLayout();
             this.PnlRegExpDate.SuspendLayout();
@@ -79,9 +81,11 @@
             this.Design2.Controls.Add(this.LblActualContact);
             this.Design2.Controls.Add(this.LblActualAddress);
             this.Design2.Controls.Add(this.PnlNameRoleStatus);
+            this.Design2.Controls.Add(this.BtnViewValidID);
             this.Design2.Controls.Add(this.BtnEditProfile);
             this.Design2.Controls.Add(this.PnlRegExpDate);
             this.Design2.Controls.Add(this.PnlMemberPrivilege);
+            this.Design2.Controls.Add(this.LblValidID);
             this.Design2.Controls.Add(this.LblContact);
             this.Design2.Controls.Add(this.LblAddress);
             this.Design2.Controls.Add(this.panel2);
@@ -96,6 +100,27 @@
             this.Design2.ShowText = true;
             this.Design2.Size = new System.Drawing.Size(1480, 758);
             this.Design2.TabIndex = 14;
+            // 
+            // LblActualContact
+            // 
+            this.LblActualContact.AutoSize = true;
+            this.LblActualContact.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblActualContact.Location = new System.Drawing.Point(81, 461);
+            this.LblActualContact.Name = "LblActualContact";
+            this.LblActualContact.Size = new System.Drawing.Size(87, 30);
+            this.LblActualContact.TabIndex = 43;
+            this.LblActualContact.Text = "Contact";
+            // 
+            // LblActualAddress
+            // 
+            this.LblActualAddress.AutoSize = true;
+            this.LblActualAddress.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblActualAddress.Location = new System.Drawing.Point(79, 381);
+            this.LblActualAddress.Name = "LblActualAddress";
+            this.LblActualAddress.Size = new System.Drawing.Size(91, 30);
+            this.LblActualAddress.TabIndex = 42;
+            this.LblActualAddress.Text = "Address";
+            this.LblActualAddress.Click += new System.EventHandler(this.LblActualAddress_Click);
             // 
             // PnlNameRoleStatus
             // 
@@ -154,6 +179,7 @@
             // BtnEditProfile
             // 
             this.BtnEditProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnEditProfile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnEditProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnEditProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnEditProfile.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -373,11 +399,12 @@
             // LblContact
             // 
             this.LblContact.AutoSize = true;
-            this.LblContact.Location = new System.Drawing.Point(66, 470);
+            this.LblContact.Location = new System.Drawing.Point(66, 422);
             this.LblContact.Name = "LblContact";
-            this.LblContact.Size = new System.Drawing.Size(96, 32);
+            this.LblContact.Size = new System.Drawing.Size(191, 32);
             this.LblContact.TabIndex = 12;
-            this.LblContact.Text = "Contact";
+            this.LblContact.Text = "Contact Number";
+            this.LblContact.Click += new System.EventHandler(this.LblContact_Click);
             // 
             // LblAddress
             // 
@@ -396,16 +423,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(238, 232);
             this.panel2.TabIndex = 0;
-            // 
-            // PicBxProfilePic
-            // 
-            this.PicBxProfilePic.Image = ((System.Drawing.Image)(resources.GetObject("PicBxProfilePic.Image")));
-            this.PicBxProfilePic.Location = new System.Drawing.Point(13, 15);
-            this.PicBxProfilePic.Name = "PicBxProfilePic";
-            this.PicBxProfilePic.Size = new System.Drawing.Size(212, 206);
-            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicBxProfilePic.TabIndex = 0;
-            this.PicBxProfilePic.TabStop = false;
             // 
             // Design1
             // 
@@ -433,23 +450,42 @@
             this.LblIDNumber.TabIndex = 2;
             this.LblIDNumber.Text = "141776";
             // 
-            // LblActualAddress
+            // LblValidID
             // 
-            this.LblActualAddress.AutoSize = true;
-            this.LblActualAddress.Location = new System.Drawing.Point(79, 386);
-            this.LblActualAddress.Name = "LblActualAddress";
-            this.LblActualAddress.Size = new System.Drawing.Size(98, 32);
-            this.LblActualAddress.TabIndex = 42;
-            this.LblActualAddress.Text = "Address";
+            this.LblValidID.AutoSize = true;
+            this.LblValidID.Location = new System.Drawing.Point(66, 503);
+            this.LblValidID.Name = "LblValidID";
+            this.LblValidID.Size = new System.Drawing.Size(88, 32);
+            this.LblValidID.TabIndex = 12;
+            this.LblValidID.Text = "ValidID";
+            this.LblValidID.Click += new System.EventHandler(this.LblContact_Click);
             // 
-            // LblActualContact
+            // BtnViewValidID
             // 
-            this.LblActualContact.AutoSize = true;
-            this.LblActualContact.Location = new System.Drawing.Point(81, 513);
-            this.LblActualContact.Name = "LblActualContact";
-            this.LblActualContact.Size = new System.Drawing.Size(96, 32);
-            this.LblActualContact.TabIndex = 43;
-            this.LblActualContact.Text = "Contact";
+            this.BtnViewValidID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewValidID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnViewValidID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewValidID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnViewValidID.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnViewValidID.ForeColor = System.Drawing.Color.White;
+            this.BtnViewValidID.Location = new System.Drawing.Point(89, 539);
+            this.BtnViewValidID.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnViewValidID.Name = "BtnViewValidID";
+            this.BtnViewValidID.Size = new System.Drawing.Size(192, 43);
+            this.BtnViewValidID.TabIndex = 40;
+            this.BtnViewValidID.Text = "👁️ View Valid ID";
+            this.BtnViewValidID.UseVisualStyleBackColor = false;
+            this.BtnViewValidID.Click += new System.EventHandler(this.BtnViewValidID_Click);
+            // 
+            // PicBxProfilePic
+            // 
+            this.PicBxProfilePic.Image = ((System.Drawing.Image)(resources.GetObject("PicBxProfilePic.Image")));
+            this.PicBxProfilePic.Location = new System.Drawing.Point(13, 15);
+            this.PicBxProfilePic.Name = "PicBxProfilePic";
+            this.PicBxProfilePic.Size = new System.Drawing.Size(212, 206);
+            this.PicBxProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxProfilePic.TabIndex = 0;
+            this.PicBxProfilePic.TabStop = false;
             // 
             // UCMemberProfile
             // 
@@ -510,5 +546,7 @@
         private System.Windows.Forms.Label LblMemberType;
         private System.Windows.Forms.Label LblActualAddress;
         private System.Windows.Forms.Label LblActualContact;
+        private System.Windows.Forms.Button BtnViewValidID;
+        private System.Windows.Forms.Label LblValidID;
     }
 }

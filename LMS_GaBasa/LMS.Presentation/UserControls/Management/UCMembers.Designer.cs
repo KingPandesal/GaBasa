@@ -106,6 +106,7 @@
             // BtnAddMember
             // 
             this.BtnAddMember.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAddMember.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnAddMember.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnAddMember.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAddMember.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -122,6 +123,7 @@
             // LblPaginationPrevious
             // 
             this.LblPaginationPrevious.BackColor = System.Drawing.Color.White;
+            this.LblPaginationPrevious.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LblPaginationPrevious.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.LblPaginationPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblPaginationPrevious.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -137,6 +139,7 @@
             // LblPaginationNext
             // 
             this.LblPaginationNext.BackColor = System.Drawing.Color.White;
+            this.LblPaginationNext.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LblPaginationNext.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.LblPaginationNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LblPaginationNext.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -196,6 +199,7 @@
             // BtnApply
             // 
             this.BtnApply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnApply.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnApply.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnApply.Font = new System.Drawing.Font("Segoe UI", 10F);

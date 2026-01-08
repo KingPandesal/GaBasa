@@ -81,6 +81,7 @@
             // BtnEditProfile
             // 
             this.BtnEditProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnEditProfile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnEditProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnEditProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnEditProfile.Font = new System.Drawing.Font("Segoe UI", 10F);

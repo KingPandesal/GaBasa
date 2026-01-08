@@ -6,6 +6,7 @@ using LMS.BusinessLogic.Services;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Member;
 using LMS.Presentation.Popup.Profile;
+using LMS.Presentation.Popup.Multipurpose;
 
 namespace LMS.Presentation.UserControls.Profile
 {
@@ -132,6 +133,77 @@ namespace LMS.Presentation.UserControls.Profile
             };
 
             editForm.ShowDialog();
+        }
+
+        private void LblActualAddress_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LblContact_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Click handler for the View Valid ID button.
+        /// Resolves stored path and opens the ViewValidID form with the image.
+        /// </summary>
+        private void BtnViewValidID_Click(object sender, EventArgs e)
+        {
+            MemberProfileDto profile = _memberProfileService.GetMemberProfile(_currentUserId);
+            if (profile == null)
+            {
+                MessageBox.Show("Could not load member profile.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string resolvedPath = ResolveValidIdPath(profile.ValidIdPath);
+
+            if (string.IsNullOrEmpty(resolvedPath) || !File.Exists(resolvedPath))
+            {
+                MessageBox.Show("Valid ID not found for this member.", "No Valid ID", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var viewForm = new ViewValidID();
+            viewForm.LoadValidID(resolvedPath);
+            viewForm.ShowDialog();
+        }
+
+        /// <summary>
+        /// Attempts to resolve a stored valid ID path. Accepts absolute paths, project-relative paths,
+        /// or filenames stored in the Assets/dataimages/ValidIDs folder.
+        /// </summary>
+        private string ResolveValidIdPath(string validIdPath)
+        {
+            if (string.IsNullOrEmpty(validIdPath))
+                return null;
+
+            try
+            {
+                // If path already points to an existing file, use it
+                if (File.Exists(validIdPath))
+                    return validIdPath;
+
+                // Try interpreting as relative to the app base directory
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string relativeCandidate = Path.Combine(baseDir, validIdPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+                if (File.Exists(relativeCandidate))
+                    return relativeCandidate;
+
+                // Try the canonical assets folder: Assets/dataimages/ValidIDs/<filename>
+                string filename = Path.GetFileName(validIdPath);
+                string assetsCandidate = Path.Combine(baseDir, "Assets", "dataimages", "ValidIDs", filename);
+                if (File.Exists(assetsCandidate))
+                    return assetsCandidate;
+            }
+            catch
+            {
+                // ignore path resolution errors and return null
+            }
+
+            return null;
         }
     }
 }

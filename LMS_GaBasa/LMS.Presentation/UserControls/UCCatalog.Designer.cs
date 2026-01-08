@@ -76,6 +76,12 @@
             this.label15 = new System.Windows.Forms.Label();
             this.LblResourceType = new System.Windows.Forms.Label();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.LblLoanType = new System.Windows.Forms.Label();
+            this.CmbBx = new System.Windows.Forms.ComboBox();
+            this.LblLanguage = new System.Windows.Forms.Label();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.LblMaterialFormat = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.PnlSearchLogic.SuspendLayout();
             this.FlwPnlBooks.SuspendLayout();
@@ -215,7 +221,7 @@
             // 
             this.LblPublicationMonthYear.AutoSize = true;
             this.LblPublicationMonthYear.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblPublicationMonthYear.Location = new System.Drawing.Point(32, 312);
+            this.LblPublicationMonthYear.Location = new System.Drawing.Point(33, 496);
             this.LblPublicationMonthYear.Name = "LblPublicationMonthYear";
             this.LblPublicationMonthYear.Size = new System.Drawing.Size(74, 21);
             this.LblPublicationMonthYear.TabIndex = 77;
@@ -233,7 +239,7 @@
             this.NumPckNoOfCopies.EnabledCalc = true;
             this.NumPckNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.NumPckNoOfCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(78)))), ((int)(((byte)(90)))));
-            this.NumPckNoOfCopies.Location = new System.Drawing.Point(155, 306);
+            this.NumPckNoOfCopies.Location = new System.Drawing.Point(156, 490);
             this.NumPckNoOfCopies.Max = 100;
             this.NumPckNoOfCopies.Min = 0;
             this.NumPckNoOfCopies.Name = "NumPckNoOfCopies";
@@ -247,7 +253,7 @@
             // 
             this.LblAvailability.AutoSize = true;
             this.LblAvailability.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblAvailability.Location = new System.Drawing.Point(32, 359);
+            this.LblAvailability.Location = new System.Drawing.Point(33, 378);
             this.LblAvailability.Name = "LblAvailability";
             this.LblAvailability.Size = new System.Drawing.Size(86, 21);
             this.LblAvailability.TabIndex = 106;
@@ -258,7 +264,7 @@
             // 
             this.comboBox5.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(155, 356);
+            this.comboBox5.Location = new System.Drawing.Point(156, 375);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(108, 29);
             this.comboBox5.TabIndex = 107;
@@ -268,6 +274,7 @@
             // BtnApplyFilter
             // 
             this.BtnApplyFilter.BackColor = System.Drawing.Color.White;
+            this.BtnApplyFilter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnApplyFilter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnApplyFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnApplyFilter.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -283,6 +290,7 @@
             // BtnResetFilter
             // 
             this.BtnResetFilter.BackColor = System.Drawing.Color.White;
+            this.BtnResetFilter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnResetFilter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnResetFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnResetFilter.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -301,7 +309,7 @@
             this.PnlSearchLogic.Controls.Add(this.RdoBtnBooleanOR);
             this.PnlSearchLogic.Controls.Add(this.RdoBtnBooleanAND);
             this.PnlSearchLogic.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PnlSearchLogic.Location = new System.Drawing.Point(36, 500);
+            this.PnlSearchLogic.Location = new System.Drawing.Point(37, 564);
             this.PnlSearchLogic.Name = "PnlSearchLogic";
             this.PnlSearchLogic.Size = new System.Drawing.Size(196, 111);
             this.PnlSearchLogic.TabIndex = 110;
@@ -345,7 +353,7 @@
             this.LblBtnSearchLogic.AutoSize = true;
             this.LblBtnSearchLogic.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LblBtnSearchLogic.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblBtnSearchLogic.Location = new System.Drawing.Point(32, 476);
+            this.LblBtnSearchLogic.Location = new System.Drawing.Point(33, 540);
             this.LblBtnSearchLogic.Name = "LblBtnSearchLogic";
             this.LblBtnSearchLogic.Size = new System.Drawing.Size(116, 21);
             this.LblBtnSearchLogic.TabIndex = 111;
@@ -434,6 +442,7 @@
             // BtnBookReserve
             // 
             this.BtnBookReserve.BackColor = System.Drawing.Color.White;
+            this.BtnBookReserve.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnBookReserve.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnBookReserve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBookReserve.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -479,6 +488,7 @@
             // BtnBookViewDetails
             // 
             this.BtnBookViewDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnBookViewDetails.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnBookViewDetails.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnBookViewDetails.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBookViewDetails.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -654,6 +664,72 @@
             this.comboBox6.Text = "All";
             this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // LblLoanType
+            // 
+            this.LblLoanType.AutoSize = true;
+            this.LblLoanType.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblLoanType.Location = new System.Drawing.Point(32, 308);
+            this.LblLoanType.Name = "LblLoanType";
+            this.LblLoanType.Size = new System.Drawing.Size(80, 21);
+            this.LblLoanType.TabIndex = 77;
+            this.LblLoanType.Text = "Loan Type";
+            this.LblLoanType.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // CmbBx
+            // 
+            this.CmbBx.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBx.FormattingEnabled = true;
+            this.CmbBx.Location = new System.Drawing.Point(155, 305);
+            this.CmbBx.Name = "CmbBx";
+            this.CmbBx.Size = new System.Drawing.Size(109, 29);
+            this.CmbBx.TabIndex = 78;
+            this.CmbBx.Text = "All";
+            this.CmbBx.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            // 
+            // LblLanguage
+            // 
+            this.LblLanguage.AutoSize = true;
+            this.LblLanguage.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblLanguage.Location = new System.Drawing.Point(32, 343);
+            this.LblLanguage.Name = "LblLanguage";
+            this.LblLanguage.Size = new System.Drawing.Size(78, 21);
+            this.LblLanguage.TabIndex = 77;
+            this.LblLanguage.Text = "Language";
+            this.LblLanguage.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // comboBox7
+            // 
+            this.comboBox7.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.comboBox7.FormattingEnabled = true;
+            this.comboBox7.Location = new System.Drawing.Point(155, 340);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(109, 29);
+            this.comboBox7.TabIndex = 78;
+            this.comboBox7.Text = "All";
+            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            // 
+            // LblMaterialFormat
+            // 
+            this.LblMaterialFormat.AutoSize = true;
+            this.LblMaterialFormat.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblMaterialFormat.Location = new System.Drawing.Point(34, 413);
+            this.LblMaterialFormat.Name = "LblMaterialFormat";
+            this.LblMaterialFormat.Size = new System.Drawing.Size(121, 21);
+            this.LblMaterialFormat.TabIndex = 106;
+            this.LblMaterialFormat.Text = "Material Format";
+            this.LblMaterialFormat.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(157, 410);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(108, 29);
+            this.comboBox2.TabIndex = 107;
+            this.comboBox2.Text = "All";
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            // 
             // UCCatalog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -666,10 +742,16 @@
             this.Controls.Add(this.PnlSearchLogic);
             this.Controls.Add(this.BtnResetFilter);
             this.Controls.Add(this.BtnApplyFilter);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.LblMaterialFormat);
             this.Controls.Add(this.comboBox5);
             this.Controls.Add(this.LblAvailability);
             this.Controls.Add(this.NumPckNoOfCopies);
             this.Controls.Add(this.LblPublicationMonthYear);
+            this.Controls.Add(this.comboBox7);
+            this.Controls.Add(this.LblLanguage);
+            this.Controls.Add(this.CmbBx);
+            this.Controls.Add(this.LblLoanType);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.LblPublisher);
             this.Controls.Add(this.comboBox3);
@@ -752,5 +834,11 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label LblResourceType;
         private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.Label LblLoanType;
+        private System.Windows.Forms.ComboBox CmbBx;
+        private System.Windows.Forms.Label LblLanguage;
+        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.Label LblMaterialFormat;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

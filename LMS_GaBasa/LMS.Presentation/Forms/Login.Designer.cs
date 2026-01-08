@@ -116,6 +116,7 @@
             // BtnLogin
             // 
             this.BtnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnLogin.FlatAppearance.BorderSize = 0;
             this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnLogin.ForeColor = System.Drawing.Color.White;
