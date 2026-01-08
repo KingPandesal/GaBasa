@@ -66,7 +66,16 @@ namespace LMS.Presentation.Popup.Inventory
 
             // Catalog manager for categories/languages
             var languageRepo = new LanguageRepository(new DbConnection());
-            _catalogManager = new CatalogManager(_categoryRepo, languageRepo);
+
+            // Fix: call the CatalogManager constructor with the five repository arguments it requires.
+            // Passing (CategoryRepository, LanguageRepository) does not match any existing overload.
+            var bookCopyRepo = new BookCopyRepository(new DbConnection());
+            _catalogManager = new CatalogManager(
+                _bookRepo,         // IBookRepository
+                bookCopyRepo,      // IBookCopyRepository
+                _bookAuthorRepo,   // BookAuthorRepository
+                _authorRepo,       // AuthorRepository
+                _categoryRepo);    // CategoryRepository
 
             // barcode generator for potential regeneration (same folder as AddBook)
             string barcodesFolder = Path.Combine(Application.StartupPath, "Assets", "dataimages", "BookCopyBarcodes");

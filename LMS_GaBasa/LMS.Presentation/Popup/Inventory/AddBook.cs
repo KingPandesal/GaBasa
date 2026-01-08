@@ -64,7 +64,16 @@ namespace LMS.Presentation.Popup.Inventory
             var bookFactory = new BookFactory();
             _publisherRepo = new PublisherRepository(dbConnection);
 
-            _catalogManager = new CatalogManager(categoryRepo, languageRepo);
+            // Fix: create CatalogManager using the constructor that matches available repository instances.
+            // The previous call `new CatalogManager(categoryRepo, languageRepo)` did not match any overload
+            // and caused the compiler error. CatalogManager expects either the parameterless ctor or the
+            // five-repository ctor. We already have the required repository instances, so pass them.
+            _catalogManager = new CatalogManager(
+                bookRepo,
+                bookCopyRepo,
+                bookAuthorRepo,
+                authorRepo,
+                categoryRepo);
 
             // create barcode generator with configured output folder (Presentation knows file system)
             string barcodesFolder = Path.Combine(Application.StartupPath, "Assets", "dataimages", "BookCopyBarcodes");

@@ -41,7 +41,6 @@
             this.LblPublisher = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.LblPublicationMonthYear = new System.Windows.Forms.Label();
-            this.NumPckNoOfCopies = new ReaLTaiizor.Controls.FoxNumeric();
             this.LblAvailability = new System.Windows.Forms.Label();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.BtnApplyFilter = new System.Windows.Forms.Button();
@@ -56,7 +55,7 @@
             this.FlwPnlBooks = new System.Windows.Forms.FlowLayoutPanel();
             this.LblNewArrivals = new System.Windows.Forms.Label();
             this.PnlNewArrivalsSection = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.PnlBook = new System.Windows.Forms.Panel();
             this.BtnBookReserve = new System.Windows.Forms.Button();
             this.LblBookStatus = new System.Windows.Forms.Label();
             this.LblBookAuthor = new System.Windows.Forms.Label();
@@ -82,15 +81,26 @@
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.LblMaterialFormat = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.PnlSearchLogic.SuspendLayout();
             this.FlwPnlBooks.SuspendLayout();
             this.PnlNewArrivalsSection.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.PnlBook.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCoverImage)).BeginInit();
             this.PnlPopularBooksSection.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // LblBooks
@@ -166,7 +176,7 @@
             // 
             this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(155, 196);
+            this.comboBox1.Location = new System.Drawing.Point(173, 196);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(109, 29);
             this.comboBox1.TabIndex = 76;
@@ -188,7 +198,7 @@
             // 
             this.comboBox3.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(155, 234);
+            this.comboBox3.Location = new System.Drawing.Point(173, 234);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(109, 29);
             this.comboBox3.TabIndex = 78;
@@ -210,7 +220,7 @@
             // 
             this.comboBox4.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(155, 270);
+            this.comboBox4.Location = new System.Drawing.Point(173, 270);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(109, 29);
             this.comboBox4.TabIndex = 78;
@@ -221,33 +231,12 @@
             // 
             this.LblPublicationMonthYear.AutoSize = true;
             this.LblPublicationMonthYear.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblPublicationMonthYear.Location = new System.Drawing.Point(33, 496);
+            this.LblPublicationMonthYear.Location = new System.Drawing.Point(33, 458);
             this.LblPublicationMonthYear.Name = "LblPublicationMonthYear";
-            this.LblPublicationMonthYear.Size = new System.Drawing.Size(74, 21);
+            this.LblPublicationMonthYear.Size = new System.Drawing.Size(121, 21);
             this.LblPublicationMonthYear.TabIndex = 77;
-            this.LblPublicationMonthYear.Text = "Pub. Year";
+            this.LblPublicationMonthYear.Text = "Publication Year";
             this.LblPublicationMonthYear.Click += new System.EventHandler(this.label13_Click);
-            // 
-            // NumPckNoOfCopies
-            // 
-            this.NumPckNoOfCopies.BackColor = System.Drawing.Color.Transparent;
-            this.NumPckNoOfCopies.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.NumPckNoOfCopies.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(98)))), ((int)(((byte)(110)))));
-            this.NumPckNoOfCopies.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.NumPckNoOfCopies.DisabledButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(198)))), ((int)(((byte)(210)))));
-            this.NumPckNoOfCopies.DisabledTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(178)))), ((int)(((byte)(190)))));
-            this.NumPckNoOfCopies.EnabledCalc = true;
-            this.NumPckNoOfCopies.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.NumPckNoOfCopies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(78)))), ((int)(((byte)(90)))));
-            this.NumPckNoOfCopies.Location = new System.Drawing.Point(156, 490);
-            this.NumPckNoOfCopies.Max = 100;
-            this.NumPckNoOfCopies.Min = 0;
-            this.NumPckNoOfCopies.Name = "NumPckNoOfCopies";
-            this.NumPckNoOfCopies.Size = new System.Drawing.Size(109, 27);
-            this.NumPckNoOfCopies.TabIndex = 105;
-            this.NumPckNoOfCopies.Text = "foxNumeric1";
-            this.NumPckNoOfCopies.Value = 0;
-            this.NumPckNoOfCopies.Click += new System.EventHandler(this.NumPckNoOfCopies_Click);
             // 
             // LblAvailability
             // 
@@ -264,7 +253,7 @@
             // 
             this.comboBox5.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(156, 375);
+            this.comboBox5.Location = new System.Drawing.Point(173, 375);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(108, 29);
             this.comboBox5.TabIndex = 107;
@@ -309,7 +298,7 @@
             this.PnlSearchLogic.Controls.Add(this.RdoBtnBooleanOR);
             this.PnlSearchLogic.Controls.Add(this.RdoBtnBooleanAND);
             this.PnlSearchLogic.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PnlSearchLogic.Location = new System.Drawing.Point(37, 564);
+            this.PnlSearchLogic.Location = new System.Drawing.Point(38, 592);
             this.PnlSearchLogic.Name = "PnlSearchLogic";
             this.PnlSearchLogic.Size = new System.Drawing.Size(196, 111);
             this.PnlSearchLogic.TabIndex = 110;
@@ -353,7 +342,7 @@
             this.LblBtnSearchLogic.AutoSize = true;
             this.LblBtnSearchLogic.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LblBtnSearchLogic.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.LblBtnSearchLogic.Location = new System.Drawing.Point(33, 540);
+            this.LblBtnSearchLogic.Location = new System.Drawing.Point(34, 568);
             this.LblBtnSearchLogic.Name = "LblBtnSearchLogic";
             this.LblBtnSearchLogic.Size = new System.Drawing.Size(116, 21);
             this.LblBtnSearchLogic.TabIndex = 111;
@@ -384,7 +373,7 @@
             this.lostBorderPanel14.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.lostBorderPanel14.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel14.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel14.Location = new System.Drawing.Point(283, 160);
+            this.lostBorderPanel14.Location = new System.Drawing.Point(302, 160);
             this.lostBorderPanel14.Name = "lostBorderPanel14";
             this.lostBorderPanel14.Padding = new System.Windows.Forms.Padding(5);
             this.lostBorderPanel14.ShowText = true;
@@ -397,9 +386,9 @@
             this.FlwPnlBooks.Controls.Add(this.PnlNewArrivalsSection);
             this.FlwPnlBooks.Controls.Add(this.LblPopularBooks);
             this.FlwPnlBooks.Controls.Add(this.PnlPopularBooksSection);
-            this.FlwPnlBooks.Location = new System.Drawing.Point(333, 150);
+            this.FlwPnlBooks.Location = new System.Drawing.Point(333, 160);
             this.FlwPnlBooks.Name = "FlwPnlBooks";
-            this.FlwPnlBooks.Size = new System.Drawing.Size(1215, 697);
+            this.FlwPnlBooks.Size = new System.Drawing.Size(1215, 687);
             this.FlwPnlBooks.TabIndex = 115;
             this.FlwPnlBooks.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint_1);
             // 
@@ -419,25 +408,26 @@
             // PnlNewArrivalsSection
             // 
             this.PnlNewArrivalsSection.AutoScroll = true;
-            this.PnlNewArrivalsSection.Controls.Add(this.panel2);
+            this.PnlNewArrivalsSection.Controls.Add(this.PnlBook);
             this.PnlNewArrivalsSection.Location = new System.Drawing.Point(3, 45);
             this.PnlNewArrivalsSection.Name = "PnlNewArrivalsSection";
             this.PnlNewArrivalsSection.Size = new System.Drawing.Size(1241, 257);
             this.PnlNewArrivalsSection.TabIndex = 116;
+            this.PnlNewArrivalsSection.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlNewArrivalsSection_Paint);
             // 
-            // panel2
+            // PnlBook
             // 
-            this.panel2.Controls.Add(this.BtnBookReserve);
-            this.panel2.Controls.Add(this.LblBookStatus);
-            this.panel2.Controls.Add(this.LblBookAuthor);
-            this.panel2.Controls.Add(this.PicBxBookCoverImage);
-            this.panel2.Controls.Add(this.BtnBookViewDetails);
-            this.panel2.Controls.Add(this.LblBookTitle);
-            this.panel2.Controls.Add(this.LblBookCategory);
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(533, 222);
-            this.panel2.TabIndex = 70;
+            this.PnlBook.Controls.Add(this.BtnBookReserve);
+            this.PnlBook.Controls.Add(this.LblBookStatus);
+            this.PnlBook.Controls.Add(this.LblBookAuthor);
+            this.PnlBook.Controls.Add(this.PicBxBookCoverImage);
+            this.PnlBook.Controls.Add(this.BtnBookViewDetails);
+            this.PnlBook.Controls.Add(this.LblBookTitle);
+            this.PnlBook.Controls.Add(this.LblBookCategory);
+            this.PnlBook.Location = new System.Drawing.Point(0, 0);
+            this.PnlBook.Name = "PnlBook";
+            this.PnlBook.Size = new System.Drawing.Size(533, 222);
+            this.PnlBook.TabIndex = 70;
             // 
             // BtnBookReserve
             // 
@@ -481,7 +471,7 @@
             this.PicBxBookCoverImage.Location = new System.Drawing.Point(0, 0);
             this.PicBxBookCoverImage.Name = "PicBxBookCoverImage";
             this.PicBxBookCoverImage.Size = new System.Drawing.Size(175, 220);
-            this.PicBxBookCoverImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxBookCoverImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxBookCoverImage.TabIndex = 0;
             this.PicBxBookCoverImage.TabStop = false;
             // 
@@ -503,6 +493,7 @@
             // 
             // LblBookTitle
             // 
+            this.LblBookTitle.AutoEllipsis = true;
             this.LblBookTitle.AutoSize = true;
             this.LblBookTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.LblBookTitle.Location = new System.Drawing.Point(181, 0);
@@ -615,7 +606,7 @@
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(175, 220);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
             // 
@@ -657,7 +648,13 @@
             // 
             this.comboBox6.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(155, 160);
+            this.comboBox6.Items.AddRange(new object[] {
+            "Book",
+            "Periodicals / Magazines",
+            "Theses / Dissertations",
+            "Audio-Visual",
+            "E-Books"});
+            this.comboBox6.Location = new System.Drawing.Point(173, 160);
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(109, 29);
             this.comboBox6.TabIndex = 76;
@@ -679,7 +676,10 @@
             // 
             this.CmbBx.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.CmbBx.FormattingEnabled = true;
-            this.CmbBx.Location = new System.Drawing.Point(155, 305);
+            this.CmbBx.Items.AddRange(new object[] {
+            "Circulation",
+            "Reference"});
+            this.CmbBx.Location = new System.Drawing.Point(173, 305);
             this.CmbBx.Name = "CmbBx";
             this.CmbBx.Size = new System.Drawing.Size(109, 29);
             this.CmbBx.TabIndex = 78;
@@ -701,7 +701,7 @@
             // 
             this.comboBox7.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(155, 340);
+            this.comboBox7.Location = new System.Drawing.Point(173, 340);
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(109, 29);
             this.comboBox7.TabIndex = 78;
@@ -723,18 +723,144 @@
             // 
             this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(157, 410);
+            this.comboBox2.Items.AddRange(new object[] {
+            "Physical",
+            "Digital"});
+            this.comboBox2.Location = new System.Drawing.Point(173, 410);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(108, 29);
             this.comboBox2.TabIndex = 107;
             this.comboBox2.Text = "All";
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button1.Location = new System.Drawing.Point(434, 101);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(81, 36);
+            this.button1.TabIndex = 71;
+            this.button1.Text = "Title ▲";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button2.Location = new System.Drawing.Point(533, 101);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(81, 36);
+            this.button2.TabIndex = 71;
+            this.button2.Text = "Author";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button3.Location = new System.Drawing.Point(633, 101);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(127, 36);
+            this.button3.TabIndex = 71;
+            this.button3.Text = "Date Added";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.White;
+            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.Location = new System.Drawing.Point(779, 101);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(127, 36);
+            this.button5.TabIndex = 71;
+            this.button5.Text = "Call Number";
+            this.button5.UseVisualStyleBackColor = false;
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.Color.White;
+            this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button6.Location = new System.Drawing.Point(927, 101);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(166, 36);
+            this.button6.TabIndex = 71;
+            this.button6.Text = "Publication Year";
+            this.button6.UseVisualStyleBackColor = false;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(124, 486);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(97, 26);
+            this.numericUpDown1.TabIndex = 116;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label1.Location = new System.Drawing.Point(65, 487);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 21);
+            this.label1.TabIndex = 77;
+            this.label1.Text = "From";
+            this.label1.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label2.Location = new System.Drawing.Point(65, 519);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 21);
+            this.label2.TabIndex = 77;
+            this.label2.Text = "To";
+            this.label2.Click += new System.EventHandler(this.label13_Click);
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(124, 518);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(97, 26);
+            this.numericUpDown2.TabIndex = 116;
+            // 
             // UCCatalog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.numericUpDown2);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.FlwPnlBooks);
             this.Controls.Add(this.lostBorderPanel14);
             this.Controls.Add(this.TxtSearch);
@@ -745,8 +871,9 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.LblMaterialFormat);
             this.Controls.Add(this.comboBox5);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.LblAvailability);
-            this.Controls.Add(this.NumPckNoOfCopies);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.LblPublicationMonthYear);
             this.Controls.Add(this.comboBox7);
             this.Controls.Add(this.LblLanguage);
@@ -774,13 +901,15 @@
             this.FlwPnlBooks.ResumeLayout(false);
             this.FlwPnlBooks.PerformLayout();
             this.PnlNewArrivalsSection.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.PnlBook.ResumeLayout(false);
+            this.PnlBook.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCoverImage)).EndInit();
             this.PnlPopularBooksSection.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -799,7 +928,6 @@
         private System.Windows.Forms.Label LblPublisher;
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.Label LblPublicationMonthYear;
-        private ReaLTaiizor.Controls.FoxNumeric NumPckNoOfCopies;
         private System.Windows.Forms.Label LblAvailability;
         private System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.Button BtnApplyFilter;
@@ -815,7 +943,7 @@
         private System.Windows.Forms.Label LblNewArrivals;
         private System.Windows.Forms.Label LblPopularBooks;
         private System.Windows.Forms.Panel PnlNewArrivalsSection;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel PnlBook;
         private System.Windows.Forms.PictureBox PicBxBookCoverImage;
         private System.Windows.Forms.Button BtnBookViewDetails;
         private System.Windows.Forms.Label LblBookTitle;
@@ -840,5 +968,14 @@
         private System.Windows.Forms.ComboBox comboBox7;
         private System.Windows.Forms.Label LblMaterialFormat;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }
