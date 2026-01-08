@@ -3,10 +3,12 @@ using LMS.BusinessLogic.Services.FetchUsers;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.User;
 using LMS.Presentation.Popup.Users;
+using LMS.Presentation.Popup.Multipurpose;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using LMS.BusinessLogic.Services;
 
 namespace LMS.Presentation.UserControls.Management
 {
@@ -21,6 +23,11 @@ namespace LMS.Presentation.UserControls.Management
         private int _currentPage = 1;
         private int _pageSize = 10;
         private int _totalPages = 1;
+
+        // Column name constants (use names from designer to avoid index confusion)
+        private const string ColName_ProfilePicture = "ColumnProfilePicture";
+        private const string ColName_Edit = "Edit";
+        private const string ColName_Archive = "Archive";
 
         public UCUsers() : this(
             new FetchUserService(new UserRepository()),
@@ -283,7 +290,7 @@ namespace LMS.Presentation.UserControls.Management
 
             // Get the user from filtered list using the display index
             int displayIndex = (_currentPage - 1) * _pageSize + e.RowIndex;
-            if (displayIndex >= _filteredUsers.Count)
+            if (_filteredUsers == null || displayIndex < 0 || displayIndex >= _filteredUsers.Count)
                 return;
 
             var user = _filteredUsers[displayIndex];
@@ -291,8 +298,42 @@ namespace LMS.Presentation.UserControls.Management
             string userName = user.FullName ?? "this user";
             string currentStatus = user.Status ?? "";
 
-            // Edit button clicked (column index 9)
-            if (e.ColumnIndex == 9)
+            // Use the column Name to decide action (avoids hard-coded indices)
+            string colName = DgwUsers.Columns[e.ColumnIndex].Name;
+
+            // View Profile Picture button clicked
+            if (string.Equals(colName, ColName_ProfilePicture, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    // Use the profile service to get the absolute photo path
+                    var profileService = new UserProfileService(new UserRepository());
+                    var profile = profileService.GetUserProfile(userId);
+
+                    string imagePath = profile?.PhotoPath;
+
+                    if (string.IsNullOrEmpty(imagePath) || !System.IO.File.Exists(imagePath))
+                    {
+                        MessageBox.Show("Profile picture not found for this user.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    using (var view = new ViewProfilePicture())
+                    {
+                        view.LoadProfilePicture(imagePath);
+                        view.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to load profile picture: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return;
+            }
+
+            // Edit button clicked
+            if (string.Equals(colName, ColName_Edit, StringComparison.OrdinalIgnoreCase))
             {
                 EditUser editUserForm = new EditUser();
                 editUserForm.LoadUser(userId);
@@ -301,9 +342,12 @@ namespace LMS.Presentation.UserControls.Management
                 {
                     LoadUsers();
                 }
+
+                return;
             }
-            // Archive button clicked (column index 10)
-            else if (e.ColumnIndex == 10)
+
+            // Archive button clicked
+            if (string.Equals(colName, ColName_Archive, StringComparison.OrdinalIgnoreCase))
             {
                 if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
                 {
@@ -335,6 +379,8 @@ namespace LMS.Presentation.UserControls.Management
                         MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+
+                return;
             }
         }
 
@@ -405,6 +451,11 @@ namespace LMS.Presentation.UserControls.Management
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UCUsers_Load_1(object sender, EventArgs e)
         {
 
         }

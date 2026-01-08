@@ -39,6 +39,7 @@
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnLastLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnProfilePicture = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             this.LblEntries = new System.Windows.Forms.Label();
@@ -90,6 +91,7 @@
             this.Column6,
             this.ColumnLastLogin,
             this.Column5,
+            this.ColumnProfilePicture,
             this.Edit,
             this.Archive});
             this.DgwUsers.GridColor = System.Drawing.SystemColors.ControlLight;
@@ -156,6 +158,15 @@
             this.Column5.MinimumWidth = 8;
             this.Column5.Name = "Column5";
             this.Column5.Width = 150;
+            // 
+            // ColumnProfilePicture
+            // 
+            this.ColumnProfilePicture.HeaderText = "Profile Picture";
+            this.ColumnProfilePicture.MinimumWidth = 8;
+            this.ColumnProfilePicture.Name = "ColumnProfilePicture";
+            this.ColumnProfilePicture.Text = "View Profile Picture";
+            this.ColumnProfilePicture.UseColumnTextForButtonValue = true;
+            this.ColumnProfilePicture.Width = 150;
             // 
             // Edit
             // 
@@ -365,6 +376,7 @@
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCUsers";
             this.Size = new System.Drawing.Size(1580, 936);
+            this.Load += new System.EventHandler(this.UCUsers_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.DgwUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -396,6 +408,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLastLogin;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnProfilePicture;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.DataGridViewImageColumn Archive;
     }
