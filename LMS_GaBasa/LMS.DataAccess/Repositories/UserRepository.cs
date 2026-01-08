@@ -147,7 +147,8 @@ namespace LMS.DataAccess.Repositories
             return user;
         }
 
-        public bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath)
+        // Updated UpdateProfile to include Username
+        public bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, string username)
         {
             if (userId <= 0)
                 throw new ArgumentException("userId must be greater than 0", nameof(userId));
@@ -162,7 +163,8 @@ namespace LMS.DataAccess.Repositories
                                 LastName = @LastName, 
                                 Email = @Email, 
                                 ContactNumber = @ContactNumber, 
-                                Photo = @Photo 
+                                Photo = @Photo,
+                                Username = @Username
                             WHERE UserID = @UserID";
 
                 var pUserId = cmd.CreateParameter();
@@ -205,6 +207,13 @@ namespace LMS.DataAccess.Repositories
                 pPhoto.Size = 500;
                 pPhoto.Value = (object)photoPath ?? DBNull.Value;
                 cmd.Parameters.Add(pPhoto);
+
+                var pUsername = cmd.CreateParameter();
+                pUsername.ParameterName = "@Username";
+                pUsername.DbType = DbType.String;
+                pUsername.Size = 256;
+                pUsername.Value = (object)username ?? DBNull.Value;
+                cmd.Parameters.Add(pUsername);
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 return rowsAffected > 0;
@@ -347,6 +356,41 @@ namespace LMS.DataAccess.Repositories
 
                 int rowsAffected = cmd.ExecuteNonQuery();
                 return rowsAffected > 0;
+            }
+        }
+
+        // Add GetPasswordHash to fetch stored hash
+        public string GetPasswordHash(int userId)
+        {
+            if (userId <= 0) throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT [Password] FROM [User] WHERE UserID = @UserID";
+                AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
+
+                var result = cmd.ExecuteScalar();
+                return result == null || result == DBNull.Value ? null : result.ToString();
+            }
+        }
+
+        // UpdatePassword updates the hashed password
+        public bool UpdatePassword(int userId, string newPasswordHash)
+        {
+            if (userId <= 0) throw new ArgumentException("userId must be greater than 0", nameof(userId));
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "UPDATE [User] SET [Password] = @Password WHERE UserID = @UserID";
+                AddParameter(cmd, "@UserID", DbType.Int32, userId, 0);
+                AddParameter(cmd, "@Password", DbType.String, newPasswordHash, 256);
+
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
             }
         }
 

@@ -6,6 +6,7 @@ using LMS.Model.Models.Users;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using LMS.BusinessLogic.Hashing;
 
 // Alias to resolve conflict between namespace and class
 using UserModel = LMS.Model.Models.Users.User;

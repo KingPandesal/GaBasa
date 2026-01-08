@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMS.BusinessLogic.Managers
+namespace LMS.BusinessLogic.Hashing
 {
     /// <summary>
     /// Abstracts password hashing so the algorithm can be changed or mocked for tests.

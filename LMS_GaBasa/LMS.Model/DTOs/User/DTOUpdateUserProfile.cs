@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.Model.DTOs.User
 {
@@ -14,5 +10,12 @@ namespace LMS.Model.DTOs.User
         public string PhotoPath { get; set; }
         public string Email { get; set; }
         public string ContactNumber { get; set; }
+
+        // Added for EditLibrarianStaffProfile usage
+        public string Username { get; set; }
+
+        // Optional password change fields (null when not changing)
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
     }
 }

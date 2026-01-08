@@ -2,6 +2,7 @@
 using LMS.Model.Models.Enums;
 using LMS.Model.Models.Users;
 using System;
+using LMS.BusinessLogic.Hashing;
 
 namespace LMS.BusinessLogic.Managers
 {

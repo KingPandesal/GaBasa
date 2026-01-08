@@ -3,6 +3,7 @@ using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Member;
 using System;
 using System.IO;
+using LMS.BusinessLogic.Hashing;
 
 namespace LMS.BusinessLogic.Services.AddMember
 {

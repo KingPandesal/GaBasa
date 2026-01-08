@@ -44,6 +44,7 @@
             this.LblFirstName = new System.Windows.Forms.Label();
             this.Design1 = new System.Windows.Forms.Panel();
             this.TipPicBxProfilePic = new System.Windows.Forms.ToolTip(this.components);
+            this.PicBxValidID = new System.Windows.Forms.PictureBox();
             this.TxtAddress = new System.Windows.Forms.TextBox();
             this.LblAddress = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -62,14 +63,13 @@
             this.TxtUsername = new System.Windows.Forms.TextBox();
             this.LblEntNewPass = new System.Windows.Forms.Label();
             this.PicBxValidIDContainer = new System.Windows.Forms.Panel();
-            this.PicBxValidID = new System.Windows.Forms.PictureBox();
             this.PicBxProfilePicContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PicBxValidIDContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).BeginInit();
             this.SuspendLayout();
             // 
             // PicBxProfilePicContainer
@@ -210,6 +210,18 @@
             this.Design1.Size = new System.Drawing.Size(546, 85);
             this.Design1.TabIndex = 58;
             // 
+            // PicBxValidID
+            // 
+            this.PicBxValidID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxValidID.Image = ((System.Drawing.Image)(resources.GetObject("PicBxValidID.Image")));
+            this.PicBxValidID.Location = new System.Drawing.Point(13, 16);
+            this.PicBxValidID.Name = "PicBxValidID";
+            this.PicBxValidID.Size = new System.Drawing.Size(123, 119);
+            this.PicBxValidID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxValidID.TabIndex = 0;
+            this.PicBxValidID.TabStop = false;
+            this.TipPicBxProfilePic.SetToolTip(this.PicBxValidID, "Click to edit photo");
+            // 
             // TxtAddress
             // 
             this.TxtAddress.ForeColor = System.Drawing.Color.Black;
@@ -242,7 +254,7 @@
             this.groupBox1.Controls.Add(this.TxtContactNumber);
             this.groupBox1.Controls.Add(this.TxtEmail);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.ForeColor = System.Drawing.Color.Black;
+            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.groupBox1.Location = new System.Drawing.Point(24, 19);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(477, 338);
@@ -259,7 +271,7 @@
             this.LblAddProfPic.Name = "LblAddProfPic";
             this.LblAddProfPic.Size = new System.Drawing.Size(366, 28);
             this.LblAddProfPic.TabIndex = 73;
-            this.LblAddProfPic.Text = "Click picture to add your photo / ValidID";
+            this.LblAddProfPic.Text = "Click picture to edit your photo / ValidID";
             // 
             // panel1
             // 
@@ -408,18 +420,6 @@
             this.PicBxValidIDContainer.Size = new System.Drawing.Size(149, 145);
             this.PicBxValidIDContainer.TabIndex = 58;
             // 
-            // PicBxValidID
-            // 
-            this.PicBxValidID.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicBxValidID.Image = ((System.Drawing.Image)(resources.GetObject("PicBxValidID.Image")));
-            this.PicBxValidID.Location = new System.Drawing.Point(13, 16);
-            this.PicBxValidID.Name = "PicBxValidID";
-            this.PicBxValidID.Size = new System.Drawing.Size(123, 119);
-            this.PicBxValidID.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PicBxValidID.TabIndex = 0;
-            this.PicBxValidID.TabStop = false;
-            this.TipPicBxProfilePic.SetToolTip(this.PicBxValidID, "Click to edit photo");
-            // 
             // EditMemberProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -441,13 +441,13 @@
             this.Text = "Edit Profile";
             this.PicBxProfilePicContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.PicBxValidIDContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxValidID)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

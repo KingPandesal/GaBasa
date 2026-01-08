@@ -12,8 +12,8 @@ namespace LMS.DataAccess.Repositories
         // Fetch a user by ID
         User GetById(int userId);
 
-        // Update user profile
-        bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath);
+        // Update user profile (now includes username)
+        bool UpdateProfile(int userId, string firstName, string lastName, string email, string contactNumber, string photoPath, string username);
 
         int Add(User user);
         bool UsernameExists(string username);
@@ -30,6 +30,10 @@ namespace LMS.DataAccess.Repositories
             string photoPath, 
             Role role, 
             UserStatus status);
+
+        // New methods to support password verification/update
+        string GetPasswordHash(int userId);
+        bool UpdatePassword(int userId, string newPasswordHash);
 
         // New method for archiving (soft delete)
         bool ArchiveUser(int userId);
