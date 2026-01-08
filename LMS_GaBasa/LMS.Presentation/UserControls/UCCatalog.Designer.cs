@@ -35,14 +35,14 @@
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.LblFilters = new System.Windows.Forms.Label();
             this.LblAuthor = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CmbBxAuthor = new System.Windows.Forms.ComboBox();
             this.LblCategory = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.CmbBxCategory = new System.Windows.Forms.ComboBox();
             this.LblPublisher = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.CmbBxPublisher = new System.Windows.Forms.ComboBox();
             this.LblPublicationMonthYear = new System.Windows.Forms.Label();
             this.LblAvailability = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.CmbBxAvailability = new System.Windows.Forms.ComboBox();
             this.BtnApplyFilter = new System.Windows.Forms.Button();
             this.BtnResetFilter = new System.Windows.Forms.Button();
             this.PnlSearchLogic = new System.Windows.Forms.Panel();
@@ -74,22 +74,23 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.LblResourceType = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.CmbBxResourceType = new System.Windows.Forms.ComboBox();
             this.LblLoanType = new System.Windows.Forms.Label();
-            this.CmbBx = new System.Windows.Forms.ComboBox();
+            this.CmbBxLoanType = new System.Windows.Forms.ComboBox();
             this.LblLanguage = new System.Windows.Forms.Label();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.CmbBxLanguage = new System.Windows.Forms.ComboBox();
             this.LblMaterialFormat = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.CmbBxMaterialFormat = new System.Windows.Forms.ComboBox();
+            this.BtnSortTitle = new System.Windows.Forms.Button();
+            this.BtnSortAuthor = new System.Windows.Forms.Button();
+            this.BtnSortDateAdded = new System.Windows.Forms.Button();
+            this.BtnSortCallNumber = new System.Windows.Forms.Button();
+            this.BtnSortPublicationYear = new System.Windows.Forms.Button();
+            this.NumPckPublicationYearFrom = new System.Windows.Forms.NumericUpDown();
+            this.LblPublicationYearFrom = new System.Windows.Forms.Label();
+            this.LblPublicationYearTo = new System.Windows.Forms.Label();
+            this.NumPckPublicationYearTo = new System.Windows.Forms.NumericUpDown();
+            this.BtnSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.PnlSearchLogic.SuspendLayout();
             this.FlwPnlBooks.SuspendLayout();
@@ -99,8 +100,8 @@
             this.PnlPopularBooksSection.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckPublicationYearFrom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckPublicationYearTo)).BeginInit();
             this.SuspendLayout();
             // 
             // LblBooks
@@ -170,18 +171,16 @@
             this.LblAuthor.Size = new System.Drawing.Size(58, 21);
             this.LblAuthor.TabIndex = 75;
             this.LblAuthor.Text = "Author";
-            this.LblAuthor.Click += new System.EventHandler(this.label5_Click);
             // 
-            // comboBox1
+            // CmbBxAuthor
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(173, 196);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(109, 29);
-            this.comboBox1.TabIndex = 76;
-            this.comboBox1.Text = "All";
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.CmbBxAuthor.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxAuthor.FormattingEnabled = true;
+            this.CmbBxAuthor.Location = new System.Drawing.Point(173, 196);
+            this.CmbBxAuthor.Name = "CmbBxAuthor";
+            this.CmbBxAuthor.Size = new System.Drawing.Size(109, 29);
+            this.CmbBxAuthor.TabIndex = 76;
+            this.CmbBxAuthor.Text = "All";
             // 
             // LblCategory
             // 
@@ -192,18 +191,16 @@
             this.LblCategory.Size = new System.Drawing.Size(73, 21);
             this.LblCategory.TabIndex = 77;
             this.LblCategory.Text = "Category";
-            this.LblCategory.Click += new System.EventHandler(this.label11_Click);
             // 
-            // comboBox3
+            // CmbBxCategory
             // 
-            this.comboBox3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(173, 234);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(109, 29);
-            this.comboBox3.TabIndex = 78;
-            this.comboBox3.Text = "All";
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            this.CmbBxCategory.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxCategory.FormattingEnabled = true;
+            this.CmbBxCategory.Location = new System.Drawing.Point(173, 234);
+            this.CmbBxCategory.Name = "CmbBxCategory";
+            this.CmbBxCategory.Size = new System.Drawing.Size(109, 29);
+            this.CmbBxCategory.TabIndex = 78;
+            this.CmbBxCategory.Text = "All";
             // 
             // LblPublisher
             // 
@@ -214,18 +211,16 @@
             this.LblPublisher.Size = new System.Drawing.Size(75, 21);
             this.LblPublisher.TabIndex = 77;
             this.LblPublisher.Text = "Publisher";
-            this.LblPublisher.Click += new System.EventHandler(this.label12_Click);
             // 
-            // comboBox4
+            // CmbBxPublisher
             // 
-            this.comboBox4.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(173, 270);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(109, 29);
-            this.comboBox4.TabIndex = 78;
-            this.comboBox4.Text = "All";
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            this.CmbBxPublisher.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxPublisher.FormattingEnabled = true;
+            this.CmbBxPublisher.Location = new System.Drawing.Point(173, 270);
+            this.CmbBxPublisher.Name = "CmbBxPublisher";
+            this.CmbBxPublisher.Size = new System.Drawing.Size(109, 29);
+            this.CmbBxPublisher.TabIndex = 78;
+            this.CmbBxPublisher.Text = "All";
             // 
             // LblPublicationMonthYear
             // 
@@ -236,7 +231,6 @@
             this.LblPublicationMonthYear.Size = new System.Drawing.Size(121, 21);
             this.LblPublicationMonthYear.TabIndex = 77;
             this.LblPublicationMonthYear.Text = "Publication Year";
-            this.LblPublicationMonthYear.Click += new System.EventHandler(this.label13_Click);
             // 
             // LblAvailability
             // 
@@ -247,18 +241,16 @@
             this.LblAvailability.Size = new System.Drawing.Size(86, 21);
             this.LblAvailability.TabIndex = 106;
             this.LblAvailability.Text = "Availability";
-            this.LblAvailability.Click += new System.EventHandler(this.label14_Click);
             // 
-            // comboBox5
+            // CmbBxAvailability
             // 
-            this.comboBox5.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(173, 375);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(108, 29);
-            this.comboBox5.TabIndex = 107;
-            this.comboBox5.Text = "All";
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            this.CmbBxAvailability.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxAvailability.FormattingEnabled = true;
+            this.CmbBxAvailability.Location = new System.Drawing.Point(173, 375);
+            this.CmbBxAvailability.Name = "CmbBxAvailability";
+            this.CmbBxAvailability.Size = new System.Drawing.Size(108, 29);
+            this.CmbBxAvailability.TabIndex = 107;
+            this.CmbBxAvailability.Text = "All";
             // 
             // BtnApplyFilter
             // 
@@ -358,11 +350,11 @@
             this.TxtSearch.Location = new System.Drawing.Point(155, 32);
             this.TxtSearch.MaximumSize = new System.Drawing.Size(1500, 40);
             this.TxtSearch.MaxLength = 32767;
-            this.TxtSearch.MinimumSize = new System.Drawing.Size(1393, 33);
+            this.TxtSearch.MinimumSize = new System.Drawing.Size(1200, 33);
             this.TxtSearch.Multiline = false;
             this.TxtSearch.Name = "TxtSearch";
             this.TxtSearch.ReadOnly = false;
-            this.TxtSearch.Size = new System.Drawing.Size(1393, 40);
+            this.TxtSearch.Size = new System.Drawing.Size(1259, 40);
             this.TxtSearch.TabIndex = 113;
             this.TxtSearch.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearch.UseSystemPasswordChar = false;
@@ -390,7 +382,6 @@
             this.FlwPnlBooks.Name = "FlwPnlBooks";
             this.FlwPnlBooks.Size = new System.Drawing.Size(1215, 687);
             this.FlwPnlBooks.TabIndex = 115;
-            this.FlwPnlBooks.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint_1);
             // 
             // LblNewArrivals
             // 
@@ -403,7 +394,6 @@
             this.LblNewArrivals.Size = new System.Drawing.Size(160, 42);
             this.LblNewArrivals.TabIndex = 22;
             this.LblNewArrivals.Text = "New Arrivals";
-            this.LblNewArrivals.Click += new System.EventHandler(this.label7_Click);
             // 
             // PnlNewArrivalsSection
             // 
@@ -413,7 +403,6 @@
             this.PnlNewArrivalsSection.Name = "PnlNewArrivalsSection";
             this.PnlNewArrivalsSection.Size = new System.Drawing.Size(1241, 257);
             this.PnlNewArrivalsSection.TabIndex = 116;
-            this.PnlNewArrivalsSection.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlNewArrivalsSection_Paint);
             // 
             // PnlBook
             // 
@@ -642,24 +631,22 @@
             this.LblResourceType.Size = new System.Drawing.Size(110, 21);
             this.LblResourceType.TabIndex = 75;
             this.LblResourceType.Text = "Resource Type";
-            this.LblResourceType.Click += new System.EventHandler(this.label5_Click);
             // 
-            // comboBox6
+            // CmbBxResourceType
             // 
-            this.comboBox6.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
+            this.CmbBxResourceType.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxResourceType.FormattingEnabled = true;
+            this.CmbBxResourceType.Items.AddRange(new object[] {
             "Book",
             "Periodicals / Magazines",
             "Theses / Dissertations",
             "Audio-Visual",
             "E-Books"});
-            this.comboBox6.Location = new System.Drawing.Point(173, 160);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(109, 29);
-            this.comboBox6.TabIndex = 76;
-            this.comboBox6.Text = "All";
-            this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.CmbBxResourceType.Location = new System.Drawing.Point(173, 160);
+            this.CmbBxResourceType.Name = "CmbBxResourceType";
+            this.CmbBxResourceType.Size = new System.Drawing.Size(109, 29);
+            this.CmbBxResourceType.TabIndex = 76;
+            this.CmbBxResourceType.Text = "All";
             // 
             // LblLoanType
             // 
@@ -670,21 +657,19 @@
             this.LblLoanType.Size = new System.Drawing.Size(80, 21);
             this.LblLoanType.TabIndex = 77;
             this.LblLoanType.Text = "Loan Type";
-            this.LblLoanType.Click += new System.EventHandler(this.label12_Click);
             // 
-            // CmbBx
+            // CmbBxLoanType
             // 
-            this.CmbBx.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.CmbBx.FormattingEnabled = true;
-            this.CmbBx.Items.AddRange(new object[] {
+            this.CmbBxLoanType.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxLoanType.FormattingEnabled = true;
+            this.CmbBxLoanType.Items.AddRange(new object[] {
             "Circulation",
             "Reference"});
-            this.CmbBx.Location = new System.Drawing.Point(173, 305);
-            this.CmbBx.Name = "CmbBx";
-            this.CmbBx.Size = new System.Drawing.Size(109, 29);
-            this.CmbBx.TabIndex = 78;
-            this.CmbBx.Text = "All";
-            this.CmbBx.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            this.CmbBxLoanType.Location = new System.Drawing.Point(173, 305);
+            this.CmbBxLoanType.Name = "CmbBxLoanType";
+            this.CmbBxLoanType.Size = new System.Drawing.Size(109, 29);
+            this.CmbBxLoanType.TabIndex = 78;
+            this.CmbBxLoanType.Text = "All";
             // 
             // LblLanguage
             // 
@@ -695,18 +680,16 @@
             this.LblLanguage.Size = new System.Drawing.Size(78, 21);
             this.LblLanguage.TabIndex = 77;
             this.LblLanguage.Text = "Language";
-            this.LblLanguage.Click += new System.EventHandler(this.label12_Click);
             // 
-            // comboBox7
+            // CmbBxLanguage
             // 
-            this.comboBox7.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(173, 340);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(109, 29);
-            this.comboBox7.TabIndex = 78;
-            this.comboBox7.Text = "All";
-            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            this.CmbBxLanguage.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxLanguage.FormattingEnabled = true;
+            this.CmbBxLanguage.Location = new System.Drawing.Point(173, 340);
+            this.CmbBxLanguage.Name = "CmbBxLanguage";
+            this.CmbBxLanguage.Size = new System.Drawing.Size(109, 29);
+            this.CmbBxLanguage.TabIndex = 78;
+            this.CmbBxLanguage.Text = "All";
             // 
             // LblMaterialFormat
             // 
@@ -717,150 +700,163 @@
             this.LblMaterialFormat.Size = new System.Drawing.Size(121, 21);
             this.LblMaterialFormat.TabIndex = 106;
             this.LblMaterialFormat.Text = "Material Format";
-            this.LblMaterialFormat.Click += new System.EventHandler(this.label14_Click);
             // 
-            // comboBox2
+            // CmbBxMaterialFormat
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.CmbBxMaterialFormat.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.CmbBxMaterialFormat.FormattingEnabled = true;
+            this.CmbBxMaterialFormat.Items.AddRange(new object[] {
             "Physical",
             "Digital"});
-            this.comboBox2.Location = new System.Drawing.Point(173, 410);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(108, 29);
-            this.comboBox2.TabIndex = 107;
-            this.comboBox2.Text = "All";
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            this.CmbBxMaterialFormat.Location = new System.Drawing.Point(173, 410);
+            this.CmbBxMaterialFormat.Name = "CmbBxMaterialFormat";
+            this.CmbBxMaterialFormat.Size = new System.Drawing.Size(108, 29);
+            this.CmbBxMaterialFormat.TabIndex = 107;
+            this.CmbBxMaterialFormat.Text = "All";
             // 
-            // button1
+            // BtnSortTitle
             // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Location = new System.Drawing.Point(434, 101);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(81, 36);
-            this.button1.TabIndex = 71;
-            this.button1.Text = "Title ▲";
-            this.button1.UseVisualStyleBackColor = false;
+            this.BtnSortTitle.BackColor = System.Drawing.Color.White;
+            this.BtnSortTitle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSortTitle.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortTitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSortTitle.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.BtnSortTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortTitle.Location = new System.Drawing.Point(434, 101);
+            this.BtnSortTitle.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSortTitle.Name = "BtnSortTitle";
+            this.BtnSortTitle.Size = new System.Drawing.Size(81, 36);
+            this.BtnSortTitle.TabIndex = 71;
+            this.BtnSortTitle.Text = "Title ▲";
+            this.BtnSortTitle.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // BtnSortAuthor
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Location = new System.Drawing.Point(533, 101);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(81, 36);
-            this.button2.TabIndex = 71;
-            this.button2.Text = "Author";
-            this.button2.UseVisualStyleBackColor = false;
+            this.BtnSortAuthor.BackColor = System.Drawing.Color.White;
+            this.BtnSortAuthor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSortAuthor.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortAuthor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSortAuthor.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.BtnSortAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortAuthor.Location = new System.Drawing.Point(533, 101);
+            this.BtnSortAuthor.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSortAuthor.Name = "BtnSortAuthor";
+            this.BtnSortAuthor.Size = new System.Drawing.Size(81, 36);
+            this.BtnSortAuthor.TabIndex = 71;
+            this.BtnSortAuthor.Text = "Author";
+            this.BtnSortAuthor.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // BtnSortDateAdded
             // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Location = new System.Drawing.Point(633, 101);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(127, 36);
-            this.button3.TabIndex = 71;
-            this.button3.Text = "Date Added";
-            this.button3.UseVisualStyleBackColor = false;
+            this.BtnSortDateAdded.BackColor = System.Drawing.Color.White;
+            this.BtnSortDateAdded.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSortDateAdded.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortDateAdded.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSortDateAdded.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.BtnSortDateAdded.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortDateAdded.Location = new System.Drawing.Point(633, 101);
+            this.BtnSortDateAdded.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSortDateAdded.Name = "BtnSortDateAdded";
+            this.BtnSortDateAdded.Size = new System.Drawing.Size(127, 36);
+            this.BtnSortDateAdded.TabIndex = 71;
+            this.BtnSortDateAdded.Text = "Date Added";
+            this.BtnSortDateAdded.UseVisualStyleBackColor = false;
             // 
-            // button5
+            // BtnSortCallNumber
             // 
-            this.button5.BackColor = System.Drawing.Color.White;
-            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.Location = new System.Drawing.Point(779, 101);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(127, 36);
-            this.button5.TabIndex = 71;
-            this.button5.Text = "Call Number";
-            this.button5.UseVisualStyleBackColor = false;
+            this.BtnSortCallNumber.BackColor = System.Drawing.Color.White;
+            this.BtnSortCallNumber.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSortCallNumber.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortCallNumber.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSortCallNumber.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.BtnSortCallNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortCallNumber.Location = new System.Drawing.Point(779, 101);
+            this.BtnSortCallNumber.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSortCallNumber.Name = "BtnSortCallNumber";
+            this.BtnSortCallNumber.Size = new System.Drawing.Size(127, 36);
+            this.BtnSortCallNumber.TabIndex = 71;
+            this.BtnSortCallNumber.Text = "Call Number";
+            this.BtnSortCallNumber.UseVisualStyleBackColor = false;
             // 
-            // button6
+            // BtnSortPublicationYear
             // 
-            this.button6.BackColor = System.Drawing.Color.White;
-            this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button6.Location = new System.Drawing.Point(927, 101);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(166, 36);
-            this.button6.TabIndex = 71;
-            this.button6.Text = "Publication Year";
-            this.button6.UseVisualStyleBackColor = false;
+            this.BtnSortPublicationYear.BackColor = System.Drawing.Color.White;
+            this.BtnSortPublicationYear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSortPublicationYear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortPublicationYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSortPublicationYear.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.BtnSortPublicationYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSortPublicationYear.Location = new System.Drawing.Point(927, 101);
+            this.BtnSortPublicationYear.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSortPublicationYear.Name = "BtnSortPublicationYear";
+            this.BtnSortPublicationYear.Size = new System.Drawing.Size(166, 36);
+            this.BtnSortPublicationYear.TabIndex = 71;
+            this.BtnSortPublicationYear.Text = "Publication Year";
+            this.BtnSortPublicationYear.UseVisualStyleBackColor = false;
             // 
-            // numericUpDown1
+            // NumPckPublicationYearFrom
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(124, 486);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(97, 26);
-            this.numericUpDown1.TabIndex = 116;
+            this.NumPckPublicationYearFrom.Location = new System.Drawing.Point(124, 486);
+            this.NumPckPublicationYearFrom.Name = "NumPckPublicationYearFrom";
+            this.NumPckPublicationYearFrom.Size = new System.Drawing.Size(97, 26);
+            this.NumPckPublicationYearFrom.TabIndex = 116;
             // 
-            // label1
+            // LblPublicationYearFrom
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label1.Location = new System.Drawing.Point(65, 487);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 21);
-            this.label1.TabIndex = 77;
-            this.label1.Text = "From";
-            this.label1.Click += new System.EventHandler(this.label13_Click);
+            this.LblPublicationYearFrom.AutoSize = true;
+            this.LblPublicationYearFrom.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblPublicationYearFrom.Location = new System.Drawing.Point(65, 487);
+            this.LblPublicationYearFrom.Name = "LblPublicationYearFrom";
+            this.LblPublicationYearFrom.Size = new System.Drawing.Size(47, 21);
+            this.LblPublicationYearFrom.TabIndex = 77;
+            this.LblPublicationYearFrom.Text = "From";
             // 
-            // label2
+            // LblPublicationYearTo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label2.Location = new System.Drawing.Point(65, 519);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(25, 21);
-            this.label2.TabIndex = 77;
-            this.label2.Text = "To";
-            this.label2.Click += new System.EventHandler(this.label13_Click);
+            this.LblPublicationYearTo.AutoSize = true;
+            this.LblPublicationYearTo.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.LblPublicationYearTo.Location = new System.Drawing.Point(65, 519);
+            this.LblPublicationYearTo.Name = "LblPublicationYearTo";
+            this.LblPublicationYearTo.Size = new System.Drawing.Size(25, 21);
+            this.LblPublicationYearTo.TabIndex = 77;
+            this.LblPublicationYearTo.Text = "To";
             // 
-            // numericUpDown2
+            // NumPckPublicationYearTo
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(124, 518);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(97, 26);
-            this.numericUpDown2.TabIndex = 116;
+            this.NumPckPublicationYearTo.Location = new System.Drawing.Point(124, 518);
+            this.NumPckPublicationYearTo.Name = "NumPckPublicationYearTo";
+            this.NumPckPublicationYearTo.Size = new System.Drawing.Size(97, 26);
+            this.NumPckPublicationYearTo.TabIndex = 116;
+            // 
+            // BtnSearch
+            // 
+            this.BtnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSearch.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSearch.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.BtnSearch.ForeColor = System.Drawing.Color.White;
+            this.BtnSearch.Location = new System.Drawing.Point(1421, 36);
+            this.BtnSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSearch.Name = "BtnSearch";
+            this.BtnSearch.Size = new System.Drawing.Size(127, 36);
+            this.BtnSearch.TabIndex = 66;
+            this.BtnSearch.Text = "Search";
+            this.BtnSearch.UseVisualStyleBackColor = false;
             // 
             // UCCatalog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.NumPckPublicationYearTo);
+            this.Controls.Add(this.BtnSearch);
+            this.Controls.Add(this.NumPckPublicationYearFrom);
+            this.Controls.Add(this.BtnSortPublicationYear);
+            this.Controls.Add(this.BtnSortCallNumber);
+            this.Controls.Add(this.BtnSortDateAdded);
+            this.Controls.Add(this.BtnSortAuthor);
+            this.Controls.Add(this.BtnSortTitle);
             this.Controls.Add(this.FlwPnlBooks);
             this.Controls.Add(this.lostBorderPanel14);
             this.Controls.Add(this.TxtSearch);
@@ -868,24 +864,24 @@
             this.Controls.Add(this.PnlSearchLogic);
             this.Controls.Add(this.BtnResetFilter);
             this.Controls.Add(this.BtnApplyFilter);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.CmbBxMaterialFormat);
             this.Controls.Add(this.LblMaterialFormat);
-            this.Controls.Add(this.comboBox5);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.CmbBxAvailability);
+            this.Controls.Add(this.LblPublicationYearTo);
             this.Controls.Add(this.LblAvailability);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LblPublicationYearFrom);
             this.Controls.Add(this.LblPublicationMonthYear);
-            this.Controls.Add(this.comboBox7);
+            this.Controls.Add(this.CmbBxLanguage);
             this.Controls.Add(this.LblLanguage);
-            this.Controls.Add(this.CmbBx);
+            this.Controls.Add(this.CmbBxLoanType);
             this.Controls.Add(this.LblLoanType);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.CmbBxPublisher);
             this.Controls.Add(this.LblPublisher);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.CmbBxCategory);
             this.Controls.Add(this.LblCategory);
-            this.Controls.Add(this.comboBox6);
+            this.Controls.Add(this.CmbBxResourceType);
             this.Controls.Add(this.LblResourceType);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.CmbBxAuthor);
             this.Controls.Add(this.LblAuthor);
             this.Controls.Add(this.LblFilters);
             this.Controls.Add(this.PicBxSearchIcon);
@@ -908,8 +904,8 @@
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckPublicationYearFrom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckPublicationYearTo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -922,14 +918,14 @@
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.Label LblFilters;
         private System.Windows.Forms.Label LblAuthor;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox CmbBxAuthor;
         private System.Windows.Forms.Label LblCategory;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox CmbBxCategory;
         private System.Windows.Forms.Label LblPublisher;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox CmbBxPublisher;
         private System.Windows.Forms.Label LblPublicationMonthYear;
         private System.Windows.Forms.Label LblAvailability;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox CmbBxAvailability;
         private System.Windows.Forms.Button BtnApplyFilter;
         private System.Windows.Forms.Button BtnResetFilter;
         private System.Windows.Forms.Panel PnlSearchLogic;
@@ -961,21 +957,22 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label LblResourceType;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox CmbBxResourceType;
         private System.Windows.Forms.Label LblLoanType;
-        private System.Windows.Forms.ComboBox CmbBx;
+        private System.Windows.Forms.ComboBox CmbBxLoanType;
         private System.Windows.Forms.Label LblLanguage;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox CmbBxLanguage;
         private System.Windows.Forms.Label LblMaterialFormat;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.ComboBox CmbBxMaterialFormat;
+        private System.Windows.Forms.Button BtnSortTitle;
+        private System.Windows.Forms.Button BtnSortAuthor;
+        private System.Windows.Forms.Button BtnSortDateAdded;
+        private System.Windows.Forms.Button BtnSortCallNumber;
+        private System.Windows.Forms.Button BtnSortPublicationYear;
+        private System.Windows.Forms.NumericUpDown NumPckPublicationYearFrom;
+        private System.Windows.Forms.Label LblPublicationYearFrom;
+        private System.Windows.Forms.Label LblPublicationYearTo;
+        private System.Windows.Forms.NumericUpDown NumPckPublicationYearTo;
+        private System.Windows.Forms.Button BtnSearch;
     }
 }

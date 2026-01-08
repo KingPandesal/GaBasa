@@ -138,6 +138,110 @@ namespace LMS.BusinessLogic.Managers
             return result.OrderByDescending(b => b.BorrowCount).Take(topCount).ToList();
         }
 
+        /// <summary>
+        /// Full-text style search across common fields plus a few filters.
+        /// Simple, in-memory approach using repository GetAll() results.
+        /// </summary>
+        public List<DTOCatalogBook> SearchCatalog(string query,
+            string category = null,
+            string publisher = null,
+            int? year = null,
+            string callNumber = null,
+            string accessionNumber = null)
+        {
+            if (string.IsNullOrWhiteSpace(query) &&
+                string.IsNullOrWhiteSpace(category) &&
+                string.IsNullOrWhiteSpace(publisher) &&
+                !year.HasValue &&
+                string.IsNullOrWhiteSpace(callNumber) &&
+                string.IsNullOrWhiteSpace(accessionNumber))
+            {
+                return new List<DTOCatalogBook>();
+            }
+
+            query = query?.Trim();
+            var tokens = string.IsNullOrWhiteSpace(query)
+                ? new string[0]
+                : query.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                       .Select(t => t.Trim()).Where(t => t.Length > 0).ToArray();
+
+            var allBooks = _bookRepo.GetAll() ?? new List<Book>();
+            var result = new List<DTOCatalogBook>();
+
+            foreach (var book in allBooks)
+            {
+                // fetch copies and authors once per book
+                var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                var bookAuthors = _bookAuthorRepo.GetByBookId(book.BookID) ?? new List<BookAuthor>();
+
+                // Filter by explicit filters first
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    var catName = GetCategoryName(book.CategoryID) ?? string.Empty;
+                    if (!catName.Equals(category, StringComparison.OrdinalIgnoreCase)) continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(publisher))
+                {
+                    var pubName = book.Publisher?.Name ?? string.Empty;
+                    if (!pubName.Equals(publisher, StringComparison.OrdinalIgnoreCase)) continue;
+                }
+
+                if (year.HasValue && book.PublicationYear != year.Value) continue;
+
+                if (!string.IsNullOrWhiteSpace(callNumber) && !string.Equals(book.CallNumber?.Trim(), callNumber.Trim(), StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                if (!string.IsNullOrWhiteSpace(accessionNumber))
+                {
+                    if (!copies.Any(c => string.Equals(c.AccessionNumber, accessionNumber, StringComparison.OrdinalIgnoreCase)))
+                        continue;
+                }
+
+                // Full-text token matching across title, subtitle, isbn, authors, category, publisher, callnumber
+                bool matches = tokens.Length == 0;
+
+                foreach (var t in tokens)
+                {
+                    var lower = t.ToLowerInvariant();
+
+                    bool tokenMatches =
+                        (!string.IsNullOrWhiteSpace(book.Title) && book.Title.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrWhiteSpace(book.Subtitle) && book.Subtitle.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrWhiteSpace(book.ISBN) && book.ISBN.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrWhiteSpace(book.CallNumber) && book.CallNumber.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrWhiteSpace(book.Publisher?.Name) && book.Publisher.Name.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (!string.IsNullOrWhiteSpace(GetCategoryName(book.CategoryID)) && GetCategoryName(book.CategoryID).IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                        (copies.Any(c => !string.IsNullOrWhiteSpace(c.AccessionNumber) && c.AccessionNumber.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0)) ||
+                        (bookAuthors.Any(ba =>
+                        {
+                            var author = _authorRepo.GetById(ba.AuthorID);
+                            return author != null && !string.IsNullOrWhiteSpace(author.FullName) && author.FullName.IndexOf(lower, StringComparison.OrdinalIgnoreCase) >= 0;
+                        }));
+
+                    if (!tokenMatches)
+                    {
+                        matches = false;
+                        break;
+                    }
+                    else
+                    {
+                        matches = true;
+                    }
+                }
+
+                if (!matches) continue;
+
+                // Map to DTO and add
+                DateTime dateAdded = copies.Count > 0 ? copies.Min(c => c.DateAdded) : DateTime.MinValue;
+                var dto = MapToDTO(book, copies, dateAdded);
+                result.Add(dto);
+            }
+
+            // Order by title for deterministic results; you could also order by DateAdded or BorrowCount depending on UI needs.
+            return result.OrderBy(b => b.Title).ToList();
+        }
+
         private DTOCatalogBook MapToDTO(Book book, List<BookCopy> copies, DateTime dateAdded)
         {
             // Determine status
@@ -150,16 +254,65 @@ namespace LMS.BusinessLogic.Managers
             }
             else
             {
-                int availableCopies = copies.Count(c => 
+                int availableCopies = copies.Count(c =>
                     string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
                 status = availableCopies > 0 ? "Available" : "Unavailable";
             }
 
-            // Get primary author
+            // Get primary author (existing method)
             string authorName = GetPrimaryAuthor(book.BookID);
 
             // Get category name
             string categoryName = GetCategoryName(book.CategoryID);
+
+            // Compose Authors (all authors) and first-copy location/accession for UI grid
+            string authorsAll = string.Empty;
+            try
+            {
+                var bas = _bookAuthorRepo.GetByBookId(book.BookID) ?? new List<BookAuthor>();
+                var names = bas
+                    .Select(ba =>
+                    {
+                        var a = _authorRepo.GetById(ba.AuthorID);
+                        return a?.FullName?.Trim();
+                    })
+                    .Where(n => !string.IsNullOrWhiteSpace(n))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                authorsAll = names.Length > 0 ? string.Join(", ", names) : authorName;
+            }
+            catch
+            {
+                authorsAll = authorName;
+            }
+
+            string firstLocation = null;
+            string firstAccession = null;
+            if (copies != null && copies.Count > 0)
+            {
+                var first = copies.OrderBy(c => c.DateAdded).FirstOrDefault();
+                if (first != null)
+                {
+                    firstLocation = first.Location;
+                    firstAccession = first.AccessionNumber;
+                }
+            }
+
+            // Resolve publisher name: prefer navigation property, otherwise load by PublisherID
+            string publisherName = book.Publisher?.Name;
+            if (string.IsNullOrWhiteSpace(publisherName) && book.PublisherID > 0)
+            {
+                try
+                {
+                    var pub = new PublisherRepository().GetById(book.PublisherID);
+                    publisherName = pub?.Name;
+                }
+                catch
+                {
+                    publisherName = null;
+                }
+            }
 
             return new DTOCatalogBook
             {
@@ -170,7 +323,110 @@ namespace LMS.BusinessLogic.Managers
                 Status = status,
                 CoverImagePath = book.CoverImage,
                 DateAdded = dateAdded,
-                BorrowCount = 0
+                BorrowCount = 0,
+                Authors = authorsAll,
+                FirstCopyLocation = firstLocation,
+                FirstCopyAccession = firstAccession,
+
+                // STRICT: map ISBN and CallNumber from Book columns only
+                ISBN = book.ISBN,
+                CallNumber = book.CallNumber,
+
+                // Map Publisher name and PublicationYear explicitly
+                Publisher = publisherName,
+                PublicationYear = book.PublicationYear
+            };
+        }
+
+        private DTOCatalogBook MapToDto(Book book, BookCopy firstCopy, IEnumerable<Author> bookAuthors)
+        {
+            if (book == null) return null;
+
+            // Ensure we can compute availability/borrow count from copies
+            var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+
+            // Determine status (same logic as MapToDTO)
+            bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
+            string status;
+            if (isDigital)
+            {
+                status = !string.IsNullOrWhiteSpace(book.DownloadURL) ? "Available Online" : "Unavailable";
+            }
+            else
+            {
+                int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
+                status = availableCopies > 0 ? "Available" : "Unavailable";
+            }
+
+            // Primary author / authors list
+            string authorName = null;
+            try
+            {
+                authorName = bookAuthors?.FirstOrDefault()?.FullName ?? GetPrimaryAuthor(book.BookID);
+            }
+            catch
+            {
+                authorName = GetPrimaryAuthor(book.BookID);
+            }
+
+            string authorsAll = null;
+            try
+            {
+                if (bookAuthors != null)
+                {
+                    var names = bookAuthors
+                        .Select(a => a.FullName?.Trim())
+                        .Where(n => !string.IsNullOrWhiteSpace(n))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+                    authorsAll = names.Length > 0 ? string.Join(", ", names) : authorName;
+                }
+                else
+                {
+                    authorsAll = authorName;
+                }
+            }
+            catch
+            {
+                authorsAll = authorName;
+            }
+
+            // First-copy metadata (if provided)
+            string firstLocation = firstCopy?.Location;
+            string firstAccession = firstCopy?.AccessionNumber;
+
+            // DateAdded: prefer firstCopy.DateAdded, otherwise earliest copy date if available
+            DateTime dateAdded = DateTime.MinValue;
+            if (firstCopy != null)
+                dateAdded = firstCopy.DateAdded;
+            else if (copies.Count > 0)
+                dateAdded = copies.Min(c => c.DateAdded);
+
+            // BorrowCount: use copies.Count as a proxy (keeps previous behavior)
+            int borrowCount = copies.Count;
+
+            return new DTOCatalogBook
+            {
+                BookID = book.BookID,
+                Title = book.Title ?? "Untitled",
+                Category = book.Category?.Name,
+                Author = authorName,
+                Status = status,
+                // Book exposes 'CoverImage' (not CoverImagePath)
+                CoverImagePath = book.CoverImage,
+                DateAdded = dateAdded,
+                BorrowCount = borrowCount,
+                Authors = authorsAll,
+                FirstCopyLocation = firstLocation,
+                FirstCopyAccession = firstAccession,
+
+                // STRICT: map ISBN and CallNumber from Book columns only (no UI-side fallbacks)
+                ISBN = book.ISBN,
+                CallNumber = book.CallNumber,
+
+                // Map Publisher name and PublicationYear explicitly
+                Publisher = book.Publisher?.Name,
+                PublicationYear = book.PublicationYear
             };
         }
 
