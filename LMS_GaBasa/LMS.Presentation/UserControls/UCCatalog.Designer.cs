@@ -246,6 +246,10 @@
             // 
             this.CmbBxAvailability.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.CmbBxAvailability.FormattingEnabled = true;
+            this.CmbBxAvailability.Items.AddRange(new object[] {
+            "Available",
+            "Available Online",
+            "Out of Stock"});
             this.CmbBxAvailability.Location = new System.Drawing.Point(173, 375);
             this.CmbBxAvailability.Name = "CmbBxAvailability";
             this.CmbBxAvailability.Size = new System.Drawing.Size(108, 29);

@@ -476,5 +476,30 @@ namespace LMS.BusinessLogic.Managers
                 return "Uncategorized";
             }
         }
+
+        public List<Author> GetAllAuthors()
+        {
+            try
+            {
+                return _authorRepo.GetAll() ?? new List<Author>();
+            }
+            catch
+            {
+                return new List<Author>();
+            }
+        }
+
+        public List<Publisher> GetAllPublishers()
+        {
+            try
+            {
+                // lightweight: use repository directly
+                return new PublisherRepository().GetAll() ?? new List<Publisher>();
+            }
+            catch
+            {
+                return new List<Publisher>();
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ using LMS.BusinessLogic.Managers;
 using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.Model.DTOs.Catalog;
 using LMS.DataAccess.Repositories;
+using LMS.Model.Models.Catalog;
 
 namespace LMS.Presentation.UserControls
 {
@@ -91,6 +92,9 @@ namespace LMS.Presentation.UserControls
         {
             LoadNewArrivals();
             LoadPopularBooks();
+
+            // populate combo boxes from DB
+            PopulateComboBoxes();
         }
 
         private void LoadNewArrivals()
@@ -840,6 +844,77 @@ namespace LMS.Presentation.UserControls
             catch
             {
                 return null;
+            }
+        }
+
+        private void PopulateComboBoxes()
+        {
+            try
+            {
+                // Authors -> CmbAuthor
+                var cmbAuthor = this.Controls.Find("CmbBxAuthor", true).FirstOrDefault() as ComboBox;
+                if (cmbAuthor != null)
+                {
+                    List<Author> authors = null;
+                    try { authors = (_catalogManager as CatalogManager)?.GetAllAuthors() ?? new List<Author>(); } catch { authors = new List<Author>(); }
+
+                    var authorItems = new List<Author> { new Author { AuthorID = 0, FullName = "All" } };
+                    authorItems.AddRange(authors);
+                    cmbAuthor.DisplayMember = "FullName";
+                    cmbAuthor.ValueMember = "AuthorID";
+                    cmbAuthor.DataSource = authorItems;
+                    cmbAuthor.SelectedIndex = 0;
+                }
+
+                // Categories -> CmbCategory
+                var cmbCategory = this.Controls.Find("CmbBxCategory", true).FirstOrDefault() as ComboBox;
+                if (cmbCategory != null)
+                {
+                    var cats = (_catalogManager.GetAllCategories() ?? new List<Category>());
+                    var catItems = new List<Category> { new Category { CategoryID = 0, Name = "All" } };
+                    catItems.AddRange(cats);
+                    cmbCategory.DisplayMember = "Name";
+                    cmbCategory.ValueMember = "CategoryID";
+                    cmbCategory.DataSource = catItems;
+                    cmbCategory.SelectedIndex = 0;
+                }
+
+                // Publishers -> CmbPublisher
+                var cmbPublisher = this.Controls.Find("CmbBxPublisher", true).FirstOrDefault() as ComboBox;
+                if (cmbPublisher != null)
+                {
+                    List<Publisher> pubs = null;
+                    try { pubs = (_catalogManager as CatalogManager)?.GetAllPublishers() ?? new PublisherRepository().GetAll() ?? new List<Publisher>(); } catch { pubs = new List<Publisher>(); }
+
+                    var pubItems = new List<Publisher> { new Publisher { PublisherID = 0, Name = "All" } };
+                    pubItems.AddRange(pubs);
+                    cmbPublisher.DisplayMember = "Name";
+                    cmbPublisher.ValueMember = "PublisherID";
+                    cmbPublisher.DataSource = pubItems;
+                    cmbPublisher.SelectedIndex = 0;
+                }
+
+                // Languages -> CmbLanguage
+                // Languages -> CmbLanguage
+                var cmbLanguage = this.Controls.Find("CmbBxLanguage", true).FirstOrDefault() as ComboBox;
+                if (cmbLanguage != null)
+                {
+                    var langs = (_catalogManager.GetAllLanguages() ?? new List<string>());
+
+                    // Default "All" option
+                    var langItems = new List<string> { "All" };
+                    langItems.AddRange(langs);
+
+                    // Since it's a list of strings, no DisplayMember/ValueMember needed
+                    cmbLanguage.DataSource = langItems;
+
+                    // Select "All" by default
+                    cmbLanguage.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateComboBoxes failed: " + ex);
             }
         }
     }
