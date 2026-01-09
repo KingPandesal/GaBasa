@@ -43,6 +43,10 @@ namespace LMS.Presentation.UserControls.Management
             // Wire cancel borrow button
             BtnCancelBorrow.Click += BtnCancelBorrow_Click;
 
+            // Wire confirm borrow button
+            BtnConfirmBorrow.Click -= BtnConfirmBorrow_Click;
+            BtnConfirmBorrow.Click += BtnConfirmBorrow_Click;
+
             // Initialize UI state
             ClearMemberResults();
             ClearBookResults();
@@ -622,6 +626,62 @@ namespace LMS.Presentation.UserControls.Management
             ClearBookResults();
             TxtAccessionNumber.Text = "";
             TxtAccessionNumber.Focus();
+        }
+
+        private void BtnConfirmBorrow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentMember == null)
+                {
+                    MessageBox.Show("Please verify a member first.", "No Member", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_currentBook == null)
+                {
+                    MessageBox.Show("Please lookup a book copy first.", "No Book", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Ensure copy is borrowable according to UI rules
+                if (!BtnConfirmBorrow.Enabled)
+                {
+                    MessageBox.Show("This copy cannot be borrowed.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                int copyId = _currentBook.CopyID;
+                int memberId = _currentMember.MemberID;
+
+                DateTime borrowDate = DateTime.Now;
+                DateTime dueDate = _currentMember.CalculateDueDate();
+
+                int transId = _circulationManager.CreateBorrowingTransaction(copyId, memberId, borrowDate, dueDate);
+
+                if (transId > 0)
+                {
+                    MessageBox.Show($"Borrow successful. Transaction ID: {transId}\nDue Date: {dueDate:MMMM d, yyyy}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Update UI to reflect new status
+                    LblBookStatus.Text = "Status: Borrowed";
+                    LblBookStatus.ForeColor = Color.FromArgb(200, 0, 0);
+                    BtnConfirmBorrow.Enabled = false;
+                    BtnConfirmBorrow.Text = "Borrowed";
+
+                    // Optionally clear accession input and keep due date visible
+                    LblBookDueDate.Text = $"Due Date: {dueDate:MMMM d, yyyy}";
+                    LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to record borrowing transaction. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during borrow: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ClearBookResults()

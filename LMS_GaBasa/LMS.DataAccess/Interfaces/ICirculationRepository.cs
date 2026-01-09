@@ -1,4 +1,5 @@
 ﻿using LMS.Model.DTOs.Circulation;
+using System;
 
 namespace LMS.DataAccess.Interfaces
 {
@@ -31,5 +32,8 @@ namespace LMS.DataAccess.Interfaces
         /// Gets book/copy information by accession number for checkout.
         /// </summary>
         DTOCirculationBookInfo GetBookInfoByAccession(string accessionNumber);
+
+        // Add a borrowing transaction and mark the copy as borrowed. Returns new TransactionID (>0) on success, 0 on failure.
+        int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate);
     }
 }

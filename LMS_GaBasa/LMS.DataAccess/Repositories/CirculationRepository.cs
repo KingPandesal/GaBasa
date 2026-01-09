@@ -211,6 +211,66 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        public int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate)
+        {
+            if (copyId <= 0 || memberId <= 0) return 0;
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    try
+                    {
+                        // Insert borrowing transaction
+                        cmd.CommandText = @"
+                            INSERT INTO [BorrowingTransaction] (CopyID, MemberID, BorrowDate, DueDate, Status)
+                            VALUES (@CopyID, @MemberID, @BorrowDate, @DueDate, @Status);
+                            SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+                        AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+                        AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                        AddParameter(cmd, "@BorrowDate", DbType.DateTime, borrowDate);
+                        AddParameter(cmd, "@DueDate", DbType.DateTime, dueDate);
+                        AddParameter(cmd, "@Status", DbType.String, "Borrowed");
+
+                        var result = cmd.ExecuteScalar();
+                        int newId = result == null || result == DBNull.Value ? 0 : Convert.ToInt32(result);
+
+                        if (newId <= 0)
+                        {
+                            tran.Rollback();
+                            return 0;
+                        }
+
+                        // Update BookCopy status to Borrowed
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"UPDATE [BookCopy] SET [Status] = @Status WHERE CopyID = @CopyID";
+                        AddParameter(cmd, "@Status", DbType.String, "Borrowed");
+                        AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                        int updated = cmd.ExecuteNonQuery();
+                        if (updated == 0)
+                        {
+                            // If update failed, rollback the transaction
+                            tran.Rollback();
+                            return 0;
+                        }
+
+                        tran.Commit();
+                        return newId;
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { }
+                        return 0;
+                    }
+                }
+            }
+        }
+
         private string GetAuthorsForBook(int bookId)
         {
             try

@@ -86,5 +86,11 @@ namespace LMS.BusinessLogic.Managers.Circulation
 
             return book;
         }
+
+        public int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate)
+        {
+            if (copyId <= 0 || memberId <= 0) return 0;
+            return _circulationRepo.CreateBorrowingTransaction(copyId, memberId, borrowDate, dueDate);
+        }
     }
 }

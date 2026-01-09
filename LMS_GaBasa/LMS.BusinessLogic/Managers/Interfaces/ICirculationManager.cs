@@ -1,4 +1,5 @@
 using LMS.Model.DTOs.Circulation;
+using System;
 
 namespace LMS.BusinessLogic.Managers.Interfaces
 {
@@ -28,5 +29,15 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="accessionNumber">Accession number string (exact match).</param>
         /// <returns>Book/copy DTO or null if not found.</returns>
         DTOCirculationBookInfo GetBookByAccession(string accessionNumber);
+
+        /// <summary>
+        /// Creates a borrowing transaction.
+        /// </summary>
+        /// <param name="copyId">The ID of the copy being borrowed.</param>
+        /// <param name="memberId">The ID of the member borrowing the item.</param>
+        /// <param name="borrowDate">The date the item is borrowed.</param>
+        /// <param name="dueDate">The due date for returning the item.</param>
+        /// <returns>The TransactionID if the transaction is successful; otherwise, 0.</returns>
+        int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate);
     }
 }
