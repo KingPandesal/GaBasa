@@ -264,6 +264,12 @@ namespace LMS.Presentation.UserControls
             btnViewDetails.Click += BtnViewDetails_Click;
             panel.Controls.Add(btnViewDetails);
 
+            // Determine visibility/enabled for Reserve button.
+            // Preserve existing logic but hide the button when it would be "disabled".
+            bool shouldHideReserve = (book != null) &&
+                                 (string.Equals(book.Status, "Available", StringComparison.OrdinalIgnoreCase)
+                                  || string.Equals(book.Status, "Available Online", StringComparison.OrdinalIgnoreCase));
+
             var btnReserve = new Button
             {
                 Text = "Reserve",
@@ -275,8 +281,8 @@ namespace LMS.Presentation.UserControls
                 Font = new Font("Segoe UI", 8F),
                 Cursor = Cursors.Hand,
                 Tag = book?.BookID ?? (object)null,
-                Enabled = !(book != null && (string.Equals(book.Status, "Available", StringComparison.OrdinalIgnoreCase)
-                            || string.Equals(book.Status, "Available Online", StringComparison.OrdinalIgnoreCase)))
+                Visible = !shouldHideReserve,
+                Enabled = !shouldHideReserve
             };
             btnReserve.FlatAppearance.BorderColor = Color.FromArgb(175, 37, 50);
             btnReserve.Click += BtnReserve_Click;
