@@ -364,7 +364,25 @@ namespace LMS.Presentation.Popup.Catalog
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var url = _currentBook?.DownloadURL;
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    MessageBox.Show("No download link available for this resource.", "Download Link", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
+                using (var dlg = new ViewBookDownloadLink(url))
+                {
+                    dlg.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("BtnCancel_Click (download) failed: " + ex);
+                MessageBox.Show("Failed to open download link dialog.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

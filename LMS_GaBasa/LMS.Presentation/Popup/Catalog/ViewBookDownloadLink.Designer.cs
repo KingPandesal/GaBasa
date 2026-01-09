@@ -51,7 +51,7 @@
             this.TxtDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtDownloadURL.Location = new System.Drawing.Point(27, 52);
             this.TxtDownloadURL.Name = "TxtDownloadURL";
-            this.TxtDownloadURL.Size = new System.Drawing.Size(307, 34);
+            this.TxtDownloadURL.Size = new System.Drawing.Size(246, 34);
             this.TxtDownloadURL.TabIndex = 1;
             // 
             // BtnCopyDownloadURL
@@ -62,21 +62,22 @@
             this.BtnCopyDownloadURL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCopyDownloadURL.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnCopyDownloadURL.ForeColor = System.Drawing.Color.White;
-            this.BtnCopyDownloadURL.Location = new System.Drawing.Point(353, 46);
+            this.BtnCopyDownloadURL.Location = new System.Drawing.Point(292, 50);
             this.BtnCopyDownloadURL.Margin = new System.Windows.Forms.Padding(4);
             this.BtnCopyDownloadURL.Name = "BtnCopyDownloadURL";
-            this.BtnCopyDownloadURL.Size = new System.Drawing.Size(61, 45);
+            this.BtnCopyDownloadURL.Size = new System.Drawing.Size(45, 37);
             this.BtnCopyDownloadURL.TabIndex = 78;
             this.BtnCopyDownloadURL.Text = "📋";
             this.TipforBtnCopyDownloadURL.SetToolTip(this.BtnCopyDownloadURL, "Copy link");
             this.BtnCopyDownloadURL.UseVisualStyleBackColor = false;
+            this.BtnCopyDownloadURL.Click += new System.EventHandler(this.BtnCopyDownloadURL_Click_1);
             // 
             // ViewBookDownloadLink
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(441, 109);
+            this.ClientSize = new System.Drawing.Size(361, 109);
             this.Controls.Add(this.BtnCopyDownloadURL);
             this.Controls.Add(this.TxtDownloadURL);
             this.Controls.Add(this.LblDownloadURL);
