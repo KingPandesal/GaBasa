@@ -1010,6 +1010,8 @@ namespace LMS.Presentation.UserControls
             LblPopularBooks?.Show();
             PnlPopularBooksSection?.Show();
             ClearSearchResults();
+
+            try { SetSortButtonsVisible(false); } catch { }
         }
 
         private void ShowSearchResults(List<DTOCatalogBook> results)
@@ -1142,6 +1144,9 @@ namespace LMS.Presentation.UserControls
                     FlwPnlBooks.Controls.Add(_lvSearchResults);
                     _lvSearchResults.BringToFront();
                 }
+
+                // Show sort buttons now that the ListView is created and shown
+                try { SetSortButtonsVisible(true); } catch { }
             }
             catch (Exception ex)
             {
@@ -1249,6 +1254,9 @@ namespace LMS.Presentation.UserControls
             catch { }
 
             DisposeImageListAndCache();
+
+            // hide sort buttons when there are no results shown
+            try { SetSortButtonsVisible(false); } catch { }
         }
 
         private void LvSearchResults_ItemActivate(object sender, EventArgs e)
@@ -1708,6 +1716,9 @@ namespace LMS.Presentation.UserControls
 
             // Set initial button text to show ascending by default (Title is default active)
             UpdateAllSortButtonTexts();
+
+            // Hide sort buttons until the ListView is created and shown
+            try { SetSortButtonsVisible(false); } catch { }
         }
 
         private void BtnSortTitle_Click(object sender, EventArgs e)
@@ -1878,6 +1889,25 @@ namespace LMS.Presentation.UserControls
                 if (col >= 0 && col < item.SubItems.Count)
                     return item.SubItems[col].Text ?? string.Empty;
                 return item.Text ?? string.Empty;
+            }
+        }
+
+        private void SetSortButtonsVisible(bool visible)
+        {
+            var buttonNames = new[] { "BtnSortTitle", "BtnSortAuthor", "BtnSortPublicationYear", "BtnSortCallNumber" };
+            foreach (var name in buttonNames)
+            {
+                try
+                {
+                    var btn = this.Controls.Find(name, true).FirstOrDefault() as Button;
+                    if (btn != null)
+                    {
+                        btn.Visible = visible;
+                        // keep enabled state as designed; ensure tab stop behaves when hidden
+                        btn.TabStop = visible;
+                    }
+                }
+                catch { }
             }
         }
     }
