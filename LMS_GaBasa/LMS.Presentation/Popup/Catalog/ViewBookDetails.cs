@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using LMS.DataAccess.Repositories;
 using LMS.BusinessLogic.Managers;
 using LMS.Model.Models.Catalog.Books;
+using LMS.Model.Models.Catalog;
 using LMS.Model.Models.Enums;
 using System.Diagnostics;
 using LMS.BusinessLogic.Security;
@@ -219,6 +220,196 @@ namespace LMS.Presentation.Popup.Catalog
                 LblEditors.Text = (book.ResourceType == ResourceType.Thesis) ? "Adviser(s) :" : "Editor(s) :";
             }
 
+            // ===== New: populate the requested labels =====
+
+            // Resource Type (friendly label)
+            try
+            {
+                string resourceLabel;
+                switch (book.ResourceType)
+                {
+                    case ResourceType.EBook:
+                        resourceLabel = "E-Book";
+                        break;
+                    case ResourceType.Thesis:
+                        resourceLabel = "Thesis";
+                        break;
+                    case ResourceType.AV:
+                        resourceLabel = "Audio-Visual";
+                        break;
+                    case ResourceType.Periodical:
+                        resourceLabel = "Periodical";
+                        break;
+                    case ResourceType.PhysicalBook:
+                    default:
+                        resourceLabel = "Book";
+                        break;
+                }
+
+                // Designer label already contains the static prefix; append the value for clarity.
+                LblResourceType.Text = $"Resource Type : {resourceLabel}";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to set resource type: " + ex);
+                LblResourceType.Text = "Resource Type :";
+            }
+
+            // Call Number
+            try
+            {
+                var callNo = string.IsNullOrWhiteSpace(book.CallNumber) ? string.Empty : book.CallNumber.Trim();
+                LblCallNumber.Text = string.IsNullOrWhiteSpace(callNo) ? "Call Number :" : $"Call Number : {callNo}";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to set call number: " + ex);
+                LblCallNumber.Text = "Call Number :";
+            }
+
+            // Publisher - prefer navigation property then repository fallback
+            try
+            {
+                string publisherName = string.Empty;
+                if (book.Publisher != null && !string.IsNullOrWhiteSpace(book.Publisher.Name))
+                {
+                    publisherName = book.Publisher.Name.Trim();
+                }
+                else if (book.PublisherID > 0)
+                {
+                    try
+                    {
+                        var pubRepo = new PublisherRepository();
+                        var pub = pubRepo.GetById(book.PublisherID);
+                        if (pub != null && !string.IsNullOrWhiteSpace(pub.Name))
+                            publisherName = pub.Name.Trim();
+                    }
+                    catch { publisherName = string.Empty; }
+                }
+
+                LblPublisher.Text = string.IsNullOrWhiteSpace(publisherName) ? "Publisher :" : $"Publisher : {publisherName}";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to set publisher: " + ex);
+                LblPublisher.Text = "Publisher :";
+            }
+
+            // Language
+            try
+            {
+                var lang = string.IsNullOrWhiteSpace(book.Language) ? string.Empty : book.Language.Trim();
+                LblLanguage.Text = string.IsNullOrWhiteSpace(lang) ? "Language :" : $"Language : {lang}";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to set language: " + ex);
+                LblLanguage.Text = "Language :";
+            }
+
+            // Pages
+            try
+            {
+                LblPages.Text = (book.Pages > 0) ? $"Pages : {book.Pages}" : "Pages :";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to set pages: " + ex);
+                LblPages.Text = "Pages :";
+            }
+
+            // ===== New: Total copies, Available for borrow, populate DgwBookCopy =====
+            try
+            {
+                // Ensure the grid exists
+                if (DgvBookCopy != null)
+                {
+                    // Prepare grid: clear rows and ensure button column shows text
+                    try
+                    {
+                        if (DgvBookCopy.Columns.Contains("ColumnBarcode"))
+                        {
+                            var btnCol = DgvBookCopy.Columns["ColumnBarcode"] as DataGridViewButtonColumn;
+                            if (btnCol != null) btnCol.UseColumnTextForButtonValue = true;
+                        }
+                    }
+                    catch { /* ignore */ }
+
+                    DgvBookCopy.Rows.Clear();
+
+                    List<BookCopy> copies = book.Copies;
+                    if (copies == null)
+                        copies = new List<BookCopy>();
+
+                    int totalCopies = copies.Count;
+                    int availableCopies = copies.Count(c => string.Equals(c?.Status, "Available", StringComparison.OrdinalIgnoreCase));
+
+                    // Set labels
+                    try { LblTotalCopies.Text = $"Total Copies : {totalCopies}"; } catch { }
+                    try { LblAvailableForBorrow.Text = $"Available for borrow: {availableCopies}"; } catch { }
+
+                    int idx = 1;
+                    foreach (var copy in copies.OrderBy(c => c.DateAdded))
+                    {
+                        int rowIndex = DgvBookCopy.Rows.Add();
+                        var row = DgvBookCopy.Rows[rowIndex];
+
+                        // ColumnNumbering
+                        if (DgvBookCopy.Columns.Contains("ColumnNumbering"))
+                            row.Cells["ColumnNumbering"].Value = idx.ToString();
+
+                        // Accession number
+                        if (DgvBookCopy.Columns.Contains("ColumnAccessionNumber"))
+                            row.Cells["ColumnAccessionNumber"].Value = string.IsNullOrWhiteSpace(copy?.AccessionNumber) ? "N/A" : copy.AccessionNumber;
+
+                        // Location
+                        if (DgvBookCopy.Columns.Contains("ColumnLocation"))
+                            row.Cells["ColumnLocation"].Value = string.IsNullOrWhiteSpace(copy?.Location) ? "N/A" : copy.Location;
+
+                        // Status
+                        if (DgvBookCopy.Columns.Contains("ColumnStatus"))
+                            row.Cells["ColumnStatus"].Value = string.IsNullOrWhiteSpace(copy?.Status) ? "N/A" : copy.Status;
+
+                        // DateAdded
+                        if (DgvBookCopy.Columns.Contains("ColumnDateAdded"))
+                            row.Cells["ColumnDateAdded"].Value = copy?.DateAdded.ToString("MMM dd, yyyy") ?? "N/A";
+
+                        // AddedBy - show AddedByID as fallback (you can replace with lookup to UserRepo if desired)
+                        if (DgvBookCopy.Columns.Contains("ColumnAddedBy"))
+                        {
+                            string addedBy = (copy != null && copy.AddedByID > 0) ? $"ID:{copy.AddedByID}" : "N/A";
+                            row.Cells["ColumnAddedBy"].Value = addedBy;
+                        }
+
+                        // Barcode button cell (display text via UseColumnTextForButtonValue above or set value)
+                        if (DgvBookCopy.Columns.Contains("ColumnBarcode"))
+                        {
+                            var cell = row.Cells["ColumnBarcode"];
+                            try { cell.Value = "View Barcode"; } catch { }
+                        }
+
+                        // Edit/Delete image columns leave as-is (designer images will render)
+                        row.Tag = copy;
+                        idx++;
+                    }
+                }
+                else
+                {
+                    // If grid not present, still set labels
+                    var copies = book.Copies ?? new List<BookCopy>();
+                    int totalCopies = copies.Count;
+                    int availableCopies = copies.Count(c => string.Equals(c?.Status, "Available", StringComparison.OrdinalIgnoreCase));
+                    try { LblTotalCopies.Text = $"Total Copies : {totalCopies}"; } catch { }
+                    try { LblAvailableForBorrow.Text = $"Available for borrow: {availableCopies}"; } catch { }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to populate copies grid/labels: " + ex);
+                try { LblTotalCopies.Text = "Total Copies :"; } catch { }
+                try { LblAvailableForBorrow.Text = "Available for borrow:"; } catch { }
+            }
+
             // update buttons (if permission context already set this will show correct controls;
             // if not, SetPermissionContext will call UpdateActionButtons after being set)
             UpdateActionButtons();
@@ -354,7 +545,76 @@ namespace LMS.Presentation.Popup.Catalog
 
         private void DgwBookCopy_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
+                var dgv = sender as DataGridView;
+                if (dgv == null) return;
+
+                var column = dgv.Columns[e.ColumnIndex];
+                if (column == null) return;
+
+                // Only react to the barcode button column
+                if (!string.Equals(column.Name, "ColumnBarcode", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(column.HeaderText, "Barcode", StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                var row = dgv.Rows[e.RowIndex];
+                if (row == null) return;
+
+                // Prefer BookCopy object stored in row.Tag; fallback to cell values if necessary
+                var copy = row.Tag as BookCopy;
+
+                string barcodeText = null;
+                string accession = null;
+
+                if (copy != null)
+                {
+                    barcodeText = copy.Barcode;
+                    accession = copy.AccessionNumber;
+                }
+                else
+                {
+                    try
+                    {
+                        if (dgv.Columns.Contains("ColumnAccessionNumber"))
+                            accession = Convert.ToString(row.Cells["ColumnAccessionNumber"].Value);
+                        // try to use status/other cells if Barcode cell contains text
+                        if (dgv.Columns.Contains("ColumnBarcode"))
+                            barcodeText = Convert.ToString(row.Cells["ColumnBarcode"].Value);
+                    }
+                    catch { }
+                }
+
+                // Choose what to show: prefer explicit barcode, else show accession number
+                var toShow = !string.IsNullOrWhiteSpace(barcodeText) ? barcodeText : accession;
+
+                if (string.IsNullOrWhiteSpace(toShow))
+                {
+                    MessageBox.Show("No barcode or accession number available for this copy.", "No Barcode", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Open the barcode viewer (Inventory popup)
+                try
+                {
+                    using (var viewer = new LMS.Presentation.Popup.Inventory.ViewBarcode())
+                    {
+                        viewer.LoadBarcode(toShow, accession);
+                        viewer.ShowDialog(this);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to open ViewBarcode: " + ex);
+                    MessageBox.Show("Failed to open barcode viewer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("DgwBookCopy_CellContentClick error: " + ex);
+            }
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)

@@ -34,16 +34,7 @@
             this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.PnlDocked = new System.Windows.Forms.Panel();
             this.PnlBookDetails = new System.Windows.Forms.Panel();
-            this.DgwBookCopy = new System.Windows.Forms.DataGridView();
-            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAccessionNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAddedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnBarcode = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.DgvBookCopy = new System.Windows.Forms.DataGridView();
             this.LblResourceType = new System.Windows.Forms.Label();
             this.LblStandardID = new System.Windows.Forms.Label();
             this.LblCallNumber = new System.Windows.Forms.Label();
@@ -68,11 +59,17 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAccessionNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBarcode = new System.Windows.Forms.DataGridViewButtonColumn();
             this.PnlPicBxBookCoverContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
             this.PnlDocked.SuspendLayout();
             this.PnlBookDetails.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvBookCopy)).BeginInit();
             this.FlwPnlBtns.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,7 +123,7 @@
             // 
             // PnlBookDetails
             // 
-            this.PnlBookDetails.Controls.Add(this.DgwBookCopy);
+            this.PnlBookDetails.Controls.Add(this.DgvBookCopy);
             this.PnlBookDetails.Controls.Add(this.LblResourceType);
             this.PnlBookDetails.Controls.Add(this.LblStandardID);
             this.PnlBookDetails.Controls.Add(this.LblCallNumber);
@@ -144,99 +141,26 @@
             this.PnlBookDetails.Size = new System.Drawing.Size(996, 843);
             this.PnlBookDetails.TabIndex = 13;
             // 
-            // DgwBookCopy
+            // DgvBookCopy
             // 
-            this.DgwBookCopy.AllowUserToAddRows = false;
-            this.DgwBookCopy.BackgroundColor = System.Drawing.Color.White;
-            this.DgwBookCopy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgwBookCopy.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DgvBookCopy.AllowUserToAddRows = false;
+            this.DgvBookCopy.BackgroundColor = System.Drawing.Color.White;
+            this.DgvBookCopy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvBookCopy.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnNumbering,
             this.ColumnAccessionNumber,
             this.ColumnLocation,
             this.ColumnStatus,
             this.ColumnDateAdded,
-            this.ColumnAddedBy,
-            this.ColumnBarcode,
-            this.Edit,
-            this.Delete});
-            this.DgwBookCopy.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.DgwBookCopy.Location = new System.Drawing.Point(36, 479);
-            this.DgwBookCopy.Name = "DgwBookCopy";
-            this.DgwBookCopy.RowHeadersWidth = 62;
-            this.DgwBookCopy.RowTemplate.Height = 28;
-            this.DgwBookCopy.Size = new System.Drawing.Size(910, 326);
-            this.DgwBookCopy.TabIndex = 60;
-            this.DgwBookCopy.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwBookCopy_CellContentClick);
-            // 
-            // ColumnNumbering
-            // 
-            this.ColumnNumbering.HeaderText = "#";
-            this.ColumnNumbering.MinimumWidth = 8;
-            this.ColumnNumbering.Name = "ColumnNumbering";
-            this.ColumnNumbering.Width = 40;
-            // 
-            // ColumnAccessionNumber
-            // 
-            this.ColumnAccessionNumber.HeaderText = "Accession Number";
-            this.ColumnAccessionNumber.MinimumWidth = 8;
-            this.ColumnAccessionNumber.Name = "ColumnAccessionNumber";
-            this.ColumnAccessionNumber.Width = 150;
-            // 
-            // ColumnLocation
-            // 
-            this.ColumnLocation.HeaderText = "Location";
-            this.ColumnLocation.MinimumWidth = 8;
-            this.ColumnLocation.Name = "ColumnLocation";
-            this.ColumnLocation.Width = 150;
-            // 
-            // ColumnStatus
-            // 
-            this.ColumnStatus.HeaderText = "Status";
-            this.ColumnStatus.MinimumWidth = 8;
-            this.ColumnStatus.Name = "ColumnStatus";
-            this.ColumnStatus.Width = 150;
-            // 
-            // ColumnDateAdded
-            // 
-            this.ColumnDateAdded.HeaderText = "Date Added";
-            this.ColumnDateAdded.MinimumWidth = 8;
-            this.ColumnDateAdded.Name = "ColumnDateAdded";
-            this.ColumnDateAdded.Width = 150;
-            // 
-            // ColumnAddedBy
-            // 
-            this.ColumnAddedBy.HeaderText = "Added By";
-            this.ColumnAddedBy.MinimumWidth = 8;
-            this.ColumnAddedBy.Name = "ColumnAddedBy";
-            this.ColumnAddedBy.Width = 150;
-            // 
-            // ColumnBarcode
-            // 
-            this.ColumnBarcode.HeaderText = "Barcode";
-            this.ColumnBarcode.MinimumWidth = 8;
-            this.ColumnBarcode.Name = "ColumnBarcode";
-            this.ColumnBarcode.Text = "View Barcode";
-            this.ColumnBarcode.Width = 150;
-            // 
-            // Edit
-            // 
-            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Edit.HeaderText = "";
-            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
-            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Edit.MinimumWidth = 8;
-            this.Edit.Name = "Edit";
-            this.Edit.Width = 8;
-            // 
-            // Delete
-            // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Delete.HeaderText = "";
-            this.Delete.Image = ((System.Drawing.Image)(resources.GetObject("Delete.Image")));
-            this.Delete.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Delete.MinimumWidth = 8;
-            this.Delete.Name = "Delete";
-            this.Delete.Width = 8;
+            this.ColumnBarcode});
+            this.DgvBookCopy.GridColor = System.Drawing.SystemColors.ControlLight;
+            this.DgvBookCopy.Location = new System.Drawing.Point(36, 479);
+            this.DgvBookCopy.Name = "DgvBookCopy";
+            this.DgvBookCopy.RowHeadersWidth = 62;
+            this.DgvBookCopy.RowTemplate.Height = 28;
+            this.DgvBookCopy.Size = new System.Drawing.Size(910, 326);
+            this.DgvBookCopy.TabIndex = 60;
+            this.DgvBookCopy.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwBookCopy_CellContentClick);
             // 
             // LblResourceType
             // 
@@ -498,6 +422,49 @@
             this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
             this.dataGridViewImageColumn2.Width = 150;
             // 
+            // ColumnNumbering
+            // 
+            this.ColumnNumbering.HeaderText = "#";
+            this.ColumnNumbering.MinimumWidth = 8;
+            this.ColumnNumbering.Name = "ColumnNumbering";
+            this.ColumnNumbering.Width = 40;
+            // 
+            // ColumnAccessionNumber
+            // 
+            this.ColumnAccessionNumber.HeaderText = "Accession Number";
+            this.ColumnAccessionNumber.MinimumWidth = 8;
+            this.ColumnAccessionNumber.Name = "ColumnAccessionNumber";
+            this.ColumnAccessionNumber.Width = 150;
+            // 
+            // ColumnLocation
+            // 
+            this.ColumnLocation.HeaderText = "Location";
+            this.ColumnLocation.MinimumWidth = 8;
+            this.ColumnLocation.Name = "ColumnLocation";
+            this.ColumnLocation.Width = 150;
+            // 
+            // ColumnStatus
+            // 
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.MinimumWidth = 8;
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.Width = 150;
+            // 
+            // ColumnDateAdded
+            // 
+            this.ColumnDateAdded.HeaderText = "Date Added";
+            this.ColumnDateAdded.MinimumWidth = 8;
+            this.ColumnDateAdded.Name = "ColumnDateAdded";
+            this.ColumnDateAdded.Width = 150;
+            // 
+            // ColumnBarcode
+            // 
+            this.ColumnBarcode.HeaderText = "Barcode";
+            this.ColumnBarcode.MinimumWidth = 8;
+            this.ColumnBarcode.Name = "ColumnBarcode";
+            this.ColumnBarcode.Text = "View Barcode";
+            this.ColumnBarcode.Width = 150;
+            // 
             // ViewBookDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -517,7 +484,7 @@
             this.PnlDocked.PerformLayout();
             this.PnlBookDetails.ResumeLayout(false);
             this.PnlBookDetails.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvBookCopy)).EndInit();
             this.FlwPnlBtns.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -549,20 +516,17 @@
         private System.Windows.Forms.Label LblPhysDescFormat;
         private System.Windows.Forms.Label LblPubDateYear;
         private System.Windows.Forms.Label LblEdition;
-        private System.Windows.Forms.DataGridView DgwBookCopy;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumbering;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAccessionNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLocation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDateAdded;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAddedBy;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnBarcode;
-        private System.Windows.Forms.DataGridViewImageColumn Edit;
-        private System.Windows.Forms.DataGridViewImageColumn Delete;
+        private System.Windows.Forms.DataGridView DgvBookCopy;
         private System.Windows.Forms.Label LblCopyDetails;
         private System.Windows.Forms.Label LblAvailableForBorrow;
         private System.Windows.Forms.Label LblTotalCopies;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumbering;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAccessionNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLocation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDateAdded;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnBarcode;
     }
 }
