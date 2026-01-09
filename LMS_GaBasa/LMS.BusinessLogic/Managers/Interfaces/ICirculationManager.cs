@@ -21,5 +21,12 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="formattedMemberId">The formatted member ID.</param>
         /// <returns>The numeric member ID if valid; otherwise null.</returns>
         int? ParseFormattedMemberId(string formattedMemberId);
+
+        /// <summary>
+        /// Gets book/copy information by accession number for checkout.
+        /// </summary>
+        /// <param name="accessionNumber">Accession number string (exact match).</param>
+        /// <returns>Book/copy DTO or null if not found.</returns>
+        DTOCirculationBookInfo GetBookByAccession(string accessionNumber);
     }
 }

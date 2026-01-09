@@ -10,8 +10,6 @@ namespace LMS.DataAccess.Interfaces
         /// <summary>
         /// Gets member information by MemberID for circulation verification.
         /// </summary>
-        /// <param name="memberId">The numeric member ID.</param>
-        /// <returns>Member info if found; otherwise null.</returns>
         DTOCirculationMemberInfo GetMemberInfoByMemberId(int memberId);
 
         /// <summary>
@@ -28,5 +26,10 @@ namespace LMS.DataAccess.Interfaces
         /// Gets the total unpaid fines for a member.
         /// </summary>
         decimal GetTotalUnpaidFines(int memberId);
+
+        /// <summary>
+        /// Gets book/copy information by accession number for checkout.
+        /// </summary>
+        DTOCirculationBookInfo GetBookInfoByAccession(string accessionNumber);
     }
 }

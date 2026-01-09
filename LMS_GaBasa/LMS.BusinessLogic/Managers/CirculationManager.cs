@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Linq;
 using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.Model.DTOs.Circulation;
 using LMS.DataAccess.Interfaces;
@@ -53,6 +54,37 @@ namespace LMS.BusinessLogic.Managers.Circulation
                 return memberId;
 
             return null;
+        }
+
+        public DTOCirculationBookInfo GetBookByAccession(string accessionNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accessionNumber))
+                return null;
+
+            var book = _circulationRepo.GetBookInfoByAccession(accessionNumber.Trim());
+            if (book == null)
+                return null;
+
+            // Ensure Authors contains only a clean comma-separated list or "N/A"
+            // Repository returns authors filtered by Role='Author' where possible,
+            // but normalize here to be safe.
+            if (string.IsNullOrWhiteSpace(book.Authors))
+            {
+                book.Authors = "N/A";
+            }
+            else
+            {
+                var parts = book.Authors
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(p => p.Trim())
+                    .Where(p => !string.IsNullOrWhiteSpace(p))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                book.Authors = parts.Length > 0 ? string.Join(", ", parts) : "N/A";
+            }
+
+            return book;
         }
     }
 }

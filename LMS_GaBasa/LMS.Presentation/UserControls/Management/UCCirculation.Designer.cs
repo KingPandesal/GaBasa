@@ -58,6 +58,7 @@
             this.LblMemberType = new System.Windows.Forms.Label();
             this.LblFullName = new System.Windows.Forms.Label();
             this.LblResults = new System.Windows.Forms.Label();
+            this.PicBxMemberProfilePicture = new System.Windows.Forms.PictureBox();
             this.BtnEnterMemberID = new System.Windows.Forms.Button();
             this.TxtMemberID = new System.Windows.Forms.TextBox();
             this.LblMemberID = new System.Windows.Forms.Label();
@@ -92,16 +93,16 @@
             this.LblRenewOldDueDate = new System.Windows.Forms.Label();
             this.LblRenewBorrower = new System.Windows.Forms.Label();
             this.LblRenewTitle = new System.Windows.Forms.Label();
-            this.PicBxMemberProfilePicture = new System.Windows.Forms.PictureBox();
+            this.LblResourceType = new System.Windows.Forms.Label();
             this.TabCtrlCirculation.SuspendLayout();
             this.TabPageBorrow.SuspendLayout();
             this.GrpBxBookCheckout.SuspendLayout();
             this.GrpBxMemberVerification.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).BeginInit();
             this.TabPageReturn.SuspendLayout();
             this.GrpBxReturnBook.SuspendLayout();
             this.TabPageRenew.SuspendLayout();
             this.GrpBxBookRenewal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // TabCtrlCirculation
@@ -122,6 +123,8 @@
             this.TabPageBorrow.BackColor = System.Drawing.Color.White;
             this.TabPageBorrow.Controls.Add(this.GrpBxBookCheckout);
             this.TabPageBorrow.Controls.Add(this.GrpBxMemberVerification);
+            this.TabPageBorrow.Controls.Add(this.LblBookLoanType);
+            this.TabPageBorrow.Controls.Add(this.LblBookAuthor);
             this.TabPageBorrow.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabPageBorrow.Location = new System.Drawing.Point(4, 50);
             this.TabPageBorrow.Name = "TabPageBorrow";
@@ -132,6 +135,7 @@
             // 
             // GrpBxBookCheckout
             // 
+            this.GrpBxBookCheckout.Controls.Add(this.LblResourceType);
             this.GrpBxBookCheckout.Controls.Add(this.BtnConfirmBorrow);
             this.GrpBxBookCheckout.Controls.Add(this.LblBookDueDate);
             this.GrpBxBookCheckout.Controls.Add(this.LblNote1);
@@ -141,11 +145,9 @@
             this.GrpBxBookCheckout.Controls.Add(this.BtnScanAccessionNumber);
             this.GrpBxBookCheckout.Controls.Add(this.TxtAccessionNumber);
             this.GrpBxBookCheckout.Controls.Add(this.LblBookStatus);
-            this.GrpBxBookCheckout.Controls.Add(this.LblBookLoanType);
             this.GrpBxBookCheckout.Controls.Add(this.LblBookCategory);
-            this.GrpBxBookCheckout.Controls.Add(this.LblBookAuthor);
             this.GrpBxBookCheckout.Controls.Add(this.LblBookTitle);
-            this.GrpBxBookCheckout.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxBookCheckout.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.GrpBxBookCheckout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxBookCheckout.Location = new System.Drawing.Point(802, 31);
             this.GrpBxBookCheckout.Name = "GrpBxBookCheckout";
@@ -173,24 +175,24 @@
             // LblBookDueDate
             // 
             this.LblBookDueDate.AutoSize = true;
-            this.LblBookDueDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblBookDueDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBookDueDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblBookDueDate.Location = new System.Drawing.Point(42, 430);
+            this.LblBookDueDate.Location = new System.Drawing.Point(42, 383);
             this.LblBookDueDate.Name = "LblBookDueDate";
-            this.LblBookDueDate.Size = new System.Drawing.Size(276, 30);
+            this.LblBookDueDate.Size = new System.Drawing.Size(248, 28);
             this.LblBookDueDate.TabIndex = 54;
             this.LblBookDueDate.Text = "Due Date: January 15, 2026";
             // 
             // LblNote1
             // 
             this.LblNote1.AutoSize = true;
-            this.LblNote1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.LblNote1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblNote1.ForeColor = System.Drawing.Color.Black;
             this.LblNote1.Location = new System.Drawing.Point(43, 127);
             this.LblNote1.MaximumSize = new System.Drawing.Size(600, 0);
             this.LblNote1.MinimumSize = new System.Drawing.Size(100, 0);
             this.LblNote1.Name = "LblNote1";
-            this.LblNote1.Size = new System.Drawing.Size(591, 50);
+            this.LblNote1.Size = new System.Drawing.Size(579, 42);
             this.LblNote1.TabIndex = 0;
             this.LblNote1.Text = "*Books are identified by scanning the accession number barcode using a webcam. Ma" +
     "nual input is also supported.";
@@ -198,11 +200,11 @@
             // LblAccessionNumber
             // 
             this.LblAccessionNumber.AutoSize = true;
-            this.LblAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAccessionNumber.ForeColor = System.Drawing.Color.Black;
             this.LblAccessionNumber.Location = new System.Drawing.Point(42, 82);
             this.LblAccessionNumber.Name = "LblAccessionNumber";
-            this.LblAccessionNumber.Size = new System.Drawing.Size(147, 30);
+            this.LblAccessionNumber.Size = new System.Drawing.Size(133, 28);
             this.LblAccessionNumber.TabIndex = 0;
             this.LblAccessionNumber.Text = "Accession No.";
             // 
@@ -265,55 +267,54 @@
             // LblBookStatus
             // 
             this.LblBookStatus.AutoSize = true;
-            this.LblBookStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblBookStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBookStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblBookStatus.Location = new System.Drawing.Point(42, 383);
+            this.LblBookStatus.Location = new System.Drawing.Point(42, 340);
             this.LblBookStatus.Name = "LblBookStatus";
-            this.LblBookStatus.Size = new System.Drawing.Size(168, 30);
+            this.LblBookStatus.Size = new System.Drawing.Size(154, 28);
             this.LblBookStatus.TabIndex = 53;
             this.LblBookStatus.Text = "Status: Available";
             // 
             // LblBookLoanType
             // 
             this.LblBookLoanType.AutoSize = true;
-            this.LblBookLoanType.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblBookLoanType.ForeColor = System.Drawing.Color.Black;
-            this.LblBookLoanType.Location = new System.Drawing.Point(42, 336);
+            this.LblBookLoanType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBookLoanType.ForeColor = System.Drawing.Color.White;
+            this.LblBookLoanType.Location = new System.Drawing.Point(864, 816);
             this.LblBookLoanType.Name = "LblBookLoanType";
-            this.LblBookLoanType.Size = new System.Drawing.Size(225, 30);
+            this.LblBookLoanType.Size = new System.Drawing.Size(0, 28);
             this.LblBookLoanType.TabIndex = 53;
-            this.LblBookLoanType.Text = "Loan Type: Circulation";
             // 
             // LblBookCategory
             // 
             this.LblBookCategory.AutoSize = true;
-            this.LblBookCategory.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblBookCategory.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBookCategory.ForeColor = System.Drawing.Color.Black;
             this.LblBookCategory.Location = new System.Drawing.Point(42, 290);
             this.LblBookCategory.Name = "LblBookCategory";
-            this.LblBookCategory.Size = new System.Drawing.Size(176, 30);
+            this.LblBookCategory.Size = new System.Drawing.Size(160, 28);
             this.LblBookCategory.TabIndex = 53;
             this.LblBookCategory.Text = "Category: Fiction";
             // 
             // LblBookAuthor
             // 
             this.LblBookAuthor.AutoSize = true;
-            this.LblBookAuthor.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblBookAuthor.ForeColor = System.Drawing.Color.Black;
-            this.LblBookAuthor.Location = new System.Drawing.Point(42, 244);
+            this.LblBookAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBookAuthor.ForeColor = System.Drawing.Color.White;
+            this.LblBookAuthor.Location = new System.Drawing.Point(883, 854);
             this.LblBookAuthor.Name = "LblBookAuthor";
-            this.LblBookAuthor.Size = new System.Drawing.Size(150, 30);
+            this.LblBookAuthor.Size = new System.Drawing.Size(136, 28);
             this.LblBookAuthor.TabIndex = 53;
             this.LblBookAuthor.Text = "Author: Tiddle";
             // 
             // LblBookTitle
             // 
             this.LblBookTitle.AutoSize = true;
-            this.LblBookTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblBookTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBookTitle.ForeColor = System.Drawing.Color.Black;
             this.LblBookTitle.Location = new System.Drawing.Point(42, 196);
             this.LblBookTitle.Name = "LblBookTitle";
-            this.LblBookTitle.Size = new System.Drawing.Size(228, 30);
+            this.LblBookTitle.Size = new System.Drawing.Size(208, 28);
             this.LblBookTitle.TabIndex = 53;
             this.LblBookTitle.Text = "Title: Unlucky Vacation";
             // 
@@ -336,7 +337,7 @@
             this.GrpBxMemberVerification.Controls.Add(this.BtnEnterMemberID);
             this.GrpBxMemberVerification.Controls.Add(this.TxtMemberID);
             this.GrpBxMemberVerification.Controls.Add(this.LblMemberID);
-            this.GrpBxMemberVerification.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxMemberVerification.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.GrpBxMemberVerification.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxMemberVerification.Location = new System.Drawing.Point(36, 31);
             this.GrpBxMemberVerification.Name = "GrpBxMemberVerification";
@@ -361,44 +362,44 @@
             // LblFine
             // 
             this.LblFine.AutoSize = true;
-            this.LblFine.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblFine.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblFine.ForeColor = System.Drawing.Color.Black;
             this.LblFine.Location = new System.Drawing.Point(36, 542);
             this.LblFine.Name = "LblFine";
-            this.LblFine.Size = new System.Drawing.Size(88, 30);
+            this.LblFine.Size = new System.Drawing.Size(79, 28);
             this.LblFine.TabIndex = 56;
             this.LblFine.Text = "Fine: P5";
             // 
             // LblOverdue
             // 
             this.LblOverdue.AutoSize = true;
-            this.LblOverdue.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblOverdue.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblOverdue.ForeColor = System.Drawing.Color.Black;
             this.LblOverdue.Location = new System.Drawing.Point(36, 501);
             this.LblOverdue.Name = "LblOverdue";
-            this.LblOverdue.Size = new System.Drawing.Size(121, 30);
+            this.LblOverdue.Size = new System.Drawing.Size(107, 28);
             this.LblOverdue.TabIndex = 56;
             this.LblOverdue.Text = "Overdue: 1";
             // 
             // LblNoOverdueBooks
             // 
             this.LblNoOverdueBooks.AutoSize = true;
-            this.LblNoOverdueBooks.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblNoOverdueBooks.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblNoOverdueBooks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.LblNoOverdueBooks.Location = new System.Drawing.Point(263, 501);
             this.LblNoOverdueBooks.Name = "LblNoOverdueBooks";
-            this.LblNoOverdueBooks.Size = new System.Drawing.Size(234, 30);
+            this.LblNoOverdueBooks.Size = new System.Drawing.Size(209, 28);
             this.LblNoOverdueBooks.TabIndex = 56;
             this.LblNoOverdueBooks.Text = "❌ No Overdue Books";
             // 
             // LblFineLimit
             // 
             this.LblFineLimit.AutoSize = true;
-            this.LblFineLimit.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblFineLimit.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblFineLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
             this.LblFineLimit.Location = new System.Drawing.Point(263, 583);
             this.LblFineLimit.Name = "LblFineLimit";
-            this.LblFineLimit.Size = new System.Drawing.Size(280, 30);
+            this.LblFineLimit.Size = new System.Drawing.Size(255, 28);
             this.LblFineLimit.TabIndex = 56;
             this.LblFineLimit.Text = "✔️ Fine within allowed limit";
             // 
@@ -421,79 +422,88 @@
             // LblBorrowLimitOK
             // 
             this.LblBorrowLimitOK.AutoSize = true;
-            this.LblBorrowLimitOK.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblBorrowLimitOK.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBorrowLimitOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
             this.LblBorrowLimitOK.Location = new System.Drawing.Point(263, 542);
             this.LblBorrowLimitOK.Name = "LblBorrowLimitOK";
-            this.LblBorrowLimitOK.Size = new System.Drawing.Size(208, 30);
+            this.LblBorrowLimitOK.Size = new System.Drawing.Size(187, 28);
             this.LblBorrowLimitOK.TabIndex = 56;
             this.LblBorrowLimitOK.Text = "✔️ Borrow Limit OK";
             // 
             // LblMemberActive
             // 
             this.LblMemberActive.AutoSize = true;
-            this.LblMemberActive.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblMemberActive.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMemberActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
             this.LblMemberActive.Location = new System.Drawing.Point(263, 460);
             this.LblMemberActive.Name = "LblMemberActive";
-            this.LblMemberActive.Size = new System.Drawing.Size(198, 30);
+            this.LblMemberActive.Size = new System.Drawing.Size(177, 28);
             this.LblMemberActive.TabIndex = 56;
             this.LblMemberActive.Text = "✔️ Member Active";
             // 
             // LblBorrowed
             // 
             this.LblBorrowed.AutoSize = true;
-            this.LblBorrowed.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblBorrowed.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBorrowed.ForeColor = System.Drawing.Color.Black;
             this.LblBorrowed.Location = new System.Drawing.Point(36, 460);
             this.LblBorrowed.Name = "LblBorrowed";
-            this.LblBorrowed.Size = new System.Drawing.Size(165, 30);
+            this.LblBorrowed.Size = new System.Drawing.Size(146, 28);
             this.LblBorrowed.TabIndex = 56;
             this.LblBorrowed.Text = "Borrowed: 3 / 5";
             // 
             // LblStatus
             // 
             this.LblStatus.AutoSize = true;
-            this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblStatus.Location = new System.Drawing.Point(263, 290);
+            this.LblStatus.Location = new System.Drawing.Point(263, 271);
             this.LblStatus.Name = "LblStatus";
-            this.LblStatus.Size = new System.Drawing.Size(140, 30);
+            this.LblStatus.Size = new System.Drawing.Size(128, 28);
             this.LblStatus.TabIndex = 55;
             this.LblStatus.Text = "Status: Active";
             // 
             // LblMemberType
             // 
             this.LblMemberType.AutoSize = true;
-            this.LblMemberType.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblMemberType.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMemberType.ForeColor = System.Drawing.Color.Black;
-            this.LblMemberType.Location = new System.Drawing.Point(263, 244);
+            this.LblMemberType.Location = new System.Drawing.Point(263, 234);
             this.LblMemberType.Name = "LblMemberType";
-            this.LblMemberType.Size = new System.Drawing.Size(227, 30);
+            this.LblMemberType.Size = new System.Drawing.Size(202, 28);
             this.LblMemberType.TabIndex = 54;
             this.LblMemberType.Text = "Member Type: Faculty";
             // 
             // LblFullName
             // 
             this.LblFullName.AutoSize = true;
-            this.LblFullName.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblFullName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblFullName.ForeColor = System.Drawing.Color.Black;
             this.LblFullName.Location = new System.Drawing.Point(263, 196);
             this.LblFullName.Name = "LblFullName";
-            this.LblFullName.Size = new System.Drawing.Size(275, 30);
+            this.LblFullName.Size = new System.Drawing.Size(246, 28);
             this.LblFullName.TabIndex = 53;
             this.LblFullName.Text = "Full Name: Jane Dela Crissy";
             // 
             // LblResults
             // 
             this.LblResults.AutoSize = true;
-            this.LblResults.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblResults.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblResults.ForeColor = System.Drawing.Color.Black;
             this.LblResults.Location = new System.Drawing.Point(32, 140);
             this.LblResults.Name = "LblResults";
-            this.LblResults.Size = new System.Drawing.Size(79, 30);
+            this.LblResults.Size = new System.Drawing.Size(72, 28);
             this.LblResults.TabIndex = 53;
             this.LblResults.Text = "Results";
+            // 
+            // PicBxMemberProfilePicture
+            // 
+            this.PicBxMemberProfilePicture.BackColor = System.Drawing.Color.Gainsboro;
+            this.PicBxMemberProfilePicture.Location = new System.Drawing.Point(37, 173);
+            this.PicBxMemberProfilePicture.Name = "PicBxMemberProfilePicture";
+            this.PicBxMemberProfilePicture.Size = new System.Drawing.Size(209, 251);
+            this.PicBxMemberProfilePicture.TabIndex = 52;
+            this.PicBxMemberProfilePicture.TabStop = false;
             // 
             // BtnEnterMemberID
             // 
@@ -513,20 +523,20 @@
             // 
             // TxtMemberID
             // 
-            this.TxtMemberID.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.TxtMemberID.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.TxtMemberID.Location = new System.Drawing.Point(162, 79);
             this.TxtMemberID.Name = "TxtMemberID";
-            this.TxtMemberID.Size = new System.Drawing.Size(343, 37);
+            this.TxtMemberID.Size = new System.Drawing.Size(343, 34);
             this.TxtMemberID.TabIndex = 1;
             // 
             // LblMemberID
             // 
             this.LblMemberID.AutoSize = true;
-            this.LblMemberID.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblMemberID.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMemberID.ForeColor = System.Drawing.Color.Black;
             this.LblMemberID.Location = new System.Drawing.Point(32, 82);
             this.LblMemberID.Name = "LblMemberID";
-            this.LblMemberID.Size = new System.Drawing.Size(124, 30);
+            this.LblMemberID.Size = new System.Drawing.Size(110, 28);
             this.LblMemberID.TabIndex = 0;
             this.LblMemberID.Text = "Member ID";
             // 
@@ -939,14 +949,16 @@
             this.LblRenewTitle.TabIndex = 53;
             this.LblRenewTitle.Text = "Title: Unlucky Vacation";
             // 
-            // PicBxMemberProfilePicture
+            // LblResourceType
             // 
-            this.PicBxMemberProfilePicture.BackColor = System.Drawing.Color.Gainsboro;
-            this.PicBxMemberProfilePicture.Location = new System.Drawing.Point(37, 173);
-            this.PicBxMemberProfilePicture.Name = "PicBxMemberProfilePicture";
-            this.PicBxMemberProfilePicture.Size = new System.Drawing.Size(209, 251);
-            this.PicBxMemberProfilePicture.TabIndex = 52;
-            this.PicBxMemberProfilePicture.TabStop = false;
+            this.LblResourceType.AutoSize = true;
+            this.LblResourceType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblResourceType.ForeColor = System.Drawing.Color.Black;
+            this.LblResourceType.Location = new System.Drawing.Point(42, 245);
+            this.LblResourceType.Name = "LblResourceType";
+            this.LblResourceType.Size = new System.Drawing.Size(140, 28);
+            this.LblResourceType.TabIndex = 56;
+            this.LblResourceType.Text = "Resource Type:";
             // 
             // UCCirculation
             // 
@@ -958,17 +970,18 @@
             this.Size = new System.Drawing.Size(1580, 936);
             this.TabCtrlCirculation.ResumeLayout(false);
             this.TabPageBorrow.ResumeLayout(false);
+            this.TabPageBorrow.PerformLayout();
             this.GrpBxBookCheckout.ResumeLayout(false);
             this.GrpBxBookCheckout.PerformLayout();
             this.GrpBxMemberVerification.ResumeLayout(false);
             this.GrpBxMemberVerification.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).EndInit();
             this.TabPageReturn.ResumeLayout(false);
             this.GrpBxReturnBook.ResumeLayout(false);
             this.GrpBxReturnBook.PerformLayout();
             this.TabPageRenew.ResumeLayout(false);
             this.GrpBxBookRenewal.ResumeLayout(false);
             this.GrpBxBookRenewal.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1040,5 +1053,6 @@
         private System.Windows.Forms.Label LblRenewRenewalStatus;
         private System.Windows.Forms.Label LblRenewNewDueDate;
         private System.Windows.Forms.Button BtnViewMemberValidID;
+        private System.Windows.Forms.Label LblResourceType;
     }
 }

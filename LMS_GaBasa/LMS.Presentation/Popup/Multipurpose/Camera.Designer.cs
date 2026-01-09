@@ -90,7 +90,11 @@
             this.Controls.Add(this.CmbBxDevices);
             this.Controls.Add(this.PnlVideoPlayerContainer);
             this.Controls.Add(this.PnlDesign);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Camera";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Camera";
             this.PnlVideoPlayerContainer.ResumeLayout(false);
             this.PnlVideoPlayerContainer.PerformLayout();

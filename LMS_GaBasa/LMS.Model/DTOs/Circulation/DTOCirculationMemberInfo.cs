@@ -21,9 +21,8 @@ namespace LMS.Model.DTOs.Circulation
         // Member type privileges
         public int MaxBooksAllowed { get; set; }
         public decimal FineRate { get; set; }
-
-        // NEW: Max fine cap per member type
         public decimal MaxFineCap { get; set; }
+        public int BorrowingPeriod { get; set; } // in days
 
         // Borrowing statistics
         public int CurrentBorrowedCount { get; set; }
@@ -34,14 +33,16 @@ namespace LMS.Model.DTOs.Circulation
         public bool IsActive => string.Equals(Status, "Active", StringComparison.OrdinalIgnoreCase);
         public bool HasNoOverdue => OverdueCount == 0;
         public bool IsBorrowLimitOk => CurrentBorrowedCount < MaxBooksAllowed;
-
-        // Use MaxFineCap per member type to determine fine eligibility.
-        // If MaxFineCap is zero or negative treat as no allowed fines (blocked).
         public bool IsFineWithinLimit => TotalUnpaidFines <= MaxFineCap;
 
         /// <summary>
         /// Returns true if the member can borrow books (all eligibility checks pass).
         /// </summary>
         public bool CanBorrow => IsActive && HasNoOverdue && IsBorrowLimitOk && IsFineWithinLimit;
+
+        /// <summary>
+        /// Calculates the due date based on the member's borrowing period.
+        /// </summary>
+        public DateTime CalculateDueDate() => DateTime.Today.AddDays(BorrowingPeriod > 0 ? BorrowingPeriod : 14);
     }
 }

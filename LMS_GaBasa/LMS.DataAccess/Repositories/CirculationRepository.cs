@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Circulation;
@@ -42,7 +44,8 @@ namespace LMS.DataAccess.Repositories
                         m.ValidID AS ValidIdPath,
                         mt.MaxBooksAllowed,
                         mt.FineRate,
-                        mt.MaxFineCap
+                        mt.MaxFineCap,
+                        mt.BorrowingPeriod
                     FROM [Member] m
                     INNER JOIN [User] u ON m.UserID = u.UserID
                     INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
@@ -67,7 +70,8 @@ namespace LMS.DataAccess.Repositories
                         ValidIdPath = reader.IsDBNull(reader.GetOrdinal("ValidIdPath")) ? null : reader.GetString(reader.GetOrdinal("ValidIdPath")),
                         MaxBooksAllowed = reader.IsDBNull(reader.GetOrdinal("MaxBooksAllowed")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaxBooksAllowed")),
                         FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate")),
-                        MaxFineCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap"))
+                        MaxFineCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap")),
+                        BorrowingPeriod = reader.IsDBNull(reader.GetOrdinal("BorrowingPeriod")) ? 14 : reader.GetInt32(reader.GetOrdinal("BorrowingPeriod"))
                     };
                 }
             }
@@ -144,6 +148,135 @@ namespace LMS.DataAccess.Repositories
 
                 var result = cmd.ExecuteScalar();
                 return result != null && result != DBNull.Value ? Convert.ToDecimal(result) : 0m;
+            }
+        }
+
+        public DTOCirculationBookInfo GetBookInfoByAccession(string accessionNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accessionNumber))
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        bc.CopyID,
+                        bc.BookID,
+                        bc.AccessionNumber,
+                        bc.[Status] AS CopyStatus,
+                        bc.Location,
+                        b.Title,
+                        b.LoanType,
+                        b.ResourceType,
+                        b.DownloadURL,
+                        c.Name AS Category
+                    FROM [BookCopy] bc
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    LEFT JOIN [Category] c ON b.CategoryID = c.CategoryID
+                    WHERE bc.AccessionNumber = @AccessionNumber";
+
+                AddParameter(cmd, "@AccessionNumber", DbType.String, accessionNumber.Trim());
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (!reader.Read())
+                        return null;
+
+                    int bookId = reader.GetInt32(reader.GetOrdinal("BookID"));
+
+                    var dto = new DTOCirculationBookInfo
+                    {
+                        CopyID = reader.GetInt32(reader.GetOrdinal("CopyID")),
+                        BookID = bookId,
+                        AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? "" : reader.GetString(reader.GetOrdinal("AccessionNumber")),
+                        CopyStatus = reader.IsDBNull(reader.GetOrdinal("CopyStatus")) ? "" : reader.GetString(reader.GetOrdinal("CopyStatus")),
+                        Location = reader.IsDBNull(reader.GetOrdinal("Location")) ? "" : reader.GetString(reader.GetOrdinal("Location")),
+                        Title = reader.IsDBNull(reader.GetOrdinal("Title")) ? "" : reader.GetString(reader.GetOrdinal("Title")),
+                        LoanType = reader.IsDBNull(reader.GetOrdinal("LoanType")) ? "" : reader.GetString(reader.GetOrdinal("LoanType")),
+                        Category = reader.IsDBNull(reader.GetOrdinal("Category")) ? "" : reader.GetString(reader.GetOrdinal("Category")),
+                        ResourceType = reader.IsDBNull(reader.GetOrdinal("ResourceType")) ? "" : reader.GetString(reader.GetOrdinal("ResourceType")),
+                        DownloadURL = reader.IsDBNull(reader.GetOrdinal("DownloadURL")) ? "" : reader.GetString(reader.GetOrdinal("DownloadURL"))
+                    };
+
+                    // Authors (Role = 'Author' only)
+                    dto.Authors = GetAuthorsForBook(bookId);
+
+                    // Do not assign derived/read-only properties here. DTO exposes computed properties for those values.
+
+                    return dto;
+                }
+            }
+        }
+
+        private string GetAuthorsForBook(int bookId)
+        {
+            try
+            {
+                var names = new List<string>();
+
+                using (var conn = _db.GetConnection())
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    // 1) Primary attempt: fetch authors explicitly marked as 'Author' (case-insensitive)
+                    cmd.CommandText = @"
+                        SELECT a.FullName
+                        FROM [BookAuthor] ba
+                        INNER JOIN [Author] a ON ba.AuthorID = a.AuthorID
+                        WHERE ba.BookID = @BookID
+                          AND LOWER(RTRIM(LTRIM(ISNULL(ba.Role, '')))) = 'author'
+                        ORDER BY ba.IsPrimaryAuthor DESC, a.FullName";
+
+                    AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0))
+                                names.Add(reader.GetString(0).Trim());
+                        }
+                    }
+
+                    // 2) Fallback: if no explicit 'Author' roles found, include relations that are not Editor/Adviser (or with NULL role)
+                    if (names.Count == 0)
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"
+                            SELECT a.FullName
+                            FROM [BookAuthor] ba
+                            INNER JOIN [Author] a ON ba.AuthorID = a.AuthorID
+                            WHERE ba.BookID = @BookID
+                              AND (ba.Role IS NULL OR LOWER(RTRIM(LTRIM(ba.Role))) NOT IN ('editor','adviser'))
+                            ORDER BY ba.IsPrimaryAuthor DESC, a.FullName";
+
+                        AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+
+                        using (var reader2 = cmd.ExecuteReader())
+                        {
+                            while (reader2.Read())
+                            {
+                                if (!reader2.IsDBNull(0))
+                                    names.Add(reader2.GetString(0).Trim());
+                            }
+                        }
+                    }
+                }
+
+                // Deduplicate and return comma separated list
+                var distinct = names.Where(n => !string.IsNullOrWhiteSpace(n))
+                                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                                    .ToList();
+
+                return distinct.Count > 0 ? string.Join(", ", distinct) : string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
             }
         }
 

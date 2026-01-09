@@ -14,6 +14,10 @@ namespace LMS.Presentation.UserControls.Management
     {
         private readonly ICirculationManager _circulationManager;
         private DTOCirculationMemberInfo _currentMember;
+        private DTOCirculationBookInfo _currentBook;
+
+        // Max width for author label before truncating
+        private const int MaxAuthorLabelWidth = 650;
 
         public UCCirculation()
         {
@@ -28,16 +32,26 @@ namespace LMS.Presentation.UserControls.Management
             BtnEnterMemberID.Click += BtnEnterMemberID_Click;
             BtnViewMemberValidID.Click += BtnViewMemberValidID_Click;
 
-            // NEW: wire scan accession button to open camera dialog
+            // Wire scan accession button to open camera dialog
             BtnScanAccessionNumber.Click -= BtnScanAccessionNumber_Click;
             BtnScanAccessionNumber.Click += BtnScanAccessionNumber_Click;
 
+            // Wire accession number entry
+            TxtAccessionNumber.KeyDown += TxtAccessionNumber_KeyDown;
+            BtnEnterAccessionNumber.Click += BtnEnterAccessionNumber_Click;
+
+            // Wire cancel borrow button
+            BtnCancelBorrow.Click += BtnCancelBorrow_Click;
+
             // Initialize UI state
             ClearMemberResults();
+            ClearBookResults();
 
             // Hide book checkout section initially
             GrpBxBookCheckout.Visible = false;
         }
+
+        #region Member Verification
 
         private void TxtMemberID_KeyDown(object sender, KeyEventArgs e)
         {
@@ -60,18 +74,17 @@ namespace LMS.Presentation.UserControls.Management
 
             if (string.IsNullOrWhiteSpace(inputMemberId))
             {
-                MessageBox.Show("Please enter a Member ID.", "Validation", 
+                MessageBox.Show("Please enter a Member ID.", "Validation",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 TxtMemberID.Focus();
                 return;
             }
 
-            // Get member by formatted ID (e.g., "MEM-0023")
             var memberInfo = _circulationManager.GetMemberByFormattedId(inputMemberId);
 
             if (memberInfo == null)
             {
-                MessageBox.Show($"Member not found: {inputMemberId}", "Not Found", 
+                MessageBox.Show($"Member not found: {inputMemberId}", "Not Found",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 ClearMemberResults();
                 TxtMemberID.Focus();
@@ -79,53 +92,34 @@ namespace LMS.Presentation.UserControls.Management
                 return;
             }
 
-            // Store current member for later use
             _currentMember = memberInfo;
-
-            // Display member information
             DisplayMemberInfo(memberInfo);
-
-            // Show/hide book checkout based on eligibility
             UpdateBookCheckoutVisibility(memberInfo);
+
+            // Clear any previous book selection when member changes
+            ClearBookResults();
         }
 
         private void DisplayMemberInfo(DTOCirculationMemberInfo memberInfo)
         {
-            // Set full name
             LblFullName.Text = $"Full Name: {memberInfo.FullName}";
-
-            // Set member type
             LblMemberType.Text = $"Member Type: {memberInfo.MemberType}";
-
-            // Set status with color coding
             LblStatus.Text = $"Status: {memberInfo.Status}";
             SetStatusColor(memberInfo.Status);
-
-            // Load profile picture
             LoadProfileImage(memberInfo.PhotoPath);
-
-            // Display borrowing statistics
             DisplayBorrowingStatistics(memberInfo);
-
-            // Display eligibility checks
             DisplayEligibilityChecks(memberInfo);
         }
 
         private void DisplayBorrowingStatistics(DTOCirculationMemberInfo memberInfo)
         {
-            // Borrowed: X / Y (current / max allowed)
             LblBorrowed.Text = $"Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.MaxBooksAllowed}";
-
-            // Overdue count
             LblOverdue.Text = $"Overdue: {memberInfo.OverdueCount}";
-
-            // Total unpaid fines
             LblFine.Text = $"Fine: ₱{memberInfo.TotalUnpaidFines:N2}";
         }
 
         private void DisplayEligibilityChecks(DTOCirculationMemberInfo memberInfo)
         {
-            // Member Active check
             if (memberInfo.IsActive)
             {
                 LblMemberActive.Text = "✔️ Member Active";
@@ -137,7 +131,6 @@ namespace LMS.Presentation.UserControls.Management
                 LblMemberActive.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
-            // No Overdue Books check
             if (memberInfo.HasNoOverdue)
             {
                 LblNoOverdueBooks.Text = "✔️ No Overdue Books";
@@ -149,7 +142,6 @@ namespace LMS.Presentation.UserControls.Management
                 LblNoOverdueBooks.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
-            // Borrow Limit check
             if (memberInfo.IsBorrowLimitOk)
             {
                 LblBorrowLimitOK.Text = "✔️ Borrow Limit OK";
@@ -161,7 +153,6 @@ namespace LMS.Presentation.UserControls.Management
                 LblBorrowLimitOK.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
-            // Fine Limit check - use MaxFineCap from member type
             string capText = $"₱{memberInfo.MaxFineCap:N2}";
             if (memberInfo.IsFineWithinLimit)
             {
@@ -177,7 +168,6 @@ namespace LMS.Presentation.UserControls.Management
 
         private void UpdateBookCheckoutVisibility(DTOCirculationMemberInfo memberInfo)
         {
-            // Only show GrpBxBookCheckout if all eligibility checks pass
             GrpBxBookCheckout.Visible = memberInfo.CanBorrow;
         }
 
@@ -186,14 +176,14 @@ namespace LMS.Presentation.UserControls.Management
             switch (status?.ToLower())
             {
                 case "active":
-                    LblStatus.ForeColor = Color.FromArgb(0, 200, 0); // Green
+                    LblStatus.ForeColor = Color.FromArgb(0, 200, 0);
                     break;
                 case "inactive":
-                    LblStatus.ForeColor = Color.FromArgb(200, 200, 0); // Yellow
+                    LblStatus.ForeColor = Color.FromArgb(200, 200, 0);
                     break;
                 case "suspended":
                 case "expired":
-                    LblStatus.ForeColor = Color.FromArgb(200, 0, 0); // Red
+                    LblStatus.ForeColor = Color.FromArgb(200, 0, 0);
                     break;
                 default:
                     LblStatus.ForeColor = Color.Black;
@@ -203,7 +193,6 @@ namespace LMS.Presentation.UserControls.Management
 
         private void LoadProfileImage(string photoPath)
         {
-            // Dispose previous image to avoid memory leaks
             if (PicBxMemberProfilePicture.Image != null)
             {
                 PicBxMemberProfilePicture.Image.Dispose();
@@ -216,14 +205,12 @@ namespace LMS.Presentation.UserControls.Management
                 return;
             }
 
-            // Build full path from relative path
             string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, photoPath);
 
             if (File.Exists(fullPath))
             {
                 try
                 {
-                    // Use FileStream to avoid file locking issues
                     using (var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
                     {
                         PicBxMemberProfilePicture.Image = Image.FromStream(stream);
@@ -232,7 +219,6 @@ namespace LMS.Presentation.UserControls.Management
                 }
                 catch
                 {
-                    // If loading fails, just show the default gray background
                     PicBxMemberProfilePicture.BackColor = Color.Gainsboro;
                 }
             }
@@ -258,7 +244,6 @@ namespace LMS.Presentation.UserControls.Management
 
             string candidatePath = _currentMember.ValidIdPath;
 
-            // If path is not rooted, assume it's relative to application base directory
             if (!Path.IsPathRooted(candidatePath))
             {
                 candidatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, candidatePath);
@@ -266,7 +251,6 @@ namespace LMS.Presentation.UserControls.Management
 
             if (!File.Exists(candidatePath))
             {
-                // Try common assets folder if stored path is just filename
                 string alt = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "dataimages", "ValidIDs", Path.GetFileName(candidatePath));
                 if (File.Exists(alt))
                     candidatePath = alt;
@@ -281,29 +265,6 @@ namespace LMS.Presentation.UserControls.Management
             {
                 viewer.LoadValidID(candidatePath);
                 viewer.ShowDialog();
-            }
-        }
-
-        // NEW: Handler to open Camera form, receive scanned accession and populate accession textbox
-        private void BtnScanAccessionNumber_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (var cam = new LMS.Presentation.Popup.Multipurpose.Camera())
-                {
-                    var result = cam.ShowDialog(this);
-                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(cam.ScannedCode))
-                    {
-                        // Fill the accession textbox and trigger existing enter logic
-                        TxtAccessionNumber.Text = cam.ScannedCode.Trim();
-                        // If you have logic on Enter click, call it; otherwise simulate Enter key:
-                        BtnEnterAccessionNumber?.PerformClick();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to open camera: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -332,8 +293,356 @@ namespace LMS.Presentation.UserControls.Management
             }
             PicBxMemberProfilePicture.BackColor = Color.Gainsboro;
 
-            // Hide book checkout section
             GrpBxBookCheckout.Visible = false;
         }
+
+        #endregion
+
+        #region Book Checkout
+
+        private void TxtAccessionNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                LookupBook();
+            }
+        }
+
+        private void BtnEnterAccessionNumber_Click(object sender, EventArgs e)
+        {
+            LookupBook();
+        }
+
+        private void BtnScanAccessionNumber_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var cam = new Camera())
+                {
+                    var result = cam.ShowDialog(this);
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(cam.ScannedCode))
+                    {
+                        TxtAccessionNumber.Text = cam.ScannedCode.Trim();
+                        LookupBook();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open camera: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LookupBook()
+        {
+            string accession = TxtAccessionNumber.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(accession))
+            {
+                MessageBox.Show("Please enter an Accession Number.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TxtAccessionNumber.Focus();
+                return;
+            }
+
+            var bookInfo = _circulationManager.GetBookByAccession(accession);
+
+            if (bookInfo == null)
+            {
+                MessageBox.Show($"Book copy not found: {accession}", "Not Found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ClearBookResults();
+                TxtAccessionNumber.Focus();
+                TxtAccessionNumber.SelectAll();
+                return;
+            }
+
+            _currentBook = bookInfo;
+            DisplayBookInfo(bookInfo);
+        }
+
+        private void DisplayBookInfo(DTOCirculationBookInfo bookInfo)
+        {
+            // Title
+            LblBookTitle.Text = $"Title: {bookInfo.Title}";
+
+            // Resource Type label (safe)
+            string resType = (bookInfo.ResourceType ?? string.Empty).Trim();
+            string resourceLabel;
+            if (string.IsNullOrWhiteSpace(resType))
+            {
+                resourceLabel = "N/A";
+            }
+            else
+            {
+                switch (resType.ToLowerInvariant())
+                {
+                    case "physicalbook":
+                    case "physical":
+                    case "book":
+                        resourceLabel = "Book";
+                        break;
+                    case "ebook":
+                    case "e-book":
+                        resourceLabel = "E-Book";
+                        break;
+                    case "thesis":
+                    case "theses":
+                        resourceLabel = "Thesis";
+                        break;
+                    case "periodical":
+                    case "periodicals":
+                        resourceLabel = "Periodical";
+                        break;
+                    case "av":
+                    case "audio-visual":
+                    case "audio visual":
+                        resourceLabel = "Audio-Visual";
+                        break;
+                    default:
+                        resourceLabel = char.ToUpper(resType[0]) + resType.Substring(1);
+                        break;
+                }
+            }
+
+            if (LblResourceType != null)
+            {
+                LblResourceType.Text = $"Resource Type: {resourceLabel}";
+                LblResourceType.ForeColor = Color.Black;
+            }
+
+            // Author - show only authors (role = "Author"); if empty show "N/A"
+            string authors = string.IsNullOrWhiteSpace(bookInfo.Authors) ? "N/A" : bookInfo.Authors;
+            string authorText = $"Author: {authors}";
+            LblBookAuthor.Text = TruncateTextForLabel(authorText, LblBookAuthor, MaxAuthorLabelWidth);
+
+            // Category
+            LblBookCategory.Text = $"Category: {(!string.IsNullOrWhiteSpace(bookInfo.Category) ? bookInfo.Category : "N/A")}";
+
+            // Determine resource kind flags
+            bool isEBook = resourceLabel.Equals("E-Book", StringComparison.OrdinalIgnoreCase);
+            bool isPhysicalBook = resourceLabel.Equals("Book", StringComparison.OrdinalIgnoreCase);
+            bool isThesis = resourceLabel.Equals("Thesis", StringComparison.OrdinalIgnoreCase);
+            bool isPeriodical = resourceLabel.Equals("Periodical", StringComparison.OrdinalIgnoreCase);
+            bool isAV = resourceLabel.Equals("Audio-Visual", StringComparison.OrdinalIgnoreCase);
+            bool isOtherNonBook = isThesis || isPeriodical || isAV;
+
+            // Determine digital flag from DownloadURL or explicit EBook resource type
+            bool isDigital = isEBook || !string.IsNullOrWhiteSpace(bookInfo.DownloadURL);
+
+            // Loan Type display rules:
+            string displayLoanType = string.IsNullOrWhiteSpace(bookInfo.LoanType) ? "Circulation" : bookInfo.LoanType;
+            if (isEBook)
+            {
+                LblBookLoanType.Text = "Loan Type: Digital (no physical borrowing)";
+                LblBookLoanType.ForeColor = Color.FromArgb(200, 0, 0);
+            }
+            else if (isPhysicalBook)
+            {
+                LblBookLoanType.Text = $"Loan Type: {displayLoanType}";
+                LblBookLoanType.ForeColor = string.Equals(displayLoanType, "Circulation", StringComparison.OrdinalIgnoreCase)
+                    ? Color.Black
+                    : Color.FromArgb(200, 0, 0);
+            }
+            else if (isOtherNonBook)
+            {
+                LblBookLoanType.Text = "Loan Type: N/A";
+                LblBookLoanType.ForeColor = Color.Black;
+            }
+            else
+            {
+                LblBookLoanType.Text = $"Loan Type: {displayLoanType}";
+                LblBookLoanType.ForeColor = Color.Black;
+            }
+
+            // Status label: if loan type is Reference -> special message
+            bool isReferenceLoan = string.Equals(displayLoanType, "Reference", StringComparison.OrdinalIgnoreCase);
+            bool isAvailable = string.Equals(bookInfo.CopyStatus, "Available", StringComparison.OrdinalIgnoreCase);
+
+            if (isReferenceLoan)
+            {
+                LblBookStatus.Text = "Status: In-Library Use";
+                LblBookStatus.ForeColor = Color.FromArgb(200, 0, 0);
+            }
+            else
+            {
+                LblBookStatus.Text = $"Status: {(string.IsNullOrWhiteSpace(bookInfo.CopyStatus) ? "Unknown" : bookInfo.CopyStatus)}";
+                LblBookStatus.ForeColor = isAvailable ? Color.FromArgb(0, 200, 0) : Color.FromArgb(200, 0, 0);
+            }
+
+            // Due Date rules:
+            DateTime? showDue = null;
+            if (_currentMember != null && isAvailable)
+            {
+                if (isPhysicalBook)
+                {
+                    if (string.Equals(displayLoanType, "Circulation", StringComparison.OrdinalIgnoreCase))
+                        showDue = _currentMember.CalculateDueDate();
+                }
+                else if (isOtherNonBook && string.IsNullOrWhiteSpace(bookInfo.DownloadURL))
+                {
+                    showDue = _currentMember.CalculateDueDate();
+                }
+            }
+
+            if (showDue.HasValue)
+            {
+                LblBookDueDate.Text = $"Due Date: {showDue.Value:MMMM d, yyyy}";
+                LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
+            }
+            else
+            {
+                LblBookDueDate.Text = "Due Date: ";
+                LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
+            }
+
+            // Update button state based on computed rules
+            UpdateConfirmBorrowButton(bookInfo);
+        }
+
+        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo)
+        {
+            var resType = (bookInfo.ResourceType ?? string.Empty).Trim();
+            bool isEBook = resType.Equals("EBook", StringComparison.OrdinalIgnoreCase);
+            bool isPhysicalBook = resType.Equals("PhysicalBook", StringComparison.OrdinalIgnoreCase);
+            bool isThesis = resType.Equals("Thesis", StringComparison.OrdinalIgnoreCase);
+            bool isPeriodical = resType.Equals("Periodical", StringComparison.OrdinalIgnoreCase);
+            bool isAV = resType.Equals("AV", StringComparison.OrdinalIgnoreCase);
+            bool isOtherNonBook = isThesis || isPeriodical || isAV;
+
+            bool isDigital = isEBook || !string.IsNullOrWhiteSpace(bookInfo.DownloadURL);
+            bool isAvailable = string.Equals(bookInfo.CopyStatus, "Available", StringComparison.OrdinalIgnoreCase);
+
+            // Default disabled state
+            BtnConfirmBorrow.Enabled = false;
+            BtnConfirmBorrow.BackColor = Color.Gray;
+
+            // 1) E-Book (digital) -> never borrow
+            if (isEBook)
+            {
+                BtnConfirmBorrow.Text = "Digital (No Borrow)";
+                return;
+            }
+
+            // 2) Physical Book -> respect LoanType (must be Circulation) and availability
+            if (isPhysicalBook)
+            {
+                var displayLoanType = string.IsNullOrWhiteSpace(bookInfo.LoanType) ? "Circulation" : bookInfo.LoanType;
+                if (!string.Equals(displayLoanType, "Circulation", StringComparison.OrdinalIgnoreCase))
+                {
+                    BtnConfirmBorrow.Text = "Reference Only";
+                    return;
+                }
+
+                if (!isAvailable)
+                {
+                    BtnConfirmBorrow.Text = "Not Available";
+                    return;
+                }
+
+                // All good
+                BtnConfirmBorrow.Enabled = true;
+                BtnConfirmBorrow.Text = "Confirm Borrow";
+                BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                return;
+            }
+
+            // 3) Thesis / Periodical / AV
+            if (isOtherNonBook)
+            {
+                // if digital -> cannot borrow
+                if (isDigital)
+                {
+                    BtnConfirmBorrow.Text = "Digital (No Borrow)";
+                    return;
+                }
+
+                // physical and available -> allow borrow
+                if (isAvailable)
+                {
+                    BtnConfirmBorrow.Enabled = true;
+                    BtnConfirmBorrow.Text = "Confirm Borrow";
+                    BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                    return;
+                }
+
+                BtnConfirmBorrow.Text = "Not Available";
+                return;
+            }
+
+            // 4) Unknown resource type: be conservative — require availability and Circulation loan type if present
+            var loan = string.IsNullOrWhiteSpace(bookInfo.LoanType) ? "Circulation" : bookInfo.LoanType;
+            if (string.Equals(loan, "Circulation", StringComparison.OrdinalIgnoreCase) && isAvailable)
+            {
+                BtnConfirmBorrow.Enabled = true;
+                BtnConfirmBorrow.Text = "Confirm Borrow";
+                BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+            }
+            else
+            {
+                BtnConfirmBorrow.Text = "Cannot Borrow";
+            }
+        }
+
+        private string TruncateTextForLabel(string text, Label label, int maxWidth)
+        {
+            using (Graphics g = label.CreateGraphics())
+            {
+                SizeF size = g.MeasureString(text, label.Font);
+                if (size.Width <= maxWidth)
+                    return text;
+
+                // Find last comma position for clean truncation
+                string ellipsis = ", ...";
+                int maxChars = text.Length;
+
+                while (maxChars > 0)
+                {
+                    string truncated = text.Substring(0, maxChars) + ellipsis;
+                    size = g.MeasureString(truncated, label.Font);
+                    if (size.Width <= maxWidth)
+                    {
+                        // Try to end at a comma for cleaner look
+                        int lastComma = text.LastIndexOf(',', maxChars - 1);
+                        if (lastComma > 10)
+                            return text.Substring(0, lastComma) + ", ...";
+                        return truncated;
+                    }
+                    maxChars -= 5;
+                }
+
+                return text.Substring(0, Math.Min(20, text.Length)) + "...";
+            }
+        }
+
+        private void BtnCancelBorrow_Click(object sender, EventArgs e)
+        {
+            ClearBookResults();
+            TxtAccessionNumber.Text = "";
+            TxtAccessionNumber.Focus();
+        }
+
+        private void ClearBookResults()
+        {
+            _currentBook = null;
+
+            LblBookTitle.Text = "Title: ";
+            LblBookAuthor.Text = "Author: ";
+            LblBookCategory.Text = "Category: ";
+            LblBookLoanType.Text = "Loan Type: ";
+            LblBookLoanType.ForeColor = Color.Black;
+            LblBookStatus.Text = "Status: ";
+            LblBookStatus.ForeColor = Color.Black;
+            LblBookDueDate.Text = "Due Date: ";
+            LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
+
+            BtnConfirmBorrow.Enabled = false;
+            BtnConfirmBorrow.Text = "Confirm Borrow";
+            BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+        }
+
+        #endregion
     }
 }
