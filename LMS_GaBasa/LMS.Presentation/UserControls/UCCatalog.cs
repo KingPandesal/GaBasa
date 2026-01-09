@@ -31,6 +31,22 @@ namespace LMS.Presentation.UserControls
         private const int BookPanelHeight = 210;
         private const int BookPanelSpacing = 0;
 
+        // sort state
+        private bool _sortTitleAscending = true;
+        private bool _sortAuthorAscending = true;
+        private bool _sortDateAddedAscending = true;
+        private bool _sortCallNumberAscending = true;
+        private bool _sortPublicationYearAscending = true;
+
+        private const int CallNumberColumnIndex = 2;       // "Call Number" column index (0-based)
+        private const int TitleColumnIndex = 3;            // "Title" column index (0-based)
+        private const int AuthorColumnIndex = 4;           // "Author" column index (0-based)
+        private const int PublicationYearColumnIndex = 7;  // "Publication Year" column index (0-based)
+        private const int DateAddedColumnIndex = 8;        // "Date Added" column index (0-based)
+
+        private enum SortColumn { None, Title, Author, PublicationYear, DateAdded, CallNumber }
+        private SortColumn _activeSort = SortColumn.Title; // default
+
         public UCCatalog()
         {
             InitializeComponent();
@@ -83,6 +99,8 @@ namespace LMS.Presentation.UserControls
             }
 
             try { WireFilterControls(); } catch { }
+            try { WireFilterControls(); } catch { }
+            try { InitializeSortControls(); } catch { }
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
@@ -1037,6 +1055,7 @@ namespace LMS.Presentation.UserControls
                     _lvSearchResults.Columns.Add("Publisher", 180, HorizontalAlignment.Left);
                     _lvSearchResults.Columns.Add("Category", 140, HorizontalAlignment.Left);
                     _lvSearchResults.Columns.Add("Publication Year", 100, HorizontalAlignment.Left);
+                    _lvSearchResults.Columns.Add("Date Added", 140, HorizontalAlignment.Left); // NEW
                     _lvSearchResults.Columns.Add("Action", 100, HorizontalAlignment.Center);
 
                     _lvSearchResults.MouseMove += LvSearchResults_MouseMove;
@@ -1104,6 +1123,12 @@ namespace LMS.Presentation.UserControls
                         item.SubItems.Add(dto.Category ?? string.Empty);
                         item.SubItems.Add(year ?? string.Empty);
 
+                        // Date Added column (use ISO date format; empty if default)
+                        string dateAddedText = (dto.DateAdded != DateTime.MinValue && dto.DateAdded != default(DateTime))
+                            ? dto.DateAdded.ToString("yyyy-MM-dd")
+                            : string.Empty;
+                        item.SubItems.Add(dateAddedText);
+
                         bool isAvailable = string.Equals(dto.Status, "Available", StringComparison.OrdinalIgnoreCase)
                                            || string.Equals(dto.Status, "Available Online", StringComparison.OrdinalIgnoreCase);
 
@@ -1114,6 +1139,9 @@ namespace LMS.Presentation.UserControls
                 }
 
                 _lvSearchResults.EndUpdate();
+
+                // ensure default/title sort is applied
+                try { ApplyCurrentSort(); } catch { }
 
                 if (!FlwPnlBooks.Controls.Contains(_lvSearchResults))
                 {
@@ -1649,6 +1677,250 @@ namespace LMS.Presentation.UserControls
             }
 
             return false;
+        }
+
+        private void InitializeSortControls()
+        {
+            // Wire up BtnSortTitle if present in designer
+            var btnSortTitle = this.Controls.Find("BtnSortTitle", true).FirstOrDefault() as Button;
+            if (btnSortTitle != null)
+            {
+                try { btnSortTitle.Click -= BtnSortTitle_Click; } catch { }
+                btnSortTitle.Click += BtnSortTitle_Click;
+            }
+
+            // Wire up BtnSortAuthor if present in designer
+            var btnSortAuthor = this.Controls.Find("BtnSortAuthor", true).FirstOrDefault() as Button;
+            if (btnSortAuthor != null)
+            {
+                try { btnSortAuthor.Click -= BtnSortAuthor_Click; } catch { }
+                btnSortAuthor.Click += BtnSortAuthor_Click;
+            }
+
+            // Wire up BtnSortPublicationYear if present in designer
+            var btnSortPubYear = this.Controls.Find("BtnSortPublicationYear", true).FirstOrDefault() as Button;
+            if (btnSortPubYear != null)
+            {
+                try { btnSortPubYear.Click -= BtnSortPublicationYear_Click; } catch { }
+                btnSortPubYear.Click += BtnSortPublicationYear_Click;
+            }
+
+            // Wire up BtnSortDateAdded if present in designer
+            var btnSortDateAdded = this.Controls.Find("BtnSortDateAdded", true).FirstOrDefault() as Button;
+            if (btnSortDateAdded != null)
+            {
+                try { btnSortDateAdded.Click -= BtnSortDateAdded_Click; } catch { }
+                btnSortDateAdded.Click += BtnSortDateAdded_Click;
+            }
+
+            // Wire up BtnSortCallNumber if present in designer
+            var btnSortCallNumber = this.Controls.Find("BtnSortCallNumber", true).FirstOrDefault() as Button;
+            if (btnSortCallNumber != null)
+            {
+                try { btnSortCallNumber.Click -= BtnSortCallNumber_Click; } catch { }
+                btnSortCallNumber.Click += BtnSortCallNumber_Click;
+            }
+
+            // Set initial button text to show ascending by default (Title is default active)
+            UpdateAllSortButtonTexts();
+        }
+
+        private void BtnSortTitle_Click(object sender, EventArgs e)
+        {
+            _sortTitleAscending = !_sortTitleAscending;
+            _activeSort = SortColumn.Title;
+            UpdateAllSortButtonTexts();
+            ApplyCurrentSort();
+        }
+
+        private void BtnSortAuthor_Click(object sender, EventArgs e)
+        {
+            _sortAuthorAscending = !_sortAuthorAscending;
+            _activeSort = SortColumn.Author;
+            UpdateAllSortButtonTexts();
+            ApplyCurrentSort();
+        }
+
+        private void BtnSortPublicationYear_Click(object sender, EventArgs e)
+        {
+            _sortPublicationYearAscending = !_sortPublicationYearAscending;
+            _activeSort = SortColumn.PublicationYear;
+            UpdateAllSortButtonTexts();
+            ApplyCurrentSort();
+        }
+
+        private void BtnSortDateAdded_Click(object sender, EventArgs e)
+        {
+            _sortDateAddedAscending = !_sortDateAddedAscending;
+            _activeSort = SortColumn.DateAdded;
+            UpdateAllSortButtonTexts();
+            ApplyCurrentSort();
+        }
+
+        private void BtnSortCallNumber_Click(object sender, EventArgs e)
+        {
+            _sortCallNumberAscending = !_sortCallNumberAscending;
+            _activeSort = SortColumn.CallNumber;
+            UpdateAllSortButtonTexts();
+            ApplyCurrentSort();
+        }
+
+        private void UpdateAllSortButtonTexts()
+        {
+            // Title button
+            var btnTitle = this.Controls.Find("BtnSortTitle", true).FirstOrDefault() as Button;
+            if (btnTitle != null)
+            {
+                try
+                {
+                    btnTitle.Text = (_activeSort == SortColumn.Title) ? ("Title" + (_sortTitleAscending ? " ▲" : " ▼")) : "Title";
+                }
+                catch { }
+            }
+
+            // Author button
+            var btnAuthor = this.Controls.Find("BtnSortAuthor", true).FirstOrDefault() as Button;
+            if (btnAuthor != null)
+            {
+                try
+                {
+                    btnAuthor.Text = (_activeSort == SortColumn.Author) ? ("Author" + (_sortAuthorAscending ? " ▲" : " ▼")) : "Author";
+                }
+                catch { }
+            }
+
+            // Publication Year button
+            var btnPubYear = this.Controls.Find("BtnSortPublicationYear", true).FirstOrDefault() as Button;
+            if (btnPubYear != null)
+            {
+                try
+                {
+                    btnPubYear.Text = (_activeSort == SortColumn.PublicationYear)
+                        ? ("Publication Year" + (_sortPublicationYearAscending ? " ▲" : " ▼"))
+                        : "Publication Year";
+                }
+                catch { }
+            }
+
+            // Date Added button
+            var btnDate = this.Controls.Find("BtnSortDateAdded", true).FirstOrDefault() as Button;
+            if (btnDate != null)
+            {
+                try
+                {
+                    btnDate.Text = (_activeSort == SortColumn.DateAdded) ? ("Date Added" + (_sortDateAddedAscending ? " ▲" : " ▼")) : "Date Added";
+                }
+                catch { }
+            }
+
+            // Call Number button
+            var btnCall = this.Controls.Find("BtnSortCallNumber", true).FirstOrDefault() as Button;
+            if (btnCall != null)
+            {
+                try
+                {
+                    btnCall.Text = (_activeSort == SortColumn.CallNumber) ? ("Call Number" + (_sortCallNumberAscending ? " ▲" : " ▼")) : "Call Number";
+                }
+                catch { }
+            }
+        }
+
+        private void ApplyCurrentSort()
+        {
+            if (_lvSearchResults == null) return;
+
+            try
+            {
+                switch (_activeSort)
+                {
+                    case SortColumn.Title:
+                        _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(TitleColumnIndex, _sortTitleAscending);
+                        break;
+                    case SortColumn.Author:
+                        _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(AuthorColumnIndex, _sortAuthorAscending);
+                        break;
+                    case SortColumn.PublicationYear:
+                        _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(PublicationYearColumnIndex, _sortPublicationYearAscending);
+                        break;
+                    case SortColumn.DateAdded:
+                        _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(DateAddedColumnIndex, _sortDateAddedAscending);
+                        break;
+                    case SortColumn.CallNumber:
+                        _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(CallNumberColumnIndex, _sortCallNumberAscending);
+                        break;
+                    default:
+                        _lvSearchResults.ListViewItemSorter = null;
+                        break;
+                }
+                _lvSearchResults.Sort();
+            }
+            catch { }
+        }
+
+        // Simple, robust comparer for ListViewItem by subitem text (keeps existing behavior)
+        private class ListViewItemComparer : System.Collections.IComparer
+        {
+            private readonly int _col;
+            private readonly bool _ascending;
+            public ListViewItemComparer(int col, bool ascending)
+            {
+                _col = col;
+                _ascending = ascending;
+            }
+
+            public int Compare(object x, object y)
+            {
+                var ix = x as ListViewItem;
+                var iy = y as ListViewItem;
+                if (ix == null || iy == null) return 0;
+
+                string sx = GetSubItemText(ix, _col);
+                string sy = GetSubItemText(iy, _col);
+
+                // Special-case: Publication Year should sort numerically (whole number),
+                // not lexicographically (so "199" < "2000" correctly).
+                try
+                {
+                    if (_col == PublicationYearColumnIndex)
+                    {
+                        // empty or non-numeric values should be treated as less-than numeric values
+                        bool parsedX = int.TryParse(sx, out int vx);
+                        bool parsedY = int.TryParse(sy, out int vy);
+
+                        if (parsedX && parsedY)
+                        {
+                            int cmp = vx.CompareTo(vy);
+                            return _ascending ? cmp : -cmp;
+                        }
+
+                        if (parsedX && !parsedY)
+                            return _ascending ? 1 : -1; // numbers after non-numbers
+                        if (!parsedX && parsedY)
+                            return _ascending ? -1 : 1;
+
+                        // both non-numeric -> fall back to string compare
+                    }
+
+                    // Optionally handle DateAdded as date sort in future:
+                    // if (_col == DateAddedColumnIndex) { ... parse DateTime ... }
+
+                }
+                catch
+                {
+                    // swallow and fall back to string compare below
+                }
+
+                int cmpStr = string.Compare(sx, sy, StringComparison.CurrentCultureIgnoreCase);
+                return _ascending ? cmpStr : -cmpStr;
+            }
+
+            private static string GetSubItemText(ListViewItem item, int col)
+            {
+                if (item == null) return string.Empty;
+                if (col >= 0 && col < item.SubItems.Count)
+                    return item.SubItems[col].Text ?? string.Empty;
+                return item.Text ?? string.Empty;
+            }
         }
     }
 }
