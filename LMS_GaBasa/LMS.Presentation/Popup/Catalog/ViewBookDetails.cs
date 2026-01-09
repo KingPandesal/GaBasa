@@ -410,6 +410,98 @@ namespace LMS.Presentation.Popup.Catalog
                 try { LblAvailableForBorrow.Text = "Available for borrow:"; } catch { }
             }
 
+            // ===== New: populate the requested labels (standard id, pub date, phys/format, edition, pages) =====
+            try
+            {
+                bool isDigital = !string.IsNullOrWhiteSpace(book.DownloadURL) || book.ResourceType == ResourceType.EBook;
+
+                // Helper to safely format values
+                Func<string, string, string> fmt = (label, value) => string.IsNullOrWhiteSpace(value) ? label : $"{label} {value}";
+
+                // Standard ID, Pub/Date label, PhysDesc/Format label, Edition label, Pages label
+                string standardLabel = "Standard ID :";
+                string pubDateLabel = string.Empty;
+                string physDescLabel = string.Empty;
+                string editionLabel = string.Empty;
+                string pagesLabel = string.Empty;
+
+                switch (book.ResourceType)
+                {
+                    case ResourceType.PhysicalBook:
+                    default:
+                        standardLabel = fmt("ISBN :", book.ISBN);
+                        pubDateLabel = (book.PublicationYear > 0) ? $"Publication Year : {book.PublicationYear}" : "Publication Year :";
+                        physDescLabel = isDigital
+                            ? fmt("Format :", book.LoanType ?? "Digital")
+                            : fmt("Physical Description :", book.PhysicalDescription);
+                        editionLabel = fmt("Edition :", book.Edition);
+                        pagesLabel = (book.Pages > 0) ? $"Pages : {book.Pages}" : "Pages :";
+                        break;
+
+                    case ResourceType.Periodical:
+                        // ISSN often stored in the same field as ISBN in many systems — fallback to ISBN
+                        standardLabel = fmt("ISSN :", book.ISBN);
+                        pubDateLabel = (book.PublicationYear > 0) ? $"Publication Date : {book.PublicationYear}" : "Publication Date :";
+                        // Try to expose volume/issue using Edition if available (best-effort)
+                        if (!string.IsNullOrWhiteSpace(book.Edition))
+                        {
+                            // If edition contains "Vol" or "Issue", surface as-is; otherwise put into Volume.
+                            if (book.Edition.IndexOf("Vol", StringComparison.OrdinalIgnoreCase) >= 0
+                                || book.Edition.IndexOf("Issue", StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                editionLabel = $"Volume/Issue : {book.Edition}";
+                            }
+                            else
+                            {
+                                editionLabel = $"Volume : {book.Edition} Issue :";
+                            }
+                        }
+                        else
+                        {
+                            editionLabel = "Volume :  Issue :";
+                        }
+                        physDescLabel = isDigital ? fmt("Format :", book.LoanType ?? "Digital") : fmt("Physical Description :", book.PhysicalDescription);
+                        pagesLabel = (book.Pages > 0) ? $"Pages : {book.Pages}" : "Pages :";
+                        break;
+
+                    case ResourceType.Thesis:
+                        standardLabel = fmt("DOI :", book.ISBN); // DOI may be stored in ISBN column - fallback
+                        pubDateLabel = (book.PublicationYear > 0) ? $"Publication Year : {book.PublicationYear}" : "Publication Year :";
+                        editionLabel = fmt("Degree Level :", book.Edition);
+                        physDescLabel = isDigital ? fmt("Format :", book.LoanType ?? "Digital") : fmt("Physical Description :", book.PhysicalDescription);
+                        pagesLabel = (book.Pages > 0) ? $"Pages : {book.Pages}" : "Pages :";
+                        break;
+
+                    case ResourceType.AV:
+                        standardLabel = fmt("ISAN/UPC :", book.ISBN);
+                        pubDateLabel = (book.PublicationYear > 0) ? $"Publication Date : {book.PublicationYear}" : "Publication Date :";
+                        editionLabel = fmt("Edition :", book.Edition);
+                        // show duration in seconds using Pages field (as requested)
+                        pagesLabel = (book.Pages > 0) ? $"Duration (s) : {book.Pages}" : "Duration (s) :";
+                        physDescLabel = isDigital ? fmt("Format :", book.LoanType ?? "Digital") : fmt("Physical Description :", book.PhysicalDescription);
+                        break;
+
+                    case ResourceType.EBook:
+                        standardLabel = fmt("ISBN :", book.ISBN);
+                        pubDateLabel = (book.PublicationYear > 0) ? $"Publication Year : {book.PublicationYear}" : "Publication Year :";
+                        physDescLabel = fmt("Format :", book.LoanType ?? "Digital");
+                        editionLabel = fmt("Edition :", book.Edition);
+                        pagesLabel = (book.Pages > 0) ? $"Pages : {book.Pages}" : "Pages :";
+                        break;
+                }
+
+                // Apply to designer labels (defensive: ensure control exists)
+                try { LblStandardID.Text = standardLabel; } catch { }
+                try { LblPubDateYear.Text = string.IsNullOrWhiteSpace(pubDateLabel) ? string.Empty : pubDateLabel; } catch { }
+                try { LblPhysDescFormat.Text = physDescLabel; } catch { }
+                try { LblEdition.Text = editionLabel; } catch { }
+                try { LblPages.Text = pagesLabel; } catch { }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("PopulateBasicDetails: failed to set standard/pub/phys/edition/pages labels: " + ex);
+            }
+
             // update buttons (if permission context already set this will show correct controls;
             // if not, SetPermissionContext will call UpdateActionButtons after being set)
             UpdateActionButtons();
