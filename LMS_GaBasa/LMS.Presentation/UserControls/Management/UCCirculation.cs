@@ -28,6 +28,10 @@ namespace LMS.Presentation.UserControls.Management
             BtnEnterMemberID.Click += BtnEnterMemberID_Click;
             BtnViewMemberValidID.Click += BtnViewMemberValidID_Click;
 
+            // NEW: wire scan accession button to open camera dialog
+            BtnScanAccessionNumber.Click -= BtnScanAccessionNumber_Click;
+            BtnScanAccessionNumber.Click += BtnScanAccessionNumber_Click;
+
             // Initialize UI state
             ClearMemberResults();
 
@@ -277,6 +281,29 @@ namespace LMS.Presentation.UserControls.Management
             {
                 viewer.LoadValidID(candidatePath);
                 viewer.ShowDialog();
+            }
+        }
+
+        // NEW: Handler to open Camera form, receive scanned accession and populate accession textbox
+        private void BtnScanAccessionNumber_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var cam = new LMS.Presentation.Popup.Multipurpose.Camera())
+                {
+                    var result = cam.ShowDialog(this);
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(cam.ScannedCode))
+                    {
+                        // Fill the accession textbox and trigger existing enter logic
+                        TxtAccessionNumber.Text = cam.ScannedCode.Trim();
+                        // If you have logic on Enter click, call it; otherwise simulate Enter key:
+                        BtnEnterAccessionNumber?.PerformClick();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open camera: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

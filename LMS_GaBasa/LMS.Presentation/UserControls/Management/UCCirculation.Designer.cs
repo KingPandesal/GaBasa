@@ -50,6 +50,7 @@
             this.LblOverdue = new System.Windows.Forms.Label();
             this.LblNoOverdueBooks = new System.Windows.Forms.Label();
             this.LblFineLimit = new System.Windows.Forms.Label();
+            this.BtnViewMemberValidID = new System.Windows.Forms.Button();
             this.LblBorrowLimitOK = new System.Windows.Forms.Label();
             this.LblMemberActive = new System.Windows.Forms.Label();
             this.LblBorrowed = new System.Windows.Forms.Label();
@@ -57,7 +58,6 @@
             this.LblMemberType = new System.Windows.Forms.Label();
             this.LblFullName = new System.Windows.Forms.Label();
             this.LblResults = new System.Windows.Forms.Label();
-            this.PicBxMemberProfilePicture = new System.Windows.Forms.PictureBox();
             this.BtnEnterMemberID = new System.Windows.Forms.Button();
             this.TxtMemberID = new System.Windows.Forms.TextBox();
             this.LblMemberID = new System.Windows.Forms.Label();
@@ -78,6 +78,8 @@
             this.LblReturnTitle = new System.Windows.Forms.Label();
             this.TabPageRenew = new System.Windows.Forms.TabPage();
             this.GrpBxBookRenewal = new System.Windows.Forms.GroupBox();
+            this.LblRenewRenewalLimit = new System.Windows.Forms.Label();
+            this.LblRenewActiveReservation = new System.Windows.Forms.Label();
             this.BtnConfirmRenew = new System.Windows.Forms.Button();
             this.LblNote3 = new System.Windows.Forms.Label();
             this.LblRenewAccessionNumber = new System.Windows.Forms.Label();
@@ -85,23 +87,21 @@
             this.BtnCancelRenew = new System.Windows.Forms.Button();
             this.BtnRenewScanAccessionNumber = new System.Windows.Forms.Button();
             this.TxtRenewAccessionNumber = new System.Windows.Forms.TextBox();
+            this.LblRenewRenewalStatus = new System.Windows.Forms.Label();
+            this.LblRenewNewDueDate = new System.Windows.Forms.Label();
             this.LblRenewOldDueDate = new System.Windows.Forms.Label();
             this.LblRenewBorrower = new System.Windows.Forms.Label();
             this.LblRenewTitle = new System.Windows.Forms.Label();
-            this.LblRenewRenewalLimit = new System.Windows.Forms.Label();
-            this.LblRenewActiveReservation = new System.Windows.Forms.Label();
-            this.LblRenewNewDueDate = new System.Windows.Forms.Label();
-            this.LblRenewRenewalStatus = new System.Windows.Forms.Label();
-            this.BtnViewMemberValidID = new System.Windows.Forms.Button();
+            this.PicBxMemberProfilePicture = new System.Windows.Forms.PictureBox();
             this.TabCtrlCirculation.SuspendLayout();
             this.TabPageBorrow.SuspendLayout();
             this.GrpBxBookCheckout.SuspendLayout();
             this.GrpBxMemberVerification.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).BeginInit();
             this.TabPageReturn.SuspendLayout();
             this.GrpBxReturnBook.SuspendLayout();
             this.TabPageRenew.SuspendLayout();
             this.GrpBxBookRenewal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // TabCtrlCirculation
@@ -402,6 +402,22 @@
             this.LblFineLimit.TabIndex = 56;
             this.LblFineLimit.Text = "✔️ Fine within allowed limit";
             // 
+            // BtnViewMemberValidID
+            // 
+            this.BtnViewMemberValidID.BackColor = System.Drawing.Color.White;
+            this.BtnViewMemberValidID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnViewMemberValidID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewMemberValidID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnViewMemberValidID.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnViewMemberValidID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewMemberValidID.Location = new System.Drawing.Point(268, 380);
+            this.BtnViewMemberValidID.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnViewMemberValidID.Name = "BtnViewMemberValidID";
+            this.BtnViewMemberValidID.Size = new System.Drawing.Size(203, 44);
+            this.BtnViewMemberValidID.TabIndex = 51;
+            this.BtnViewMemberValidID.Text = "👁️ View Valid ID";
+            this.BtnViewMemberValidID.UseVisualStyleBackColor = false;
+            // 
             // LblBorrowLimitOK
             // 
             this.LblBorrowLimitOK.AutoSize = true;
@@ -478,15 +494,6 @@
             this.LblResults.Size = new System.Drawing.Size(79, 30);
             this.LblResults.TabIndex = 53;
             this.LblResults.Text = "Results";
-            // 
-            // PicBxMemberProfilePicture
-            // 
-            this.PicBxMemberProfilePicture.BackColor = System.Drawing.Color.Gainsboro;
-            this.PicBxMemberProfilePicture.Location = new System.Drawing.Point(37, 173);
-            this.PicBxMemberProfilePicture.Name = "PicBxMemberProfilePicture";
-            this.PicBxMemberProfilePicture.Size = new System.Drawing.Size(209, 251);
-            this.PicBxMemberProfilePicture.TabIndex = 52;
-            this.PicBxMemberProfilePicture.TabStop = false;
             // 
             // BtnEnterMemberID
             // 
@@ -758,6 +765,28 @@
             this.GrpBxBookRenewal.TabStop = false;
             this.GrpBxBookRenewal.Text = "Book Renewal";
             // 
+            // LblRenewRenewalLimit
+            // 
+            this.LblRenewRenewalLimit.AutoSize = true;
+            this.LblRenewRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewRenewalLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
+            this.LblRenewRenewalLimit.Location = new System.Drawing.Point(42, 401);
+            this.LblRenewRenewalLimit.Name = "LblRenewRenewalLimit";
+            this.LblRenewRenewalLimit.Size = new System.Drawing.Size(501, 30);
+            this.LblRenewRenewalLimit.TabIndex = 59;
+            this.LblRenewRenewalLimit.Text = "✔️ Renewal limit not reached (1 / 3)                       ";
+            // 
+            // LblRenewActiveReservation
+            // 
+            this.LblRenewActiveReservation.AutoSize = true;
+            this.LblRenewActiveReservation.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewActiveReservation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
+            this.LblRenewActiveReservation.Location = new System.Drawing.Point(43, 359);
+            this.LblRenewActiveReservation.Name = "LblRenewActiveReservation";
+            this.LblRenewActiveReservation.Size = new System.Drawing.Size(563, 30);
+            this.LblRenewActiveReservation.TabIndex = 60;
+            this.LblRenewActiveReservation.Text = "✔️ Book has no active reservations                                   ";
+            // 
             // BtnConfirmRenew
             // 
             this.BtnConfirmRenew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
@@ -855,6 +884,28 @@
             this.TxtRenewAccessionNumber.Size = new System.Drawing.Size(261, 37);
             this.TxtRenewAccessionNumber.TabIndex = 1;
             // 
+            // LblRenewRenewalStatus
+            // 
+            this.LblRenewRenewalStatus.AutoSize = true;
+            this.LblRenewRenewalStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewRenewalStatus.ForeColor = System.Drawing.Color.Black;
+            this.LblRenewRenewalStatus.Location = new System.Drawing.Point(43, 530);
+            this.LblRenewRenewalStatus.Name = "LblRenewRenewalStatus";
+            this.LblRenewRenewalStatus.Size = new System.Drawing.Size(245, 30);
+            this.LblRenewRenewalStatus.TabIndex = 53;
+            this.LblRenewRenewalStatus.Text = "Renewal Status: Allowed";
+            // 
+            // LblRenewNewDueDate
+            // 
+            this.LblRenewNewDueDate.AutoSize = true;
+            this.LblRenewNewDueDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewNewDueDate.ForeColor = System.Drawing.Color.Black;
+            this.LblRenewNewDueDate.Location = new System.Drawing.Point(43, 484);
+            this.LblRenewNewDueDate.Name = "LblRenewNewDueDate";
+            this.LblRenewNewDueDate.Size = new System.Drawing.Size(326, 30);
+            this.LblRenewNewDueDate.TabIndex = 53;
+            this.LblRenewNewDueDate.Text = "New Due Date: January 30, 2026";
+            // 
             // LblRenewOldDueDate
             // 
             this.LblRenewOldDueDate.AutoSize = true;
@@ -888,65 +939,14 @@
             this.LblRenewTitle.TabIndex = 53;
             this.LblRenewTitle.Text = "Title: Unlucky Vacation";
             // 
-            // LblRenewRenewalLimit
+            // PicBxMemberProfilePicture
             // 
-            this.LblRenewRenewalLimit.AutoSize = true;
-            this.LblRenewRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblRenewRenewalLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
-            this.LblRenewRenewalLimit.Location = new System.Drawing.Point(42, 401);
-            this.LblRenewRenewalLimit.Name = "LblRenewRenewalLimit";
-            this.LblRenewRenewalLimit.Size = new System.Drawing.Size(501, 30);
-            this.LblRenewRenewalLimit.TabIndex = 59;
-            this.LblRenewRenewalLimit.Text = "✔️ Renewal limit not reached (1 / 3)                       ";
-            // 
-            // LblRenewActiveReservation
-            // 
-            this.LblRenewActiveReservation.AutoSize = true;
-            this.LblRenewActiveReservation.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblRenewActiveReservation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
-            this.LblRenewActiveReservation.Location = new System.Drawing.Point(43, 359);
-            this.LblRenewActiveReservation.Name = "LblRenewActiveReservation";
-            this.LblRenewActiveReservation.Size = new System.Drawing.Size(563, 30);
-            this.LblRenewActiveReservation.TabIndex = 60;
-            this.LblRenewActiveReservation.Text = "✔️ Book has no active reservations                                   ";
-            // 
-            // LblRenewNewDueDate
-            // 
-            this.LblRenewNewDueDate.AutoSize = true;
-            this.LblRenewNewDueDate.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblRenewNewDueDate.ForeColor = System.Drawing.Color.Black;
-            this.LblRenewNewDueDate.Location = new System.Drawing.Point(43, 484);
-            this.LblRenewNewDueDate.Name = "LblRenewNewDueDate";
-            this.LblRenewNewDueDate.Size = new System.Drawing.Size(326, 30);
-            this.LblRenewNewDueDate.TabIndex = 53;
-            this.LblRenewNewDueDate.Text = "New Due Date: January 30, 2026";
-            // 
-            // LblRenewRenewalStatus
-            // 
-            this.LblRenewRenewalStatus.AutoSize = true;
-            this.LblRenewRenewalStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblRenewRenewalStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblRenewRenewalStatus.Location = new System.Drawing.Point(43, 530);
-            this.LblRenewRenewalStatus.Name = "LblRenewRenewalStatus";
-            this.LblRenewRenewalStatus.Size = new System.Drawing.Size(245, 30);
-            this.LblRenewRenewalStatus.TabIndex = 53;
-            this.LblRenewRenewalStatus.Text = "Renewal Status: Allowed";
-            // 
-            // BtnViewMemberValidID
-            // 
-            this.BtnViewMemberValidID.BackColor = System.Drawing.Color.White;
-            this.BtnViewMemberValidID.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnViewMemberValidID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnViewMemberValidID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnViewMemberValidID.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnViewMemberValidID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnViewMemberValidID.Location = new System.Drawing.Point(268, 380);
-            this.BtnViewMemberValidID.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnViewMemberValidID.Name = "BtnViewMemberValidID";
-            this.BtnViewMemberValidID.Size = new System.Drawing.Size(203, 44);
-            this.BtnViewMemberValidID.TabIndex = 51;
-            this.BtnViewMemberValidID.Text = "👁️ View Valid ID";
-            this.BtnViewMemberValidID.UseVisualStyleBackColor = false;
+            this.PicBxMemberProfilePicture.BackColor = System.Drawing.Color.Gainsboro;
+            this.PicBxMemberProfilePicture.Location = new System.Drawing.Point(37, 173);
+            this.PicBxMemberProfilePicture.Name = "PicBxMemberProfilePicture";
+            this.PicBxMemberProfilePicture.Size = new System.Drawing.Size(209, 251);
+            this.PicBxMemberProfilePicture.TabIndex = 52;
+            this.PicBxMemberProfilePicture.TabStop = false;
             // 
             // UCCirculation
             // 
@@ -962,13 +962,13 @@
             this.GrpBxBookCheckout.PerformLayout();
             this.GrpBxMemberVerification.ResumeLayout(false);
             this.GrpBxMemberVerification.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).EndInit();
             this.TabPageReturn.ResumeLayout(false);
             this.GrpBxReturnBook.ResumeLayout(false);
             this.GrpBxReturnBook.PerformLayout();
             this.TabPageRenew.ResumeLayout(false);
             this.GrpBxBookRenewal.ResumeLayout(false);
             this.GrpBxBookRenewal.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).EndInit();
             this.ResumeLayout(false);
 
         }
