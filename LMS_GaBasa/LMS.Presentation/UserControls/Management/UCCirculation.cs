@@ -669,9 +669,23 @@ namespace LMS.Presentation.UserControls.Management
                     BtnConfirmBorrow.Enabled = false;
                     BtnConfirmBorrow.Text = "Borrowed";
 
-                    // Optionally clear accession input and keep due date visible
+                    // Update due date display
                     LblBookDueDate.Text = $"Due Date: {dueDate:MMMM d, yyyy}";
                     LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
+
+                    // Show receipt dialog (uses the partial BorrowReceiptForm in Popup.Circulation)
+                    try
+                    {
+                        using (var receipt = new LMS.Presentation.Popup.Circulation.BorrowReceiptForm(transId, _currentMember, _currentBook, borrowDate, dueDate))
+                        {
+                            receipt.ShowDialog(this);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Don't fail the borrow if receipt fails — surface a friendly message
+                        MessageBox.Show($"Borrow recorded but failed to show receipt: {ex.Message}", "Receipt Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {
