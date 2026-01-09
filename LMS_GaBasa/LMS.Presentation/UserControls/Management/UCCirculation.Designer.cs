@@ -57,7 +57,7 @@
             this.LblMemberType = new System.Windows.Forms.Label();
             this.LblFullName = new System.Windows.Forms.Label();
             this.LblResults = new System.Windows.Forms.Label();
-            this.PicBxBookCoverImage = new System.Windows.Forms.PictureBox();
+            this.PicBxMemberProfilePicture = new System.Windows.Forms.PictureBox();
             this.BtnEnterMemberID = new System.Windows.Forms.Button();
             this.TxtMemberID = new System.Windows.Forms.TextBox();
             this.LblMemberID = new System.Windows.Forms.Label();
@@ -92,11 +92,12 @@
             this.LblRenewActiveReservation = new System.Windows.Forms.Label();
             this.LblRenewNewDueDate = new System.Windows.Forms.Label();
             this.LblRenewRenewalStatus = new System.Windows.Forms.Label();
+            this.BtnViewMemberValidID = new System.Windows.Forms.Button();
             this.TabCtrlCirculation.SuspendLayout();
             this.TabPageBorrow.SuspendLayout();
             this.GrpBxBookCheckout.SuspendLayout();
             this.GrpBxMemberVerification.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCoverImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).BeginInit();
             this.TabPageReturn.SuspendLayout();
             this.GrpBxReturnBook.SuspendLayout();
             this.TabPageRenew.SuspendLayout();
@@ -323,6 +324,7 @@
             this.GrpBxMemberVerification.Controls.Add(this.LblOverdue);
             this.GrpBxMemberVerification.Controls.Add(this.LblNoOverdueBooks);
             this.GrpBxMemberVerification.Controls.Add(this.LblFineLimit);
+            this.GrpBxMemberVerification.Controls.Add(this.BtnViewMemberValidID);
             this.GrpBxMemberVerification.Controls.Add(this.LblBorrowLimitOK);
             this.GrpBxMemberVerification.Controls.Add(this.LblMemberActive);
             this.GrpBxMemberVerification.Controls.Add(this.LblBorrowed);
@@ -330,7 +332,7 @@
             this.GrpBxMemberVerification.Controls.Add(this.LblMemberType);
             this.GrpBxMemberVerification.Controls.Add(this.LblFullName);
             this.GrpBxMemberVerification.Controls.Add(this.LblResults);
-            this.GrpBxMemberVerification.Controls.Add(this.PicBxBookCoverImage);
+            this.GrpBxMemberVerification.Controls.Add(this.PicBxMemberProfilePicture);
             this.GrpBxMemberVerification.Controls.Add(this.BtnEnterMemberID);
             this.GrpBxMemberVerification.Controls.Add(this.TxtMemberID);
             this.GrpBxMemberVerification.Controls.Add(this.LblMemberID);
@@ -477,14 +479,14 @@
             this.LblResults.TabIndex = 53;
             this.LblResults.Text = "Results";
             // 
-            // PicBxBookCoverImage
+            // PicBxMemberProfilePicture
             // 
-            this.PicBxBookCoverImage.BackColor = System.Drawing.Color.Gainsboro;
-            this.PicBxBookCoverImage.Location = new System.Drawing.Point(37, 173);
-            this.PicBxBookCoverImage.Name = "PicBxBookCoverImage";
-            this.PicBxBookCoverImage.Size = new System.Drawing.Size(209, 251);
-            this.PicBxBookCoverImage.TabIndex = 52;
-            this.PicBxBookCoverImage.TabStop = false;
+            this.PicBxMemberProfilePicture.BackColor = System.Drawing.Color.Gainsboro;
+            this.PicBxMemberProfilePicture.Location = new System.Drawing.Point(37, 173);
+            this.PicBxMemberProfilePicture.Name = "PicBxMemberProfilePicture";
+            this.PicBxMemberProfilePicture.Size = new System.Drawing.Size(209, 251);
+            this.PicBxMemberProfilePicture.TabIndex = 52;
+            this.PicBxMemberProfilePicture.TabStop = false;
             // 
             // BtnEnterMemberID
             // 
@@ -929,7 +931,22 @@
             this.LblRenewRenewalStatus.Size = new System.Drawing.Size(245, 30);
             this.LblRenewRenewalStatus.TabIndex = 53;
             this.LblRenewRenewalStatus.Text = "Renewal Status: Allowed";
-            this.LblRenewRenewalStatus.Click += new System.EventHandler(this.label28_Click);
+            // 
+            // BtnViewMemberValidID
+            // 
+            this.BtnViewMemberValidID.BackColor = System.Drawing.Color.White;
+            this.BtnViewMemberValidID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnViewMemberValidID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewMemberValidID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnViewMemberValidID.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnViewMemberValidID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewMemberValidID.Location = new System.Drawing.Point(268, 380);
+            this.BtnViewMemberValidID.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnViewMemberValidID.Name = "BtnViewMemberValidID";
+            this.BtnViewMemberValidID.Size = new System.Drawing.Size(203, 44);
+            this.BtnViewMemberValidID.TabIndex = 51;
+            this.BtnViewMemberValidID.Text = "👁️ View Valid ID";
+            this.BtnViewMemberValidID.UseVisualStyleBackColor = false;
             // 
             // UCCirculation
             // 
@@ -945,7 +962,7 @@
             this.GrpBxBookCheckout.PerformLayout();
             this.GrpBxMemberVerification.ResumeLayout(false);
             this.GrpBxMemberVerification.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCoverImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).EndInit();
             this.TabPageReturn.ResumeLayout(false);
             this.GrpBxReturnBook.ResumeLayout(false);
             this.GrpBxReturnBook.PerformLayout();
@@ -970,7 +987,7 @@
         private System.Windows.Forms.Label LblAccessionNumber;
         private System.Windows.Forms.Button BtnScanAccessionNumber;
         private System.Windows.Forms.Label LblResults;
-        private System.Windows.Forms.PictureBox PicBxBookCoverImage;
+        private System.Windows.Forms.PictureBox PicBxMemberProfilePicture;
         private System.Windows.Forms.Label LblNote1;
         private System.Windows.Forms.Button BtnEnterAccessionNumber;
         private System.Windows.Forms.TextBox TxtAccessionNumber;
@@ -1022,5 +1039,6 @@
         private System.Windows.Forms.Label LblRenewActiveReservation;
         private System.Windows.Forms.Label LblRenewRenewalStatus;
         private System.Windows.Forms.Label LblRenewNewDueDate;
+        private System.Windows.Forms.Button BtnViewMemberValidID;
     }
 }

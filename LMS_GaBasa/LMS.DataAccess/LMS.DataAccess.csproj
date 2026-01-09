@@ -48,6 +48,7 @@
     <Compile Include="Interfaces\IBookCopyRepository.cs" />
     <Compile Include="Interfaces\IBookRepository.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\ICirculationRepository.cs" />
     <Compile Include="Interfaces\ILanguageRepository.cs" />
     <Compile Include="Interfaces\IMemberRepository.cs" />
     <Compile Include="Interfaces\IPublisherRepository.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Repositories\BookCopyRepository.cs" />
     <Compile Include="Repositories\BookRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\CirculationRepository.cs" />
     <Compile Include="Repositories\LanguageRepository.cs" />
     <Compile Include="Repositories\MemberRepository.cs" />
     <Compile Include="Repositories\PublisherRepository.cs" />
