@@ -553,7 +553,7 @@ namespace LMS.Presentation.Popup.Catalog
                 {
                     if (canBorrow)
                     {
-                        try { BtnBorrow.Visible = BtnBorrow.Enabled = true; } catch { }
+                        try { BtnBorrow.Visible = BtnBorrow.Enabled = false; } catch { }
                     }
                     // do not show reserve when copies are available
                 }

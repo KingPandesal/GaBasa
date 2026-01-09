@@ -21,5 +21,10 @@ namespace LMS.Presentation.UserControls.Management
         {
 
         }
+
+        private void label28_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
