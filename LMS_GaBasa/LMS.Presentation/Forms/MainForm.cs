@@ -9,6 +9,7 @@ using LMS.BusinessLogic.Services;
 using LMS.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,6 +25,7 @@ namespace LMS.Presentation.Forms
         private readonly ITopBarController _topBarController;
         private readonly IUserProfileService _userProfileService;
         private Label _lblProfileRole; // Added field for profile role label
+        private readonly IPermissionService _permissionService;
 
         // Static sidebar layout: Category -> Modules
         private readonly Dictionary<string, string[]> _sidebarLayout = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
@@ -56,6 +58,9 @@ namespace LMS.Presentation.Forms
         {
             InitializeComponent();
 
+            // cache permission service so we can pass it to child UserControls later
+            _permissionService = permissionService ?? new RolePermissionService();
+
             // Cache the profile role label reference
             _lblProfileRole = this.Controls.Find("LblProfileRole", true).FirstOrDefault() as Label;
 
@@ -65,7 +70,7 @@ namespace LMS.Presentation.Forms
             _moduleNavigator = moduleNavigator ?? throw new ArgumentNullException(nameof(moduleNavigator));
 
             // Initialize the navigator first so permission checks / factories are available
-            _moduleNavigator.Initialize(_currentUser, permissionService);
+            _moduleNavigator.Initialize(_currentUser, _permissionService);
 
             // sidebar builder either injected or use default implementation
             _sidebarBuilder = sidebarBuilder ?? new SidebarBuilder(_moduleNavigator);
@@ -162,6 +167,20 @@ namespace LMS.Presentation.Forms
             if (uc != null)
             {
                 uc.Dock = DockStyle.Fill;
+
+                // If the created control is the catalog, give it the current user + permission service.
+                // This ensures Reserve button visibility is decided from DB-backed role via RolePermissionService.
+                if (uc is LMS.Presentation.UserControls.UCCatalog catalogUC)
+                {
+                    try
+                    {
+                        catalogUC.SetPermissionContext(_currentUser, _permissionService ?? new RolePermissionService());
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Failed to set permission context on UCCatalog: " + ex);
+                    }
+                }
 
                 // Subscribe to profile update event if this is the Librarian/Staff profile module
                 if (uc is UCLibrarianStaff librarianStaffUC)

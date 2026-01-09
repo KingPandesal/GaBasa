@@ -45,6 +45,19 @@ namespace LMS.Presentation.UserControls
         private enum SortColumn { None, Title, Author, PublicationYear, CallNumber }
         private SortColumn _activeSort = SortColumn.Title; // default
 
+        // Add these fields near the other private fields at the top of the class
+        private LMS.BusinessLogic.Security.IPermissionService _permissionService;
+        private LMS.Model.Models.Users.User _currentUser;
+
+        /// <summary>
+        /// Host must call this to provide the current user and permission service (RolePermissionService).
+        /// </summary>
+        public void SetPermissionContext(LMS.Model.Models.Users.User currentUser, LMS.BusinessLogic.Security.IPermissionService permissionService)
+        {
+            _currentUser = currentUser;
+            _permissionService = permissionService;
+        }
+
         public UCCatalog()
         {
             InitializeComponent();
@@ -182,6 +195,9 @@ namespace LMS.Presentation.UserControls
             catch { }
         }
 
+        // Replace the existing CreateBookPanel method with this version.
+        // Fix: declare and compute isBookAvailable before use.
+
         private Panel CreateBookPanel(DTOCatalogBook book)
         {
             var panel = new Panel
@@ -264,11 +280,23 @@ namespace LMS.Presentation.UserControls
             btnViewDetails.Click += BtnViewDetails_Click;
             panel.Controls.Add(btnViewDetails);
 
-            // Determine visibility/enabled for Reserve button.
-            // Preserve existing logic but hide the button when it would be "disabled".
-            bool shouldHideReserve = (book != null) &&
-                                 (string.Equals(book.Status, "Available", StringComparison.OrdinalIgnoreCase)
-                                  || string.Equals(book.Status, "Available Online", StringComparison.OrdinalIgnoreCase));
+            // Determine availability (DECLARED HERE so it's in scope)
+            bool isBookAvailable = (book != null) &&
+                                   (string.Equals(book.Status, "Available", StringComparison.OrdinalIgnoreCase)
+                                    || string.Equals(book.Status, "Available Online", StringComparison.OrdinalIgnoreCase));
+
+            // Determine permission to reserve: prefer IPermissionService if provided, otherwise allow by default
+            bool canReserve = true;
+            try
+            {
+                if (_permissionService != null && _currentUser != null)
+                    canReserve = _permissionService.CanReserveBooks(_currentUser);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Permission check failed, defaulting to allow reserve UI: " + ex);
+                canReserve = true;
+            }
 
             var btnReserve = new Button
             {
@@ -281,8 +309,9 @@ namespace LMS.Presentation.UserControls
                 Font = new Font("Segoe UI", 8F),
                 Cursor = Cursors.Hand,
                 Tag = book?.BookID ?? (object)null,
-                Visible = !shouldHideReserve,
-                Enabled = !shouldHideReserve
+                // Show only when book is NOT available and permission allows reserving
+                Visible = !isBookAvailable && canReserve,
+                Enabled = !isBookAvailable && canReserve
             };
             btnReserve.FlatAppearance.BorderColor = Color.FromArgb(175, 37, 50);
             btnReserve.Click += BtnReserve_Click;
@@ -1072,6 +1101,21 @@ namespace LMS.Presentation.UserControls
 
                 try { _lvSearchResults.Width = Math.Max(500, FlwPnlBooks.ClientSize.Width - 10); } catch { }
 
+                // Determine if current user can reserve (use injected permission service when available).
+                bool canReserve;
+                try
+                {
+                    if (_permissionService != null && _currentUser != null)
+                        canReserve = _permissionService.CanReserveBooks(_currentUser);
+                    else
+                        canReserve = IsCurrentUserMember(); // fallback
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("ShowSearchResults: permission check failed, falling back to member heuristic: " + ex);
+                    canReserve = IsCurrentUserMember();
+                }
+
                 _lvSearchResults.BeginUpdate();
                 _lvSearchResults.Items.Clear();
 
@@ -1096,7 +1140,7 @@ namespace LMS.Presentation.UserControls
                         item.SubItems.Add(isbn);
                         item.SubItems.Add(callNumber);
                         item.SubItems.Add(dto.Title ?? string.Empty);
-                        
+
                         string authorsDisplay = string.Empty;
                         try
                         {
@@ -1133,7 +1177,8 @@ namespace LMS.Presentation.UserControls
                         bool isAvailable = string.Equals(dto.Status, "Available", StringComparison.OrdinalIgnoreCase)
                                            || string.Equals(dto.Status, "Available Online", StringComparison.OrdinalIgnoreCase);
 
-                        item.SubItems.Add(isAvailable ? string.Empty : "Reserve");
+                        // Only show "Reserve" when book is NOT available AND current user has reserve permission (member)
+                        item.SubItems.Add((isAvailable || !canReserve) ? string.Empty : "Reserve");
                         item.Tag = dto;
                         _lvSearchResults.Items.Add(item);
                     }
@@ -1914,6 +1959,106 @@ namespace LMS.Presentation.UserControls
                     }
                 }
                 catch { }
+            }
+        }
+
+        private bool IsCurrentUserMember()
+        {
+            try
+            {
+                var allowedMemberTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    "Student", "Guest", "Faculty", "Staff Member", "Staff", "Member"
+                };
+
+                var principal = System.Threading.Thread.CurrentPrincipal;
+                if (principal == null)
+                {
+                    Debug.WriteLine("IsCurrentUserMember: Thread.CurrentPrincipal is null.");
+                    return false;
+                }
+
+                // Quick IsInRole checks (defensive)
+                foreach (var role in allowedMemberTypes)
+                {
+                    try
+                    {
+                        if (principal.IsInRole(role))
+                        {
+                            Debug.WriteLine($"IsCurrentUserMember: principal.IsInRole('{role}') == true");
+                            return true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"IsCurrentUserMember: IsInRole('{role}') threw: {ex.Message}");
+                    }
+                }
+
+                // If principal is a ClaimsPrincipal, inspect claims (many systems put role info into claims)
+                var claimsPrincipal = principal as System.Security.Claims.ClaimsPrincipal;
+                if (claimsPrincipal != null && claimsPrincipal.Claims != null)
+                {
+                    // Candidate claim types to inspect
+                    var roleClaimTypes = new[]
+                    {
+                        System.Security.Claims.ClaimTypes.Role,
+                        "role",
+                        "roles",
+                        "membertype",
+                        "member_type",
+                        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    };
+
+                    foreach (var c in claimsPrincipal.Claims)
+                    {
+                        try
+                        {
+                            if (string.IsNullOrWhiteSpace(c?.Value)) continue;
+
+                            // If claim type looks like a role type, compare value against allowed set
+                            if (roleClaimTypes.Any(t => string.Equals(t, c.Type, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                Debug.WriteLine($"IsCurrentUserMember: Found role-like claim '{c.Type}' = '{c.Value}'");
+                                if (allowedMemberTypes.Contains(c.Value.Trim()))
+                                    return true;
+                            }
+
+                            // Also accept exact matches for allowedMemberTypes even if claim type is custom
+                            if (allowedMemberTypes.Contains(c.Value.Trim()))
+                            {
+                                Debug.WriteLine($"IsCurrentUserMember: Found allowed member-type claim '{c.Type}' = '{c.Value}'");
+                                return true;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"IsCurrentUserMember: Inspecting claim threw: {ex.Message}");
+                        }
+                    }
+
+                    // dump all claims for debugging
+                    try
+                    {
+                        foreach (var c in claimsPrincipal.Claims)
+                            Debug.WriteLine($"Claim: Type='{c.Type}' Value='{c.Value}'");
+                    }
+                    catch { }
+                }
+
+                // Write identity info for debugging
+                try
+                {
+                    Debug.WriteLine($"IsCurrentUserMember: Identity.Name='{principal.Identity?.Name}', Authenticated={principal.Identity?.IsAuthenticated}");
+                }
+                catch { }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("IsCurrentUserMember threw: " + ex);
+                return false;
             }
         }
     }

@@ -204,6 +204,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\MainForm\MainForm.cs" />
     <Compile Include="UI\MainForm\ModuleIcon\ModuleIcon.cs" />
     <Compile Include="UI\MainForm\ModuleIcon\ModuleIconSet.cs" />
     <Compile Include="UI\MainForm\Navigation\IModuleNavigator.cs" />
