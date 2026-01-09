@@ -58,7 +58,7 @@ namespace LMS.Presentation.Forms
         {
             InitializeComponent();
 
-            // cache permission service so we can pass it to child UserControls later
+            // Cache permission service so we can pass it to child UserControls later
             _permissionService = permissionService ?? new RolePermissionService();
 
             // Cache the profile role label reference
@@ -169,7 +169,7 @@ namespace LMS.Presentation.Forms
                 uc.Dock = DockStyle.Fill;
 
                 // If the created control is the catalog, give it the current user + permission service.
-                // This ensures Reserve button visibility is decided from DB-backed role via RolePermissionService.
+                // This ensures Reserve/Borrow button visibility is decided from DB-backed role via RolePermissionService.
                 if (uc is LMS.Presentation.UserControls.UCCatalog catalogUC)
                 {
                     try

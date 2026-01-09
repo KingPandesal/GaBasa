@@ -1381,34 +1381,90 @@ namespace LMS.Presentation.UserControls
         }
 
 
+        // Replace the existing CreateViewBookDetailsIfAvailable method in UCCatalog with this implementation.
+        // This ensures the created ViewBookDetails form receives the current user and permission service
+        // by calling its SetPermissionContext(User, IPermissionService) method (via reflection if necessary).
+
         private Form CreateViewBookDetailsIfAvailable(int bookId)
         {
             try
             {
-                var t = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(a => a.GetTypes())
-                    .FirstOrDefault(x => x.Name == "ViewBookDetails" && typeof(Form).IsAssignableFrom(x));
-                if (t == null) return null;
-                var ctor = t.GetConstructor(new[] { typeof(int) });
-                if (ctor != null)
+                var viewType = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a =>
+                    {
+                        try { return a.GetTypes(); } catch { return new Type[0]; }
+                    })
+                    .FirstOrDefault(t => t.Name == "ViewBookDetails" && typeof(Form).IsAssignableFrom(t));
+
+                if (viewType == null) return null;
+
+                Form form = null;
+
+                // Prefer constructor (int bookId)
+                var ctorWithId = viewType.GetConstructor(new[] { typeof(int) });
+                if (ctorWithId != null)
                 {
-                    var form = ctor.Invoke(new object[] { bookId }) as Form;
-                    return form;
+                    form = ctorWithId.Invoke(new object[] { bookId }) as Form;
+                }
+                else
+                {
+                    // Fallback: parameterless ctor + set BookID property if available
+                    var paramless = viewType.GetConstructor(Type.EmptyTypes);
+                    if (paramless != null)
+                    {
+                        form = paramless.Invoke(null) as Form;
+                        if (form != null)
+                        {
+                            try
+                            {
+                                var prop = viewType.GetProperty("BookID");
+                                if (prop != null && prop.CanWrite)
+                                    prop.SetValue(form, bookId);
+                            }
+                            catch { /* ignore property set issues */ }
+                        }
+                    }
                 }
 
-                var paramless = t.GetConstructor(Type.EmptyTypes);
-                if (paramless != null)
+                if (form != null)
                 {
-                    var form = paramless.Invoke(null) as Form;
-                    var prop = t.GetProperty("BookID");
-                    if (prop != null && prop.CanWrite) prop.SetValue(form, bookId);
-                    return form;
+                    try
+                    {
+                        // Try to find an exact SetPermissionContext(User, IPermissionService) method first
+                        var setPerm = viewType.GetMethod("SetPermissionContext", new[] {
+                            typeof(LMS.Model.Models.Users.User),
+                            typeof(LMS.BusinessLogic.Security.IPermissionService)
+                        });
+
+                        // Looser fallback: any method named SetPermissionContext with two parameters
+                        if (setPerm == null)
+                        {
+                            setPerm = viewType.GetMethods().FirstOrDefault(m =>
+                                m.Name == "SetPermissionContext" && m.GetParameters().Length == 2);
+                        }
+
+                        if (setPerm != null)
+                        {
+                            // Invoke with the catalog's cached current user and permission service.
+                            // _currentUser and _permissionService are members of this UCCatalog instance.
+                            setPerm.Invoke(form, new object[] { _currentUser, _permissionService });
+                        }
+                        else
+                        {
+                            Debug.WriteLine("CreateViewBookDetailsIfAvailable: SetPermissionContext method not found on ViewBookDetails.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("CreateViewBookDetailsIfAvailable: failed to set permission context: " + ex);
+                    }
                 }
 
-                return null;
+                return form;
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine("CreateViewBookDetailsIfAvailable: " + ex);
                 return null;
             }
         }

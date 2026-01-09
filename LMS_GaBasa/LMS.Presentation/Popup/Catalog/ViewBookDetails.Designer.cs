@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewBookDetails));
             this.PnlDesign = new System.Windows.Forms.Panel();
             this.PnlPicBxBookCoverContainer = new System.Windows.Forms.Panel();
+            this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.PnlDocked = new System.Windows.Forms.Panel();
             this.PnlBookDetails = new System.Windows.Forms.Panel();
             this.DgwBookCopy = new System.Windows.Forms.DataGridView();
@@ -58,22 +59,21 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.FlwPnlBtns = new System.Windows.Forms.FlowLayoutPanel();
             this.BtnBorrow = new System.Windows.Forms.Button();
-            this.btnReserve = new System.Windows.Forms.Button();
+            this.BtnReserve = new System.Windows.Forms.Button();
             this.BtnDownloadLink = new System.Windows.Forms.Button();
             this.LblSubtitle = new System.Windows.Forms.Label();
             this.LblEditors = new System.Windows.Forms.Label();
             this.LblAuthors = new System.Windows.Forms.Label();
             this.LblCategory = new System.Windows.Forms.Label();
             this.LblTitle = new System.Windows.Forms.Label();
-            this.PicBxBookCover = new System.Windows.Forms.PictureBox();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.PnlPicBxBookCoverContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
             this.PnlDocked.SuspendLayout();
             this.PnlBookDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).BeginInit();
             this.FlwPnlBtns.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
             this.SuspendLayout();
             // 
             // PnlDesign
@@ -92,6 +92,17 @@
             this.PnlPicBxBookCoverContainer.Name = "PnlPicBxBookCoverContainer";
             this.PnlPicBxBookCoverContainer.Size = new System.Drawing.Size(326, 405);
             this.PnlPicBxBookCoverContainer.TabIndex = 2;
+            // 
+            // PicBxBookCover
+            // 
+            this.PicBxBookCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.PicBxBookCover.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PicBxBookCover.Location = new System.Drawing.Point(24, 23);
+            this.PicBxBookCover.Name = "PicBxBookCover";
+            this.PicBxBookCover.Size = new System.Drawing.Size(277, 362);
+            this.PicBxBookCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxBookCover.TabIndex = 1;
+            this.PicBxBookCover.TabStop = false;
             // 
             // PnlDocked
             // 
@@ -358,7 +369,7 @@
             // FlwPnlBtns
             // 
             this.FlwPnlBtns.Controls.Add(this.BtnBorrow);
-            this.FlwPnlBtns.Controls.Add(this.btnReserve);
+            this.FlwPnlBtns.Controls.Add(this.BtnReserve);
             this.FlwPnlBtns.Controls.Add(this.BtnDownloadLink);
             this.FlwPnlBtns.Location = new System.Drawing.Point(413, 391);
             this.FlwPnlBtns.Name = "FlwPnlBtns";
@@ -381,22 +392,22 @@
             this.BtnBorrow.Text = "📖 Borrow";
             this.BtnBorrow.UseVisualStyleBackColor = false;
             // 
-            // btnReserve
+            // BtnReserve
             // 
-            this.btnReserve.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.btnReserve.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnReserve.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.btnReserve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReserve.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.btnReserve.ForeColor = System.Drawing.Color.White;
-            this.btnReserve.Location = new System.Drawing.Point(167, 4);
-            this.btnReserve.Margin = new System.Windows.Forms.Padding(4);
-            this.btnReserve.Name = "btnReserve";
-            this.btnReserve.Size = new System.Drawing.Size(155, 45);
-            this.btnReserve.TabIndex = 79;
-            this.btnReserve.Text = "📌 Reserve";
-            this.btnReserve.UseVisualStyleBackColor = false;
-            this.btnReserve.Click += new System.EventHandler(this.button1_Click);
+            this.BtnReserve.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnReserve.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnReserve.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnReserve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnReserve.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnReserve.ForeColor = System.Drawing.Color.White;
+            this.BtnReserve.Location = new System.Drawing.Point(167, 4);
+            this.BtnReserve.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnReserve.Name = "BtnReserve";
+            this.BtnReserve.Size = new System.Drawing.Size(155, 45);
+            this.BtnReserve.TabIndex = 79;
+            this.BtnReserve.Text = "📌 Reserve";
+            this.BtnReserve.UseVisualStyleBackColor = false;
+            this.BtnReserve.Click += new System.EventHandler(this.button1_Click);
             // 
             // BtnDownloadLink
             // 
@@ -467,16 +478,6 @@
             this.LblTitle.TabIndex = 3;
             this.LblTitle.Text = "Title";
             // 
-            // PicBxBookCover
-            // 
-            this.PicBxBookCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.PicBxBookCover.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicBxBookCover.Location = new System.Drawing.Point(24, 23);
-            this.PicBxBookCover.Name = "PicBxBookCover";
-            this.PicBxBookCover.Size = new System.Drawing.Size(277, 362);
-            this.PicBxBookCover.TabIndex = 1;
-            this.PicBxBookCover.TabStop = false;
-            // 
             // dataGridViewImageColumn1
             // 
             this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -511,13 +512,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View book details";
             this.PnlPicBxBookCoverContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).EndInit();
             this.PnlDocked.ResumeLayout(false);
             this.PnlDocked.PerformLayout();
             this.PnlBookDetails.ResumeLayout(false);
             this.PnlBookDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).EndInit();
             this.FlwPnlBtns.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -535,7 +536,7 @@
         private System.Windows.Forms.Label LblSubtitle;
         private System.Windows.Forms.FlowLayoutPanel FlwPnlBtns;
         private System.Windows.Forms.Button BtnBorrow;
-        private System.Windows.Forms.Button btnReserve;
+        private System.Windows.Forms.Button BtnReserve;
         private System.Windows.Forms.Button BtnDownloadLink;
         private System.Windows.Forms.Label LblStandardID;
         private System.Windows.Forms.Panel panel3;
