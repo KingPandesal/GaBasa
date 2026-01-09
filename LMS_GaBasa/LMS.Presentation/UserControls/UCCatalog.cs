@@ -34,7 +34,6 @@ namespace LMS.Presentation.UserControls
         // sort state
         private bool _sortTitleAscending = true;
         private bool _sortAuthorAscending = true;
-        private bool _sortDateAddedAscending = true;
         private bool _sortCallNumberAscending = true;
         private bool _sortPublicationYearAscending = true;
 
@@ -42,9 +41,8 @@ namespace LMS.Presentation.UserControls
         private const int TitleColumnIndex = 3;            // "Title" column index (0-based)
         private const int AuthorColumnIndex = 4;           // "Author" column index (0-based)
         private const int PublicationYearColumnIndex = 7;  // "Publication Year" column index (0-based)
-        private const int DateAddedColumnIndex = 8;        // "Date Added" column index (0-based)
 
-        private enum SortColumn { None, Title, Author, PublicationYear, DateAdded, CallNumber }
+        private enum SortColumn { None, Title, Author, PublicationYear, CallNumber }
         private SortColumn _activeSort = SortColumn.Title; // default
 
         public UCCatalog()
@@ -1047,6 +1045,7 @@ namespace LMS.Presentation.UserControls
                     _imageIndexCache.Clear();
                     _lvSearchResults.SmallImageList = _lvImageList;
 
+                    // Columns (removed Date Added)
                     _lvSearchResults.Columns.Add("Cover", 70, HorizontalAlignment.Center);
                     _lvSearchResults.Columns.Add("Standard ID", 120, HorizontalAlignment.Left);
                     _lvSearchResults.Columns.Add("Call Number", 120, HorizontalAlignment.Left);
@@ -1055,7 +1054,7 @@ namespace LMS.Presentation.UserControls
                     _lvSearchResults.Columns.Add("Publisher", 180, HorizontalAlignment.Left);
                     _lvSearchResults.Columns.Add("Category", 140, HorizontalAlignment.Left);
                     _lvSearchResults.Columns.Add("Publication Year", 100, HorizontalAlignment.Left);
-                    _lvSearchResults.Columns.Add("Date Added", 140, HorizontalAlignment.Left); // NEW
+                    // _lvSearchResults.Columns.Add("Date Added", 140, HorizontalAlignment.Left); // removed
                     _lvSearchResults.Columns.Add("Action", 100, HorizontalAlignment.Center);
 
                     _lvSearchResults.MouseMove += LvSearchResults_MouseMove;
@@ -1122,12 +1121,6 @@ namespace LMS.Presentation.UserControls
                         item.SubItems.Add(publisher ?? string.Empty);
                         item.SubItems.Add(dto.Category ?? string.Empty);
                         item.SubItems.Add(year ?? string.Empty);
-
-                        // Date Added column (use ISO date format; empty if default)
-                        string dateAddedText = (dto.DateAdded != DateTime.MinValue && dto.DateAdded != default(DateTime))
-                            ? dto.DateAdded.ToString("yyyy-MM-dd")
-                            : string.Empty;
-                        item.SubItems.Add(dateAddedText);
 
                         bool isAvailable = string.Equals(dto.Status, "Available", StringComparison.OrdinalIgnoreCase)
                                            || string.Equals(dto.Status, "Available Online", StringComparison.OrdinalIgnoreCase);
@@ -1705,14 +1698,6 @@ namespace LMS.Presentation.UserControls
                 btnSortPubYear.Click += BtnSortPublicationYear_Click;
             }
 
-            // Wire up BtnSortDateAdded if present in designer
-            var btnSortDateAdded = this.Controls.Find("BtnSortDateAdded", true).FirstOrDefault() as Button;
-            if (btnSortDateAdded != null)
-            {
-                try { btnSortDateAdded.Click -= BtnSortDateAdded_Click; } catch { }
-                btnSortDateAdded.Click += BtnSortDateAdded_Click;
-            }
-
             // Wire up BtnSortCallNumber if present in designer
             var btnSortCallNumber = this.Controls.Find("BtnSortCallNumber", true).FirstOrDefault() as Button;
             if (btnSortCallNumber != null)
@@ -1745,14 +1730,6 @@ namespace LMS.Presentation.UserControls
         {
             _sortPublicationYearAscending = !_sortPublicationYearAscending;
             _activeSort = SortColumn.PublicationYear;
-            UpdateAllSortButtonTexts();
-            ApplyCurrentSort();
-        }
-
-        private void BtnSortDateAdded_Click(object sender, EventArgs e)
-        {
-            _sortDateAddedAscending = !_sortDateAddedAscending;
-            _activeSort = SortColumn.DateAdded;
             UpdateAllSortButtonTexts();
             ApplyCurrentSort();
         }
@@ -1802,17 +1779,6 @@ namespace LMS.Presentation.UserControls
                 catch { }
             }
 
-            // Date Added button
-            var btnDate = this.Controls.Find("BtnSortDateAdded", true).FirstOrDefault() as Button;
-            if (btnDate != null)
-            {
-                try
-                {
-                    btnDate.Text = (_activeSort == SortColumn.DateAdded) ? ("Date Added" + (_sortDateAddedAscending ? " ▲" : " ▼")) : "Date Added";
-                }
-                catch { }
-            }
-
             // Call Number button
             var btnCall = this.Controls.Find("BtnSortCallNumber", true).FirstOrDefault() as Button;
             if (btnCall != null)
@@ -1841,9 +1807,6 @@ namespace LMS.Presentation.UserControls
                         break;
                     case SortColumn.PublicationYear:
                         _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(PublicationYearColumnIndex, _sortPublicationYearAscending);
-                        break;
-                    case SortColumn.DateAdded:
-                        _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(DateAddedColumnIndex, _sortDateAddedAscending);
                         break;
                     case SortColumn.CallNumber:
                         _lvSearchResults.ListViewItemSorter = new ListViewItemComparer(CallNumberColumnIndex, _sortCallNumberAscending);
@@ -1883,7 +1846,6 @@ namespace LMS.Presentation.UserControls
                 {
                     if (_col == PublicationYearColumnIndex)
                     {
-                        // empty or non-numeric values should be treated as less-than numeric values
                         bool parsedX = int.TryParse(sx, out int vx);
                         bool parsedY = int.TryParse(sy, out int vy);
 
@@ -1900,10 +1862,6 @@ namespace LMS.Presentation.UserControls
 
                         // both non-numeric -> fall back to string compare
                     }
-
-                    // Optionally handle DateAdded as date sort in future:
-                    // if (_col == DateAddedColumnIndex) { ... parse DateTime ... }
-
                 }
                 catch
                 {

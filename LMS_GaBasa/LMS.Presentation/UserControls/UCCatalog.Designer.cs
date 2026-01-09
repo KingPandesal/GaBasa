@@ -83,7 +83,6 @@
             this.CmbBxMaterialFormat = new System.Windows.Forms.ComboBox();
             this.BtnSortTitle = new System.Windows.Forms.Button();
             this.BtnSortAuthor = new System.Windows.Forms.Button();
-            this.BtnSortDateAdded = new System.Windows.Forms.Button();
             this.BtnSortCallNumber = new System.Windows.Forms.Button();
             this.BtnSortPublicationYear = new System.Windows.Forms.Button();
             this.NumPckPublicationYearFrom = new System.Windows.Forms.NumericUpDown();
@@ -750,22 +749,6 @@
             this.BtnSortAuthor.Text = "Author";
             this.BtnSortAuthor.UseVisualStyleBackColor = false;
             // 
-            // BtnSortDateAdded
-            // 
-            this.BtnSortDateAdded.BackColor = System.Drawing.Color.White;
-            this.BtnSortDateAdded.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnSortDateAdded.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnSortDateAdded.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSortDateAdded.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.BtnSortDateAdded.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnSortDateAdded.Location = new System.Drawing.Point(671, 101);
-            this.BtnSortDateAdded.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnSortDateAdded.Name = "BtnSortDateAdded";
-            this.BtnSortDateAdded.Size = new System.Drawing.Size(138, 36);
-            this.BtnSortDateAdded.TabIndex = 71;
-            this.BtnSortDateAdded.Text = "Date Added";
-            this.BtnSortDateAdded.UseVisualStyleBackColor = false;
-            // 
             // BtnSortCallNumber
             // 
             this.BtnSortCallNumber.BackColor = System.Drawing.Color.White;
@@ -774,7 +757,7 @@
             this.BtnSortCallNumber.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSortCallNumber.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.BtnSortCallNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnSortCallNumber.Location = new System.Drawing.Point(830, 101);
+            this.BtnSortCallNumber.Location = new System.Drawing.Point(671, 101);
             this.BtnSortCallNumber.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSortCallNumber.Name = "BtnSortCallNumber";
             this.BtnSortCallNumber.Size = new System.Drawing.Size(154, 36);
@@ -790,7 +773,7 @@
             this.BtnSortPublicationYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSortPublicationYear.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.BtnSortPublicationYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnSortPublicationYear.Location = new System.Drawing.Point(1004, 101);
+            this.BtnSortPublicationYear.Location = new System.Drawing.Point(845, 101);
             this.BtnSortPublicationYear.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSortPublicationYear.Name = "BtnSortPublicationYear";
             this.BtnSortPublicationYear.Size = new System.Drawing.Size(181, 36);
@@ -858,7 +841,6 @@
             this.Controls.Add(this.NumPckPublicationYearFrom);
             this.Controls.Add(this.BtnSortPublicationYear);
             this.Controls.Add(this.BtnSortCallNumber);
-            this.Controls.Add(this.BtnSortDateAdded);
             this.Controls.Add(this.BtnSortAuthor);
             this.Controls.Add(this.BtnSortTitle);
             this.Controls.Add(this.FlwPnlBooks);
@@ -970,7 +952,6 @@
         private System.Windows.Forms.ComboBox CmbBxMaterialFormat;
         private System.Windows.Forms.Button BtnSortTitle;
         private System.Windows.Forms.Button BtnSortAuthor;
-        private System.Windows.Forms.Button BtnSortDateAdded;
         private System.Windows.Forms.Button BtnSortCallNumber;
         private System.Windows.Forms.Button BtnSortPublicationYear;
         private System.Windows.Forms.NumericUpDown NumPckPublicationYearFrom;
