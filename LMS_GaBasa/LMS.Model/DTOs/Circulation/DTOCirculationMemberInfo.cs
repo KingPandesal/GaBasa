@@ -22,6 +22,9 @@ namespace LMS.Model.DTOs.Circulation
         public int MaxBooksAllowed { get; set; }
         public decimal FineRate { get; set; }
 
+        // NEW: Max fine cap per member type
+        public decimal MaxFineCap { get; set; }
+
         // Borrowing statistics
         public int CurrentBorrowedCount { get; set; }
         public int OverdueCount { get; set; }
@@ -31,7 +34,10 @@ namespace LMS.Model.DTOs.Circulation
         public bool IsActive => string.Equals(Status, "Active", StringComparison.OrdinalIgnoreCase);
         public bool HasNoOverdue => OverdueCount == 0;
         public bool IsBorrowLimitOk => CurrentBorrowedCount < MaxBooksAllowed;
-        public bool IsFineWithinLimit => TotalUnpaidFines < 100m; // Configurable threshold
+
+        // Use MaxFineCap per member type to determine fine eligibility.
+        // If MaxFineCap is zero or negative treat as no allowed fines (blocked).
+        public bool IsFineWithinLimit => TotalUnpaidFines <= MaxFineCap;
 
         /// <summary>
         /// Returns true if the member can borrow books (all eligibility checks pass).

@@ -41,7 +41,8 @@ namespace LMS.DataAccess.Repositories
                         u.Photo AS PhotoPath,
                         m.ValidID AS ValidIdPath,
                         mt.MaxBooksAllowed,
-                        mt.FineRate
+                        mt.FineRate,
+                        mt.MaxFineCap
                     FROM [Member] m
                     INNER JOIN [User] u ON m.UserID = u.UserID
                     INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
@@ -64,8 +65,9 @@ namespace LMS.DataAccess.Repositories
                         Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "" : reader.GetString(reader.GetOrdinal("Status")),
                         PhotoPath = reader.IsDBNull(reader.GetOrdinal("PhotoPath")) ? null : reader.GetString(reader.GetOrdinal("PhotoPath")),
                         ValidIdPath = reader.IsDBNull(reader.GetOrdinal("ValidIdPath")) ? null : reader.GetString(reader.GetOrdinal("ValidIdPath")),
-                        MaxBooksAllowed = reader.GetInt32(reader.GetOrdinal("MaxBooksAllowed")),
-                        FineRate = reader.GetDecimal(reader.GetOrdinal("FineRate"))
+                        MaxBooksAllowed = reader.IsDBNull(reader.GetOrdinal("MaxBooksAllowed")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaxBooksAllowed")),
+                        FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate")),
+                        MaxFineCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap"))
                     };
                 }
             }

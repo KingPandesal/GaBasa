@@ -15,6 +15,8 @@ namespace LMS.Model.Models.Members
         public int RenewalLimit { get; set; }
         public bool ReservationPrivilege { get; set; }
         public decimal FineRate { get; set; }
+        public decimal MaxFineCap { get; set; }
+
     }
 
 }

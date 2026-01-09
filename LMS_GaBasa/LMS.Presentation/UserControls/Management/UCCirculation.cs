@@ -157,15 +157,16 @@ namespace LMS.Presentation.UserControls.Management
                 LblBorrowLimitOK.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
-            // Fine Limit check
+            // Fine Limit check - use MaxFineCap from member type
+            string capText = $"₱{memberInfo.MaxFineCap:N2}";
             if (memberInfo.IsFineWithinLimit)
             {
-                LblFineLimit.Text = "✔️ Fine within allowed limit";
+                LblFineLimit.Text = $"✔️ Fine within allowed limit ({capText})";
                 LblFineLimit.ForeColor = Color.FromArgb(0, 200, 0);
             }
             else
             {
-                LblFineLimit.Text = "❌ Fine exceeds limit (₱100)";
+                LblFineLimit.Text = $"❌ Fine exceeds limit ({capText})";
                 LblFineLimit.ForeColor = Color.FromArgb(200, 0, 0);
             }
         }
