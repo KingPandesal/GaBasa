@@ -9,6 +9,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using LMS.BusinessLogic.Services.BarcodeGenerator;
+using LMS.Presentation.BarcodeGenerator;
+using ZXing;
 
 namespace LMS.Presentation.Popup.Inventory
 {
@@ -469,50 +472,31 @@ namespace LMS.Presentation.Popup.Inventory
             try
             {
                 string folder = Path.Combine(Application.StartupPath, "Assets", "dataimages", "BookCopyBarcodes");
-                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
 
-                string filename = $"{accession}.png";
-                string full = Path.Combine(folder, filename);
+                // Use ZXingBarcodeGenerator for real, scannable CODE_128 barcodes
+                var barcodeGenerator = new ZXingBarcodeGenerator(
+                    folder,
+                    BarcodeFormat.CODE_128,
+                    width: 300,
+                    height: 100,
+                    margin: 10);
 
-                using (var bmp = GenerateSimpleBarcodeBitmap(accession, 600, 160))
+                var results = barcodeGenerator.GenerateMany(new[] { accession });
+
+                if (results.TryGetValue(accession, out string barcodePath) && !string.IsNullOrWhiteSpace(barcodePath))
                 {
-                    bmp.Save(full, ImageFormat.Png);
+                    // Return only the filename to keep DB column small
+                    return Path.GetFileName(barcodePath);
                 }
 
-                // store only the filename so DB column remains small (e.g. "TH-33-2026-0001.png")
-                return filename;
+                return null;
             }
             catch
             {
                 return null;
             }
-        }
-
-        // Simple placeholder barcode image (as PNG). Replace with ZXing for real barcodes.
-        private Bitmap GenerateSimpleBarcodeBitmap(string text, int width, int height)
-        {
-            var bmp = new Bitmap(Math.Max(200, width), Math.Max(80, height));
-            using (var g = Graphics.FromImage(bmp))
-            {
-                g.Clear(Color.White);
-                var rnd = new Random(text?.GetHashCode() ?? 0);
-                int x = 10;
-                while (x < bmp.Width - 10)
-                {
-                    int w = rnd.Next(2, 10);
-                    int h = bmp.Height - rnd.Next(40, 80);
-                    g.FillRectangle(Brushes.Black, new Rectangle(x, 10, w, h));
-                    x += w + rnd.Next(1, 5);
-                }
-
-                var font = new Font("Segoe UI", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
-                var rect = new Rectangle(0, bmp.Height - 36, bmp.Width, 30);
-                using (var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
-                {
-                    g.DrawString(text ?? string.Empty, font, Brushes.Black, rect, sf);
-                }
-            }
-            return bmp;
         }
 
         // DataGrid delete/edit handlers use staging: delete marks CopyID for deletion (or removes staged new)
