@@ -642,10 +642,10 @@
             this.CmbBxResourceType.FormattingEnabled = true;
             this.CmbBxResourceType.Items.AddRange(new object[] {
             "Book",
-            "Periodicals / Magazines",
-            "Theses / Dissertations",
+            "Periodical",
+            "Thesis",
             "Audio-Visual",
-            "E-Books"});
+            "E-Book"});
             this.CmbBxResourceType.Location = new System.Drawing.Point(173, 160);
             this.CmbBxResourceType.Name = "CmbBxResourceType";
             this.CmbBxResourceType.Size = new System.Drawing.Size(109, 29);

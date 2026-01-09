@@ -30,5 +30,13 @@ namespace LMS.BusinessLogic.Managers.Interfaces
             int? year = null,
             string callNumber = null,
             string accessionNumber = null);
+
+        // Author helper APIs used by the UI (exposed via interface so callers don't need to cast to CatalogManager)
+        List<Author> GetAllAuthors();
+        List<Author> GetAuthorsByRole(string role);
+        List<Author> GetAuthorsByBookIdAndRole(int bookId, string role);
+
+        // Publisher helper used by UI
+        List<Publisher> GetAllPublishers();
     }
 }

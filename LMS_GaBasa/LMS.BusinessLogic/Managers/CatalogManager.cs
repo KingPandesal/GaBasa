@@ -242,6 +242,25 @@ namespace LMS.BusinessLogic.Managers
             return result.OrderBy(b => b.Title).ToList();
         }
 
+        private string MapResourceType(ResourceType resourceType)
+        {
+            switch (resourceType)
+            {
+                case ResourceType.PhysicalBook:
+                    return "Book";
+                case ResourceType.Periodical:
+                    return "Periodical";
+                case ResourceType.Thesis:
+                    return "Thesis";
+                case ResourceType.AV:
+                    return "Audio-Visual";
+                case ResourceType.EBook:
+                    return "E-Book";
+                default:
+                    return "Unknown";
+            }
+        }
+
         private DTOCatalogBook MapToDTO(Book book, List<BookCopy> copies, DateTime dateAdded)
         {
             // Determine status
@@ -265,12 +284,20 @@ namespace LMS.BusinessLogic.Managers
             // Get category name
             string categoryName = GetCategoryName(book.CategoryID);
 
-            // Compose Authors (all authors) and first-copy location/accession for UI grid
-            string authorsAll = string.Empty;
+            // Compose Authors (prefer only those with Role = "Author", fall back to any authors)
+            string authorsAll = null;
             try
             {
                 var bas = _bookAuthorRepo.GetByBookId(book.BookID) ?? new List<BookAuthor>();
-                var names = bas
+
+                // Prefer relations with Role == "Author"
+                var roleBas = bas
+                    .Where(ba => !string.IsNullOrWhiteSpace(ba.Role) && string.Equals(ba.Role.Trim(), "Author", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                var sourceBas = roleBas.Count > 0 ? roleBas : bas;
+
+                var names = sourceBas
                     .Select(ba =>
                     {
                         var a = _authorRepo.GetById(ba.AuthorID);
@@ -314,6 +341,37 @@ namespace LMS.BusinessLogic.Managers
                 }
             }
 
+            // Map a stable resource-type label (keep labels short / matching combobox when possible)
+            string resourceLabel = null;
+            try
+            {
+                switch (book.ResourceType)
+                {
+                    case ResourceType.PhysicalBook:
+                        resourceLabel = "Book";
+                        break;
+                    case ResourceType.Periodical:
+                        resourceLabel = "Periodical";
+                        break;
+                    case ResourceType.Thesis:
+                        resourceLabel = "Thesis";
+                        break;
+                    case ResourceType.AV:
+                        resourceLabel = "Audio-Visual";
+                        break;
+                    case ResourceType.EBook:
+                        resourceLabel = "E-Book";
+                        break;
+                    default:
+                        resourceLabel = "Unknown";
+                        break;
+                }
+            }
+            catch
+            {
+                resourceLabel = "Unknown";
+            }
+
             return new DTOCatalogBook
             {
                 BookID = book.BookID,
@@ -334,99 +392,19 @@ namespace LMS.BusinessLogic.Managers
 
                 // Map Publisher name and PublicationYear explicitly
                 Publisher = publisherName,
-                PublicationYear = book.PublicationYear
-            };
-        }
+                PublicationYear = book.PublicationYear,
 
-        private DTOCatalogBook MapToDto(Book book, BookCopy firstCopy, IEnumerable<Author> bookAuthors)
-        {
-            if (book == null) return null;
+                // NEW: material format derived from ResourceType / DownloadURL
+                MaterialFormat = isDigital ? "Digital" : "Physical",
 
-            // Ensure we can compute availability/borrow count from copies
-            var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                // NEW: resource type label
+                ResourceType = resourceLabel,
 
-            // Determine status (same logic as MapToDTO)
-            bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
-            string status;
-            if (isDigital)
-            {
-                status = !string.IsNullOrWhiteSpace(book.DownloadURL) ? "Available Online" : "Unavailable";
-            }
-            else
-            {
-                int availableCopies = copies.Count(c => string.Equals(c.Status, "Available", StringComparison.OrdinalIgnoreCase));
-                status = availableCopies > 0 ? "Available" : "Unavailable";
-            }
+                // NEW: loan type (string stored in Book.LoanType)
+                LoanType = string.IsNullOrWhiteSpace(book.LoanType) ? null : book.LoanType.Trim(),
 
-            // Primary author / authors list
-            string authorName = null;
-            try
-            {
-                authorName = bookAuthors?.FirstOrDefault()?.FullName ?? GetPrimaryAuthor(book.BookID);
-            }
-            catch
-            {
-                authorName = GetPrimaryAuthor(book.BookID);
-            }
-
-            string authorsAll = null;
-            try
-            {
-                if (bookAuthors != null)
-                {
-                    var names = bookAuthors
-                        .Select(a => a.FullName?.Trim())
-                        .Where(n => !string.IsNullOrWhiteSpace(n))
-                        .Distinct(StringComparer.OrdinalIgnoreCase)
-                        .ToArray();
-                    authorsAll = names.Length > 0 ? string.Join(", ", names) : authorName;
-                }
-                else
-                {
-                    authorsAll = authorName;
-                }
-            }
-            catch
-            {
-                authorsAll = authorName;
-            }
-
-            // First-copy metadata (if provided)
-            string firstLocation = firstCopy?.Location;
-            string firstAccession = firstCopy?.AccessionNumber;
-
-            // DateAdded: prefer firstCopy.DateAdded, otherwise earliest copy date if available
-            DateTime dateAdded = DateTime.MinValue;
-            if (firstCopy != null)
-                dateAdded = firstCopy.DateAdded;
-            else if (copies.Count > 0)
-                dateAdded = copies.Min(c => c.DateAdded);
-
-            // BorrowCount: use copies.Count as a proxy (keeps previous behavior)
-            int borrowCount = copies.Count;
-
-            return new DTOCatalogBook
-            {
-                BookID = book.BookID,
-                Title = book.Title ?? "Untitled",
-                Category = book.Category?.Name,
-                Author = authorName,
-                Status = status,
-                // Book exposes 'CoverImage' (not CoverImagePath)
-                CoverImagePath = book.CoverImage,
-                DateAdded = dateAdded,
-                BorrowCount = borrowCount,
-                Authors = authorsAll,
-                FirstCopyLocation = firstLocation,
-                FirstCopyAccession = firstAccession,
-
-                // STRICT: map ISBN and CallNumber from Book columns only (no UI-side fallbacks)
-                ISBN = book.ISBN,
-                CallNumber = book.CallNumber,
-
-                // Map Publisher name and PublicationYear explicitly
-                Publisher = book.Publisher?.Name,
-                PublicationYear = book.PublicationYear
+                // NEW: language mapped from book.Language
+                Language = string.IsNullOrWhiteSpace(book.Language) ? null : book.Language.Trim()
             };
         }
 
@@ -500,6 +478,92 @@ namespace LMS.BusinessLogic.Managers
             {
                 return new List<Publisher>();
             }
+        }
+
+        public List<Author> GetAuthorsByRole(string role)
+        {
+            var result = new List<Author>();
+            if (string.IsNullOrWhiteSpace(role))
+                return result;
+
+            try
+            {
+                var allBooks = _bookRepo.GetAll() ?? new List<Book>();
+                var seen = new HashSet<int>();
+
+                foreach (var book in allBooks)
+                {
+                    var bas = _bookAuthorRepo.GetByBookId(book.BookID) ?? new List<BookAuthor>();
+                    foreach (var ba in bas)
+                    {
+                        if (ba == null) continue;
+                        if (!string.Equals(ba.Role ?? string.Empty, role, StringComparison.OrdinalIgnoreCase)) continue;
+
+                        try
+                        {
+                            var author = _authorRepo.GetById(ba.AuthorID);
+                            if (author != null && !seen.Contains(author.AuthorID))
+                            {
+                                seen.Add(author.AuthorID);
+                                result.Add(author);
+                            }
+                        }
+                        catch
+                        {
+                            // ignore individual author load failures
+                        }
+                    }
+                }
+
+                // Sort by name for predictable UI order
+                result = result.OrderBy(a => a.FullName, StringComparer.CurrentCultureIgnoreCase).ToList();
+            }
+            catch
+            {
+                // swallow exceptions and return what we have (empty on failure)
+            }
+
+            return result; 
+        }
+
+        public List<Author> GetAuthorsByBookIdAndRole(int bookId, string role)
+        {
+            var result = new List<Author>();
+            if (bookId <= 0 || string.IsNullOrWhiteSpace(role))
+                return result;
+
+            try
+            {
+                var bas = _bookAuthorRepo.GetByBookId(bookId) ?? new List<BookAuthor>();
+                var seen = new HashSet<int>();
+                foreach (var ba in bas)
+                {
+                    if (ba == null) continue;
+                    if (!string.Equals(ba.Role ?? string.Empty, role, StringComparison.OrdinalIgnoreCase)) continue;
+
+                    try
+                    {
+                        var author = _authorRepo.GetById(ba.AuthorID);
+                        if (author != null && !seen.Contains(author.AuthorID))
+                        {
+                            seen.Add(author.AuthorID);
+                            result.Add(author);
+                        }
+                    }
+                    catch
+                    {
+                        // ignore individual failures
+                    }
+                }
+
+                result = result.OrderBy(a => a.FullName, StringComparer.CurrentCultureIgnoreCase).ToList();
+            }
+            catch
+            {
+                // swallow - return what we have (possibly empty)
+            }
+
+            return result;
         }
     }
 }

@@ -81,6 +81,8 @@ namespace LMS.Presentation.UserControls
             {
                 Debug.WriteLine("Failed to set AutoScrollMinSize: " + ex);
             }
+
+            try { WireFilterControls(); } catch { }
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
@@ -384,7 +386,22 @@ namespace LMS.Presentation.UserControls
             var ctrl = this.Controls.Find("TxtSearch", true).FirstOrDefault();
             var txt = ctrl != null ? (ctrl.Text ?? string.Empty).Trim() : string.Empty;
 
-            if (string.IsNullOrWhiteSpace(txt))
+            // If there's no query and no advanced filters, show catalog panels
+            var filters = GetSearchFilters();
+            bool hasAnyFilter = !string.IsNullOrWhiteSpace(filters.Query) ||
+                                !string.IsNullOrWhiteSpace(filters.Category) ||
+                                !string.IsNullOrWhiteSpace(filters.Publisher) ||
+                                filters.Year.HasValue || filters.YearFrom.HasValue || filters.YearTo.HasValue ||
+                                !string.IsNullOrWhiteSpace(filters.CallNumber) ||
+                                !string.IsNullOrWhiteSpace(filters.AccessionNumber) ||
+                                !string.IsNullOrWhiteSpace(filters.Author) ||
+                                !string.IsNullOrWhiteSpace(filters.Language) ||
+                                !string.IsNullOrWhiteSpace(filters.Availability) ||
+                                !string.IsNullOrWhiteSpace(filters.ResourceType) ||
+                                !string.IsNullOrWhiteSpace(filters.LoanType) ||
+                                !string.IsNullOrWhiteSpace(filters.MaterialFormat);
+
+            if (!hasAnyFilter)
             {
                 ClearSearchResults();
                 ShowCatalogPanels();
@@ -393,33 +410,361 @@ namespace LMS.Presentation.UserControls
 
             HideCatalogPanels();
 
-            var filters = GetSearchFilters();
+            List<DTOCatalogBook> results = new List<DTOCatalogBook>();
 
-            List<DTOCatalogBook> results = null;
             try
             {
-                results = _catalogManager.SearchCatalog(filters.Query,
-                    filters.Category,
-                    filters.Publisher,
-                    filters.Year,
-                    filters.CallNumber,
-                    filters.AccessionNumber);
+                // get all DTOs (avoid calling SearchCatalog with all-null which intentionally returns empty)
+                var all = new List<DTOCatalogBook>();
+                try
+                {
+                    all = _catalogManager.GetPopularBooks(int.MaxValue) ?? new List<DTOCatalogBook>();
+                }
+                catch
+                {
+                    try { all = _catalogManager.SearchCatalog("the", null, null, null, null, null) ?? new List<DTOCatalogBook>(); } catch { all = new List<DTOCatalogBook>(); }
+                }
+
+                Func<string, string, bool> contains = (src, term) =>
+                {
+                    if (string.IsNullOrWhiteSpace(src) || string.IsNullOrWhiteSpace(term)) return false;
+                    return src.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+                };
+
+                var predicates = new List<Func<DTOCatalogBook, bool>>();
+
+                // tokens
+                var tokens = string.IsNullOrWhiteSpace(filters.Query)
+                    ? new string[0]
+                    : filters.Query.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                          .Select(t => t.Trim()).Where(t => t.Length > 0).ToArray();
+
+                if (tokens.Length > 0)
+                {
+                    Func<DTOCatalogBook, string> combinedText = dto =>
+                        string.Join(" ", new[]
+                        {
+                            dto?.Title ?? string.Empty,
+                            dto?.Authors ?? string.Empty,
+                            dto?.Author ?? string.Empty,
+                            dto?.ISBN ?? string.Empty,
+                            dto?.Publisher ?? string.Empty,
+                            dto?.Category ?? string.Empty,
+                            dto?.CallNumber ?? string.Empty,
+                            dto?.FirstCopyAccession ?? string.Empty
+                        });
+
+                    if (filters.Logic == SearchFilters.LogicMode.And)
+                    {
+                        predicates.Add(dto =>
+                        {
+                            var txtAll = combinedText(dto);
+                            return tokens.All(t => contains(txtAll, t));
+                        });
+                    }
+                    else
+                    {
+                        predicates.Add(dto =>
+                        {
+                            var txtAll = combinedText(dto);
+                            return tokens.Any(t => contains(txtAll, t));
+                        });
+                    }
+                }
+
+                // Helper: skip adding predicate for placeholder "All"
+                Func<string, bool> isMeaningful = s => !string.IsNullOrWhiteSpace(s) && !s.Equals("All", StringComparison.OrdinalIgnoreCase);
+
+                // Author
+                if (isMeaningful(filters.Author))
+                {
+                    var author = filters.Author.Trim();
+                    predicates.Add(dto =>
+                    {
+                        try
+                        {
+                            // Prefer authoritative book-level author relationship (only role = "Author")
+                            try
+                            {
+                                var roleAuthors = _catalogManager.GetAuthorsByBookIdAndRole(dto.BookID, "Author");
+                                if (roleAuthors != null && roleAuthors.Count > 0)
+                                {
+                                    // return true if any role-author matches (case-insensitive substring or exact)
+                                    foreach (var a in roleAuthors)
+                                    {
+                                        var name = (a?.FullName ?? string.Empty).Trim();
+                                        if (string.IsNullOrWhiteSpace(name)) continue;
+                                        if (name.Equals(author, StringComparison.OrdinalIgnoreCase)) return true;
+                                        if (name.IndexOf(author, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                                    }
+                                    return false;
+                                }
+                            }
+                            catch
+                            {
+                                // fall through to DTO-based matching on error
+                            }
+
+                            // Fallback: match against DTO fields (Authors / Author), supports comma-separated tokens
+                            return AuthorMatchesFilter(dto, author);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    });
+                }
+
+                // Category
+                if (isMeaningful(filters.Category))
+                {
+                    var cat = filters.Category.Trim();
+                    predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.Category) && string.Equals(dto.Category.Trim(), cat, StringComparison.OrdinalIgnoreCase));
+                }
+
+                // Publisher
+                if (isMeaningful(filters.Publisher))
+                {
+                    var pub = filters.Publisher.Trim();
+                    predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.Publisher) && dto.Publisher.IndexOf(pub, StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                // Language (reflection) -- skip filter if DTO doesn't expose Language
+                if (isMeaningful(filters.Language))
+                {
+                    var lang = filters.Language.Trim();
+                    predicates.Add(dto =>
+                    {
+                        try
+                        {
+                            var prop = dto.GetType().GetProperty("Language");
+                            if (prop == null) return true; // skip filter when DTO lacks the property
+                            var val = prop.GetValue(dto) as string;
+                            return string.IsNullOrWhiteSpace(val) ? false : string.Equals(val.Trim(), lang, StringComparison.OrdinalIgnoreCase);
+                        }
+                        catch { return false; }
+                    });
+                }
+
+                // Availability -> Status
+                if (isMeaningful(filters.Availability))
+                {
+                    var avail = filters.Availability.Trim();
+                    predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.Status) && string.Equals(dto.Status.Trim(), avail, StringComparison.OrdinalIgnoreCase));
+                }
+
+                // ResourceType (reflection) -- skip when DTO doesn't contain the property
+                if (isMeaningful(filters.ResourceType))
+                {
+                    var target = filters.ResourceType.Trim();
+                    predicates.Add(dto =>
+                    {
+                        try
+                        {
+                            var prop = dto.GetType().GetProperty("ResourceType");
+                            if (prop == null) return true;
+                            var val = prop.GetValue(dto) as string;
+                            return string.IsNullOrWhiteSpace(val) ? false : string.Equals(val.Trim(), target, StringComparison.OrdinalIgnoreCase);
+                        }
+                        catch { return false; }
+                    });
+                }
+
+                // LoanType (reflection)
+                if (isMeaningful(filters.LoanType))
+                {
+                    var target = filters.LoanType.Trim();
+                    predicates.Add(dto =>
+                    {
+                        try
+                        {
+                            var prop = dto.GetType().GetProperty("LoanType");
+                            if (prop == null) return true;
+                            var val = prop.GetValue(dto) as string;
+                            return string.IsNullOrWhiteSpace(val) ? false : string.Equals(val.Trim(), target, StringComparison.OrdinalIgnoreCase);
+                        }
+                        catch { return false; }
+                    });
+                }
+
+                // MaterialFormat (reflection)
+                if (isMeaningful(filters.MaterialFormat))
+                {
+                    var target = filters.MaterialFormat.Trim();
+                    predicates.Add(dto =>
+                    {
+                        try
+                        {
+                            var prop = dto.GetType().GetProperty("MaterialFormat");
+                            if (prop == null) return true;
+                            var val = prop.GetValue(dto) as string;
+                            return string.IsNullOrWhiteSpace(val) ? false : string.Equals(val.Trim(), target, StringComparison.OrdinalIgnoreCase);
+                        }
+                        catch { return false; }
+                    });
+                }
+
+                // Call number
+                if (isMeaningful(filters.CallNumber))
+                {
+                    var cnum = filters.CallNumber.Trim();
+                    predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.CallNumber) && dto.CallNumber.IndexOf(cnum, StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                // Accession number
+                if (isMeaningful(filters.AccessionNumber))
+                {
+                    var acc = filters.AccessionNumber.Trim();
+                    predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.FirstCopyAccession) && dto.FirstCopyAccession.IndexOf(acc, StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                // Year range / exact year
+                if (filters.YearFrom.HasValue || filters.YearTo.HasValue)
+                {
+                    int from = filters.YearFrom ?? int.MinValue;
+                    int to = filters.YearTo ?? int.MaxValue;
+                    predicates.Add(dto => dto.PublicationYear > 0 && dto.PublicationYear >= from && dto.PublicationYear <= to);
+                }
+                else if (filters.Year.HasValue)
+                {
+                    int y = filters.Year.Value;
+                    predicates.Add(dto => dto.PublicationYear == y);
+                }
+
+                // Combine predicates according to logic. If no predicates were created, treat candidate set as 'all'
+                if (predicates.Count == 0)
+                {
+                    results = all.ToList();
+                }
+                else
+                {
+                    if (filters.Logic == SearchFilters.LogicMode.And)
+                        results = all.Where(dto => predicates.All(p => SafeInvokePredicate(p, dto))).ToList();
+                    else if (filters.Logic == SearchFilters.LogicMode.Or)
+                        results = all.Where(dto => predicates.Any(p => SafeInvokePredicate(p, dto))).ToList();
+                    else // Not
+                        results = all.Where(dto => predicates.All(p => !SafeInvokePredicate(p, dto))).ToList();
+                }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("SearchCatalog failed: " + ex);
+                Debug.WriteLine("PerformSearch failed: " + ex);
                 MessageBox.Show("Search failed. See logs for details.", "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             ShowSearchResults(results);
         }
 
-        // The existing TextChanged handler is intentionally left in the file (unused) so designer or third-party control
-        // behavior won't break if an event gets wired elsewhere. But it no longer triggers the live search.
+        // small helper to guard predicate execution from exceptions
+        private static bool SafeInvokePredicate(Func<DTOCatalogBook, bool> pred, DTOCatalogBook dto)
+        {
+            try { return pred(dto); }
+            catch { return false; }
+        }
+
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             // Intentionally left blank to avoid running search while typing.
             // Use Enter key to perform search (handled by TxtSearch_KeyDown).
+        }
+
+        private void WireFilterControls()
+        {
+            try
+            {
+                // Apply / Reset buttons (use designer names)
+                var btnApply = this.Controls.Find("BtnApplyFilter", true).FirstOrDefault() as Button;
+                if (btnApply != null)
+                {
+                    try { btnApply.Click -= ApplyFilters_Click; } catch { }
+                    btnApply.Click += ApplyFilters_Click;
+                }
+
+                var btnReset = this.Controls.Find("BtnResetFilter", true).FirstOrDefault() as Button;
+                if (btnReset != null)
+                {
+                    try { btnReset.Click -= ResetFilters_Click; } catch { }
+                    btnReset.Click += ResetFilters_Click;
+                }
+
+                // Radio buttons - use designer names and default to AND
+                var rAnd = this.Controls.Find("RdoBtnBooleanAND", true).FirstOrDefault() as RadioButton;
+                var rOr = this.Controls.Find("RdoBtnBooleanOR", true).FirstOrDefault() as RadioButton;
+                var rNot = this.Controls.Find("RdoBtnBooleanNOT", true).FirstOrDefault() as RadioButton;
+                if (rAnd != null && rOr != null && rNot != null)
+                {
+                    rAnd.Checked = true;
+                }
+
+                // Also wire numeric up-down value changed handlers (designer names)
+                var numFrom = this.Controls.Find("NumPckPublicationYearFrom", true).FirstOrDefault() as NumericUpDown;
+                var numTo = this.Controls.Find("NumPckPublicationYearTo", true).FirstOrDefault() as NumericUpDown;
+                if (numFrom != null)
+                {
+                    try { numFrom.ValueChanged -= NumPckPublicationYear_ValueChanged; } catch { }
+                    numFrom.ValueChanged += NumPckPublicationYear_ValueChanged;
+                }
+                if (numTo != null)
+                {
+                    try { numTo.ValueChanged -= NumPckPublicationYear_ValueChanged; } catch { }
+                    numTo.ValueChanged += NumPckPublicationYear_ValueChanged;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("WireFilterControls failed: " + ex);
+            }
+        }
+
+        private void ApplyFilters_Click(object sender, EventArgs e)
+        {
+            PerformSearch();
+        }
+
+        private void ResetFilters_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Clear text search
+                var txt = this.Controls.Find("TxtSearch", true).FirstOrDefault() as TextBox;
+                if (txt != null) txt.Text = string.Empty;
+
+                // Reset combos to first item (designer names)
+                var names = new[] { "CmbBxAuthor", "CmbBxCategory", "CmbBxPublisher", "CmbBxLanguage", "CmbBxAvailability", "CmbBxResourceType", "CmbBxLoanType", "CmbBxMaterialFormat" };
+                foreach (var n in names)
+                {
+                    var c = this.Controls.Find(n, true).FirstOrDefault() as ComboBox;
+                    if (c != null)
+                    {
+                        if (c.Items.Count > 0)
+                        {
+                            try { c.SelectedIndex = 0; } catch { try { c.Text = "All"; } catch { } }
+                        }
+                        else
+                        {
+                            try { c.Text = "All"; } catch { }
+                        }
+                    }
+                }
+
+                // Reset numeric year picks (designer names)
+                var nyFrom = this.Controls.Find("NumPckPublicationYearFrom", true).FirstOrDefault() as NumericUpDown;
+                var nyTo = this.Controls.Find("NumPckPublicationYearTo", true).FirstOrDefault() as NumericUpDown;
+                if (nyFrom != null) nyFrom.Value = nyFrom.Minimum;
+                if (nyTo != null) nyTo.Value = nyTo.Maximum;
+
+                // Reset radio logic to AND if present (designer names)
+                var rAnd = this.Controls.Find("RdoBtnBooleanAND", true).FirstOrDefault() as RadioButton;
+                if (rAnd != null) rAnd.Checked = true;
+
+                // Clear results and show catalog panels
+                ClearSearchResults();
+                ShowCatalogPanels();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("ResetFilters_Click failed: " + ex);
+            }
         }
 
         private class SearchFilters
@@ -427,22 +772,67 @@ namespace LMS.Presentation.UserControls
             public string Query { get; set; }
             public string Category { get; set; }
             public string Publisher { get; set; }
-            public int? Year { get; set; }
+            public int? Year { get; set; }            // kept for single-year exact match when used
+            public int? YearFrom { get; set; }        // range start
+            public int? YearTo { get; set; }          // range end
             public string CallNumber { get; set; }
             public string AccessionNumber { get; set; }
             public bool FullText { get; set; }
+
+            public string Author { get; set; }
+            public string Language { get; set; }
+
+            // Added filter fields for designer combo boxes
+            public string Availability { get; set; }
+            public string ResourceType { get; set; }
+            public string LoanType { get; set; }
+            public string MaterialFormat { get; set; }
+
+            public enum LogicMode { And, Or, Not }
+            public LogicMode Logic { get; set; } = LogicMode.And;
         }
 
         private SearchFilters GetSearchFilters()
         {
             var f = new SearchFilters();
 
+            // Title (keep as-is)
             string title = ReadControlText("TxtTitle");
-            string author = ReadControlText("TxtAuthor");
+
+            // Robust author read: prefer SelectedItem when it's an Author object, otherwise fall back to Text
+            string author = string.Empty;
+            try
+            {
+                var cmbAuthor = this.Controls.Find("CmbBxAuthor", true).FirstOrDefault() as ComboBox;
+                if (cmbAuthor != null)
+                {
+                    var sel = cmbAuthor.SelectedItem;
+                    if (sel is Author a)
+                        author = (a.FullName ?? string.Empty).Trim();
+                    else
+                        author = (cmbAuthor.Text ?? string.Empty).Trim();
+
+                    // Normalise "All" to empty
+                    if (string.Equals(author, "All", StringComparison.OrdinalIgnoreCase))
+                        author = string.Empty;
+                }
+                else
+                {
+                    // Fallback
+                    author = ReadControlText("CmbBxAuthor");
+                    if (string.Equals(author, "All", StringComparison.OrdinalIgnoreCase)) author = string.Empty;
+                }
+            }
+            catch
+            {
+                author = ReadControlText("CmbBxAuthor");
+                if (string.Equals(author, "All", StringComparison.OrdinalIgnoreCase)) author = string.Empty;
+            }
+
             string isbn = ReadControlText("TxtISBN");
             string subject = ReadControlText("TxtSubject");
-            string category = ReadControlText("CmbCategory");
-            string publisher = ReadControlText("TxtPublisher");
+            string category = ReadControlText("CmbBxCategory");
+            string publisher = ReadControlText("CmbBxPublisher");
             string yearText = ReadControlText("TxtYear");
             string callNumber = ReadControlText("TxtCallNumber");
             string accession = ReadControlText("TxtAccessionNumber");
@@ -456,22 +846,79 @@ namespace LMS.Presentation.UserControls
 
             if (!string.IsNullOrWhiteSpace(mainQuery)) parts.Add(mainQuery);
             if (!string.IsNullOrWhiteSpace(title)) parts.Add($"title:{title}");
-            if (!string.IsNullOrWhiteSpace(author)) parts.Add($"author:{author}");
+            // if (!string.IsNullOrWhiteSpace(author)) parts.Add($"author:{author}");
             if (!string.IsNullOrWhiteSpace(isbn)) parts.Add($"isbn:{isbn}");
             if (!string.IsNullOrWhiteSpace(subject)) parts.Add($"subject:{subject}");
 
             f.Query = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
 
-            f.Category = string.IsNullOrWhiteSpace(category) ? null : category;
-            f.Publisher = string.IsNullOrWhiteSpace(publisher) ? null : publisher;
+            f.Category = string.IsNullOrWhiteSpace(category) || string.Equals(category, "All", StringComparison.OrdinalIgnoreCase) ? null : category;
+            f.Publisher = string.IsNullOrWhiteSpace(publisher) || string.Equals(publisher, "All", StringComparison.OrdinalIgnoreCase) ? null : publisher;
             f.CallNumber = string.IsNullOrWhiteSpace(callNumber) ? null : callNumber;
             f.AccessionNumber = string.IsNullOrWhiteSpace(accession) ? null : accession;
             f.FullText = fullText;
 
-            if (int.TryParse(yearText, out int y))
-                f.Year = y;
+            // Year range numeric controls (designer names)
+            var numFrom = this.Controls.Find("NumPckPublicationYearFrom", true).FirstOrDefault() as NumericUpDown;
+            var numTo = this.Controls.Find("NumPckPublicationYearTo", true).FirstOrDefault() as NumericUpDown;
+            if (numFrom != null && numTo != null)
+            {
+                int yFrom = Convert.ToInt32(numFrom.Value);
+                int yTo = Convert.ToInt32(numTo.Value);
+                if (yFrom > 0) f.YearFrom = yFrom;
+                if (yTo > 0) f.YearTo = yTo;
+            }
             else
-                f.Year = null;
+            {
+                // keep single-year textbox as fallback
+                if (int.TryParse(yearText, out int y))
+                    f.Year = y;
+                else
+                    f.Year = null;
+            }
+
+            // Use the normalized author value
+            f.Author = string.IsNullOrWhiteSpace(author) ? null : author;
+
+            var lang = ReadControlText("CmbBxLanguage");
+            f.Language = string.IsNullOrWhiteSpace(lang) || string.Equals(lang, "All", StringComparison.OrdinalIgnoreCase) ? null : lang;
+
+            // Read combo filters (designer names). Map availability synonyms to DTO values.
+            var availRaw = ReadControlText("CmbBxAvailability");
+            if (string.IsNullOrWhiteSpace(availRaw) || string.Equals(availRaw, "All", StringComparison.OrdinalIgnoreCase))
+            {
+                f.Availability = null;
+            }
+            else
+            {
+                var a = availRaw.Trim();
+                // Normalize common UI labels to the DTO.Status values used by CatalogManager ("Available", "Available Online", "Unavailable")
+                if (a.Equals("Out of Stock", StringComparison.OrdinalIgnoreCase) || a.Equals("Unavailable", StringComparison.OrdinalIgnoreCase) || a.Equals("OutOfStock", StringComparison.OrdinalIgnoreCase))
+                    f.Availability = "Unavailable";
+                else if (a.Equals("Available Online", StringComparison.OrdinalIgnoreCase) || a.Equals("Available (Online)", StringComparison.OrdinalIgnoreCase))
+                    f.Availability = "Available Online";
+                else if (a.Equals("Available", StringComparison.OrdinalIgnoreCase))
+                    f.Availability = "Available";
+                else
+                    f.Availability = a;
+            }
+
+            var resType = ReadControlText("CmbBxResourceType");
+            f.ResourceType = string.IsNullOrWhiteSpace(resType) || string.Equals(resType, "All", StringComparison.OrdinalIgnoreCase) ? null : resType;
+
+            var loanType = ReadControlText("CmbBxLoanType");
+            f.LoanType = string.IsNullOrWhiteSpace(loanType) || string.Equals(loanType, "All", StringComparison.OrdinalIgnoreCase) ? null : loanType;
+
+            var matFmt = ReadControlText("CmbBxMaterialFormat");
+            f.MaterialFormat = string.IsNullOrWhiteSpace(matFmt) || string.Equals(matFmt, "All", StringComparison.OrdinalIgnoreCase) ? null : matFmt;
+
+            // Logic radio buttons (designer names)
+            var rAnd = this.Controls.Find("RdoBtnBooleanAND", true).FirstOrDefault() as RadioButton;
+            var rOr = this.Controls.Find("RdoBtnBooleanOR", true).FirstOrDefault() as RadioButton;
+            var rNot = this.Controls.Find("RdoBtnBooleanNOT", true).FirstOrDefault() as RadioButton;
+            if (rOr != null && rOr.Checked) f.Logic = SearchFilters.LogicMode.Or;
+            else if (rNot != null && rNot.Checked) f.Logic = SearchFilters.LogicMode.Not;
+            else f.Logic = SearchFilters.LogicMode.And;
 
             return f;
         }
@@ -485,12 +932,42 @@ namespace LMS.Presentation.UserControls
             {
                 case TextBox tb:
                     return tb.Text?.Trim() ?? string.Empty;
+
                 case ComboBox cb:
-                    return (cb.SelectedItem?.ToString() ?? cb.Text)?.Trim() ?? string.Empty;
+                    // Prefer the displayed text (works for data-bound combos where DisplayMember is set).
+                    var displayed = (cb.Text ?? string.Empty).Trim();
+                    if (!string.IsNullOrEmpty(displayed))
+                        return displayed;
+
+                    // If Text is empty, try to derive a meaningful string from the SelectedItem,
+                    // handling common bound types used in this control.
+                    var sel = cb.SelectedItem;
+                    if (sel != null)
+                    {
+                        try
+                        {
+                            // Known DTO / Model types used as DataSource
+                            if (sel is Author author) return (author.FullName ?? string.Empty).Trim();
+                            if (sel is Category category) return (category.Name ?? string.Empty).Trim();
+                            if (sel is Publisher publisher) return (publisher.Name ?? string.Empty).Trim();
+
+                            // Fallback to SelectedItem.ToString()
+                            return sel.ToString().Trim();
+                        }
+                        catch
+                        {
+                            // swallow and fall through to safe return
+                        }
+                    }
+
+                    return string.Empty;
+
                 case Label lb:
                     return lb.Text?.Trim() ?? string.Empty;
+
                 case NumericUpDown nud:
                     return nud.Value.ToString();
+
                 default:
                     var prop = c.GetType().GetProperty("Text");
                     if (prop != null)
@@ -587,17 +1064,42 @@ namespace LMS.Presentation.UserControls
                         string isbn = (dto.ISBN ?? string.Empty).Trim();
                         string callNumber = (dto.CallNumber ?? string.Empty).Trim();
 
-                        // If you want to detect missing mappings, uncomment a debug line:
-                        // if (string.IsNullOrEmpty(isbn)) Debug.WriteLine($"DTO BookID={dto.BookID} has no ISBN mapped.");
-                        // if (string.IsNullOrEmpty(callNumber)) Debug.WriteLine($"DTO BookID={dto.BookID} has no CallNumber mapped.");
-
                         string publisher = dto.Publisher ?? string.Empty;
                         string year = dto.PublicationYear > 0 ? dto.PublicationYear.ToString() : string.Empty;
 
                         item.SubItems.Add(isbn);
                         item.SubItems.Add(callNumber);
                         item.SubItems.Add(dto.Title ?? string.Empty);
-                        item.SubItems.Add(dto.Authors ?? dto.Author ?? string.Empty);
+                        
+                        string authorsDisplay = string.Empty;
+                        try
+                        {
+                            // Prefer authors for this book with role = "Author"
+                            try
+                            {
+                                var auths = _catalogManager.GetAuthorsByBookIdAndRole(dto.BookID, "Author");
+                                if (auths != null && auths.Count > 0)
+                                {
+                                    authorsDisplay = string.Join(", ",
+                                        auths.Select(a => (a?.FullName ?? string.Empty).Trim())
+                                             .Where(n => !string.IsNullOrWhiteSpace(n)));
+                                }
+                            }
+                            catch
+                            {
+                                authorsDisplay = null;
+                            }
+                        }
+                        catch
+                        {
+                            authorsDisplay = null;
+                        }
+
+                        // Fallback to DTO values when no role-author information available
+                        if (string.IsNullOrWhiteSpace(authorsDisplay))
+                            authorsDisplay = dto.Authors ?? dto.Author ?? string.Empty;
+
+                        item.SubItems.Add(authorsDisplay);
                         item.SubItems.Add(publisher ?? string.Empty);
                         item.SubItems.Add(dto.Category ?? string.Empty);
                         item.SubItems.Add(year ?? string.Empty);
@@ -798,22 +1300,6 @@ namespace LMS.Presentation.UserControls
             return -1;
         }
 
-        private string GetDtoPropertyString(DTOCatalogBook dto, string propName)
-        {
-            if (dto == null || string.IsNullOrWhiteSpace(propName)) return string.Empty;
-            try
-            {
-                var pi = dto.GetType().GetProperty(propName);
-                if (pi != null)
-                {
-                    var val = pi.GetValue(dto);
-                    if (val == null) return string.Empty;
-                    return val.ToString();
-                }
-            }
-            catch { }
-            return string.Empty;
-        }
 
         private Form CreateViewBookDetailsIfAvailable(int bookId)
         {
@@ -856,14 +1342,47 @@ namespace LMS.Presentation.UserControls
                 if (cmbAuthor != null)
                 {
                     List<Author> authors = null;
-                    try { authors = (_catalogManager as CatalogManager)?.GetAllAuthors() ?? new List<Author>(); } catch { authors = new List<Author>(); }
+                    try
+                    {
+                        // Prefer authors who appear with role = "Author" in BookAuthor relationships
+                        authors = _catalogManager.GetAuthorsByRole("Author") ?? new List<Author>();
 
+                        // If none found (e.g., older DB or no role data), fallback to all authors
+                        if (authors == null || authors.Count == 0)
+                            authors = _catalogManager.GetAllAuthors() ?? new List<Author>();
+                    }
+                    catch
+                    {
+                        authors = new List<Author>();
+                    }
+
+                    // Deduplicate and sort by FullName (defensive)
+                    var distinct = authors
+                        .Where(a => a != null && !string.IsNullOrWhiteSpace(a.FullName))
+                        .GroupBy(a => a.FullName.Trim(), StringComparer.OrdinalIgnoreCase)
+                        .Select(g => g.First())
+                        .OrderBy(a => a.FullName, StringComparer.CurrentCultureIgnoreCase)
+                        .ToList();
+
+                    // Build items with "All" first
                     var authorItems = new List<Author> { new Author { AuthorID = 0, FullName = "All" } };
-                    authorItems.AddRange(authors);
-                    cmbAuthor.DisplayMember = "FullName";
-                    cmbAuthor.ValueMember = "AuthorID";
-                    cmbAuthor.DataSource = authorItems;
-                    cmbAuthor.SelectedIndex = 0;
+                    authorItems.AddRange(distinct);
+
+                    // Populate Items directly to avoid DataSource binding quirks
+                    try
+                    {
+                        cmbAuthor.DataSource = null;
+                        cmbAuthor.Items.Clear();
+                        cmbAuthor.DisplayMember = "FullName";
+                        cmbAuthor.ValueMember = "AuthorID";
+                        foreach (var a in authorItems)
+                            cmbAuthor.Items.Add(a);
+                        cmbAuthor.SelectedIndex = 0;
+                    }
+                    catch
+                    {
+                        try { cmbAuthor.Text = "All"; } catch { }
+                    }
                 }
 
                 // Categories -> CmbCategory
@@ -884,7 +1403,7 @@ namespace LMS.Presentation.UserControls
                 if (cmbPublisher != null)
                 {
                     List<Publisher> pubs = null;
-                    try { pubs = (_catalogManager as CatalogManager)?.GetAllPublishers() ?? new PublisherRepository().GetAll() ?? new List<Publisher>(); } catch { pubs = new List<Publisher>(); }
+                    try { pubs = _catalogManager.GetAllPublishers() ?? new PublisherRepository().GetAll() ?? new List<Publisher>(); } catch { pubs = new List<Publisher>(); }
 
                     var pubItems = new List<Publisher> { new Publisher { PublisherID = 0, Name = "All" } };
                     pubItems.AddRange(pubs);
@@ -894,28 +1413,242 @@ namespace LMS.Presentation.UserControls
                     cmbPublisher.SelectedIndex = 0;
                 }
 
-                // Languages -> CmbLanguage
-                // Languages -> CmbLanguage
+                // Languages -> CmbLanguage (explicit values, "All" first)
                 var cmbLanguage = this.Controls.Find("CmbBxLanguage", true).FirstOrDefault() as ComboBox;
                 if (cmbLanguage != null)
                 {
-                    var langs = (_catalogManager.GetAllLanguages() ?? new List<string>());
+                    try
+                    {
+                        var langs = (_catalogManager.GetAllLanguages() ?? new List<string>())
+                                    .Where(l => !string.IsNullOrWhiteSpace(l))
+                                    .Select(l => l.Trim())
+                                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                                    .OrderBy(l => l)
+                                    .ToList();
 
-                    // Default "All" option
-                    var langItems = new List<string> { "All" };
-                    langItems.AddRange(langs);
+                        cmbLanguage.DataSource = null;
+                        cmbLanguage.Items.Clear();
 
-                    // Since it's a list of strings, no DisplayMember/ValueMember needed
-                    cmbLanguage.DataSource = langItems;
+                        // ensure the "All" option is first
+                        cmbLanguage.Items.Add("All");
+                        foreach (var ln in langs)
+                            cmbLanguage.Items.Add(ln);
 
-                    // Select "All" by default
-                    cmbLanguage.SelectedIndex = 0;
+                        // Select "All" by default
+                        if (cmbLanguage.Items.Count > 0)
+                            cmbLanguage.SelectedIndex = 0;
+                        else
+                            cmbLanguage.Text = "All";
+                    }
+                    catch
+                    {
+                        try { cmbLanguage.Text = "All"; } catch { }
+                    }
+                }
+
+                // Ensure designer-populated combos include "All" as first item and select it.
+                var designerComboNames = new[] { "CmbBxAvailability", "CmbBxResourceType", "CmbBxLoanType", "CmbBxMaterialFormat" };
+                foreach (var name in designerComboNames)
+                {
+                    var cb = this.Controls.Find(name, true).FirstOrDefault() as ComboBox;
+                    if (cb == null) continue;
+
+                    bool hasAll = false;
+                    try
+                    {
+                        hasAll = cb.Items.Cast<object>().Any(i => string.Equals(Convert.ToString(i), "All", StringComparison.OrdinalIgnoreCase));
+                    }
+                    catch { hasAll = false; }
+
+                    if (!hasAll)
+                    {
+                        try { cb.Items.Insert(0, "All"); } catch { }
+                    }
+
+                    // Prefer SelectedIndex = 0; if that fails, set Text = "All"
+                    try { cb.SelectedIndex = 0; } catch { try { cb.Text = "All"; } catch { } }
+                }
+
+                // Publication year numeric pickers - restrict maximum to current year
+                var numFrom = this.Controls.Find("NumPckPublicationYearFrom", true).FirstOrDefault() as NumericUpDown;
+                var numTo = this.Controls.Find("NumPckPublicationYearTo", true).FirstOrDefault() as NumericUpDown;
+                int currentYear = DateTime.Now.Year;
+                if (numFrom != null)
+                {
+                    try
+                    {
+                        numFrom.Minimum = 0;
+                        numFrom.Maximum = currentYear;
+                        if (numFrom.Value > numFrom.Maximum) numFrom.Value = numFrom.Maximum;
+                        numFrom.ValueChanged -= NumPckPublicationYear_ValueChanged;
+                        numFrom.ValueChanged += NumPckPublicationYear_ValueChanged;
+                    }
+                    catch { }
+                }
+
+                if (numTo != null)
+                {
+                    try
+                    {
+                        numTo.Minimum = 0;
+                        numTo.Maximum = currentYear;
+                        if (numTo.Value > numTo.Maximum) numTo.Value = numTo.Maximum;
+                        numTo.ValueChanged -= NumPckPublicationYear_ValueChanged;
+                        numTo.ValueChanged += NumPckPublicationYear_ValueChanged;
+                    }
+                    catch { }
+                }
+
+                // Resource Type -> CmbBxResourceType (explicit, stable labels)
+                var cmbResource = this.Controls.Find("CmbBxResourceType", true).FirstOrDefault() as ComboBox;
+                if (cmbResource != null)
+                {
+                    var resourceItems = new List<string>
+                    {
+                        "All",
+                        "Book",
+                        "Periodical",
+                        "Thesis",
+                        "Audio-Visual",
+                        "E-Book"
+                    };
+
+                    // Replace items safely
+                    try
+                    {
+                        cmbResource.DataSource = null;
+                        cmbResource.Items.Clear();
+                        foreach (var r in resourceItems) cmbResource.Items.Add(r);
+                        cmbResource.SelectedIndex = 0;
+                    }
+                    catch
+                    {
+                        try { cmbResource.Text = "All"; } catch { }
+                    }
+                }
+
+                // Loan Type -> CmbBxLoanType (explicit values)
+                var cmbLoanType = this.Controls.Find("CmbBxLoanType", true).FirstOrDefault() as ComboBox;
+                if (cmbLoanType != null)
+                {
+                    var loanItems = new List<string>
+                    {
+                        "All",
+                        "Circulation",
+                        "Reference"
+                    };
+
+                    try
+                    {
+                        cmbLoanType.DataSource = null;
+                        cmbLoanType.Items.Clear();
+                        foreach (var l in loanItems) cmbLoanType.Items.Add(l);
+                        cmbLoanType.SelectedIndex = 0;
+                    }
+                    catch
+                    {
+                        try { cmbLoanType.Text = "All"; } catch { }
+                    }
+                }
+
+                // Availability -> CmbBxAvailability (explicit, includes 'Out of Stock' which maps to DTO 'Unavailable')
+                var cmbAvailability = this.Controls.Find("CmbBxAvailability", true).FirstOrDefault() as ComboBox;
+                if (cmbAvailability != null)
+                {
+                    var availItems = new List<string>
+                    {
+                        "All",
+                        "Available",
+                        "Available Online",
+                        "Out of Stock"
+                    };
+
+                    try
+                    {
+                        cmbAvailability.DataSource = null;
+                        cmbAvailability.Items.Clear();
+                        foreach (var a in availItems) cmbAvailability.Items.Add(a);
+                        cmbAvailability.SelectedIndex = 0;
+                    }
+                    catch
+                    {
+                        try { cmbAvailability.Text = "All"; } catch { }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("PopulateComboBoxes failed: " + ex);
             }
+        }
+
+        // Ensure numeric pickers never exceed current year when user edits values
+        private void NumPckPublicationYear_ValueChanged(object sender, EventArgs e)
+        {
+            if (!(sender is NumericUpDown nud)) return;
+            int currentYear = DateTime.Now.Year;
+            if (nud.Value > currentYear)
+            {
+                try { nud.Value = currentYear; } catch { }
+            }
+        }
+
+        // Add this helper to the UCCatalog class (place it near other private helpers, e.g. below SafeInvokePredicate).
+        private bool AuthorMatchesFilter(DTOCatalogBook dto, string authorFilter)
+        {
+            if (dto == null || string.IsNullOrWhiteSpace(authorFilter)) return false;
+            var target = authorFilter.Trim();
+
+            try
+            {
+                // Primary author quick check
+                if (!string.IsNullOrWhiteSpace(dto.Author) &&
+                    dto.Author.IndexOf(target, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+
+                if (string.IsNullOrWhiteSpace(dto.Authors))
+                    return false;
+
+                // Normalize common separators and joiners to commas so split is reliable.
+                // Use Regex.Replace to handle " and " case-insensitively.
+                var raw = dto.Authors;
+                try
+                {
+                    raw = System.Text.RegularExpressions.Regex.Replace(raw, @"\band\b", ",", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                }
+                catch
+                {
+                    // if regex fails for any reason, fall back to original string
+                }
+
+                // Replace a few other common separators
+                raw = raw.Replace("&", ",").Replace("/", ",").Replace("|", ",");
+
+                // Split into tokens and trim
+                var tokens = raw
+                    .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(t => t.Trim())
+                    .Where(t => t.Length > 0);
+
+                foreach (var tok in tokens)
+                {
+                    // exact name match
+                    if (string.Equals(tok, target, StringComparison.OrdinalIgnoreCase))
+                        return true;
+
+                    // partial match (user typed partial name) -> this makes the author combobox selection match any author token
+                    if (tok.IndexOf(target, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+            }
+            catch
+            {
+                // swallow and return false on unexpected errors
+            }
+
+            return false;
         }
     }
 }

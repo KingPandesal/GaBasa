@@ -18,25 +18,25 @@ namespace LMS.Model.DTOs.Catalog
         public int BorrowCount { get; set; }
 
         // New fields used by the search/result grid:
-        // Comma-separated authors (all authors) for display
-        public string Authors { get; set; }
-
-        // Location of the first copy (if any)
-        public string FirstCopyLocation { get; set; }
-
-        // Accession number of first copy (if any)
-        public string FirstCopyAccession { get; set; }
-
-        // Explicit ISBN property (Standard ID). Populate this in your repository/mapper.
-        public string ISBN { get; set; }
-
-        // Explicit CallNumber property. Populate this in your repository/mapper.
+        public string Authors { get; set; }               // Comma-separated authors (all authors)
+        public string FirstCopyLocation { get; set; }     // Location of the first copy (if any)
+        public string FirstCopyAccession { get; set; }    // Accession number of first copy (if any)
+        public string ISBN { get; set; }                  // Standard ID
         public string CallNumber { get; set; }
-
-        // NEW: Publisher name (from Book.Publisher.Name)
         public string Publisher { get; set; }
-
-        // NEW: Publication year (from Book.PublicationYear)
         public int PublicationYear { get; set; }
+
+        // NEW: Material format for filtering/display: "Physical" | "Digital"
+        public string MaterialFormat { get; set; }
+
+        // NEW: Resource type label for filtering/display:
+        // e.g. "Book", "Periodical", "Thesis", "Audio-Visual", "E-Book"
+        public string ResourceType { get; set; }
+
+        // NEW: Loan type for filtering/display: "Circulation" | "Reference"
+        public string LoanType { get; set; }
+
+        // NEW: Language (mapped from Book.Language) used by language filter
+        public string Language { get; set; }
     }
 }
