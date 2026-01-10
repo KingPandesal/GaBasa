@@ -62,8 +62,6 @@
             this.CmbBxStatus.FormattingEnabled = true;
             this.CmbBxStatus.Items.AddRange(new object[] {
             "Available",
-            "Borrowed",
-            "Reserved",
             "Lost",
             "Damaged",
             "Repair"});

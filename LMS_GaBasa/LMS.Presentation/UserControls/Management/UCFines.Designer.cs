@@ -32,7 +32,6 @@
             this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
             this.CmbBxCategoryFilter = new System.Windows.Forms.ComboBox();
-            this.BtnImport = new System.Windows.Forms.Button();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -88,22 +87,6 @@
             this.CmbBxCategoryFilter.Size = new System.Drawing.Size(215, 36);
             this.CmbBxCategoryFilter.TabIndex = 89;
             this.CmbBxCategoryFilter.Text = "All Category";
-            // 
-            // BtnImport
-            // 
-            this.BtnImport.BackColor = System.Drawing.Color.White;
-            this.BtnImport.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnImport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnImport.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnImport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnImport.Location = new System.Drawing.Point(1236, 123);
-            this.BtnImport.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnImport.Name = "BtnImport";
-            this.BtnImport.Size = new System.Drawing.Size(135, 46);
-            this.BtnImport.TabIndex = 88;
-            this.BtnImport.Text = "📥 Import";
-            this.BtnImport.UseVisualStyleBackColor = false;
             // 
             // TxtSearchBar
             // 
@@ -339,7 +322,6 @@
             this.Controls.Add(this.PicBxSearchIcon);
             this.Controls.Add(this.CmbBxStatusFilter);
             this.Controls.Add(this.CmbBxCategoryFilter);
-            this.Controls.Add(this.BtnImport);
             this.Controls.Add(this.TxtSearchBar);
             this.Controls.Add(this.CmbBxResourceTypeFilter);
             this.Controls.Add(this.BtnApply);
@@ -366,7 +348,6 @@
         private System.Windows.Forms.PictureBox PicBxSearchIcon;
         private System.Windows.Forms.ComboBox CmbBxStatusFilter;
         private System.Windows.Forms.ComboBox CmbBxCategoryFilter;
-        private System.Windows.Forms.Button BtnImport;
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
