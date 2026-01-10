@@ -701,10 +701,6 @@ namespace LMS.Presentation.UserControls.Management
 
         #endregion
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
         private void LblMemberID_Click(object sender, EventArgs e)
         {
         }
