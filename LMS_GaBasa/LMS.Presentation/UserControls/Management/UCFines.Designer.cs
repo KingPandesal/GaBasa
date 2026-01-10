@@ -77,12 +77,14 @@
             this.LblAmountReceived = new System.Windows.Forms.Label();
             this.NumPckAmountReceived = new System.Windows.Forms.NumericUpDown();
             this.LblChange = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
+            this.LblValueChange = new System.Windows.Forms.Label();
             this.BtnSearchMember = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.FlowPnlforAddCharges = new System.Windows.Forms.FlowLayoutPanel();
+            this.PnlforAccessionNumber = new System.Windows.Forms.Panel();
+            this.PnlforChargeType = new System.Windows.Forms.Panel();
+            this.PnlforAmount = new System.Windows.Forms.Panel();
+            this.LblAmounttoPay = new System.Windows.Forms.Label();
+            this.LblValueAmounttoPay = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgwInventory)).BeginInit();
@@ -92,10 +94,10 @@
             this.TabPgWaiver.SuspendLayout();
             this.TabPgPayment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumPckAmountReceived)).BeginInit();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.FlowPnlforAddCharges.SuspendLayout();
+            this.PnlforAccessionNumber.SuspendLayout();
+            this.PnlforChargeType.SuspendLayout();
+            this.PnlforAmount.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewImageColumn2
@@ -128,7 +130,7 @@
             this.BtnSettlePayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSettlePayment.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnSettlePayment.ForeColor = System.Drawing.Color.White;
-            this.BtnSettlePayment.Location = new System.Drawing.Point(45, 222);
+            this.BtnSettlePayment.Location = new System.Drawing.Point(51, 276);
             this.BtnSettlePayment.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSettlePayment.Name = "BtnSettlePayment";
             this.BtnSettlePayment.Size = new System.Drawing.Size(182, 44);
@@ -384,7 +386,7 @@
             // TabPgAddCharges
             // 
             this.TabPgAddCharges.BackColor = System.Drawing.Color.White;
-            this.TabPgAddCharges.Controls.Add(this.flowLayoutPanel1);
+            this.TabPgAddCharges.Controls.Add(this.FlowPnlforAddCharges);
             this.TabPgAddCharges.Controls.Add(this.BtnAddToList);
             this.TabPgAddCharges.Location = new System.Drawing.Point(4, 34);
             this.TabPgAddCharges.Name = "TabPgAddCharges";
@@ -486,8 +488,10 @@
             this.TabPgPayment.BackColor = System.Drawing.Color.White;
             this.TabPgPayment.Controls.Add(this.NumPckAmountReceived);
             this.TabPgPayment.Controls.Add(this.CmbBxMode);
-            this.TabPgPayment.Controls.Add(this.label17);
+            this.TabPgPayment.Controls.Add(this.LblValueAmounttoPay);
+            this.TabPgPayment.Controls.Add(this.LblValueChange);
             this.TabPgPayment.Controls.Add(this.BtnSettlePayment);
+            this.TabPgPayment.Controls.Add(this.LblAmounttoPay);
             this.TabPgPayment.Controls.Add(this.LblChange);
             this.TabPgPayment.Controls.Add(this.LblAmountReceived);
             this.TabPgPayment.Controls.Add(this.LblMode);
@@ -579,7 +583,7 @@
             this.CmbBxMode.Items.AddRange(new object[] {
             "Cash",
             "Online"});
-            this.CmbBxMode.Location = new System.Drawing.Point(235, 39);
+            this.CmbBxMode.Location = new System.Drawing.Point(241, 93);
             this.CmbBxMode.Name = "CmbBxMode";
             this.CmbBxMode.Size = new System.Drawing.Size(196, 33);
             this.CmbBxMode.TabIndex = 61;
@@ -589,7 +593,7 @@
             this.LblMode.AutoSize = true;
             this.LblMode.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMode.ForeColor = System.Drawing.Color.Black;
-            this.LblMode.Location = new System.Drawing.Point(40, 39);
+            this.LblMode.Location = new System.Drawing.Point(46, 93);
             this.LblMode.Name = "LblMode";
             this.LblMode.Size = new System.Drawing.Size(68, 28);
             this.LblMode.TabIndex = 60;
@@ -600,7 +604,7 @@
             this.LblAmountReceived.AutoSize = true;
             this.LblAmountReceived.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAmountReceived.ForeColor = System.Drawing.Color.Black;
-            this.LblAmountReceived.Location = new System.Drawing.Point(40, 96);
+            this.LblAmountReceived.Location = new System.Drawing.Point(46, 150);
             this.LblAmountReceived.Name = "LblAmountReceived";
             this.LblAmountReceived.Size = new System.Drawing.Size(169, 28);
             this.LblAmountReceived.TabIndex = 60;
@@ -608,7 +612,7 @@
             // 
             // NumPckAmountReceived
             // 
-            this.NumPckAmountReceived.Location = new System.Drawing.Point(235, 97);
+            this.NumPckAmountReceived.Location = new System.Drawing.Point(241, 151);
             this.NumPckAmountReceived.Name = "NumPckAmountReceived";
             this.NumPckAmountReceived.Size = new System.Drawing.Size(196, 30);
             this.NumPckAmountReceived.TabIndex = 62;
@@ -618,22 +622,22 @@
             this.LblChange.AutoSize = true;
             this.LblChange.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblChange.ForeColor = System.Drawing.Color.Black;
-            this.LblChange.Location = new System.Drawing.Point(40, 158);
+            this.LblChange.Location = new System.Drawing.Point(46, 212);
             this.LblChange.Name = "LblChange";
             this.LblChange.Size = new System.Drawing.Size(82, 28);
             this.LblChange.TabIndex = 60;
             this.LblChange.Text = "Change:";
             // 
-            // label17
+            // LblValueChange
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(230, 158);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(34, 28);
-            this.label17.TabIndex = 60;
-            this.label17.Text = "P0";
+            this.LblValueChange.AutoSize = true;
+            this.LblValueChange.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblValueChange.ForeColor = System.Drawing.Color.Black;
+            this.LblValueChange.Location = new System.Drawing.Point(236, 212);
+            this.LblValueChange.Name = "LblValueChange";
+            this.LblValueChange.Size = new System.Drawing.Size(34, 28);
+            this.LblValueChange.TabIndex = 60;
+            this.LblValueChange.Text = "P0";
             // 
             // BtnSearchMember
             // 
@@ -652,42 +656,64 @@
             this.BtnSearchMember.UseVisualStyleBackColor = false;
             this.BtnSearchMember.Click += new System.EventHandler(this.BtnEnterMemberID_Click);
             // 
-            // flowLayoutPanel1
+            // FlowPnlforAddCharges
             // 
-            this.flowLayoutPanel1.Controls.Add(this.panel3);
-            this.flowLayoutPanel1.Controls.Add(this.panel2);
-            this.flowLayoutPanel1.Controls.Add(this.panel4);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(38, 39);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(466, 182);
-            this.flowLayoutPanel1.TabIndex = 63;
+            this.FlowPnlforAddCharges.Controls.Add(this.PnlforChargeType);
+            this.FlowPnlforAddCharges.Controls.Add(this.PnlforAccessionNumber);
+            this.FlowPnlforAddCharges.Controls.Add(this.PnlforAmount);
+            this.FlowPnlforAddCharges.Location = new System.Drawing.Point(38, 39);
+            this.FlowPnlforAddCharges.Name = "FlowPnlforAddCharges";
+            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(466, 182);
+            this.FlowPnlforAddCharges.TabIndex = 63;
             // 
-            // panel2
+            // PnlforAccessionNumber
             // 
-            this.panel2.Controls.Add(this.TxtAccessionNumber);
-            this.panel2.Controls.Add(this.LblAccessionNumber);
-            this.panel2.Location = new System.Drawing.Point(3, 53);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(405, 44);
-            this.panel2.TabIndex = 0;
+            this.PnlforAccessionNumber.Controls.Add(this.TxtAccessionNumber);
+            this.PnlforAccessionNumber.Controls.Add(this.LblAccessionNumber);
+            this.PnlforAccessionNumber.Location = new System.Drawing.Point(3, 53);
+            this.PnlforAccessionNumber.Name = "PnlforAccessionNumber";
+            this.PnlforAccessionNumber.Size = new System.Drawing.Size(405, 44);
+            this.PnlforAccessionNumber.TabIndex = 0;
             // 
-            // panel3
+            // PnlforChargeType
             // 
-            this.panel3.Controls.Add(this.CmbBxChargeType);
-            this.panel3.Controls.Add(this.LblChargeType);
-            this.panel3.Location = new System.Drawing.Point(3, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(405, 44);
-            this.panel3.TabIndex = 1;
+            this.PnlforChargeType.Controls.Add(this.CmbBxChargeType);
+            this.PnlforChargeType.Controls.Add(this.LblChargeType);
+            this.PnlforChargeType.Location = new System.Drawing.Point(3, 3);
+            this.PnlforChargeType.Name = "PnlforChargeType";
+            this.PnlforChargeType.Size = new System.Drawing.Size(405, 44);
+            this.PnlforChargeType.TabIndex = 1;
             // 
-            // panel4
+            // PnlforAmount
             // 
-            this.panel4.Controls.Add(this.LblAmount);
-            this.panel4.Controls.Add(this.NumPckAmount);
-            this.panel4.Location = new System.Drawing.Point(3, 103);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(405, 44);
-            this.panel4.TabIndex = 2;
+            this.PnlforAmount.Controls.Add(this.LblAmount);
+            this.PnlforAmount.Controls.Add(this.NumPckAmount);
+            this.PnlforAmount.Location = new System.Drawing.Point(3, 103);
+            this.PnlforAmount.Name = "PnlforAmount";
+            this.PnlforAmount.Size = new System.Drawing.Size(405, 44);
+            this.PnlforAmount.TabIndex = 2;
+            // 
+            // LblAmounttoPay
+            // 
+            this.LblAmounttoPay.AutoSize = true;
+            this.LblAmounttoPay.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblAmounttoPay.ForeColor = System.Drawing.Color.Black;
+            this.LblAmounttoPay.Location = new System.Drawing.Point(46, 39);
+            this.LblAmounttoPay.Name = "LblAmounttoPay";
+            this.LblAmounttoPay.Size = new System.Drawing.Size(146, 28);
+            this.LblAmounttoPay.TabIndex = 60;
+            this.LblAmounttoPay.Text = "Amount to Pay:";
+            // 
+            // LblValueAmounttoPay
+            // 
+            this.LblValueAmounttoPay.AutoSize = true;
+            this.LblValueAmounttoPay.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblValueAmounttoPay.ForeColor = System.Drawing.Color.Black;
+            this.LblValueAmounttoPay.Location = new System.Drawing.Point(236, 39);
+            this.LblValueAmounttoPay.Name = "LblValueAmounttoPay";
+            this.LblValueAmounttoPay.Size = new System.Drawing.Size(34, 28);
+            this.LblValueAmounttoPay.TabIndex = 60;
+            this.LblValueAmounttoPay.Text = "P0";
             // 
             // UCFines
             // 
@@ -720,13 +746,13 @@
             this.TabPgPayment.ResumeLayout(false);
             this.TabPgPayment.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumPckAmountReceived)).EndInit();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.FlowPnlforAddCharges.ResumeLayout(false);
+            this.PnlforAccessionNumber.ResumeLayout(false);
+            this.PnlforAccessionNumber.PerformLayout();
+            this.PnlforChargeType.ResumeLayout(false);
+            this.PnlforChargeType.PerformLayout();
+            this.PnlforAmount.ResumeLayout(false);
+            this.PnlforAmount.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -779,13 +805,15 @@
         private System.Windows.Forms.ComboBox CmbBxMode;
         private System.Windows.Forms.Label LblMode;
         private System.Windows.Forms.NumericUpDown NumPckAmountReceived;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label LblValueChange;
         private System.Windows.Forms.Label LblChange;
         private System.Windows.Forms.Label LblAmountReceived;
         private System.Windows.Forms.Button BtnSearchMember;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.FlowLayoutPanel FlowPnlforAddCharges;
+        private System.Windows.Forms.Panel PnlforAccessionNumber;
+        private System.Windows.Forms.Panel PnlforChargeType;
+        private System.Windows.Forms.Panel PnlforAmount;
+        private System.Windows.Forms.Label LblValueAmounttoPay;
+        private System.Windows.Forms.Label LblAmounttoPay;
     }
 }
