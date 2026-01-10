@@ -31,6 +31,7 @@
             this.TabCtrlCirculation = new System.Windows.Forms.TabControl();
             this.TabPageBorrow = new System.Windows.Forms.TabPage();
             this.GrpBxBookCheckout = new System.Windows.Forms.GroupBox();
+            this.LblResourceType = new System.Windows.Forms.Label();
             this.BtnConfirmBorrow = new System.Windows.Forms.Button();
             this.LblBookDueDate = new System.Windows.Forms.Label();
             this.LblNote1 = new System.Windows.Forms.Label();
@@ -40,9 +41,7 @@
             this.BtnScanAccessionNumber = new System.Windows.Forms.Button();
             this.TxtAccessionNumber = new System.Windows.Forms.TextBox();
             this.LblBookStatus = new System.Windows.Forms.Label();
-            this.LblBookLoanType = new System.Windows.Forms.Label();
             this.LblBookCategory = new System.Windows.Forms.Label();
-            this.LblBookAuthor = new System.Windows.Forms.Label();
             this.LblBookTitle = new System.Windows.Forms.Label();
             this.GrpBxMemberVerification = new System.Windows.Forms.GroupBox();
             this.PnlDesign1 = new ReaLTaiizor.Controls.LostBorderPanel();
@@ -62,6 +61,8 @@
             this.BtnEnterMemberID = new System.Windows.Forms.Button();
             this.TxtMemberID = new System.Windows.Forms.TextBox();
             this.LblMemberID = new System.Windows.Forms.Label();
+            this.LblBookLoanType = new System.Windows.Forms.Label();
+            this.LblBookAuthor = new System.Windows.Forms.Label();
             this.TabPageReturn = new System.Windows.Forms.TabPage();
             this.GrpBxReturnBook = new System.Windows.Forms.GroupBox();
             this.BtnConfirmReturn = new System.Windows.Forms.Button();
@@ -93,7 +94,6 @@
             this.LblRenewOldDueDate = new System.Windows.Forms.Label();
             this.LblRenewBorrower = new System.Windows.Forms.Label();
             this.LblRenewTitle = new System.Windows.Forms.Label();
-            this.LblResourceType = new System.Windows.Forms.Label();
             this.TabCtrlCirculation.SuspendLayout();
             this.TabPageBorrow.SuspendLayout();
             this.GrpBxBookCheckout.SuspendLayout();
@@ -155,6 +155,17 @@
             this.GrpBxBookCheckout.TabIndex = 13;
             this.GrpBxBookCheckout.TabStop = false;
             this.GrpBxBookCheckout.Text = "Book Checkout";
+            // 
+            // LblResourceType
+            // 
+            this.LblResourceType.AutoSize = true;
+            this.LblResourceType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblResourceType.ForeColor = System.Drawing.Color.Black;
+            this.LblResourceType.Location = new System.Drawing.Point(42, 245);
+            this.LblResourceType.Name = "LblResourceType";
+            this.LblResourceType.Size = new System.Drawing.Size(140, 28);
+            this.LblResourceType.TabIndex = 56;
+            this.LblResourceType.Text = "Resource Type:";
             // 
             // BtnConfirmBorrow
             // 
@@ -275,16 +286,6 @@
             this.LblBookStatus.TabIndex = 53;
             this.LblBookStatus.Text = "Status: Available";
             // 
-            // LblBookLoanType
-            // 
-            this.LblBookLoanType.AutoSize = true;
-            this.LblBookLoanType.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblBookLoanType.ForeColor = System.Drawing.Color.White;
-            this.LblBookLoanType.Location = new System.Drawing.Point(864, 816);
-            this.LblBookLoanType.Name = "LblBookLoanType";
-            this.LblBookLoanType.Size = new System.Drawing.Size(0, 28);
-            this.LblBookLoanType.TabIndex = 53;
-            // 
             // LblBookCategory
             // 
             this.LblBookCategory.AutoSize = true;
@@ -295,17 +296,6 @@
             this.LblBookCategory.Size = new System.Drawing.Size(160, 28);
             this.LblBookCategory.TabIndex = 53;
             this.LblBookCategory.Text = "Category: Fiction";
-            // 
-            // LblBookAuthor
-            // 
-            this.LblBookAuthor.AutoSize = true;
-            this.LblBookAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblBookAuthor.ForeColor = System.Drawing.Color.White;
-            this.LblBookAuthor.Location = new System.Drawing.Point(883, 854);
-            this.LblBookAuthor.Name = "LblBookAuthor";
-            this.LblBookAuthor.Size = new System.Drawing.Size(136, 28);
-            this.LblBookAuthor.TabIndex = 53;
-            this.LblBookAuthor.Text = "Author: Tiddle";
             // 
             // LblBookTitle
             // 
@@ -540,6 +530,27 @@
             this.LblMemberID.TabIndex = 0;
             this.LblMemberID.Text = "Member ID";
             // 
+            // LblBookLoanType
+            // 
+            this.LblBookLoanType.AutoSize = true;
+            this.LblBookLoanType.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBookLoanType.ForeColor = System.Drawing.Color.White;
+            this.LblBookLoanType.Location = new System.Drawing.Point(864, 816);
+            this.LblBookLoanType.Name = "LblBookLoanType";
+            this.LblBookLoanType.Size = new System.Drawing.Size(0, 28);
+            this.LblBookLoanType.TabIndex = 53;
+            // 
+            // LblBookAuthor
+            // 
+            this.LblBookAuthor.AutoSize = true;
+            this.LblBookAuthor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblBookAuthor.ForeColor = System.Drawing.Color.White;
+            this.LblBookAuthor.Location = new System.Drawing.Point(883, 854);
+            this.LblBookAuthor.Name = "LblBookAuthor";
+            this.LblBookAuthor.Size = new System.Drawing.Size(136, 28);
+            this.LblBookAuthor.TabIndex = 53;
+            this.LblBookAuthor.Text = "Author: Tiddle";
+            // 
             // TabPageReturn
             // 
             this.TabPageReturn.BackColor = System.Drawing.Color.White;
@@ -599,9 +610,9 @@
             this.LblReturnBorrower.ForeColor = System.Drawing.Color.Black;
             this.LblReturnBorrower.Location = new System.Drawing.Point(42, 458);
             this.LblReturnBorrower.Name = "LblReturnBorrower";
-            this.LblReturnBorrower.Size = new System.Drawing.Size(269, 30);
+            this.LblReturnBorrower.Size = new System.Drawing.Size(109, 30);
             this.LblReturnBorrower.TabIndex = 54;
-            this.LblReturnBorrower.Text = "Borrower: Jane Dela Crissy";
+            this.LblReturnBorrower.Text = "Borrower:";
             // 
             // LblReturnFine
             // 
@@ -610,9 +621,9 @@
             this.LblReturnFine.ForeColor = System.Drawing.Color.Black;
             this.LblReturnFine.Location = new System.Drawing.Point(42, 381);
             this.LblReturnFine.Name = "LblReturnFine";
-            this.LblReturnFine.Size = new System.Drawing.Size(88, 30);
+            this.LblReturnFine.Size = new System.Drawing.Size(58, 30);
             this.LblReturnFine.TabIndex = 54;
-            this.LblReturnFine.Text = "Fine: P5";
+            this.LblReturnFine.Text = "Fine:";
             // 
             // LblNote2
             // 
@@ -699,12 +710,12 @@
             // 
             this.LblReturnStatus.AutoSize = true;
             this.LblReturnStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.LblReturnStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.LblReturnStatus.ForeColor = System.Drawing.Color.Black;
             this.LblReturnStatus.Location = new System.Drawing.Point(42, 334);
             this.LblReturnStatus.Name = "LblReturnStatus";
-            this.LblReturnStatus.Size = new System.Drawing.Size(166, 30);
+            this.LblReturnStatus.Size = new System.Drawing.Size(75, 30);
             this.LblReturnStatus.TabIndex = 53;
-            this.LblReturnStatus.Text = "Status: Overdue";
+            this.LblReturnStatus.Text = "Status:";
             // 
             // LblReturnReturnDate
             // 
@@ -713,9 +724,9 @@
             this.LblReturnReturnDate.ForeColor = System.Drawing.Color.Black;
             this.LblReturnReturnDate.Location = new System.Drawing.Point(42, 287);
             this.LblReturnReturnDate.Name = "LblReturnReturnDate";
-            this.LblReturnReturnDate.Size = new System.Drawing.Size(300, 30);
+            this.LblReturnReturnDate.Size = new System.Drawing.Size(132, 30);
             this.LblReturnReturnDate.TabIndex = 53;
-            this.LblReturnReturnDate.Text = "Return Date: January 15, 2026";
+            this.LblReturnReturnDate.Text = "Return Date:";
             // 
             // LblReturnBorrowDate
             // 
@@ -724,9 +735,9 @@
             this.LblReturnBorrowDate.ForeColor = System.Drawing.Color.Black;
             this.LblReturnBorrowDate.Location = new System.Drawing.Point(42, 241);
             this.LblReturnBorrowDate.Name = "LblReturnBorrowDate";
-            this.LblReturnBorrowDate.Size = new System.Drawing.Size(296, 30);
+            this.LblReturnBorrowDate.Size = new System.Drawing.Size(140, 30);
             this.LblReturnBorrowDate.TabIndex = 53;
-            this.LblReturnBorrowDate.Text = "Borrow Date: January 1, 2026";
+            this.LblReturnBorrowDate.Text = "Borrow Date:";
             // 
             // LblReturnTitle
             // 
@@ -735,9 +746,9 @@
             this.LblReturnTitle.ForeColor = System.Drawing.Color.Black;
             this.LblReturnTitle.Location = new System.Drawing.Point(42, 196);
             this.LblReturnTitle.Name = "LblReturnTitle";
-            this.LblReturnTitle.Size = new System.Drawing.Size(228, 30);
+            this.LblReturnTitle.Size = new System.Drawing.Size(59, 30);
             this.LblReturnTitle.TabIndex = 53;
-            this.LblReturnTitle.Text = "Title: Unlucky Vacation";
+            this.LblReturnTitle.Text = "Title:";
             // 
             // TabPageRenew
             // 
@@ -948,17 +959,6 @@
             this.LblRenewTitle.Size = new System.Drawing.Size(228, 30);
             this.LblRenewTitle.TabIndex = 53;
             this.LblRenewTitle.Text = "Title: Unlucky Vacation";
-            // 
-            // LblResourceType
-            // 
-            this.LblResourceType.AutoSize = true;
-            this.LblResourceType.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblResourceType.ForeColor = System.Drawing.Color.Black;
-            this.LblResourceType.Location = new System.Drawing.Point(42, 245);
-            this.LblResourceType.Name = "LblResourceType";
-            this.LblResourceType.Size = new System.Drawing.Size(140, 28);
-            this.LblResourceType.TabIndex = 56;
-            this.LblResourceType.Text = "Resource Type:";
             // 
             // UCCirculation
             // 

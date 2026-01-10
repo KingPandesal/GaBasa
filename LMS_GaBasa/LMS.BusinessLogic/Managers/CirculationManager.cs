@@ -92,5 +92,11 @@ namespace LMS.BusinessLogic.Managers.Circulation
             if (copyId <= 0 || memberId <= 0) return 0;
             return _circulationRepo.CreateBorrowingTransaction(copyId, memberId, borrowDate, dueDate);
         }
+
+        public DTOReturnInfo GetActiveBorrowingByAccession(string accessionNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accessionNumber)) return null;
+            return _circulationRepo.GetActiveBorrowingByAccession(accessionNumber.Trim());
+        }
     }
 }

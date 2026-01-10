@@ -39,5 +39,12 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="dueDate">The due date for returning the item.</param>
         /// <returns>The TransactionID if the transaction is successful; otherwise, 0.</returns>
         int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate);
+
+        /// <summary>
+        /// NEW: Lookup active borrowing by accession (for returns)
+        /// </summary>
+        /// <param name="accessionNumber">Accession number of the book/copy.</param>
+        /// <returns>Active borrowing information if found; otherwise null.</returns>
+        DTOReturnInfo GetActiveBorrowingByAccession(string accessionNumber);
     }
 }

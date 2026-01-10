@@ -271,6 +271,83 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        public DTOReturnInfo GetActiveBorrowingByAccession(string accessionNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accessionNumber)) return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                // Query active borrowing transaction for given accession (ReturnDate IS NULL)
+                // Join to member/user and membertype to compute fine rules
+                cmd.CommandText = @"
+                    SELECT 
+                        bt.TransactionID,
+                        bt.CopyID,
+                        bt.MemberID,
+                        ISNULL(u.FirstName,'') + ' ' + ISNULL(u.LastName,'') AS MemberName,
+                        bt.BorrowDate,
+                        bt.DueDate,
+                        bt.ReturnDate,
+                        b.Title,
+                        bc.AccessionNumber,
+                        ISNULL(mt.FineRate, 0) AS FineRate,
+                        ISNULL(mt.MaxFineCap, 0) AS MaxFineCap
+                    FROM [BorrowingTransaction] bt
+                    INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    INNER JOIN [Member] m ON bt.MemberID = m.MemberID
+                    INNER JOIN [User] u ON m.UserID = u.UserID
+                    LEFT JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                    WHERE bc.AccessionNumber = @AccessionNumber
+                      AND bt.ReturnDate IS NULL";
+
+                AddParameter(cmd, "@AccessionNumber", DbType.String, accessionNumber.Trim());
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (!reader.Read())
+                        return null;
+
+                    var dto = new DTOReturnInfo
+                    {
+                        TransactionID = reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                        CopyID = reader.GetInt32(reader.GetOrdinal("CopyID")),
+                        MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                        MemberName = reader.IsDBNull(reader.GetOrdinal("MemberName")) ? "" : reader.GetString(reader.GetOrdinal("MemberName")).Trim(),
+                        BorrowDate = reader.IsDBNull(reader.GetOrdinal("BorrowDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("BorrowDate")),
+                        DueDate = reader.IsDBNull(reader.GetOrdinal("DueDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("DueDate")),
+                        ReturnDate = reader.IsDBNull(reader.GetOrdinal("ReturnDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                        Title = reader.IsDBNull(reader.GetOrdinal("Title")) ? "" : reader.GetString(reader.GetOrdinal("Title")).Trim(),
+                        AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? "" : reader.GetString(reader.GetOrdinal("AccessionNumber")).Trim()
+                    };
+
+                    // Compute fine using member type rules if overdue
+                    decimal fineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate"));
+                    decimal maxCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap"));
+
+                    var today = DateTime.Today;
+                    var due = dto.DueDate.Date;
+
+                    if (today > due)
+                    {
+                        dto.DaysOverdue = (today - due).Days;
+                        dto.FineAmount = dto.DaysOverdue * fineRate;
+                        if (maxCap > 0 && dto.FineAmount > maxCap) dto.FineAmount = maxCap;
+                    }
+                    else
+                    {
+                        dto.DaysOverdue = 0;
+                        dto.FineAmount = 0m;
+                    }
+
+                    return dto;
+                }
+            }
+        }
+
         private string GetAuthorsForBook(int bookId)
         {
             try

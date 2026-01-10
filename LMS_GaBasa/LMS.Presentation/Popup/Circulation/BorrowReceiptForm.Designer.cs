@@ -54,16 +54,14 @@
             this.PnlDesign2 = new System.Windows.Forms.Panel();
             this.BtnPrintReceipt = new System.Windows.Forms.Button();
             this.BtnPreviewReceipt = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).BeginInit();
             this.PnlDesign.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PicBxLogo
             // 
             this.PicBxLogo.Image = ((System.Drawing.Image)(resources.GetObject("PicBxLogo.Image")));
-            this.PicBxLogo.Location = new System.Drawing.Point(37, 35);
+            this.PicBxLogo.Location = new System.Drawing.Point(37, 44);
             this.PicBxLogo.Name = "PicBxLogo";
             this.PicBxLogo.Size = new System.Drawing.Size(67, 62);
             this.PicBxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -75,7 +73,7 @@
             this.LblUM.AutoSize = true;
             this.LblUM.Font = new System.Drawing.Font("Old English Text MT", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblUM.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblUM.Location = new System.Drawing.Point(119, 35);
+            this.LblUM.Location = new System.Drawing.Point(119, 44);
             this.LblUM.Name = "LblUM";
             this.LblUM.Size = new System.Drawing.Size(477, 44);
             this.LblUM.TabIndex = 1;
@@ -85,7 +83,7 @@
             // 
             this.LblTagumCity.AutoSize = true;
             this.LblTagumCity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblTagumCity.Location = new System.Drawing.Point(280, 79);
+            this.LblTagumCity.Location = new System.Drawing.Point(280, 88);
             this.LblTagumCity.Name = "LblTagumCity";
             this.LblTagumCity.Size = new System.Drawing.Size(123, 28);
             this.LblTagumCity.TabIndex = 2;
@@ -96,7 +94,7 @@
             this.LblBorrowReceipt.AutoSize = true;
             this.LblBorrowReceipt.Font = new System.Drawing.Font("Impact", 15F);
             this.LblBorrowReceipt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblBorrowReceipt.Location = new System.Drawing.Point(30, 141);
+            this.LblBorrowReceipt.Location = new System.Drawing.Point(30, 150);
             this.LblBorrowReceipt.Name = "LblBorrowReceipt";
             this.LblBorrowReceipt.Size = new System.Drawing.Size(221, 37);
             this.LblBorrowReceipt.TabIndex = 3;
@@ -107,7 +105,7 @@
             this.LblTransactionID.AutoSize = true;
             this.LblTransactionID.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTransactionID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblTransactionID.Location = new System.Drawing.Point(466, 139);
+            this.LblTransactionID.Location = new System.Drawing.Point(466, 148);
             this.LblTransactionID.Name = "LblTransactionID";
             this.LblTransactionID.Size = new System.Drawing.Size(130, 41);
             this.LblTransactionID.TabIndex = 3;
@@ -133,7 +131,7 @@
             this.PnlDesign.Controls.Add(this.LblName);
             this.PnlDesign.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.PnlDesign.ForeColor = System.Drawing.Color.Black;
-            this.PnlDesign.Location = new System.Drawing.Point(37, 183);
+            this.PnlDesign.Location = new System.Drawing.Point(37, 192);
             this.PnlDesign.Name = "PnlDesign";
             this.PnlDesign.Padding = new System.Windows.Forms.Padding(5);
             this.PnlDesign.ShowText = true;
@@ -301,7 +299,7 @@
             this.LblMessage.AutoSize = true;
             this.LblMessage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblMessage.Location = new System.Drawing.Point(48, 466);
+            this.LblMessage.Location = new System.Drawing.Point(48, 475);
             this.LblMessage.Name = "LblMessage";
             this.LblMessage.Size = new System.Drawing.Size(355, 21);
             this.LblMessage.TabIndex = 8;
@@ -312,7 +310,7 @@
             this.Lbl4.AutoSize = true;
             this.Lbl4.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Lbl4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Lbl4.Location = new System.Drawing.Point(37, 513);
+            this.Lbl4.Location = new System.Drawing.Point(37, 522);
             this.Lbl4.Name = "Lbl4";
             this.Lbl4.Size = new System.Drawing.Size(129, 28);
             this.Lbl4.TabIndex = 8;
@@ -323,7 +321,7 @@
             // 
             this.PnlDesign2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.PnlDesign2.ForeColor = System.Drawing.Color.Blue;
-            this.PnlDesign2.Location = new System.Drawing.Point(171, 551);
+            this.PnlDesign2.Location = new System.Drawing.Point(171, 560);
             this.PnlDesign2.Name = "PnlDesign2";
             this.PnlDesign2.Size = new System.Drawing.Size(200, 1);
             this.PnlDesign2.TabIndex = 14;
@@ -336,7 +334,7 @@
             this.BtnPrintReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrintReceipt.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnPrintReceipt.ForeColor = System.Drawing.Color.White;
-            this.BtnPrintReceipt.Location = new System.Drawing.Point(487, 580);
+            this.BtnPrintReceipt.Location = new System.Drawing.Point(488, 587);
             this.BtnPrintReceipt.Margin = new System.Windows.Forms.Padding(4);
             this.BtnPrintReceipt.Name = "BtnPrintReceipt";
             this.BtnPrintReceipt.Size = new System.Drawing.Size(108, 44);
@@ -352,7 +350,7 @@
             this.BtnPreviewReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPreviewReceipt.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnPreviewReceipt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnPreviewReceipt.Location = new System.Drawing.Point(371, 580);
+            this.BtnPreviewReceipt.Location = new System.Drawing.Point(372, 587);
             this.BtnPreviewReceipt.Margin = new System.Windows.Forms.Padding(4);
             this.BtnPreviewReceipt.Name = "BtnPreviewReceipt";
             this.BtnPreviewReceipt.Size = new System.Drawing.Size(108, 44);
@@ -360,36 +358,28 @@
             this.BtnPreviewReceipt.Text = "Preview";
             this.BtnPreviewReceipt.UseVisualStyleBackColor = false;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.PnlDesign2);
-            this.panel1.Controls.Add(this.PnlDesign);
-            this.panel1.Controls.Add(this.Lbl4);
-            this.panel1.Controls.Add(this.LblMessage);
-            this.panel1.Controls.Add(this.LblTransactionID);
-            this.panel1.Controls.Add(this.LblBorrowReceipt);
-            this.panel1.Controls.Add(this.LblTagumCity);
-            this.panel1.Controls.Add(this.LblUM);
-            this.panel1.Controls.Add(this.PicBxLogo);
-            this.panel1.Location = new System.Drawing.Point(-1, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(638, 573);
-            this.panel1.TabIndex = 58;
-            // 
             // BorrowReceiptForm
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(637, 644);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.PnlDesign2);
+            this.Controls.Add(this.PnlDesign);
             this.Controls.Add(this.BtnPreviewReceipt);
+            this.Controls.Add(this.Lbl4);
             this.Controls.Add(this.BtnPrintReceipt);
+            this.Controls.Add(this.LblMessage);
+            this.Controls.Add(this.PicBxLogo);
+            this.Controls.Add(this.LblTransactionID);
+            this.Controls.Add(this.LblUM);
+            this.Controls.Add(this.LblBorrowReceipt);
+            this.Controls.Add(this.LblTagumCity);
             this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(659, 772);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(600, 700);
             this.Name = "BorrowReceiptForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BorrowReceipt";
@@ -397,9 +387,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).EndInit();
             this.PnlDesign.ResumeLayout(false);
             this.PnlDesign.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -424,7 +413,6 @@
         private System.Windows.Forms.Panel PnlDesign2;
         private System.Windows.Forms.Button BtnPrintReceipt;
         private System.Windows.Forms.Button BtnPreviewReceipt;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label LblValueDueDate;
         private System.Windows.Forms.Label LblValueDateBorrowed;
         private System.Windows.Forms.Label LblValueTitle;

@@ -45,6 +45,7 @@
     <Compile Include="DTOs\Catalog\DTOCatalogBook.cs" />
     <Compile Include="DTOs\Circulation\DTOCirculationBookInfo.cs" />
     <Compile Include="DTOs\Circulation\DTOCirculationMemberInfo.cs" />
+    <Compile Include="DTOs\Circulation\DTOReturnInfo.cs" />
     <Compile Include="DTOs\Member\DTOCreateMember.cs" />
     <Compile Include="DTOs\Member\DTOCreateMemberResult.cs" />
     <Compile Include="DTOs\Member\DTOEditMember.cs" />

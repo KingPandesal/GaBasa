@@ -47,6 +47,12 @@ namespace LMS.Presentation.UserControls.Management
             BtnConfirmBorrow.Click -= BtnConfirmBorrow_Click;
             BtnConfirmBorrow.Click += BtnConfirmBorrow_Click;
 
+            // Wire return controls
+            TxtReturnAccessionNumber.KeyDown += TxtReturnAccessionNumber_KeyDown;
+            BtnReturnEnterAccessionNumber.Click += BtnReturnEnterAccessionNumber_Click;
+            BtnReturnScanAccessionNumber.Click += BtnReturnScanAccessionNumber_Click;
+            BtnCancelReturn.Click += BtnCancelReturn_Click;
+
             // Initialize UI state
             ClearMemberResults();
             ClearBookResults();
@@ -715,6 +721,115 @@ namespace LMS.Presentation.UserControls.Management
             BtnConfirmBorrow.Enabled = false;
             BtnConfirmBorrow.Text = "Confirm Borrow";
             BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+        }
+
+        #endregion
+
+        #region Book Return
+
+        private void TxtReturnAccessionNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                LookupReturn();
+            }
+        }
+
+        private void BtnReturnEnterAccessionNumber_Click(object sender, EventArgs e)
+        {
+            LookupReturn();
+        }
+
+        private void BtnReturnScanAccessionNumber_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var cam = new Camera())
+                {
+                    var result = cam.ShowDialog(this);
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(cam.ScannedCode))
+                    {
+                        TxtReturnAccessionNumber.Text = cam.ScannedCode.Trim();
+                        LookupReturn();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open camera: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnCancelReturn_Click(object sender, EventArgs e)
+        {
+            ClearReturnResults();
+            TxtReturnAccessionNumber.Text = "";
+            TxtReturnAccessionNumber.Focus();
+        }
+
+        private void LookupReturn()
+        {
+            string accession = TxtReturnAccessionNumber.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(accession))
+            {
+                MessageBox.Show("Please enter an Accession Number.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TxtReturnAccessionNumber.Focus();
+                return;
+            }
+
+            var info = _circulationManager.GetActiveBorrowingByAccession(accession);
+            if (info == null)
+            {
+                MessageBox.Show($"No active borrowing found for accession: {accession}", "Not Found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearReturnResults();
+                TxtReturnAccessionNumber.Focus();
+                TxtReturnAccessionNumber.SelectAll();
+                return;
+            }
+
+            // Populate UI
+            LblReturnTitle.Text = $"Title: {(!string.IsNullOrWhiteSpace(info.Title) ? info.Title : "N/A")}";
+            LblReturnBorrowDate.Text = $"Borrow Date: {info.BorrowDate:MMMM d, yyyy}";
+            LblReturnReturnDate.Text = $"Return Date: {DateTime.Today:MMMM d, yyyy}";
+
+            // NEW: show borrower name
+            LblReturnBorrower.Text = $"Borrower: {(!string.IsNullOrWhiteSpace(info.MemberName) ? info.MemberName : "Unknown")}";
+            LblReturnBorrower.ForeColor = Color.Black;
+
+            if (info.DaysOverdue > 0)
+            {
+                LblReturnStatus.Text = "Status: Overdue";
+                LblReturnStatus.ForeColor = Color.FromArgb(200, 0, 0);
+                LblReturnFine.Text = $"Fine: ₱{info.FineAmount:N2}";
+            }
+            else
+            {
+                LblReturnStatus.Text = "Status: On time";
+                LblReturnStatus.ForeColor = Color.FromArgb(0, 200, 0);
+                LblReturnFine.Text = "Fine: ₱0.00";
+            }
+
+            // Keep ConfirmReturn disabled per your instruction (don't make it work yet)
+            BtnConfirmReturn.Enabled = false;
+        }
+
+        private void ClearReturnResults()
+        {
+            LblReturnTitle.Text = "Title: ";
+            LblReturnBorrowDate.Text = "Borrow Date: ";
+            LblReturnReturnDate.Text = "Return Date: ";
+            LblReturnStatus.Text = "Status: ";
+            LblReturnStatus.ForeColor = Color.Black;
+            LblReturnFine.Text = "Fine: ";
+            BtnConfirmReturn.Enabled = false;
+
+            // Reset borrower label
+            LblReturnBorrower.Text = "Borrower: ";
+            LblReturnBorrower.ForeColor = Color.Black;
         }
 
         #endregion
