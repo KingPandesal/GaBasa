@@ -201,11 +201,11 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.groupBox1.Location = new System.Drawing.Point(506, 154);
+            this.groupBox1.Location = new System.Drawing.Point(473, 154);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(859, 482);
+            this.groupBox1.Size = new System.Drawing.Size(892, 482);
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Outstanding Penalties";
@@ -372,7 +372,7 @@
             this.TabCtrl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabCtrl.Name = "TabCtrl";
             this.TabCtrl.SelectedIndex = 0;
-            this.TabCtrl.Size = new System.Drawing.Size(467, 499);
+            this.TabCtrl.Size = new System.Drawing.Size(434, 499);
             this.TabCtrl.TabIndex = 57;
             // 
             // TabPgAddCharges
@@ -384,7 +384,7 @@
             this.TabPgAddCharges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabPgAddCharges.Name = "TabPgAddCharges";
             this.TabPgAddCharges.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TabPgAddCharges.Size = new System.Drawing.Size(459, 466);
+            this.TabPgAddCharges.Size = new System.Drawing.Size(426, 466);
             this.TabPgAddCharges.TabIndex = 0;
             this.TabPgAddCharges.Text = "Add Charges";
             // 
@@ -396,7 +396,7 @@
             this.FlowPnlforAddCharges.Location = new System.Drawing.Point(34, 31);
             this.FlowPnlforAddCharges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.FlowPnlforAddCharges.Name = "FlowPnlforAddCharges";
-            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(389, 146);
+            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(359, 146);
             this.FlowPnlforAddCharges.TabIndex = 63;
             // 
             // PnlforChargeType
@@ -419,7 +419,7 @@
             this.CmbBxChargeType.Location = new System.Drawing.Point(168, 0);
             this.CmbBxChargeType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CmbBxChargeType.Name = "CmbBxChargeType";
-            this.CmbBxChargeType.Size = new System.Drawing.Size(218, 28);
+            this.CmbBxChargeType.Size = new System.Drawing.Size(187, 28);
             this.CmbBxChargeType.TabIndex = 59;
             // 
             // LblChargeType
@@ -448,7 +448,7 @@
             this.TxtAccessionNumber.Location = new System.Drawing.Point(168, 2);
             this.TxtAccessionNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtAccessionNumber.Name = "TxtAccessionNumber";
-            this.TxtAccessionNumber.Size = new System.Drawing.Size(218, 26);
+            this.TxtAccessionNumber.Size = new System.Drawing.Size(187, 26);
             this.TxtAccessionNumber.TabIndex = 62;
             // 
             // LblAccessionNumber
@@ -488,7 +488,7 @@
             this.NumPckAmount.Location = new System.Drawing.Point(270, 1);
             this.NumPckAmount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NumPckAmount.Name = "NumPckAmount";
-            this.NumPckAmount.Size = new System.Drawing.Size(116, 26);
+            this.NumPckAmount.Size = new System.Drawing.Size(85, 26);
             this.NumPckAmount.TabIndex = 60;
             // 
             // BtnAddToList
@@ -517,7 +517,7 @@
             this.TabPgWaiver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabPgWaiver.Name = "TabPgWaiver";
             this.TabPgWaiver.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TabPgWaiver.Size = new System.Drawing.Size(459, 466);
+            this.TabPgWaiver.Size = new System.Drawing.Size(426, 466);
             this.TabPgWaiver.TabIndex = 1;
             this.TabPgWaiver.Text = "Waiver";
             // 
@@ -540,7 +540,7 @@
             this.TxtReason.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtReason.Multiline = true;
             this.TxtReason.Name = "TxtReason";
-            this.TxtReason.Size = new System.Drawing.Size(359, 66);
+            this.TxtReason.Size = new System.Drawing.Size(357, 66);
             this.TxtReason.TabIndex = 53;
             // 
             // BtnWaive
@@ -576,7 +576,7 @@
             this.TabPgPayment.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabPgPayment.Name = "TabPgPayment";
             this.TabPgPayment.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TabPgPayment.Size = new System.Drawing.Size(459, 466);
+            this.TabPgPayment.Size = new System.Drawing.Size(426, 466);
             this.TabPgPayment.TabIndex = 2;
             this.TabPgPayment.Text = "Payment";
             // 
@@ -585,7 +585,7 @@
             this.NumPckAmountReceived.Location = new System.Drawing.Point(214, 121);
             this.NumPckAmountReceived.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NumPckAmountReceived.Name = "NumPckAmountReceived";
-            this.NumPckAmountReceived.Size = new System.Drawing.Size(174, 26);
+            this.NumPckAmountReceived.Size = new System.Drawing.Size(176, 26);
             this.NumPckAmountReceived.TabIndex = 62;
             // 
             // CmbBxMode
@@ -598,7 +598,7 @@
             this.CmbBxMode.Location = new System.Drawing.Point(214, 74);
             this.CmbBxMode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CmbBxMode.Name = "CmbBxMode";
-            this.CmbBxMode.Size = new System.Drawing.Size(175, 28);
+            this.CmbBxMode.Size = new System.Drawing.Size(176, 28);
             this.CmbBxMode.TabIndex = 61;
             // 
             // LblValueAmounttoPay
