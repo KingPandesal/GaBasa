@@ -143,5 +143,18 @@ namespace LMS.BusinessLogic.Managers
 
             return _circulationRepo.ProcessPayment(fineIds, paymentMode, paymentDate);
         }
+
+        public DTORenewalInfo GetRenewalInfoByAccession(string accessionNumber)
+        {
+            return _circulationRepo.GetRenewalInfoByAccession(accessionNumber);
+        }
+
+        public bool RenewBorrowingTransaction(int transactionId, out DateTime newDueDate)
+        {
+            newDueDate = DateTime.MinValue;
+            if (transactionId <= 0) return false;
+
+            return _circulationRepo.RenewBorrowingTransaction(transactionId, out newDueDate);
+        }
     }
 }

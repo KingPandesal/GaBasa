@@ -19,6 +19,9 @@ namespace LMS.Presentation.UserControls.Management
         // NEW: hold currently looked-up return info so calculations can reuse it
         private DTOReturnInfo _currentReturn;
 
+        // Add this field at the top of the class (with other fields):
+        private DTORenewalInfo _currentRenewal;
+
         // Max width for author label before truncating
         private const int MaxAuthorLabelWidth = 650;
 
@@ -60,6 +63,10 @@ namespace LMS.Presentation.UserControls.Management
             BtnConfirmReturn.Click -= BtnConfirmReturn_Click;
             BtnConfirmReturn.Click += BtnConfirmReturn_Click;
 
+            TxtRenewAccessionNumber.KeyDown += TxtRenewAccessionNumber_KeyDown;
+            BtnRenewEnterAccessionNumber.Click += BtnRenewEnterAccessionNumber_Click;
+            BtnRenewScanAccessionNumber.Click += BtnRenewScanAccessionNumber_Click;
+
             // NEW: wire condition and penalty inputs (designer has these controls)
             CmbBxReturnCondition.SelectedIndexChanged += CmbBxReturnCondition_SelectedIndexChanged;
             NumPckReturnReplacementCost.ValueChanged += NumPckReturnReplacementCost_ValueChanged;
@@ -83,6 +90,85 @@ namespace LMS.Presentation.UserControls.Management
             // Ensure penalty panel visibility reflects default condition
             UpdatePenaltyPanelVisibility();
             LblReturnTotalFine.Text = "Total Fine: ₱0.00";
+
+            // Initialize renewal UI
+            ClearRenewalResults();
+
+            // Wire cancel renew button
+            BtnCancelRenew.Click += BtnCancelRenew_Click;
+
+            // Wire confirm renew button
+            BtnConfirmRenew.Click -= BtnConfirmRenew_Click;
+            BtnConfirmRenew.Click += BtnConfirmRenew_Click;
+        }
+
+        private void BtnConfirmRenew_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentRenewal == null)
+                {
+                    MessageBox.Show("Please lookup a borrowing transaction first.", "No Transaction", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!BtnConfirmRenew.Enabled)
+                {
+                    MessageBox.Show("Renewal not allowed for this transaction.", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Disable button to avoid duplicate clicks
+                BtnConfirmRenew.Enabled = false;
+
+                // Attempt to renew via manager. Manager should expose RenewBorrowingTransaction(transactionId, out newDueDate)
+                DateTime newDueDate;
+                bool success = false;
+
+                // Attempt call - assumes ICirculationManager (or concrete CirculationManager) exposes RenewBorrowingTransaction.
+                // If your ICirculationManager doesn't have this method yet, add it and route to the repository as previously discussed.
+                try
+                {
+                    // if interface exposes it:
+                    success = _circulationManager.RenewBorrowingTransaction(_currentRenewal.TransactionID, out newDueDate);
+                }
+                catch (MissingMethodException)
+                {
+                    // Defensive fallback: surface clear message for missing API
+                    MessageBox.Show("Renewal operation is not implemented in the manager. Add RenewBorrowingTransaction to ICirculationManager and implement it.", "Not Implemented", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (success)
+                {
+                    MessageBox.Show($"Renewal successful. New Due Date: {newDueDate:MMMM d, yyyy}", "Renewed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // After successful transaction, clear UI fields as requested
+                    ClearRenewalResults();
+                    TxtRenewAccessionNumber.Text = "";
+                    TxtRenewAccessionNumber.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to renew. The renewal limit may have been reached or the book has active reservations.", "Renewal Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Reload to refresh UI state in case server-side values changed
+                    try
+                    {
+                        string accession = TxtRenewAccessionNumber.Text?.Trim();
+                        if (!string.IsNullOrWhiteSpace(accession))
+                            LookupRenewal();
+                    }
+                    catch
+                    {
+                        // ignore reload errors
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during renewal: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #region Member Verification
@@ -883,6 +969,166 @@ namespace LMS.Presentation.UserControls.Management
             }
             UpdatePenaltyPanelVisibility();
             LblReturnTotalFine.Text = "Total Fine: ₱0.00";
+        }
+
+        #endregion
+
+        #region Book Renewal
+
+        private void TxtRenewAccessionNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                LookupRenewal();
+            }
+        }
+
+        private void BtnRenewEnterAccessionNumber_Click(object sender, EventArgs e)
+        {
+            LookupRenewal();
+        }
+
+        private void BtnRenewScanAccessionNumber_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var cam = new Camera())
+                {
+                    var result = cam.ShowDialog(this);
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(cam.ScannedCode))
+                    {
+                        TxtRenewAccessionNumber.Text = cam.ScannedCode.Trim();
+                        LookupRenewal();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open camera: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnCancelRenew_Click(object sender, EventArgs e)
+        {
+            ClearRenewalResults();
+            TxtRenewAccessionNumber.Text = "";
+            TxtRenewAccessionNumber.Focus();
+        }
+
+        private void LookupRenewal()
+        {
+            string accession = TxtRenewAccessionNumber.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(accession))
+            {
+                MessageBox.Show("Please enter an Accession Number.", "Validation",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TxtRenewAccessionNumber.Focus();
+                return;
+            }
+
+            var info = _circulationManager.GetRenewalInfoByAccession(accession);
+            if (info == null)
+            {
+                MessageBox.Show($"No active borrowing found for accession: {accession}", "Not Found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearRenewalResults();
+                TxtRenewAccessionNumber.Focus();
+                TxtRenewAccessionNumber.SelectAll();
+                return;
+            }
+
+            _currentRenewal = info;
+            DisplayRenewalInfo(info);
+        }
+
+        private void DisplayRenewalInfo(DTORenewalInfo info)
+        {
+            // 1. Title
+            LblRenewTitle.Text = $"Title: {(!string.IsNullOrWhiteSpace(info.Title) ? info.Title : "N/A")}";
+
+            // 2. Borrower
+            LblRenewBorrower.Text = $"Borrower: {(!string.IsNullOrWhiteSpace(info.MemberName) ? info.MemberName : "Unknown")}";
+
+            // 3. Old Due Date
+            LblRenewOldDueDate.Text = $"Old Due Date: {info.DueDate:MMMM d, yyyy}";
+
+            // 4. Active Reservation Check
+            if (!info.HasActiveReservation)
+            {
+                LblRenewActiveReservation.Text = "✔️ Book has no active reservations";
+                LblRenewActiveReservation.ForeColor = Color.FromArgb(0, 200, 0);
+            }
+            else
+            {
+                LblRenewActiveReservation.Text = "❌ Book has active reservation(s)";
+                LblRenewActiveReservation.ForeColor = Color.FromArgb(200, 0, 0);
+            }
+
+            // 5. Renewal Limit Check
+            if (info.IsWithinRenewalLimit)
+            {
+                LblRenewRenewalLimit.Text = $"✔️ Renewal limit not reached ({info.RenewalCount} / {info.MaxRenewals})";
+                LblRenewRenewalLimit.ForeColor = Color.FromArgb(0, 200, 0);
+            }
+            else
+            {
+                LblRenewRenewalLimit.Text = $"❌ Renewal limit reached ({info.RenewalCount} / {info.MaxRenewals})";
+                LblRenewRenewalLimit.ForeColor = Color.FromArgb(200, 0, 0);
+            }
+
+            // 6. Renewal Status (both checks must pass)
+            bool canRenew = info.CanRenew;
+            if (canRenew)
+            {
+                LblRenewRenewalStatus.Text = "Renewal Status: Allowed";
+                LblRenewRenewalStatus.ForeColor = Color.FromArgb(0, 200, 0);
+            }
+            else
+            {
+                LblRenewRenewalStatus.Text = "Renewal Status: Not Allowed";
+                LblRenewRenewalStatus.ForeColor = Color.FromArgb(200, 0, 0);
+            }
+
+            // 7. New Due Date - only show if renewal is allowed
+            if (canRenew)
+            {
+                DateTime newDueDate = info.CalculateNewDueDate();
+                LblRenewNewDueDate.Text = $"New Due Date: {newDueDate:MMMM d, yyyy}";
+                LblRenewNewDueDate.Visible = true;
+            }
+            else
+            {
+                LblRenewNewDueDate.Text = "New Due Date: ";
+                LblRenewNewDueDate.Visible = false;
+            }
+
+            // Enable/disable confirm button based on eligibility
+            BtnConfirmRenew.Enabled = canRenew;
+            BtnConfirmRenew.BackColor = canRenew ? Color.FromArgb(175, 37, 50) : Color.Gray;
+        }
+
+        private void ClearRenewalResults()
+        {
+            _currentRenewal = null;
+
+            LblRenewTitle.Text = "Title: ";
+            LblRenewBorrower.Text = "Borrower: ";
+            LblRenewOldDueDate.Text = "Old Due Date: ";
+            LblRenewActiveReservation.Text = "";
+            LblRenewActiveReservation.ForeColor = Color.Black;
+            LblRenewRenewalLimit.Text = "";
+            LblRenewRenewalLimit.ForeColor = Color.Black;
+            LblRenewRenewalStatus.Text = "Renewal Status: ";
+            LblRenewRenewalStatus.ForeColor = Color.Black;
+
+            // NEW: only show NewDueDate when renewal is Allowed
+            LblRenewNewDueDate.Text = "New Due Date: ";
+            LblRenewNewDueDate.Visible = false;
+
+            BtnConfirmRenew.Enabled = false;
+            BtnConfirmRenew.BackColor = Color.FromArgb(175, 37, 50);
         }
 
         #endregion

@@ -96,5 +96,18 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// Returns list of created PaymentIDs.
         /// </summary>
         List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
+
+        /// <summary>
+        /// Gets renewal information for an active borrowing by accession number.
+        /// </summary>
+        DTORenewalInfo GetRenewalInfoByAccession(string accessionNumber);
+
+        /// <summary>
+        /// Attempts to renew a borrowing transaction.
+        /// </summary>
+        /// <param name="transactionId">The ID of the transaction to renew.</param>
+        /// <param name="newDueDate">The new due date for the transaction.</param>
+        /// <returns>True if the renewal is successful; otherwise, false.</returns>
+        bool RenewBorrowingTransaction(int transactionId, out DateTime newDueDate);
     }
 }

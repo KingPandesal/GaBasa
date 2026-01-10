@@ -855,5 +855,238 @@ namespace LMS.DataAccess.Repositories
                 }
             }
         }
+
+        public DTORenewalInfo GetRenewalInfoByAccession(string accessionNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accessionNumber)) return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        bt.TransactionID,
+                        bt.CopyID,
+                        bt.MemberID,
+                        ISNULL(u.FirstName,'') + ' ' + ISNULL(u.LastName,'') AS MemberName,
+                        bt.BorrowDate,
+                        bt.DueDate,
+                        ISNULL(bt.RenewalCount, 0) AS RenewalCount,
+                        b.Title,
+                        bc.AccessionNumber,
+                        bc.BookID,
+                        ISNULL(mt.RenewalLimit, 2) AS MaxRenewals,
+                        ISNULL(mt.BorrowingPeriod, 14) AS BorrowingPeriod
+                    FROM [BorrowingTransaction] bt
+                    INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    INNER JOIN [Member] m ON bt.MemberID = m.MemberID
+                    INNER JOIN [User] u ON m.UserID = u.UserID
+                    LEFT JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                    WHERE bc.AccessionNumber = @AccessionNumber
+                      AND bt.ReturnDate IS NULL
+                      AND bt.[Status] IN ('Borrowed', 'Overdue')";
+
+                AddParameter(cmd, "@AccessionNumber", DbType.String, accessionNumber.Trim());
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (!reader.Read())
+                        return null;
+
+                    int bookId = reader.GetInt32(reader.GetOrdinal("BookID"));
+                    int renewalCount = reader.GetInt32(reader.GetOrdinal("RenewalCount"));
+                    int maxRenewals = reader.GetInt32(reader.GetOrdinal("MaxRenewals"));
+
+                    var dto = new DTORenewalInfo
+                    {
+                        TransactionID = reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                        CopyID = reader.GetInt32(reader.GetOrdinal("CopyID")),
+                        MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                        MemberName = reader.IsDBNull(reader.GetOrdinal("MemberName")) ? "" : reader.GetString(reader.GetOrdinal("MemberName")).Trim(),
+                        BorrowDate = reader.GetDateTime(reader.GetOrdinal("BorrowDate")),
+                        DueDate = reader.GetDateTime(reader.GetOrdinal("DueDate")),
+                        RenewalCount = renewalCount,
+                        MaxRenewals = maxRenewals,
+                        BorrowingPeriod = reader.GetInt32(reader.GetOrdinal("BorrowingPeriod")),
+                        Title = reader.IsDBNull(reader.GetOrdinal("Title")) ? "" : reader.GetString(reader.GetOrdinal("Title")).Trim(),
+                        AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? "" : reader.GetString(reader.GetOrdinal("AccessionNumber")).Trim(),
+                        IsWithinRenewalLimit = renewalCount < maxRenewals
+                    };
+
+                    // Close reader before making another query
+                    reader.Close();
+
+                    // Check for active reservations on this book
+                    dto.HasActiveReservation = HasActiveReservationForBook(bookId);
+
+                    return dto;
+                }
+            }
+        }
+
+        public bool HasActiveReservationForBook(int bookId)
+        {
+            if (bookId <= 0) return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                // Check Reservation table for active reservations (Pending or Ready)
+                // Reservation table typically has: ReservationID, MemberID, BookID/CopyID, ReservationDate, Status
+                cmd.CommandText = @"
+                    SELECT COUNT(*) 
+                    FROM [Reservation] r
+                    INNER JOIN [BookCopy] bc ON r.CopyID = bc.CopyID
+                    WHERE bc.BookID = @BookID
+                      AND r.[Status] IN ('Pending', 'Ready', 'Active')";
+
+                AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+
+                var result = cmd.ExecuteScalar();
+                int count = result != null ? Convert.ToInt32(result) : 0;
+                return count > 0;
+            }
+        }
+
+        public int? GetBookIdByCopyId(int copyId)
+        {
+            if (copyId <= 0) return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"SELECT BookID FROM [BookCopy] WHERE CopyID = @CopyID";
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                var result = cmd.ExecuteScalar();
+                return result != null && result != DBNull.Value ? (int?)Convert.ToInt32(result) : null;
+            }
+        }
+
+        /// <summary>
+        /// Renews the borrowing transaction by incrementing the renewal count and extending the due date.
+        /// </summary>
+        /// <param name="transactionId">The ID of the borrowing transaction to renew.</param>
+        /// <param name="newDueDate">Output parameter that will receive the new due date if renewal is successful.</param>
+        /// <returns>True if the renewal was successful, false otherwise.</returns>
+        public bool RenewBorrowingTransaction(int transactionId, out DateTime newDueDate)
+        {
+            newDueDate = DateTime.MinValue;
+            if (transactionId <= 0) return false;
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    try
+                    {
+                        // 1) Load transaction, current renewal count, member type renewal limit, borrowing period and book id
+                        cmd.CommandText = @"
+                            SELECT 
+                                bc.BookID,
+                                ISNULL(bt.RenewalCount, 0) AS RenewalCount,
+                                ISNULL(mt.RenewalLimit, 2) AS RenewalLimit,
+                                ISNULL(mt.BorrowingPeriod, 14) AS BorrowingPeriod
+                            FROM [BorrowingTransaction] bt
+                            INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                            INNER JOIN [Member] m ON bt.MemberID = m.MemberID
+                            LEFT JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                            WHERE bt.TransactionID = @TransactionID
+                              AND bt.ReturnDate IS NULL
+                              AND bt.[Status] IN ('Borrowed', 'Overdue')";
+
+                        AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+
+                        int bookId;
+                        int renewalCount;
+                        int renewalLimit;
+                        int borrowingPeriod;
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                            {
+                                // transaction not found / not active
+                                return false;
+                            }
+
+                            bookId = reader.GetInt32(reader.GetOrdinal("BookID"));
+                            renewalCount = reader.GetInt32(reader.GetOrdinal("RenewalCount"));
+                            renewalLimit = reader.GetInt32(reader.GetOrdinal("RenewalLimit"));
+                            borrowingPeriod = reader.GetInt32(reader.GetOrdinal("BorrowingPeriod"));
+                        }
+
+                        // 2) Check renewal limit
+                        if (renewalCount >= renewalLimit)
+                        {
+                            return false; // limit reached
+                        }
+
+                        // 3) Check for active reservations for the same book
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"
+                            SELECT COUNT(*) 
+                            FROM [Reservation] r
+                            INNER JOIN [BookCopy] bc ON r.CopyID = bc.CopyID
+                            WHERE bc.BookID = @BookID
+                              AND r.[Status] IN ('Pending', 'Ready', 'Active')";
+                        AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+
+                        var resObj = cmd.ExecuteScalar();
+                        int resCount = resObj != null && resObj != DBNull.Value ? Convert.ToInt32(resObj) : 0;
+                        if (resCount > 0)
+                            return false;
+
+                        // 4) Perform update: increment renewal count and extend due date
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"
+                            UPDATE [BorrowingTransaction]
+                            SET RenewalCount = ISNULL(RenewalCount,0) + 1,
+                                DueDate = DATEADD(day, @BorrowingPeriod, DueDate)
+                            WHERE TransactionID = @TransactionID
+                              AND ReturnDate IS NULL
+                              AND [Status] IN ('Borrowed', 'Overdue')";
+                        AddParameter(cmd, "@BorrowingPeriod", DbType.Int32, borrowingPeriod);
+                        AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+
+                        int updated = cmd.ExecuteNonQuery();
+                        if (updated == 0)
+                        {
+                            tran.Rollback();
+                            return false;
+                        }
+
+                        // 5) Read new due date
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"SELECT DueDate FROM [BorrowingTransaction] WHERE TransactionID = @TransactionID";
+                        AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+
+                        var dueObj = cmd.ExecuteScalar();
+                        if (dueObj != null && dueObj != DBNull.Value)
+                        {
+                            newDueDate = Convert.ToDateTime(dueObj);
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { }
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

@@ -19,7 +19,10 @@ namespace LMS.Model.Models.Transactions
         public DateTime BorrowDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
-        public string Status { get; set; } // Enum: Borrowed, Returned, Overdue
+        public string Status { get; set; } 
+        // Enum: Borrowed, Returned, Overdue
+        public int RenewalCount { get; set; }
+
     }
 
 }

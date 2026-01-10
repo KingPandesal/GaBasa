@@ -567,10 +567,10 @@
             this.TabPageReturn.BackColor = System.Drawing.Color.White;
             this.TabPageReturn.Controls.Add(this.GrpBxReturnBook);
             this.TabPageReturn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabPageReturn.Location = new System.Drawing.Point(4, 41);
+            this.TabPageReturn.Location = new System.Drawing.Point(4, 37);
             this.TabPageReturn.Name = "TabPageReturn";
             this.TabPageReturn.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageReturn.Size = new System.Drawing.Size(1572, 891);
+            this.TabPageReturn.Size = new System.Drawing.Size(1572, 859);
             this.TabPageReturn.TabIndex = 1;
             this.TabPageReturn.Text = "Return";
             // 
@@ -853,10 +853,10 @@
             // 
             this.TabPageRenew.BackColor = System.Drawing.Color.White;
             this.TabPageRenew.Controls.Add(this.GrpBxBookRenewal);
-            this.TabPageRenew.Location = new System.Drawing.Point(4, 41);
+            this.TabPageRenew.Location = new System.Drawing.Point(4, 37);
             this.TabPageRenew.Name = "TabPageRenew";
             this.TabPageRenew.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageRenew.Size = new System.Drawing.Size(1572, 891);
+            this.TabPageRenew.Size = new System.Drawing.Size(1572, 859);
             this.TabPageRenew.TabIndex = 2;
             this.TabPageRenew.Text = "Renewal";
             // 
@@ -1009,22 +1009,22 @@
             this.LblRenewRenewalStatus.AutoSize = true;
             this.LblRenewRenewalStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewRenewalStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblRenewRenewalStatus.Location = new System.Drawing.Point(43, 530);
+            this.LblRenewRenewalStatus.Location = new System.Drawing.Point(43, 485);
             this.LblRenewRenewalStatus.Name = "LblRenewRenewalStatus";
-            this.LblRenewRenewalStatus.Size = new System.Drawing.Size(221, 28);
+            this.LblRenewRenewalStatus.Size = new System.Drawing.Size(145, 28);
             this.LblRenewRenewalStatus.TabIndex = 53;
-            this.LblRenewRenewalStatus.Text = "Renewal Status: Allowed";
+            this.LblRenewRenewalStatus.Text = "Renewal Status:";
             // 
             // LblRenewNewDueDate
             // 
             this.LblRenewNewDueDate.AutoSize = true;
             this.LblRenewNewDueDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewNewDueDate.ForeColor = System.Drawing.Color.Black;
-            this.LblRenewNewDueDate.Location = new System.Drawing.Point(43, 484);
+            this.LblRenewNewDueDate.Location = new System.Drawing.Point(43, 526);
             this.LblRenewNewDueDate.Name = "LblRenewNewDueDate";
-            this.LblRenewNewDueDate.Size = new System.Drawing.Size(292, 28);
+            this.LblRenewNewDueDate.Size = new System.Drawing.Size(141, 28);
             this.LblRenewNewDueDate.TabIndex = 53;
-            this.LblRenewNewDueDate.Text = "New Due Date: January 30, 2026";
+            this.LblRenewNewDueDate.Text = "New Due Date:";
             // 
             // LblRenewOldDueDate
             // 
@@ -1033,9 +1033,9 @@
             this.LblRenewOldDueDate.ForeColor = System.Drawing.Color.Black;
             this.LblRenewOldDueDate.Location = new System.Drawing.Point(42, 286);
             this.LblRenewOldDueDate.Name = "LblRenewOldDueDate";
-            this.LblRenewOldDueDate.Size = new System.Drawing.Size(285, 28);
+            this.LblRenewOldDueDate.Size = new System.Drawing.Size(134, 28);
             this.LblRenewOldDueDate.TabIndex = 53;
-            this.LblRenewOldDueDate.Text = "Old Due Date: January 15, 2026";
+            this.LblRenewOldDueDate.Text = "Old Due Date:";
             // 
             // LblRenewBorrower
             // 
@@ -1044,9 +1044,9 @@
             this.LblRenewBorrower.ForeColor = System.Drawing.Color.Black;
             this.LblRenewBorrower.Location = new System.Drawing.Point(42, 240);
             this.LblRenewBorrower.Name = "LblRenewBorrower";
-            this.LblRenewBorrower.Size = new System.Drawing.Size(238, 28);
+            this.LblRenewBorrower.Size = new System.Drawing.Size(96, 28);
             this.LblRenewBorrower.TabIndex = 53;
-            this.LblRenewBorrower.Text = "Borrower: Jane Dele Crissy";
+            this.LblRenewBorrower.Text = "Borrower:";
             // 
             // LblRenewTitle
             // 
@@ -1055,9 +1055,9 @@
             this.LblRenewTitle.ForeColor = System.Drawing.Color.Black;
             this.LblRenewTitle.Location = new System.Drawing.Point(42, 196);
             this.LblRenewTitle.Name = "LblRenewTitle";
-            this.LblRenewTitle.Size = new System.Drawing.Size(208, 28);
+            this.LblRenewTitle.Size = new System.Drawing.Size(53, 28);
             this.LblRenewTitle.TabIndex = 53;
-            this.LblRenewTitle.Text = "Title: Unlucky Vacation";
+            this.LblRenewTitle.Text = "Title:";
             // 
             // UCCirculation
             // 

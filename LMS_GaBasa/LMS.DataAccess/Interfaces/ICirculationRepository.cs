@@ -97,5 +97,28 @@ namespace LMS.DataAccess.Interfaces
         /// Returns list of created PaymentIDs (empty on failure).
         /// </summary>
         List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
+
+        /// <summary>
+        /// Gets renewal information for an active borrowing by accession number.
+        /// Includes reservation check and renewal limit validation.
+        /// </summary>
+        DTORenewalInfo GetRenewalInfoByAccession(string accessionNumber);
+
+        /// <summary>
+        /// Checks if there are active reservations for the specified BookID (not CopyID).
+        /// Active = Status in ('Pending', 'Ready')
+        /// </summary>
+        bool HasActiveReservationForBook(int bookId);
+
+        /// <summary>
+        /// Gets the BookID for a given CopyID.
+        /// </summary>
+        int? GetBookIdByCopyId(int copyId);
+
+        /// <summary>
+        /// Attempts to renew a borrowing transaction.
+        /// Returns true on success and outputs the new due date.
+        /// </summary>
+        bool RenewBorrowingTransaction(int transactionId, out DateTime newDueDate);
     }
 }
