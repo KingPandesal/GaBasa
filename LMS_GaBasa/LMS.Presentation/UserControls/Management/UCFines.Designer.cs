@@ -105,7 +105,7 @@
             this.dataGridViewImageColumn2.MinimumWidth = 8;
             this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
             this.dataGridViewImageColumn2.ToolTipText = "Archive user";
-            this.dataGridViewImageColumn2.Width = 150;
+            this.dataGridViewImageColumn2.Width = 125;
             // 
             // dataGridViewImageColumn1
             // 
@@ -116,7 +116,7 @@
             this.dataGridViewImageColumn1.MinimumWidth = 8;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.ToolTipText = "Edit user";
-            this.dataGridViewImageColumn1.Width = 150;
+            this.dataGridViewImageColumn1.Width = 125;
             // 
             // BtnSettlePayment
             // 
@@ -126,10 +126,10 @@
             this.BtnSettlePayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSettlePayment.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnSettlePayment.ForeColor = System.Drawing.Color.White;
-            this.BtnSettlePayment.Location = new System.Drawing.Point(172, 326);
-            this.BtnSettlePayment.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSettlePayment.Location = new System.Drawing.Point(153, 261);
+            this.BtnSettlePayment.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnSettlePayment.Name = "BtnSettlePayment";
-            this.BtnSettlePayment.Size = new System.Drawing.Size(166, 44);
+            this.BtnSettlePayment.Size = new System.Drawing.Size(148, 35);
             this.BtnSettlePayment.TabIndex = 54;
             this.BtnSettlePayment.Text = "Settle Payment";
             this.BtnSettlePayment.UseVisualStyleBackColor = false;
@@ -138,10 +138,10 @@
             // TxtSearchMember
             // 
             this.TxtSearchMember.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.TxtSearchMember.Location = new System.Drawing.Point(37, 82);
+            this.TxtSearchMember.Location = new System.Drawing.Point(33, 66);
             this.TxtSearchMember.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtSearchMember.Name = "TxtSearchMember";
-            this.TxtSearchMember.Size = new System.Drawing.Size(386, 34);
+            this.TxtSearchMember.Size = new System.Drawing.Size(344, 30);
             this.TxtSearchMember.TabIndex = 53;
             // 
             // LblSearchMember
@@ -149,9 +149,9 @@
             this.LblSearchMember.AutoSize = true;
             this.LblSearchMember.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblSearchMember.ForeColor = System.Drawing.Color.Black;
-            this.LblSearchMember.Location = new System.Drawing.Point(32, 32);
+            this.LblSearchMember.Location = new System.Drawing.Point(28, 26);
             this.LblSearchMember.Name = "LblSearchMember";
-            this.LblSearchMember.Size = new System.Drawing.Size(173, 28);
+            this.LblSearchMember.Size = new System.Drawing.Size(152, 23);
             this.LblSearchMember.TabIndex = 52;
             this.LblSearchMember.Text = "Search Member ID";
             this.LblSearchMember.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -161,9 +161,9 @@
             this.LblType.AutoSize = true;
             this.LblType.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblType.ForeColor = System.Drawing.Color.Black;
-            this.LblType.Location = new System.Drawing.Point(630, 89);
+            this.LblType.Location = new System.Drawing.Point(560, 71);
             this.LblType.Name = "LblType";
-            this.LblType.Size = new System.Drawing.Size(57, 28);
+            this.LblType.Size = new System.Drawing.Size(49, 23);
             this.LblType.TabIndex = 52;
             this.LblType.Text = "Type:";
             this.LblType.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -173,9 +173,9 @@
             this.LblName.AutoSize = true;
             this.LblName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblName.ForeColor = System.Drawing.Color.Black;
-            this.LblName.Location = new System.Drawing.Point(630, 61);
+            this.LblName.Location = new System.Drawing.Point(560, 49);
             this.LblName.Name = "LblName";
-            this.LblName.Size = new System.Drawing.Size(68, 28);
+            this.LblName.Size = new System.Drawing.Size(60, 23);
             this.LblName.TabIndex = 52;
             this.LblName.Text = "Name:";
             this.LblName.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -185,9 +185,9 @@
             this.LblStatus.AutoSize = true;
             this.LblStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblStatus.Location = new System.Drawing.Point(630, 120);
+            this.LblStatus.Location = new System.Drawing.Point(560, 96);
             this.LblStatus.Name = "LblStatus";
-            this.LblStatus.Size = new System.Drawing.Size(69, 28);
+            this.LblStatus.Size = new System.Drawing.Size(60, 23);
             this.LblStatus.TabIndex = 52;
             this.LblStatus.Text = "Status:";
             this.LblStatus.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -198,11 +198,11 @@
             this.GrpBxOustandingPenalties.Controls.Add(this.LblSelectedTotal);
             this.GrpBxOustandingPenalties.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.GrpBxOustandingPenalties.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.GrpBxOustandingPenalties.Location = new System.Drawing.Point(532, 192);
+            this.GrpBxOustandingPenalties.Location = new System.Drawing.Point(473, 154);
             this.GrpBxOustandingPenalties.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GrpBxOustandingPenalties.Name = "GrpBxOustandingPenalties";
             this.GrpBxOustandingPenalties.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GrpBxOustandingPenalties.Size = new System.Drawing.Size(1004, 602);
+            this.GrpBxOustandingPenalties.Size = new System.Drawing.Size(892, 482);
             this.GrpBxOustandingPenalties.TabIndex = 55;
             this.GrpBxOustandingPenalties.TabStop = false;
             this.GrpBxOustandingPenalties.Text = "Outstanding Penalties";
@@ -211,10 +211,10 @@
             // 
             this.panel1.Controls.Add(this.DgvFines);
             this.panel1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.panel1.Location = new System.Drawing.Point(22, 32);
+            this.panel1.Location = new System.Drawing.Point(20, 26);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(853, 295);
+            this.panel1.Size = new System.Drawing.Size(853, 236);
             this.panel1.TabIndex = 60;
             // 
             // DgvFines
@@ -234,12 +234,12 @@
             this.ColumnDateIssued,
             this.ColumnStatus});
             this.DgvFines.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.DgvFines.Location = new System.Drawing.Point(4, 19);
+            this.DgvFines.Location = new System.Drawing.Point(0, 15);
             this.DgvFines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DgvFines.Name = "DgvFines";
             this.DgvFines.RowHeadersWidth = 62;
             this.DgvFines.RowTemplate.Height = 28;
-            this.DgvFines.Size = new System.Drawing.Size(846, 272);
+            this.DgvFines.Size = new System.Drawing.Size(853, 221);
             this.DgvFines.TabIndex = 59;
             // 
             // LblSelectedTotal
@@ -247,9 +247,9 @@
             this.LblSelectedTotal.AutoSize = true;
             this.LblSelectedTotal.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblSelectedTotal.ForeColor = System.Drawing.Color.Black;
-            this.LblSelectedTotal.Location = new System.Drawing.Point(22, 349);
+            this.LblSelectedTotal.Location = new System.Drawing.Point(20, 279);
             this.LblSelectedTotal.Name = "LblSelectedTotal";
-            this.LblSelectedTotal.Size = new System.Drawing.Size(137, 28);
+            this.LblSelectedTotal.Size = new System.Drawing.Size(119, 23);
             this.LblSelectedTotal.TabIndex = 52;
             this.LblSelectedTotal.Text = "Selected Total:";
             this.LblSelectedTotal.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -259,9 +259,9 @@
             this.LblMemberInfo.AutoSize = true;
             this.LblMemberInfo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMemberInfo.ForeColor = System.Drawing.Color.Black;
-            this.LblMemberInfo.Location = new System.Drawing.Point(630, 32);
+            this.LblMemberInfo.Location = new System.Drawing.Point(560, 26);
             this.LblMemberInfo.Name = "LblMemberInfo";
-            this.LblMemberInfo.Size = new System.Drawing.Size(125, 28);
+            this.LblMemberInfo.Size = new System.Drawing.Size(109, 23);
             this.LblMemberInfo.TabIndex = 52;
             this.LblMemberInfo.Text = "Member Info";
             this.LblMemberInfo.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -272,11 +272,11 @@
             this.TabCtrl.Controls.Add(this.TabPgWaiver);
             this.TabCtrl.Controls.Add(this.TabPgPayment);
             this.TabCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.TabCtrl.Location = new System.Drawing.Point(37, 171);
+            this.TabCtrl.Location = new System.Drawing.Point(33, 137);
             this.TabCtrl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabCtrl.Name = "TabCtrl";
             this.TabCtrl.SelectedIndex = 0;
-            this.TabCtrl.Size = new System.Drawing.Size(488, 624);
+            this.TabCtrl.Size = new System.Drawing.Size(434, 499);
             this.TabCtrl.TabIndex = 57;
             // 
             // TabPgAddCharges
@@ -284,11 +284,11 @@
             this.TabPgAddCharges.BackColor = System.Drawing.Color.White;
             this.TabPgAddCharges.Controls.Add(this.FlowPnlforAddCharges);
             this.TabPgAddCharges.Controls.Add(this.BtnAddToList);
-            this.TabPgAddCharges.Location = new System.Drawing.Point(4, 34);
+            this.TabPgAddCharges.Location = new System.Drawing.Point(4, 29);
             this.TabPgAddCharges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabPgAddCharges.Name = "TabPgAddCharges";
             this.TabPgAddCharges.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TabPgAddCharges.Size = new System.Drawing.Size(480, 586);
+            this.TabPgAddCharges.Size = new System.Drawing.Size(426, 466);
             this.TabPgAddCharges.TabIndex = 0;
             this.TabPgAddCharges.Text = "Add Charges";
             // 
@@ -297,10 +297,10 @@
             this.FlowPnlforAddCharges.Controls.Add(this.PnlforChargeType);
             this.FlowPnlforAddCharges.Controls.Add(this.PnlforAccessionNumber);
             this.FlowPnlforAddCharges.Controls.Add(this.PnlforAmount);
-            this.FlowPnlforAddCharges.Location = new System.Drawing.Point(38, 39);
+            this.FlowPnlforAddCharges.Location = new System.Drawing.Point(34, 31);
             this.FlowPnlforAddCharges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.FlowPnlforAddCharges.Name = "FlowPnlforAddCharges";
-            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(404, 182);
+            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(359, 146);
             this.FlowPnlforAddCharges.TabIndex = 63;
             // 
             // PnlforChargeType
@@ -310,7 +310,7 @@
             this.PnlforChargeType.Location = new System.Drawing.Point(3, 2);
             this.PnlforChargeType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PnlforChargeType.Name = "PnlforChargeType";
-            this.PnlforChargeType.Size = new System.Drawing.Size(471, 44);
+            this.PnlforChargeType.Size = new System.Drawing.Size(419, 35);
             this.PnlforChargeType.TabIndex = 1;
             // 
             // CmbBxChargeType
@@ -323,7 +323,7 @@
             this.CmbBxChargeType.Location = new System.Drawing.Point(189, 0);
             this.CmbBxChargeType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CmbBxChargeType.Name = "CmbBxChargeType";
-            this.CmbBxChargeType.Size = new System.Drawing.Size(210, 33);
+            this.CmbBxChargeType.Size = new System.Drawing.Size(187, 28);
             this.CmbBxChargeType.TabIndex = 59;
             // 
             // LblChargeType
@@ -331,9 +331,9 @@
             this.LblChargeType.AutoSize = true;
             this.LblChargeType.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblChargeType.ForeColor = System.Drawing.Color.Black;
-            this.LblChargeType.Location = new System.Drawing.Point(-6, 0);
+            this.LblChargeType.Location = new System.Drawing.Point(-5, 0);
             this.LblChargeType.Name = "LblChargeType";
-            this.LblChargeType.Size = new System.Drawing.Size(124, 28);
+            this.LblChargeType.Size = new System.Drawing.Size(109, 23);
             this.LblChargeType.TabIndex = 58;
             this.LblChargeType.Text = "Charge Type:";
             // 
@@ -341,18 +341,18 @@
             // 
             this.PnlforAccessionNumber.Controls.Add(this.TxtAccessionNumber);
             this.PnlforAccessionNumber.Controls.Add(this.LblAccessionNumber);
-            this.PnlforAccessionNumber.Location = new System.Drawing.Point(3, 50);
+            this.PnlforAccessionNumber.Location = new System.Drawing.Point(3, 41);
             this.PnlforAccessionNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PnlforAccessionNumber.Name = "PnlforAccessionNumber";
-            this.PnlforAccessionNumber.Size = new System.Drawing.Size(471, 44);
+            this.PnlforAccessionNumber.Size = new System.Drawing.Size(419, 35);
             this.PnlforAccessionNumber.TabIndex = 0;
             // 
             // TxtAccessionNumber
             // 
-            this.TxtAccessionNumber.Location = new System.Drawing.Point(189, 2);
+            this.TxtAccessionNumber.Location = new System.Drawing.Point(168, 2);
             this.TxtAccessionNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtAccessionNumber.Name = "TxtAccessionNumber";
-            this.TxtAccessionNumber.Size = new System.Drawing.Size(210, 30);
+            this.TxtAccessionNumber.Size = new System.Drawing.Size(187, 26);
             this.TxtAccessionNumber.TabIndex = 62;
             // 
             // LblAccessionNumber
@@ -360,9 +360,9 @@
             this.LblAccessionNumber.AutoSize = true;
             this.LblAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAccessionNumber.ForeColor = System.Drawing.Color.Black;
-            this.LblAccessionNumber.Location = new System.Drawing.Point(-6, 2);
+            this.LblAccessionNumber.Location = new System.Drawing.Point(-5, 2);
             this.LblAccessionNumber.Name = "LblAccessionNumber";
-            this.LblAccessionNumber.Size = new System.Drawing.Size(178, 28);
+            this.LblAccessionNumber.Size = new System.Drawing.Size(156, 23);
             this.LblAccessionNumber.TabIndex = 56;
             this.LblAccessionNumber.Text = "Accession Number:";
             // 
@@ -370,10 +370,10 @@
             // 
             this.PnlforAmount.Controls.Add(this.LblAmount);
             this.PnlforAmount.Controls.Add(this.NumPckAmount);
-            this.PnlforAmount.Location = new System.Drawing.Point(3, 98);
+            this.PnlforAmount.Location = new System.Drawing.Point(3, 80);
             this.PnlforAmount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PnlforAmount.Name = "PnlforAmount";
-            this.PnlforAmount.Size = new System.Drawing.Size(471, 44);
+            this.PnlforAmount.Size = new System.Drawing.Size(419, 35);
             this.PnlforAmount.TabIndex = 2;
             // 
             // LblAmount
@@ -383,16 +383,16 @@
             this.LblAmount.ForeColor = System.Drawing.Color.Black;
             this.LblAmount.Location = new System.Drawing.Point(-4, 0);
             this.LblAmount.Name = "LblAmount";
-            this.LblAmount.Size = new System.Drawing.Size(87, 28);
+            this.LblAmount.Size = new System.Drawing.Size(76, 23);
             this.LblAmount.TabIndex = 57;
             this.LblAmount.Text = "Amount:";
             // 
             // NumPckAmount
             // 
-            this.NumPckAmount.Location = new System.Drawing.Point(304, 1);
+            this.NumPckAmount.Location = new System.Drawing.Point(270, 1);
             this.NumPckAmount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NumPckAmount.Name = "NumPckAmount";
-            this.NumPckAmount.Size = new System.Drawing.Size(96, 30);
+            this.NumPckAmount.Size = new System.Drawing.Size(85, 26);
             this.NumPckAmount.TabIndex = 60;
             // 
             // BtnAddToList
@@ -403,10 +403,10 @@
             this.BtnAddToList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAddToList.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnAddToList.ForeColor = System.Drawing.Color.White;
-            this.BtnAddToList.Location = new System.Drawing.Point(172, 326);
-            this.BtnAddToList.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnAddToList.Location = new System.Drawing.Point(153, 261);
+            this.BtnAddToList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnAddToList.Name = "BtnAddToList";
-            this.BtnAddToList.Size = new System.Drawing.Size(166, 44);
+            this.BtnAddToList.Size = new System.Drawing.Size(148, 35);
             this.BtnAddToList.TabIndex = 61;
             this.BtnAddToList.Text = "Add to List";
             this.BtnAddToList.UseVisualStyleBackColor = false;
@@ -417,11 +417,11 @@
             this.TabPgWaiver.Controls.Add(this.LblReason);
             this.TabPgWaiver.Controls.Add(this.TxtReason);
             this.TabPgWaiver.Controls.Add(this.BtnWaive);
-            this.TabPgWaiver.Location = new System.Drawing.Point(4, 34);
+            this.TabPgWaiver.Location = new System.Drawing.Point(4, 29);
             this.TabPgWaiver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabPgWaiver.Name = "TabPgWaiver";
             this.TabPgWaiver.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TabPgWaiver.Size = new System.Drawing.Size(480, 586);
+            this.TabPgWaiver.Size = new System.Drawing.Size(426, 466);
             this.TabPgWaiver.TabIndex = 1;
             this.TabPgWaiver.Text = "Waiver";
             // 
@@ -430,9 +430,9 @@
             this.LblReason.AutoSize = true;
             this.LblReason.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReason.ForeColor = System.Drawing.Color.Black;
-            this.LblReason.Location = new System.Drawing.Point(34, 39);
+            this.LblReason.Location = new System.Drawing.Point(30, 31);
             this.LblReason.Name = "LblReason";
-            this.LblReason.Size = new System.Drawing.Size(78, 28);
+            this.LblReason.Size = new System.Drawing.Size(69, 23);
             this.LblReason.TabIndex = 52;
             this.LblReason.Text = "Reason:";
             this.LblReason.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -440,11 +440,11 @@
             // TxtReason
             // 
             this.TxtReason.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.TxtReason.Location = new System.Drawing.Point(39, 79);
+            this.TxtReason.Location = new System.Drawing.Point(35, 63);
             this.TxtReason.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtReason.Multiline = true;
             this.TxtReason.Name = "TxtReason";
-            this.TxtReason.Size = new System.Drawing.Size(401, 82);
+            this.TxtReason.Size = new System.Drawing.Size(357, 66);
             this.TxtReason.TabIndex = 53;
             // 
             // BtnWaive
@@ -455,10 +455,10 @@
             this.BtnWaive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnWaive.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnWaive.ForeColor = System.Drawing.Color.White;
-            this.BtnWaive.Location = new System.Drawing.Point(172, 326);
-            this.BtnWaive.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnWaive.Location = new System.Drawing.Point(153, 261);
+            this.BtnWaive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnWaive.Name = "BtnWaive";
-            this.BtnWaive.Size = new System.Drawing.Size(166, 44);
+            this.BtnWaive.Size = new System.Drawing.Size(148, 35);
             this.BtnWaive.TabIndex = 54;
             this.BtnWaive.Text = "Waive";
             this.BtnWaive.UseVisualStyleBackColor = false;
@@ -476,20 +476,20 @@
             this.TabPgPayment.Controls.Add(this.LblChange);
             this.TabPgPayment.Controls.Add(this.LblAmountReceived);
             this.TabPgPayment.Controls.Add(this.LblMode);
-            this.TabPgPayment.Location = new System.Drawing.Point(4, 34);
+            this.TabPgPayment.Location = new System.Drawing.Point(4, 29);
             this.TabPgPayment.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabPgPayment.Name = "TabPgPayment";
             this.TabPgPayment.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TabPgPayment.Size = new System.Drawing.Size(480, 586);
+            this.TabPgPayment.Size = new System.Drawing.Size(426, 466);
             this.TabPgPayment.TabIndex = 2;
             this.TabPgPayment.Text = "Payment";
             // 
             // NumPckAmountReceived
             // 
-            this.NumPckAmountReceived.Location = new System.Drawing.Point(241, 151);
+            this.NumPckAmountReceived.Location = new System.Drawing.Point(214, 121);
             this.NumPckAmountReceived.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NumPckAmountReceived.Name = "NumPckAmountReceived";
-            this.NumPckAmountReceived.Size = new System.Drawing.Size(198, 30);
+            this.NumPckAmountReceived.Size = new System.Drawing.Size(176, 26);
             this.NumPckAmountReceived.TabIndex = 62;
             // 
             // CmbBxMode
@@ -499,10 +499,10 @@
             this.CmbBxMode.Items.AddRange(new object[] {
             "Cash",
             "Online"});
-            this.CmbBxMode.Location = new System.Drawing.Point(241, 92);
+            this.CmbBxMode.Location = new System.Drawing.Point(214, 74);
             this.CmbBxMode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CmbBxMode.Name = "CmbBxMode";
-            this.CmbBxMode.Size = new System.Drawing.Size(198, 33);
+            this.CmbBxMode.Size = new System.Drawing.Size(176, 28);
             this.CmbBxMode.TabIndex = 61;
             // 
             // LblValueAmounttoPay
@@ -510,9 +510,9 @@
             this.LblValueAmounttoPay.AutoSize = true;
             this.LblValueAmounttoPay.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueAmounttoPay.ForeColor = System.Drawing.Color.Black;
-            this.LblValueAmounttoPay.Location = new System.Drawing.Point(236, 39);
+            this.LblValueAmounttoPay.Location = new System.Drawing.Point(210, 31);
             this.LblValueAmounttoPay.Name = "LblValueAmounttoPay";
-            this.LblValueAmounttoPay.Size = new System.Drawing.Size(34, 28);
+            this.LblValueAmounttoPay.Size = new System.Drawing.Size(29, 23);
             this.LblValueAmounttoPay.TabIndex = 60;
             this.LblValueAmounttoPay.Text = "P0";
             // 
@@ -521,9 +521,9 @@
             this.LblValueChange.AutoSize = true;
             this.LblValueChange.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueChange.ForeColor = System.Drawing.Color.Black;
-            this.LblValueChange.Location = new System.Drawing.Point(236, 212);
+            this.LblValueChange.Location = new System.Drawing.Point(210, 170);
             this.LblValueChange.Name = "LblValueChange";
-            this.LblValueChange.Size = new System.Drawing.Size(34, 28);
+            this.LblValueChange.Size = new System.Drawing.Size(29, 23);
             this.LblValueChange.TabIndex = 60;
             this.LblValueChange.Text = "P0";
             // 
@@ -532,9 +532,9 @@
             this.LblAmounttoPay.AutoSize = true;
             this.LblAmounttoPay.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAmounttoPay.ForeColor = System.Drawing.Color.Black;
-            this.LblAmounttoPay.Location = new System.Drawing.Point(35, 39);
+            this.LblAmounttoPay.Location = new System.Drawing.Point(31, 31);
             this.LblAmounttoPay.Name = "LblAmounttoPay";
-            this.LblAmounttoPay.Size = new System.Drawing.Size(146, 28);
+            this.LblAmounttoPay.Size = new System.Drawing.Size(128, 23);
             this.LblAmounttoPay.TabIndex = 60;
             this.LblAmounttoPay.Text = "Amount to Pay:";
             // 
@@ -543,9 +543,9 @@
             this.LblChange.AutoSize = true;
             this.LblChange.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblChange.ForeColor = System.Drawing.Color.Black;
-            this.LblChange.Location = new System.Drawing.Point(35, 212);
+            this.LblChange.Location = new System.Drawing.Point(31, 170);
             this.LblChange.Name = "LblChange";
-            this.LblChange.Size = new System.Drawing.Size(82, 28);
+            this.LblChange.Size = new System.Drawing.Size(73, 23);
             this.LblChange.TabIndex = 60;
             this.LblChange.Text = "Change:";
             // 
@@ -554,9 +554,9 @@
             this.LblAmountReceived.AutoSize = true;
             this.LblAmountReceived.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAmountReceived.ForeColor = System.Drawing.Color.Black;
-            this.LblAmountReceived.Location = new System.Drawing.Point(35, 151);
+            this.LblAmountReceived.Location = new System.Drawing.Point(31, 121);
             this.LblAmountReceived.Name = "LblAmountReceived";
-            this.LblAmountReceived.Size = new System.Drawing.Size(169, 28);
+            this.LblAmountReceived.Size = new System.Drawing.Size(148, 23);
             this.LblAmountReceived.TabIndex = 60;
             this.LblAmountReceived.Text = "Amount Received:";
             // 
@@ -565,9 +565,9 @@
             this.LblMode.AutoSize = true;
             this.LblMode.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMode.ForeColor = System.Drawing.Color.Black;
-            this.LblMode.Location = new System.Drawing.Point(35, 92);
+            this.LblMode.Location = new System.Drawing.Point(31, 74);
             this.LblMode.Name = "LblMode";
-            this.LblMode.Size = new System.Drawing.Size(68, 28);
+            this.LblMode.Size = new System.Drawing.Size(58, 23);
             this.LblMode.TabIndex = 60;
             this.LblMode.Text = "Mode:";
             // 
@@ -576,9 +576,9 @@
             this.LblTotalFines.AutoSize = true;
             this.LblTotalFines.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblTotalFines.ForeColor = System.Drawing.Color.Black;
-            this.LblTotalFines.Location = new System.Drawing.Point(1055, 61);
+            this.LblTotalFines.Location = new System.Drawing.Point(938, 49);
             this.LblTotalFines.Name = "LblTotalFines";
-            this.LblTotalFines.Size = new System.Drawing.Size(107, 28);
+            this.LblTotalFines.Size = new System.Drawing.Size(93, 23);
             this.LblTotalFines.TabIndex = 52;
             this.LblTotalFines.Text = "Total Fines:";
             this.LblTotalFines.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -588,9 +588,9 @@
             this.LblBooksCurrentlyBorrowed.AutoSize = true;
             this.LblBooksCurrentlyBorrowed.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblBooksCurrentlyBorrowed.ForeColor = System.Drawing.Color.Black;
-            this.LblBooksCurrentlyBorrowed.Location = new System.Drawing.Point(1055, 89);
+            this.LblBooksCurrentlyBorrowed.Location = new System.Drawing.Point(938, 71);
             this.LblBooksCurrentlyBorrowed.Name = "LblBooksCurrentlyBorrowed";
-            this.LblBooksCurrentlyBorrowed.Size = new System.Drawing.Size(244, 28);
+            this.LblBooksCurrentlyBorrowed.Size = new System.Drawing.Size(212, 23);
             this.LblBooksCurrentlyBorrowed.TabIndex = 52;
             this.LblBooksCurrentlyBorrowed.Text = "Books Currently Borrowed:";
             this.LblBooksCurrentlyBorrowed.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -600,9 +600,9 @@
             this.LblOverdueCount.AutoSize = true;
             this.LblOverdueCount.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblOverdueCount.ForeColor = System.Drawing.Color.Black;
-            this.LblOverdueCount.Location = new System.Drawing.Point(1055, 120);
+            this.LblOverdueCount.Location = new System.Drawing.Point(938, 96);
             this.LblOverdueCount.Name = "LblOverdueCount";
-            this.LblOverdueCount.Size = new System.Drawing.Size(149, 28);
+            this.LblOverdueCount.Size = new System.Drawing.Size(131, 23);
             this.LblOverdueCount.TabIndex = 52;
             this.LblOverdueCount.Text = "Overdue Count:";
             this.LblOverdueCount.Click += new System.EventHandler(this.LblMemberID_Click);
@@ -615,10 +615,10 @@
             this.BtnSearchMember.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSearchMember.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnSearchMember.ForeColor = System.Drawing.Color.White;
-            this.BtnSearchMember.Location = new System.Drawing.Point(432, 82);
-            this.BtnSearchMember.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSearchMember.Location = new System.Drawing.Point(384, 66);
+            this.BtnSearchMember.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnSearchMember.Name = "BtnSearchMember";
-            this.BtnSearchMember.Size = new System.Drawing.Size(126, 38);
+            this.BtnSearchMember.Size = new System.Drawing.Size(112, 30);
             this.BtnSearchMember.TabIndex = 54;
             this.BtnSearchMember.Text = "Search";
             this.BtnSearchMember.UseVisualStyleBackColor = false;
@@ -629,7 +629,7 @@
             this.ColumnNumbering.HeaderText = "#";
             this.ColumnNumbering.MinimumWidth = 8;
             this.ColumnNumbering.Name = "ColumnNumbering";
-            this.ColumnNumbering.Width = 55;
+            this.ColumnNumbering.Width = 46;
             // 
             // ColumnCheckBox
             // 
@@ -643,53 +643,53 @@
             this.ColumnTransactionID.HeaderText = "Transaction ID";
             this.ColumnTransactionID.MinimumWidth = 8;
             this.ColumnTransactionID.Name = "ColumnTransactionID";
-            this.ColumnTransactionID.Width = 144;
+            this.ColumnTransactionID.Width = 125;
             // 
             // ColumnMemberID
             // 
             this.ColumnMemberID.HeaderText = "Member ID";
             this.ColumnMemberID.MinimumWidth = 8;
             this.ColumnMemberID.Name = "ColumnMemberID";
-            this.ColumnMemberID.Width = 124;
+            this.ColumnMemberID.Width = 108;
             // 
             // ColumnMemberName
             // 
             this.ColumnMemberName.HeaderText = "Member Name";
             this.ColumnMemberName.MinimumWidth = 8;
             this.ColumnMemberName.Name = "ColumnMemberName";
-            this.ColumnMemberName.Width = 151;
+            this.ColumnMemberName.Width = 130;
             // 
             // ColumnFineAmount
             // 
             this.ColumnFineAmount.HeaderText = "Fine Amount";
             this.ColumnFineAmount.MinimumWidth = 8;
             this.ColumnFineAmount.Name = "ColumnFineAmount";
-            this.ColumnFineAmount.Width = 135;
+            this.ColumnFineAmount.Width = 117;
             // 
             // ColumnFineType
             // 
             this.ColumnFineType.HeaderText = "Fine Type";
             this.ColumnFineType.MinimumWidth = 8;
             this.ColumnFineType.Name = "ColumnFineType";
-            this.ColumnFineType.Width = 111;
+            this.ColumnFineType.Width = 95;
             // 
             // ColumnDateIssued
             // 
             this.ColumnDateIssued.HeaderText = "Date Issued";
             this.ColumnDateIssued.MinimumWidth = 8;
             this.ColumnDateIssued.Name = "ColumnDateIssued";
-            this.ColumnDateIssued.Width = 126;
+            this.ColumnDateIssued.Width = 110;
             // 
             // ColumnStatus
             // 
             this.ColumnStatus.HeaderText = "Status";
             this.ColumnStatus.MinimumWidth = 8;
             this.ColumnStatus.Name = "ColumnStatus";
-            this.ColumnStatus.Width = 88;
+            this.ColumnStatus.Width = 76;
             // 
             // UCFines
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.TabCtrl);
@@ -706,7 +706,7 @@
             this.Controls.Add(this.LblMemberInfo);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCFines";
-            this.Size = new System.Drawing.Size(1580, 936);
+            this.Size = new System.Drawing.Size(1404, 749);
             this.GrpBxOustandingPenalties.ResumeLayout(false);
             this.GrpBxOustandingPenalties.PerformLayout();
             this.panel1.ResumeLayout(false);
