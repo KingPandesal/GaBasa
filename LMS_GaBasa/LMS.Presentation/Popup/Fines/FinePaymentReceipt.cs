@@ -16,5 +16,10 @@ namespace LMS.Presentation.Popup.Fines
         {
             InitializeComponent();
         }
+
+        private void LblValueDueDate_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -54,6 +54,8 @@
             this.LblUM = new System.Windows.Forms.Label();
             this.LblBorrowReceipt = new System.Windows.Forms.Label();
             this.LblTagumCity = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).BeginInit();
             this.SuspendLayout();
@@ -62,9 +64,10 @@
             // 
             this.PnlDesign2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.PnlDesign2.ForeColor = System.Drawing.Color.Blue;
-            this.PnlDesign2.Location = new System.Drawing.Point(186, 517);
+            this.PnlDesign2.Location = new System.Drawing.Point(165, 439);
+            this.PnlDesign2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PnlDesign2.Name = "PnlDesign2";
-            this.PnlDesign2.Size = new System.Drawing.Size(200, 1);
+            this.PnlDesign2.Size = new System.Drawing.Size(178, 1);
             this.PnlDesign2.TabIndex = 66;
             // 
             // BtnPreviewReceipt
@@ -75,10 +78,10 @@
             this.BtnPreviewReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPreviewReceipt.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnPreviewReceipt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnPreviewReceipt.Location = new System.Drawing.Point(372, 587);
-            this.BtnPreviewReceipt.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnPreviewReceipt.Location = new System.Drawing.Point(331, 526);
+            this.BtnPreviewReceipt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnPreviewReceipt.Name = "BtnPreviewReceipt";
-            this.BtnPreviewReceipt.Size = new System.Drawing.Size(108, 44);
+            this.BtnPreviewReceipt.Size = new System.Drawing.Size(96, 35);
             this.BtnPreviewReceipt.TabIndex = 68;
             this.BtnPreviewReceipt.Text = "Preview";
             this.BtnPreviewReceipt.UseVisualStyleBackColor = false;
@@ -91,10 +94,10 @@
             this.BtnPrintReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrintReceipt.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnPrintReceipt.ForeColor = System.Drawing.Color.White;
-            this.BtnPrintReceipt.Location = new System.Drawing.Point(488, 587);
-            this.BtnPrintReceipt.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnPrintReceipt.Location = new System.Drawing.Point(434, 526);
+            this.BtnPrintReceipt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnPrintReceipt.Name = "BtnPrintReceipt";
-            this.BtnPrintReceipt.Size = new System.Drawing.Size(108, 44);
+            this.BtnPrintReceipt.Size = new System.Drawing.Size(96, 35);
             this.BtnPrintReceipt.TabIndex = 67;
             this.BtnPrintReceipt.Text = "Print";
             this.BtnPrintReceipt.UseVisualStyleBackColor = false;
@@ -104,20 +107,20 @@
             this.LblMessage.AutoSize = true;
             this.LblMessage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblMessage.Location = new System.Drawing.Point(33, 533);
+            this.LblMessage.Location = new System.Drawing.Point(29, 458);
             this.LblMessage.Name = "LblMessage";
-            this.LblMessage.Size = new System.Drawing.Size(355, 21);
+            this.LblMessage.Size = new System.Drawing.Size(478, 57);
             this.LblMessage.TabIndex = 63;
-            this.LblMessage.Text = "Please return on or before due date to avoid fines.";
+            this.LblMessage.Text = resources.GetString("LblMessage.Text");
             // 
             // Lbl4
             // 
             this.Lbl4.AutoSize = true;
             this.Lbl4.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Lbl4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Lbl4.Location = new System.Drawing.Point(52, 487);
+            this.Lbl4.Location = new System.Drawing.Point(40, 416);
             this.Lbl4.Name = "Lbl4";
-            this.Lbl4.Size = new System.Drawing.Size(129, 28);
+            this.Lbl4.Size = new System.Drawing.Size(113, 23);
             this.Lbl4.TabIndex = 64;
             this.Lbl4.Text = "Processed By:";
             // 
@@ -126,20 +129,21 @@
             this.LblValueDueDate.AutoSize = true;
             this.LblValueDueDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueDueDate.ForeColor = System.Drawing.Color.Black;
-            this.LblValueDueDate.Location = new System.Drawing.Point(118, 231);
+            this.LblValueDueDate.Location = new System.Drawing.Point(145, 185);
             this.LblValueDueDate.Name = "LblValueDueDate";
-            this.LblValueDueDate.Size = new System.Drawing.Size(58, 28);
+            this.LblValueDueDate.Size = new System.Drawing.Size(50, 23);
             this.LblValueDueDate.TabIndex = 10;
             this.LblValueDueDate.Text = "value";
+            this.LblValueDueDate.Click += new System.EventHandler(this.LblValueDueDate_Click);
             // 
             // LblValueDateBorrowed
             // 
             this.LblValueDateBorrowed.AutoSize = true;
             this.LblValueDateBorrowed.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueDateBorrowed.ForeColor = System.Drawing.Color.Black;
-            this.LblValueDateBorrowed.Location = new System.Drawing.Point(168, 203);
+            this.LblValueDateBorrowed.Location = new System.Drawing.Point(160, 155);
             this.LblValueDateBorrowed.Name = "LblValueDateBorrowed";
-            this.LblValueDateBorrowed.Size = new System.Drawing.Size(58, 28);
+            this.LblValueDateBorrowed.Size = new System.Drawing.Size(50, 23);
             this.LblValueDateBorrowed.TabIndex = 10;
             this.LblValueDateBorrowed.Text = "value";
             // 
@@ -148,9 +152,9 @@
             this.LblValueTitle.AutoSize = true;
             this.LblValueTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueTitle.ForeColor = System.Drawing.Color.Black;
-            this.LblValueTitle.Location = new System.Drawing.Point(87, 165);
+            this.LblValueTitle.Location = new System.Drawing.Point(119, 132);
             this.LblValueTitle.Name = "LblValueTitle";
-            this.LblValueTitle.Size = new System.Drawing.Size(58, 28);
+            this.LblValueTitle.Size = new System.Drawing.Size(50, 23);
             this.LblValueTitle.TabIndex = 10;
             this.LblValueTitle.Text = "value";
             // 
@@ -159,9 +163,9 @@
             this.LblValueAccessionNumber.AutoSize = true;
             this.LblValueAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueAccessionNumber.ForeColor = System.Drawing.Color.Black;
-            this.LblValueAccessionNumber.Location = new System.Drawing.Point(171, 137);
+            this.LblValueAccessionNumber.Location = new System.Drawing.Point(116, 110);
             this.LblValueAccessionNumber.Name = "LblValueAccessionNumber";
-            this.LblValueAccessionNumber.Size = new System.Drawing.Size(58, 28);
+            this.LblValueAccessionNumber.Size = new System.Drawing.Size(50, 23);
             this.LblValueAccessionNumber.TabIndex = 10;
             this.LblValueAccessionNumber.Text = "value";
             // 
@@ -170,9 +174,9 @@
             this.LblValueMemberType.AutoSize = true;
             this.LblValueMemberType.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueMemberType.ForeColor = System.Drawing.Color.Black;
-            this.LblValueMemberType.Location = new System.Drawing.Point(170, 69);
+            this.LblValueMemberType.Location = new System.Drawing.Point(149, 55);
             this.LblValueMemberType.Name = "LblValueMemberType";
-            this.LblValueMemberType.Size = new System.Drawing.Size(73, 28);
+            this.LblValueMemberType.Size = new System.Drawing.Size(62, 23);
             this.LblValueMemberType.TabIndex = 10;
             this.LblValueMemberType.Text = "Faculty";
             // 
@@ -181,9 +185,9 @@
             this.LblValueName.AutoSize = true;
             this.LblValueName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblValueName.ForeColor = System.Drawing.Color.Black;
-            this.LblValueName.Location = new System.Drawing.Point(97, 41);
+            this.LblValueName.Location = new System.Drawing.Point(91, 33);
             this.LblValueName.Name = "LblValueName";
-            this.LblValueName.Size = new System.Drawing.Size(149, 28);
+            this.LblValueName.Size = new System.Drawing.Size(131, 23);
             this.LblValueName.TabIndex = 10;
             this.LblValueName.Text = "Jane Dela Crissy";
             // 
@@ -192,86 +196,86 @@
             this.LblDuedate.AutoSize = true;
             this.LblDuedate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblDuedate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblDuedate.Location = new System.Drawing.Point(15, 231);
+            this.LblDuedate.Location = new System.Drawing.Point(25, 185);
             this.LblDuedate.Name = "LblDuedate";
-            this.LblDuedate.Size = new System.Drawing.Size(97, 28);
+            this.LblDuedate.Size = new System.Drawing.Size(112, 23);
             this.LblDuedate.TabIndex = 9;
-            this.LblDuedate.Text = "Due Date:";
+            this.LblDuedate.Text = "Fine Amount:";
             // 
             // LblTransactionID
             // 
             this.LblTransactionID.AutoSize = true;
             this.LblTransactionID.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTransactionID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblTransactionID.Location = new System.Drawing.Point(466, 148);
+            this.LblTransactionID.Location = new System.Drawing.Point(388, 119);
             this.LblTransactionID.Name = "LblTransactionID";
-            this.LblTransactionID.Size = new System.Drawing.Size(130, 41);
+            this.LblTransactionID.Size = new System.Drawing.Size(142, 35);
             this.LblTransactionID.TabIndex = 61;
-            this.LblTransactionID.Text = "Trans. ID";
+            this.LblTransactionID.Text = "Payment ID";
             // 
             // LblDateBorrowed
             // 
             this.LblDateBorrowed.AutoSize = true;
             this.LblDateBorrowed.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblDateBorrowed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblDateBorrowed.Location = new System.Drawing.Point(15, 203);
+            this.LblDateBorrowed.Location = new System.Drawing.Point(25, 155);
             this.LblDateBorrowed.Name = "LblDateBorrowed";
-            this.LblDateBorrowed.Size = new System.Drawing.Size(147, 28);
+            this.LblDateBorrowed.Size = new System.Drawing.Size(129, 23);
             this.LblDateBorrowed.TabIndex = 8;
-            this.LblDateBorrowed.Text = "Date Borrowed:";
+            this.LblDateBorrowed.Text = "Payment Mode:";
             // 
             // Lbl2
             // 
             this.Lbl2.AutoSize = true;
             this.Lbl2.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Lbl2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Lbl2.Location = new System.Drawing.Point(15, 109);
+            this.Lbl2.Location = new System.Drawing.Point(13, 87);
             this.Lbl2.Name = "Lbl2";
-            this.Lbl2.Size = new System.Drawing.Size(57, 28);
+            this.Lbl2.Size = new System.Drawing.Size(153, 23);
             this.Lbl2.TabIndex = 7;
-            this.Lbl2.Text = "Book";
+            this.Lbl2.Text = "Transaction Details";
             // 
             // Lbl1
             // 
             this.Lbl1.AutoSize = true;
             this.Lbl1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Lbl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Lbl1.Location = new System.Drawing.Point(15, 13);
+            this.Lbl1.Location = new System.Drawing.Point(13, 10);
             this.Lbl1.Name = "Lbl1";
-            this.Lbl1.Size = new System.Drawing.Size(92, 28);
+            this.Lbl1.Size = new System.Drawing.Size(107, 23);
             this.Lbl1.TabIndex = 6;
-            this.Lbl1.Text = "Borrower";
+            this.Lbl1.Text = "Payer Details";
             // 
             // LblAccessionNumber
             // 
             this.LblAccessionNumber.AutoSize = true;
             this.LblAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblAccessionNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblAccessionNumber.Location = new System.Drawing.Point(28, 137);
+            this.LblAccessionNumber.Location = new System.Drawing.Point(25, 110);
             this.LblAccessionNumber.Name = "LblAccessionNumber";
-            this.LblAccessionNumber.Size = new System.Drawing.Size(137, 28);
+            this.LblAccessionNumber.Size = new System.Drawing.Size(85, 23);
             this.LblAccessionNumber.TabIndex = 5;
-            this.LblAccessionNumber.Text = "Accession No.:";
+            this.LblAccessionNumber.Text = "Fine Type:";
             // 
             // LblTitle
             // 
             this.LblTitle.AutoSize = true;
             this.LblTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblTitle.Location = new System.Drawing.Point(28, 165);
+            this.LblTitle.Location = new System.Drawing.Point(25, 132);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(53, 28);
+            this.LblTitle.Size = new System.Drawing.Size(87, 23);
             this.LblTitle.TabIndex = 4;
-            this.LblTitle.Text = "Title:";
+            this.LblTitle.Text = "Date Paid:";
             // 
             // LblMemberType
             // 
             this.LblMemberType.AutoSize = true;
             this.LblMemberType.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblMemberType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblMemberType.Location = new System.Drawing.Point(28, 69);
+            this.LblMemberType.Location = new System.Drawing.Point(25, 55);
             this.LblMemberType.Name = "LblMemberType";
-            this.LblMemberType.Size = new System.Drawing.Size(136, 28);
+            this.LblMemberType.Size = new System.Drawing.Size(118, 23);
             this.LblMemberType.TabIndex = 5;
             this.LblMemberType.Text = "Member Type:";
             // 
@@ -280,9 +284,9 @@
             this.LblName.AutoSize = true;
             this.LblName.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblName.Location = new System.Drawing.Point(28, 41);
+            this.LblName.Location = new System.Drawing.Point(25, 33);
             this.LblName.Name = "LblName";
-            this.LblName.Size = new System.Drawing.Size(68, 28);
+            this.LblName.Size = new System.Drawing.Size(60, 23);
             this.LblName.TabIndex = 4;
             this.LblName.Text = "Name:";
             // 
@@ -290,6 +294,8 @@
             // 
             this.PnlDesign.BackColor = System.Drawing.Color.White;
             this.PnlDesign.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.PnlDesign.Controls.Add(this.label2);
+            this.PnlDesign.Controls.Add(this.label1);
             this.PnlDesign.Controls.Add(this.LblValueDueDate);
             this.PnlDesign.Controls.Add(this.LblValueDateBorrowed);
             this.PnlDesign.Controls.Add(this.LblValueTitle);
@@ -306,19 +312,21 @@
             this.PnlDesign.Controls.Add(this.LblName);
             this.PnlDesign.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.PnlDesign.ForeColor = System.Drawing.Color.Black;
-            this.PnlDesign.Location = new System.Drawing.Point(37, 192);
+            this.PnlDesign.Location = new System.Drawing.Point(33, 154);
+            this.PnlDesign.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PnlDesign.Name = "PnlDesign";
-            this.PnlDesign.Padding = new System.Windows.Forms.Padding(5);
+            this.PnlDesign.Padding = new System.Windows.Forms.Padding(4);
             this.PnlDesign.ShowText = true;
-            this.PnlDesign.Size = new System.Drawing.Size(559, 280);
+            this.PnlDesign.Size = new System.Drawing.Size(497, 244);
             this.PnlDesign.TabIndex = 65;
             // 
             // PicBxLogo
             // 
             this.PicBxLogo.Image = ((System.Drawing.Image)(resources.GetObject("PicBxLogo.Image")));
-            this.PicBxLogo.Location = new System.Drawing.Point(37, 44);
+            this.PicBxLogo.Location = new System.Drawing.Point(33, 35);
+            this.PicBxLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PicBxLogo.Name = "PicBxLogo";
-            this.PicBxLogo.Size = new System.Drawing.Size(67, 62);
+            this.PicBxLogo.Size = new System.Drawing.Size(60, 50);
             this.PicBxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxLogo.TabIndex = 58;
             this.PicBxLogo.TabStop = false;
@@ -328,9 +336,9 @@
             this.LblUM.AutoSize = true;
             this.LblUM.Font = new System.Drawing.Font("Old English Text MT", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblUM.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblUM.Location = new System.Drawing.Point(119, 44);
+            this.LblUM.Location = new System.Drawing.Point(106, 35);
             this.LblUM.Name = "LblUM";
-            this.LblUM.Size = new System.Drawing.Size(477, 44);
+            this.LblUM.Size = new System.Drawing.Size(401, 35);
             this.LblUM.TabIndex = 59;
             this.LblUM.Text = "University of Mindanao, Inc.";
             // 
@@ -339,9 +347,9 @@
             this.LblBorrowReceipt.AutoSize = true;
             this.LblBorrowReceipt.Font = new System.Drawing.Font("Impact", 15F);
             this.LblBorrowReceipt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblBorrowReceipt.Location = new System.Drawing.Point(30, 150);
+            this.LblBorrowReceipt.Location = new System.Drawing.Point(27, 120);
             this.LblBorrowReceipt.Name = "LblBorrowReceipt";
-            this.LblBorrowReceipt.Size = new System.Drawing.Size(222, 37);
+            this.LblBorrowReceipt.Size = new System.Drawing.Size(185, 32);
             this.LblBorrowReceipt.TabIndex = 62;
             this.LblBorrowReceipt.Text = "PAYMENT RECEIPT";
             // 
@@ -349,18 +357,40 @@
             // 
             this.LblTagumCity.AutoSize = true;
             this.LblTagumCity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblTagumCity.Location = new System.Drawing.Point(280, 88);
+            this.LblTagumCity.Location = new System.Drawing.Point(249, 70);
             this.LblTagumCity.Name = "LblTagumCity";
-            this.LblTagumCity.Size = new System.Drawing.Size(107, 20);
+            this.LblTagumCity.Size = new System.Drawing.Size(89, 16);
             this.LblTagumCity.TabIndex = 60;
             this.LblTagumCity.Text = "TAGUM CITY";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.label1.Location = new System.Drawing.Point(25, 215);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 23);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Total Paid:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(129, 214);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 23);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "value";
+            // 
             // FinePaymentReceipt
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(644, 655);
+            this.ClientSize = new System.Drawing.Size(572, 567);
             this.Controls.Add(this.PnlDesign2);
             this.Controls.Add(this.BtnPreviewReceipt);
             this.Controls.Add(this.BtnPrintReceipt);
@@ -373,6 +403,7 @@
             this.Controls.Add(this.LblBorrowReceipt);
             this.Controls.Add(this.LblTagumCity);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FinePaymentReceipt";
@@ -413,5 +444,7 @@
         private System.Windows.Forms.Label LblUM;
         private System.Windows.Forms.Label LblBorrowReceipt;
         private System.Windows.Forms.Label LblTagumCity;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
