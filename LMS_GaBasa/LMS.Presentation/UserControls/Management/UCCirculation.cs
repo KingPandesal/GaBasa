@@ -977,6 +977,10 @@ namespace LMS.Presentation.UserControls.Management
                 // Include time in the return date (use current local date and time)
                 DateTime returnDate = DateTime.Now;
 
+                // Store returnInfo before clearing so we can show receipt
+                var returnInfoForReceipt = _currentReturn;
+                int transactionId = _currentReturn.TransactionID;
+
                 bool success = _circulationManager.CompleteReturnGood(
                     _currentReturn.TransactionID,
                     _currentReturn.CopyID,
@@ -1005,6 +1009,25 @@ namespace LMS.Presentation.UserControls.Management
 
                     // Clear the active return since it's completed
                     _currentReturn = null;
+
+                    // Show return receipt
+                    try
+                    {
+                        using (var receipt = new LMS.Presentation.Popup.Circulation.ReturnReceiptForm(
+                            transactionId,
+                            returnInfoForReceipt,
+                            returnDate,
+                            fine,
+                            cond))
+                        {
+                            receipt.ShowDialog(this);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Don't fail the return if receipt fails — surface a friendly message
+                        MessageBox.Show($"Return recorded but failed to show receipt: {ex.Message}", "Receipt Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {

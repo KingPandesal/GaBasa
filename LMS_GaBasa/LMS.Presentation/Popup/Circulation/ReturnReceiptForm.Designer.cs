@@ -54,6 +54,10 @@
             this.LblTagumCity = new System.Windows.Forms.Label();
             this.PicBxLogo = new System.Windows.Forms.PictureBox();
             this.LblMessage = new System.Windows.Forms.Label();
+            this.LblCondition = new System.Windows.Forms.Label();
+            this.LblValueCondition = new System.Windows.Forms.Label();
+            this.LblFine = new System.Windows.Forms.Label();
+            this.LblValueFine = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +66,7 @@
             // 
             this.PnlDesign2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.PnlDesign2.ForeColor = System.Drawing.Color.Blue;
-            this.PnlDesign2.Location = new System.Drawing.Point(166, 591);
+            this.PnlDesign2.Location = new System.Drawing.Point(186, 514);
             this.PnlDesign2.Name = "PnlDesign2";
             this.PnlDesign2.Size = new System.Drawing.Size(200, 1);
             this.PnlDesign2.TabIndex = 66;
@@ -75,7 +79,7 @@
             this.BtnPreviewReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPreviewReceipt.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnPreviewReceipt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnPreviewReceipt.Location = new System.Drawing.Point(372, 616);
+            this.BtnPreviewReceipt.Location = new System.Drawing.Point(372, 635);
             this.BtnPreviewReceipt.Margin = new System.Windows.Forms.Padding(4);
             this.BtnPreviewReceipt.Name = "BtnPreviewReceipt";
             this.BtnPreviewReceipt.Size = new System.Drawing.Size(108, 44);
@@ -88,7 +92,7 @@
             this.Lbl4.AutoSize = true;
             this.Lbl4.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Lbl4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Lbl4.Location = new System.Drawing.Point(32, 553);
+            this.Lbl4.Location = new System.Drawing.Point(52, 485);
             this.Lbl4.Name = "Lbl4";
             this.Lbl4.Size = new System.Drawing.Size(129, 28);
             this.Lbl4.TabIndex = 63;
@@ -102,7 +106,7 @@
             this.BtnPrintReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrintReceipt.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnPrintReceipt.ForeColor = System.Drawing.Color.White;
-            this.BtnPrintReceipt.Location = new System.Drawing.Point(488, 616);
+            this.BtnPrintReceipt.Location = new System.Drawing.Point(488, 635);
             this.BtnPrintReceipt.Margin = new System.Windows.Forms.Padding(4);
             this.BtnPrintReceipt.Name = "BtnPrintReceipt";
             this.BtnPrintReceipt.Size = new System.Drawing.Size(108, 44);
@@ -280,12 +284,16 @@
             this.PnlDesign.BackColor = System.Drawing.Color.White;
             this.PnlDesign.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.PnlDesign.Controls.Add(this.LblValueDateReturned);
+            this.PnlDesign.Controls.Add(this.LblValueFine);
+            this.PnlDesign.Controls.Add(this.LblValueCondition);
             this.PnlDesign.Controls.Add(this.LblValueDateBorrowed);
             this.PnlDesign.Controls.Add(this.LblValueTitle);
             this.PnlDesign.Controls.Add(this.LblValueAccessionNumber);
             this.PnlDesign.Controls.Add(this.LblValueMemberType);
             this.PnlDesign.Controls.Add(this.LblValueName);
+            this.PnlDesign.Controls.Add(this.LblFine);
             this.PnlDesign.Controls.Add(this.LblReturnDate);
+            this.PnlDesign.Controls.Add(this.LblCondition);
             this.PnlDesign.Controls.Add(this.LblDateBorrowed);
             this.PnlDesign.Controls.Add(this.Lbl2);
             this.PnlDesign.Controls.Add(this.Lbl1);
@@ -349,7 +357,7 @@
             this.LblMessage.AutoSize = true;
             this.LblMessage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblMessage.Location = new System.Drawing.Point(48, 475);
+            this.LblMessage.Location = new System.Drawing.Point(33, 537);
             this.LblMessage.MaximumSize = new System.Drawing.Size(540, 100);
             this.LblMessage.MinimumSize = new System.Drawing.Size(500, 42);
             this.LblMessage.Name = "LblMessage";
@@ -359,17 +367,61 @@
     " applicable fines or charges have been assessed in accordance with library polic" +
     "ies.";
             // 
+            // LblCondition
+            // 
+            this.LblCondition.AutoSize = true;
+            this.LblCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblCondition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblCondition.Location = new System.Drawing.Point(307, 203);
+            this.LblCondition.Name = "LblCondition";
+            this.LblCondition.Size = new System.Drawing.Size(103, 28);
+            this.LblCondition.TabIndex = 8;
+            this.LblCondition.Text = "Condition:";
+            // 
+            // LblValueCondition
+            // 
+            this.LblValueCondition.AutoSize = true;
+            this.LblValueCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblValueCondition.ForeColor = System.Drawing.Color.Black;
+            this.LblValueCondition.Location = new System.Drawing.Point(416, 203);
+            this.LblValueCondition.Name = "LblValueCondition";
+            this.LblValueCondition.Size = new System.Drawing.Size(58, 28);
+            this.LblValueCondition.TabIndex = 10;
+            this.LblValueCondition.Text = "value";
+            // 
+            // LblFine
+            // 
+            this.LblFine.AutoSize = true;
+            this.LblFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblFine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblFine.Location = new System.Drawing.Point(307, 231);
+            this.LblFine.Name = "LblFine";
+            this.LblFine.Size = new System.Drawing.Size(52, 28);
+            this.LblFine.TabIndex = 8;
+            this.LblFine.Text = "Fine:";
+            // 
+            // LblValueFine
+            // 
+            this.LblValueFine.AutoSize = true;
+            this.LblValueFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblValueFine.ForeColor = System.Drawing.Color.Black;
+            this.LblValueFine.Location = new System.Drawing.Point(416, 231);
+            this.LblValueFine.Name = "LblValueFine";
+            this.LblValueFine.Size = new System.Drawing.Size(58, 28);
+            this.LblValueFine.TabIndex = 10;
+            this.LblValueFine.Text = "value";
+            // 
             // ReturnReceiptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(632, 679);
+            this.ClientSize = new System.Drawing.Size(632, 692);
             this.Controls.Add(this.PnlDesign2);
             this.Controls.Add(this.BtnPreviewReceipt);
-            this.Controls.Add(this.Lbl4);
             this.Controls.Add(this.BtnPrintReceipt);
             this.Controls.Add(this.LblMessage);
+            this.Controls.Add(this.Lbl4);
             this.Controls.Add(this.LblTransactionID);
             this.Controls.Add(this.PnlDesign);
             this.Controls.Add(this.PicBxLogo);
@@ -382,6 +434,7 @@
             this.Name = "ReturnReceiptForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ReturnReceiptForm";
+            this.Load += new System.EventHandler(this.ReturnReceiptForm_Load);
             this.PnlDesign.ResumeLayout(false);
             this.PnlDesign.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).EndInit();
@@ -417,5 +470,9 @@
         private System.Windows.Forms.Label LblReturnReceipt;
         private System.Windows.Forms.Label LblTagumCity;
         private System.Windows.Forms.Label LblMessage;
+        private System.Windows.Forms.Label LblValueFine;
+        private System.Windows.Forms.Label LblValueCondition;
+        private System.Windows.Forms.Label LblFine;
+        private System.Windows.Forms.Label LblCondition;
     }
 }
