@@ -31,8 +31,8 @@
             this.PnlDesign = new System.Windows.Forms.Panel();
             this.VideoPlayer = new AForge.Controls.VideoSourcePlayer();
             this.PnlVideoPlayerContainer = new System.Windows.Forms.Panel();
-            this.CmbBxDevices = new System.Windows.Forms.ComboBox();
             this.LblResult = new System.Windows.Forms.Label();
+            this.CmbBxDevices = new System.Windows.Forms.ComboBox();
             this.PnlVideoPlayerContainer.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +63,15 @@
             this.PnlVideoPlayerContainer.Size = new System.Drawing.Size(513, 275);
             this.PnlVideoPlayerContainer.TabIndex = 2;
             // 
+            // LblResult
+            // 
+            this.LblResult.AutoSize = true;
+            this.LblResult.Location = new System.Drawing.Point(23, 251);
+            this.LblResult.Name = "LblResult";
+            this.LblResult.Size = new System.Drawing.Size(69, 20);
+            this.LblResult.TabIndex = 4;
+            this.LblResult.Text = "Barcode";
+            // 
             // CmbBxDevices
             // 
             this.CmbBxDevices.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -71,15 +80,6 @@
             this.CmbBxDevices.Name = "CmbBxDevices";
             this.CmbBxDevices.Size = new System.Drawing.Size(457, 36);
             this.CmbBxDevices.TabIndex = 3;
-            // 
-            // LblResult
-            // 
-            this.LblResult.AutoSize = true;
-            this.LblResult.Location = new System.Drawing.Point(223, 251);
-            this.LblResult.Name = "LblResult";
-            this.LblResult.Size = new System.Drawing.Size(69, 20);
-            this.LblResult.TabIndex = 4;
-            this.LblResult.Text = "Barcode";
             // 
             // Camera
             // 

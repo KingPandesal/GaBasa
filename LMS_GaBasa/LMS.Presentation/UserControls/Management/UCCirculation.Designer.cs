@@ -123,7 +123,7 @@
             this.TabCtrlCirculation.Controls.Add(this.TabPageReturn);
             this.TabCtrlCirculation.Controls.Add(this.TabPageRenew);
             this.TabCtrlCirculation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabCtrlCirculation.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.TabCtrlCirculation.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.TabCtrlCirculation.Location = new System.Drawing.Point(0, 0);
             this.TabCtrlCirculation.Name = "TabCtrlCirculation";
             this.TabCtrlCirculation.SelectedIndex = 0;
@@ -568,10 +568,10 @@
             this.TabPageReturn.BackColor = System.Drawing.Color.White;
             this.TabPageReturn.Controls.Add(this.GrpBxReturnBook);
             this.TabPageReturn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabPageReturn.Location = new System.Drawing.Point(4, 50);
+            this.TabPageReturn.Location = new System.Drawing.Point(4, 37);
             this.TabPageReturn.Name = "TabPageReturn";
             this.TabPageReturn.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageReturn.Size = new System.Drawing.Size(1572, 882);
+            this.TabPageReturn.Size = new System.Drawing.Size(1572, 895);
             this.TabPageReturn.TabIndex = 1;
             this.TabPageReturn.Text = "Return";
             // 
@@ -792,10 +792,10 @@
             // 
             this.TabPageRenew.BackColor = System.Drawing.Color.White;
             this.TabPageRenew.Controls.Add(this.GrpBxBookRenewal);
-            this.TabPageRenew.Location = new System.Drawing.Point(4, 50);
+            this.TabPageRenew.Location = new System.Drawing.Point(4, 41);
             this.TabPageRenew.Name = "TabPageRenew";
             this.TabPageRenew.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageRenew.Size = new System.Drawing.Size(1572, 882);
+            this.TabPageRenew.Size = new System.Drawing.Size(1572, 891);
             this.TabPageRenew.TabIndex = 2;
             this.TabPageRenew.Text = "Renewal";
             // 

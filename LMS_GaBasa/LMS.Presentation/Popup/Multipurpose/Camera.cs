@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
@@ -32,23 +31,16 @@ namespace LMS.Presentation.Popup.Multipurpose
         {
             InitializeComponent();
 
-            // Configure ZXing reader with conservative, robust options for camera scanning
+            // Configure ZXing reader - CODE_128 only to match our generated barcodes
             _reader = new BarcodeReader
             {
                 AutoRotate = true,
                 Options = new DecodingOptions
                 {
-                    TryHarder = true,          // try extra effort for difficult shots
-                    TryInverted = true,        // invert black/white if needed
-                    PossibleFormats = new[]
-                    {
-                        BarcodeFormat.CODE_128, // match your generated barcodes
-                        BarcodeFormat.CODE_39,
-                        BarcodeFormat.EAN_13,
-                        BarcodeFormat.EAN_8,
-                        BarcodeFormat.UPC_A,
-                        BarcodeFormat.UPC_E
-                    }.ToList()
+                    TryHarder = true,
+                    TryInverted = true,
+                    // Only allow CODE_128 to prevent false reads from other formats
+                    PossibleFormats = new[] { BarcodeFormat.CODE_128 }.ToList()
                 }
             };
 
@@ -66,7 +58,7 @@ namespace LMS.Presentation.Popup.Multipurpose
                 try
                 {
                     StartCamera();
-                    if (LblResult != null) LblResult.Text = "Scanning...";
+                    if (LblResult != null) LblResult.Text = "Scanning for CODE_128...";
                     if (VideoPlayer != null)
                     {
                         VideoPlayer.BringToFront();
@@ -193,26 +185,27 @@ namespace LMS.Presentation.Popup.Multipurpose
                 frame = (Bitmap)eventArgs.Frame.Clone();
 
                 // Optional: crop center region to speed decoding and avoid noisy borders
-                Rectangle crop = GetCentralCrop(frame.Width, frame.Height, 0.7f); // 70% center area
+                Rectangle crop = GetCentralCrop(frame.Width, frame.Height, 0.8f); // 80% center area
                 toDecode = (crop.Width == frame.Width && crop.Height == frame.Height) ? frame : frame.Clone(crop, frame.PixelFormat);
 
-                // Decode synchronously on this NewFrame thread (AForge raises NewFrame on a background thread).
-                // Using BarcodeReader.Decode(Bitmap) avoids BinaryBitmap <-> Bitmap conversion errors.
                 Result result = null;
                 try
                 {
-                    // BarcodeReader is safe to call here; if you observe thread-safety issues you can lock(_reader) or create a local reader instance.
                     result = _reader.Decode(toDecode);
                 }
                 catch
                 {
-                    // decode failure for this frame; ignore and continue
                     result = null;
                 }
 
                 if (result != null && !string.IsNullOrWhiteSpace(result.Text))
                 {
                     var text = result.Text.Trim();
+
+                    // Validate: our accession numbers follow pattern like BK-2026-0001, TH-2026-0001, etc.
+                    // Accept if it looks like a valid accession or is at least 5 chars
+                    if (text.Length < 3)
+                        return; // too short, likely noise
 
                     // Debounce identical repeated detections
                     var now = DateTime.UtcNow;
@@ -242,9 +235,7 @@ namespace LMS.Presentation.Popup.Multipurpose
             }
             finally
             {
-                // Dispose bitmaps created here. If toDecode references frame, disposing toDecode disposes frame as well.
                 toDecode?.Dispose();
-                // frame was either disposed by disposing toDecode (if same) or still needs disposing
                 if (!object.ReferenceEquals(toDecode, frame))
                     frame?.Dispose();
             }
@@ -252,7 +243,6 @@ namespace LMS.Presentation.Popup.Multipurpose
 
         private Rectangle GetCentralCrop(int width, int height, float ratio)
         {
-            // ratio between 0..1 determines fraction of frame used (0.7 -> 70% centered)
             if (ratio <= 0f || ratio >= 1f) return new Rectangle(0, 0, width, height);
             int w = (int)(width * ratio);
             int h = (int)(height * ratio);
@@ -261,7 +251,6 @@ namespace LMS.Presentation.Popup.Multipurpose
             return new Rectangle(x, y, Math.Max(1, w), Math.Max(1, h));
         }
 
-        // Example wired handlers for Start/Stop buttons (names should match your Designer)
         private void btnStart_Click(object sender, EventArgs e)
         {
             try
