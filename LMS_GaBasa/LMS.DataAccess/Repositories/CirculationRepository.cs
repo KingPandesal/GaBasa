@@ -704,5 +704,37 @@ namespace LMS.DataAccess.Repositories
 
             return fines;
         }
+
+        /// <summary>
+        /// Inserts a fine charge for the member. If transactionId &lt;= 0, TransactionID will be inserted as NULL.
+        /// </summary>
+        public bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status)
+        {
+            if (memberId <= 0) return false;
+            if (amount <= 0m) return false;
+            if (string.IsNullOrWhiteSpace(fineType)) fineType = "Charge";
+            if (string.IsNullOrWhiteSpace(status)) status = "Unpaid";
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    INSERT INTO [Fine] (MemberID, TransactionID, FineAmount, FineType, DateIssued, [Status])
+                    VALUES (@MemberID, @TransactionID, @FineAmount, @FineType, @DateIssued, @Status)";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                // Insert NULL for TransactionID when not provided
+                AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId > 0 ? (object)transactionId : DBNull.Value);
+                AddParameter(cmd, "@FineAmount", DbType.Decimal, amount);
+                AddParameter(cmd, "@FineType", DbType.String, fineType);
+                AddParameter(cmd, "@DateIssued", DbType.DateTime, dateIssued);
+                AddParameter(cmd, "@Status", DbType.String, status);
+
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
+            }
+        }
     }
 }

@@ -319,7 +319,7 @@
             this.CmbBxChargeType.FormattingEnabled = true;
             this.CmbBxChargeType.Items.AddRange(new object[] {
             "ID Card Replacement",
-            "Damaged Book Fee"});
+            "Damaged Book"});
             this.CmbBxChargeType.Location = new System.Drawing.Point(189, 0);
             this.CmbBxChargeType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CmbBxChargeType.Name = "CmbBxChargeType";

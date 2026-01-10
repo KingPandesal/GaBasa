@@ -1,16 +1,18 @@
-using LMS.BusinessLogic.Managers.Interfaces;
-using LMS.DataAccess.Interfaces;
-using LMS.Model.DTOs.Circulation;
-using LMS.Model.DTOs.Fine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using LMS.DataAccess.Repositories;
+using LMS.DataAccess.Interfaces;
+using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.Fine;
+using LMS.BusinessLogic.Managers.Interfaces;
 
-namespace LMS.BusinessLogic.Managers.Circulation
+namespace LMS.BusinessLogic.Managers
 {
     /// <summary>
     /// Manager for handling circulation operations.
+    /// (existing code remains; below we add a thin wrapper for adding fine charges)
     /// </summary>
     public class CirculationManager : ICirculationManager
     {
@@ -118,6 +120,12 @@ namespace LMS.BusinessLogic.Managers.Circulation
                 return new List<DTOFineRecord>();
 
             return _circulationRepo.GetFinesByMemberId(memberId);
+        }
+
+        public bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status)
+        {
+            if (memberId <= 0) return false;
+            return _circulationRepo.AddFineCharge(memberId, transactionId, amount, fineType, dateIssued, status);
         }
     }
 }
