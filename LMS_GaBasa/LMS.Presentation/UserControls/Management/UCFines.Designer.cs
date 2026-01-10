@@ -40,6 +40,15 @@
             this.GrpBxOustandingPenalties = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DgvFines = new System.Windows.Forms.DataGridView();
+            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnMemberID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnMemberName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnFineAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnFineType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDateIssued = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LblSelectedTotal = new System.Windows.Forms.Label();
             this.LblMemberInfo = new System.Windows.Forms.Label();
             this.TabCtrl = new System.Windows.Forms.TabControl();
@@ -72,15 +81,6 @@
             this.LblBooksCurrentlyBorrowed = new System.Windows.Forms.Label();
             this.LblOverdueCount = new System.Windows.Forms.Label();
             this.BtnSearchMember = new System.Windows.Forms.Button();
-            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColumnTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnMemberID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnMemberName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnFineAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnFineType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDateIssued = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GrpBxOustandingPenalties.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvFines)).BeginInit();
@@ -126,7 +126,7 @@
             this.BtnSettlePayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSettlePayment.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnSettlePayment.ForeColor = System.Drawing.Color.White;
-            this.BtnSettlePayment.Location = new System.Drawing.Point(153, 261);
+            this.BtnSettlePayment.Location = new System.Drawing.Point(140, 261);
             this.BtnSettlePayment.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnSettlePayment.Name = "BtnSettlePayment";
             this.BtnSettlePayment.Size = new System.Drawing.Size(148, 35);
@@ -141,7 +141,7 @@
             this.TxtSearchMember.Location = new System.Drawing.Point(33, 66);
             this.TxtSearchMember.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtSearchMember.Name = "TxtSearchMember";
-            this.TxtSearchMember.Size = new System.Drawing.Size(344, 30);
+            this.TxtSearchMember.Size = new System.Drawing.Size(305, 30);
             this.TxtSearchMember.TabIndex = 53;
             // 
             // LblSearchMember
@@ -242,6 +242,69 @@
             this.DgvFines.Size = new System.Drawing.Size(853, 221);
             this.DgvFines.TabIndex = 59;
             // 
+            // ColumnNumbering
+            // 
+            this.ColumnNumbering.HeaderText = "#";
+            this.ColumnNumbering.MinimumWidth = 8;
+            this.ColumnNumbering.Name = "ColumnNumbering";
+            this.ColumnNumbering.Width = 46;
+            // 
+            // ColumnCheckBox
+            // 
+            this.ColumnCheckBox.HeaderText = "";
+            this.ColumnCheckBox.MinimumWidth = 8;
+            this.ColumnCheckBox.Name = "ColumnCheckBox";
+            this.ColumnCheckBox.Width = 8;
+            // 
+            // ColumnTransactionID
+            // 
+            this.ColumnTransactionID.HeaderText = "Transaction ID";
+            this.ColumnTransactionID.MinimumWidth = 8;
+            this.ColumnTransactionID.Name = "ColumnTransactionID";
+            this.ColumnTransactionID.Width = 125;
+            // 
+            // ColumnMemberID
+            // 
+            this.ColumnMemberID.HeaderText = "Member ID";
+            this.ColumnMemberID.MinimumWidth = 8;
+            this.ColumnMemberID.Name = "ColumnMemberID";
+            this.ColumnMemberID.Width = 108;
+            // 
+            // ColumnMemberName
+            // 
+            this.ColumnMemberName.HeaderText = "Member Name";
+            this.ColumnMemberName.MinimumWidth = 8;
+            this.ColumnMemberName.Name = "ColumnMemberName";
+            this.ColumnMemberName.Width = 130;
+            // 
+            // ColumnFineAmount
+            // 
+            this.ColumnFineAmount.HeaderText = "Fine Amount";
+            this.ColumnFineAmount.MinimumWidth = 8;
+            this.ColumnFineAmount.Name = "ColumnFineAmount";
+            this.ColumnFineAmount.Width = 117;
+            // 
+            // ColumnFineType
+            // 
+            this.ColumnFineType.HeaderText = "Fine Type";
+            this.ColumnFineType.MinimumWidth = 8;
+            this.ColumnFineType.Name = "ColumnFineType";
+            this.ColumnFineType.Width = 95;
+            // 
+            // ColumnDateIssued
+            // 
+            this.ColumnDateIssued.HeaderText = "Date Issued";
+            this.ColumnDateIssued.MinimumWidth = 8;
+            this.ColumnDateIssued.Name = "ColumnDateIssued";
+            this.ColumnDateIssued.Width = 110;
+            // 
+            // ColumnStatus
+            // 
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.MinimumWidth = 8;
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.Width = 76;
+            // 
             // LblSelectedTotal
             // 
             this.LblSelectedTotal.AutoSize = true;
@@ -323,7 +386,7 @@
             this.CmbBxChargeType.Location = new System.Drawing.Point(189, 0);
             this.CmbBxChargeType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CmbBxChargeType.Name = "CmbBxChargeType";
-            this.CmbBxChargeType.Size = new System.Drawing.Size(187, 28);
+            this.CmbBxChargeType.Size = new System.Drawing.Size(167, 28);
             this.CmbBxChargeType.TabIndex = 59;
             // 
             // LblChargeType
@@ -352,7 +415,7 @@
             this.TxtAccessionNumber.Location = new System.Drawing.Point(168, 2);
             this.TxtAccessionNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtAccessionNumber.Name = "TxtAccessionNumber";
-            this.TxtAccessionNumber.Size = new System.Drawing.Size(187, 26);
+            this.TxtAccessionNumber.Size = new System.Drawing.Size(188, 26);
             this.TxtAccessionNumber.TabIndex = 62;
             // 
             // LblAccessionNumber
@@ -403,7 +466,7 @@
             this.BtnAddToList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAddToList.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnAddToList.ForeColor = System.Drawing.Color.White;
-            this.BtnAddToList.Location = new System.Drawing.Point(153, 261);
+            this.BtnAddToList.Location = new System.Drawing.Point(140, 261);
             this.BtnAddToList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnAddToList.Name = "BtnAddToList";
             this.BtnAddToList.Size = new System.Drawing.Size(148, 35);
@@ -455,7 +518,7 @@
             this.BtnWaive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnWaive.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnWaive.ForeColor = System.Drawing.Color.White;
-            this.BtnWaive.Location = new System.Drawing.Point(153, 261);
+            this.BtnWaive.Location = new System.Drawing.Point(140, 261);
             this.BtnWaive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnWaive.Name = "BtnWaive";
             this.BtnWaive.Size = new System.Drawing.Size(148, 35);
@@ -615,7 +678,7 @@
             this.BtnSearchMember.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSearchMember.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnSearchMember.ForeColor = System.Drawing.Color.White;
-            this.BtnSearchMember.Location = new System.Drawing.Point(384, 66);
+            this.BtnSearchMember.Location = new System.Drawing.Point(351, 66);
             this.BtnSearchMember.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnSearchMember.Name = "BtnSearchMember";
             this.BtnSearchMember.Size = new System.Drawing.Size(112, 30);
@@ -623,69 +686,6 @@
             this.BtnSearchMember.Text = "Search";
             this.BtnSearchMember.UseVisualStyleBackColor = false;
             this.BtnSearchMember.Click += new System.EventHandler(this.BtnEnterMemberID_Click);
-            // 
-            // ColumnNumbering
-            // 
-            this.ColumnNumbering.HeaderText = "#";
-            this.ColumnNumbering.MinimumWidth = 8;
-            this.ColumnNumbering.Name = "ColumnNumbering";
-            this.ColumnNumbering.Width = 46;
-            // 
-            // ColumnCheckBox
-            // 
-            this.ColumnCheckBox.HeaderText = "";
-            this.ColumnCheckBox.MinimumWidth = 8;
-            this.ColumnCheckBox.Name = "ColumnCheckBox";
-            this.ColumnCheckBox.Width = 8;
-            // 
-            // ColumnTransactionID
-            // 
-            this.ColumnTransactionID.HeaderText = "Transaction ID";
-            this.ColumnTransactionID.MinimumWidth = 8;
-            this.ColumnTransactionID.Name = "ColumnTransactionID";
-            this.ColumnTransactionID.Width = 125;
-            // 
-            // ColumnMemberID
-            // 
-            this.ColumnMemberID.HeaderText = "Member ID";
-            this.ColumnMemberID.MinimumWidth = 8;
-            this.ColumnMemberID.Name = "ColumnMemberID";
-            this.ColumnMemberID.Width = 108;
-            // 
-            // ColumnMemberName
-            // 
-            this.ColumnMemberName.HeaderText = "Member Name";
-            this.ColumnMemberName.MinimumWidth = 8;
-            this.ColumnMemberName.Name = "ColumnMemberName";
-            this.ColumnMemberName.Width = 130;
-            // 
-            // ColumnFineAmount
-            // 
-            this.ColumnFineAmount.HeaderText = "Fine Amount";
-            this.ColumnFineAmount.MinimumWidth = 8;
-            this.ColumnFineAmount.Name = "ColumnFineAmount";
-            this.ColumnFineAmount.Width = 117;
-            // 
-            // ColumnFineType
-            // 
-            this.ColumnFineType.HeaderText = "Fine Type";
-            this.ColumnFineType.MinimumWidth = 8;
-            this.ColumnFineType.Name = "ColumnFineType";
-            this.ColumnFineType.Width = 95;
-            // 
-            // ColumnDateIssued
-            // 
-            this.ColumnDateIssued.HeaderText = "Date Issued";
-            this.ColumnDateIssued.MinimumWidth = 8;
-            this.ColumnDateIssued.Name = "ColumnDateIssued";
-            this.ColumnDateIssued.Width = 110;
-            // 
-            // ColumnStatus
-            // 
-            this.ColumnStatus.HeaderText = "Status";
-            this.ColumnStatus.MinimumWidth = 8;
-            this.ColumnStatus.Name = "ColumnStatus";
-            this.ColumnStatus.Width = 76;
             // 
             // UCFines
             // 
