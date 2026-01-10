@@ -80,6 +80,7 @@
             // DgwUsers
             // 
             this.DgwUsers.AllowUserToAddRows = false;
+            this.DgwUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgwUsers.BackgroundColor = System.Drawing.Color.White;
             this.DgwUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgwUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -108,56 +109,56 @@
             this.Column7.HeaderText = "User ID";
             this.Column7.MinimumWidth = 8;
             this.Column7.Name = "Column7";
-            this.Column7.Width = 150;
+            this.Column7.Width = 93;
             // 
             // Column1
             // 
             this.Column1.HeaderText = "Full Name";
             this.Column1.MinimumWidth = 20;
             this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
+            this.Column1.Width = 108;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "Role";
             this.Column4.MinimumWidth = 8;
             this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
+            this.Column4.Width = 78;
             // 
             // Column2
             // 
             this.Column2.HeaderText = "Username";
             this.Column2.MinimumWidth = 8;
             this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
+            this.Column2.Width = 119;
             // 
             // Column3
             // 
             this.Column3.HeaderText = "Email";
             this.Column3.MinimumWidth = 8;
             this.Column3.Name = "Column3";
-            this.Column3.Width = 200;
+            this.Column3.Width = 84;
             // 
             // Column6
             // 
             this.Column6.HeaderText = "Contact Number";
             this.Column6.MinimumWidth = 8;
             this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
+            this.Column6.Width = 148;
             // 
             // ColumnLastLogin
             // 
             this.ColumnLastLogin.HeaderText = "Last Login";
             this.ColumnLastLogin.MinimumWidth = 8;
             this.ColumnLastLogin.Name = "ColumnLastLogin";
-            this.ColumnLastLogin.Width = 150;
+            this.ColumnLastLogin.Width = 110;
             // 
             // Column5
             // 
             this.Column5.HeaderText = "Status";
             this.Column5.MinimumWidth = 8;
             this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
+            this.Column5.Width = 92;
             // 
             // ColumnProfilePicture
             // 
@@ -166,7 +167,7 @@
             this.ColumnProfilePicture.Name = "ColumnProfilePicture";
             this.ColumnProfilePicture.Text = "View Profile Picture";
             this.ColumnProfilePicture.UseColumnTextForButtonValue = true;
-            this.ColumnProfilePicture.Width = 150;
+            this.ColumnProfilePicture.Width = 101;
             // 
             // Edit
             // 

@@ -215,6 +215,7 @@
             // DgwInventory
             // 
             this.DgwInventory.AllowUserToAddRows = false;
+            this.DgwInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgwInventory.BackgroundColor = System.Drawing.Color.White;
             this.DgwInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgwInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -257,154 +258,154 @@
             this.ColumnNumbering.HeaderText = "#";
             this.ColumnNumbering.MinimumWidth = 8;
             this.ColumnNumbering.Name = "ColumnNumbering";
-            this.ColumnNumbering.Width = 50;
+            this.ColumnNumbering.Width = 54;
             // 
             // ColumnBookID
             // 
             this.ColumnBookID.HeaderText = "Book ID";
             this.ColumnBookID.MinimumWidth = 8;
             this.ColumnBookID.Name = "ColumnBookID";
-            this.ColumnBookID.Width = 150;
+            this.ColumnBookID.Width = 96;
             // 
             // ColumnISBN
             // 
             this.ColumnISBN.HeaderText = "Standard ID";
             this.ColumnISBN.MinimumWidth = 8;
             this.ColumnISBN.Name = "ColumnISBN";
-            this.ColumnISBN.Width = 150;
+            this.ColumnISBN.Width = 122;
             // 
             // ColumnCallNo
             // 
             this.ColumnCallNo.HeaderText = "Call Number";
             this.ColumnCallNo.MinimumWidth = 8;
             this.ColumnCallNo.Name = "ColumnCallNo";
-            this.ColumnCallNo.Width = 150;
+            this.ColumnCallNo.Width = 121;
             // 
             // ColumnTitle
             // 
             this.ColumnTitle.HeaderText = "Title";
             this.ColumnTitle.MinimumWidth = 8;
             this.ColumnTitle.Name = "ColumnTitle";
-            this.ColumnTitle.Width = 150;
+            this.ColumnTitle.Width = 74;
             // 
             // ColumnSubtitle
             // 
             this.ColumnSubtitle.HeaderText = "Subtitle";
             this.ColumnSubtitle.MinimumWidth = 8;
             this.ColumnSubtitle.Name = "ColumnSubtitle";
-            this.ColumnSubtitle.Width = 150;
+            this.ColumnSubtitle.Width = 99;
             // 
             // ColumnAuthors
             // 
             this.ColumnAuthors.HeaderText = "Authors";
             this.ColumnAuthors.MinimumWidth = 8;
             this.ColumnAuthors.Name = "ColumnAuthors";
-            this.ColumnAuthors.Width = 150;
+            this.ColumnAuthors.Width = 101;
             // 
             // ColumnEditors
             // 
             this.ColumnEditors.HeaderText = "Editors";
             this.ColumnEditors.MinimumWidth = 8;
             this.ColumnEditors.Name = "ColumnEditors";
-            this.ColumnEditors.Width = 150;
+            this.ColumnEditors.Width = 95;
             // 
             // ColumnAdviser
             // 
             this.ColumnAdviser.HeaderText = "Adviser";
             this.ColumnAdviser.MinimumWidth = 8;
             this.ColumnAdviser.Name = "ColumnAdviser";
-            this.ColumnAdviser.Width = 150;
+            this.ColumnAdviser.Width = 97;
             // 
             // ColumnPublishers
             // 
             this.ColumnPublishers.HeaderText = "Publishers";
             this.ColumnPublishers.MinimumWidth = 8;
             this.ColumnPublishers.Name = "ColumnPublishers";
-            this.ColumnPublishers.Width = 150;
+            this.ColumnPublishers.Width = 118;
             // 
             // ColumnCategory
             // 
             this.ColumnCategory.HeaderText = "Category";
             this.ColumnCategory.MinimumWidth = 8;
             this.ColumnCategory.Name = "ColumnCategory";
-            this.ColumnCategory.Width = 150;
+            this.ColumnCategory.Width = 109;
             // 
             // ColumnLanguage
             // 
             this.ColumnLanguage.HeaderText = "Language";
             this.ColumnLanguage.MinimumWidth = 8;
             this.ColumnLanguage.Name = "ColumnLanguage";
-            this.ColumnLanguage.Width = 150;
+            this.ColumnLanguage.Width = 117;
             // 
             // ColumnPages
             // 
             this.ColumnPages.HeaderText = "Pages";
             this.ColumnPages.MinimumWidth = 8;
             this.ColumnPages.Name = "ColumnPages";
-            this.ColumnPages.Width = 150;
+            this.ColumnPages.Width = 90;
             // 
             // ColumnEdition
             // 
             this.ColumnEdition.HeaderText = "Edition / Vol";
             this.ColumnEdition.MinimumWidth = 8;
             this.ColumnEdition.Name = "ColumnEdition";
-            this.ColumnEdition.Width = 150;
+            this.ColumnEdition.Width = 99;
             // 
             // ColumnPublicationYear
             // 
             this.ColumnPublicationYear.HeaderText = "Publication Year";
             this.ColumnPublicationYear.MinimumWidth = 8;
             this.ColumnPublicationYear.Name = "ColumnPublicationYear";
-            this.ColumnPublicationYear.Width = 150;
+            this.ColumnPublicationYear.Width = 147;
             // 
             // ColumnDescription
             // 
             this.ColumnDescription.HeaderText = "Description /  Format";
             this.ColumnDescription.MinimumWidth = 8;
             this.ColumnDescription.Name = "ColumnDescription";
-            this.ColumnDescription.Width = 150;
+            this.ColumnDescription.Width = 130;
             // 
             // ColumnResourceType
             // 
             this.ColumnResourceType.HeaderText = "Resource Type";
             this.ColumnResourceType.MinimumWidth = 8;
             this.ColumnResourceType.Name = "ColumnResourceType";
-            this.ColumnResourceType.Width = 150;
+            this.ColumnResourceType.Width = 140;
             // 
             // ColumnDLURL
             // 
             this.ColumnDLURL.HeaderText = "Download URL";
             this.ColumnDLURL.MinimumWidth = 8;
             this.ColumnDLURL.Name = "ColumnDLURL";
-            this.ColumnDLURL.Width = 150;
+            this.ColumnDLURL.Width = 141;
             // 
             // ColumnLoanType
             // 
             this.ColumnLoanType.HeaderText = "Loan Type";
             this.ColumnLoanType.MinimumWidth = 8;
             this.ColumnLoanType.Name = "ColumnLoanType";
-            this.ColumnLoanType.Width = 150;
+            this.ColumnLoanType.Width = 110;
             // 
             // ColumnTotalCopies
             // 
             this.ColumnTotalCopies.HeaderText = "Total Copies";
             this.ColumnTotalCopies.MinimumWidth = 8;
             this.ColumnTotalCopies.Name = "ColumnTotalCopies";
-            this.ColumnTotalCopies.Width = 150;
+            this.ColumnTotalCopies.Width = 123;
             // 
             // ColumnAvailableCopies
             // 
             this.ColumnAvailableCopies.HeaderText = "Available Copies";
             this.ColumnAvailableCopies.MinimumWidth = 8;
             this.ColumnAvailableCopies.Name = "ColumnAvailableCopies";
-            this.ColumnAvailableCopies.Width = 150;
+            this.ColumnAvailableCopies.Width = 148;
             // 
             // ColumnStatus
             // 
             this.ColumnStatus.HeaderText = "Status";
             this.ColumnStatus.MinimumWidth = 8;
             this.ColumnStatus.Name = "ColumnStatus";
-            this.ColumnStatus.Width = 150;
+            this.ColumnStatus.Width = 92;
             // 
             // ColumnBtnCoverImage
             // 
@@ -412,7 +413,7 @@
             this.ColumnBtnCoverImage.MinimumWidth = 8;
             this.ColumnBtnCoverImage.Name = "ColumnBtnCoverImage";
             this.ColumnBtnCoverImage.Text = "View Cover Image";
-            this.ColumnBtnCoverImage.Width = 150;
+            this.ColumnBtnCoverImage.Width = 95;
             // 
             // ColumnBtnCopies
             // 
@@ -420,7 +421,7 @@
             this.ColumnBtnCopies.MinimumWidth = 8;
             this.ColumnBtnCopies.Name = "ColumnBtnCopies";
             this.ColumnBtnCopies.Text = "View All Copies";
-            this.ColumnBtnCopies.Width = 150;
+            this.ColumnBtnCopies.Width = 64;
             // 
             // Edit
             // 

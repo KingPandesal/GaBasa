@@ -21,5 +21,16 @@ namespace LMS.Presentation.UserControls.Management
         {
 
         }
+
+        private void LblMemberID_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void BtnEnterMemberID_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -41,10 +41,6 @@
             this.LblShow = new System.Windows.Forms.Label();
             this.BtnApply = new System.Windows.Forms.Button();
             this.DgwMembers = new System.Windows.Forms.DataGridView();
-            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,6 +63,10 @@
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
             this.RenewMembership = new System.Windows.Forms.DataGridViewImageColumn();
+            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgwMembers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -217,6 +217,7 @@
             // DgwMembers
             // 
             this.DgwMembers.AllowUserToAddRows = false;
+            this.DgwMembers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgwMembers.BackgroundColor = System.Drawing.Color.White;
             this.DgwMembers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgwMembers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -249,6 +250,176 @@
             this.DgwMembers.RowTemplate.Height = 28;
             this.DgwMembers.Size = new System.Drawing.Size(1509, 490);
             this.DgwMembers.TabIndex = 43;
+            // 
+            // Column17
+            // 
+            this.Column17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column17.HeaderText = "#";
+            this.Column17.MinimumWidth = 8;
+            this.Column17.Name = "Column17";
+            this.Column17.Width = 54;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Member ID";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 115;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Full Name";
+            this.Column1.MinimumWidth = 20;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 108;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Member Type";
+            this.Column11.MinimumWidth = 8;
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 130;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Username";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 119;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Email";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 84;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Address";
+            this.Column8.MinimumWidth = 8;
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 104;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Contact Number";
+            this.Column6.MinimumWidth = 8;
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 148;
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Max Books Allowed";
+            this.Column12.MinimumWidth = 8;
+            this.Column12.Name = "Column12";
+            this.Column12.Width = 167;
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "Borrowing Period";
+            this.Column13.MinimumWidth = 8;
+            this.Column13.Name = "Column13";
+            this.Column13.Width = 152;
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Renewal Limit";
+            this.Column14.MinimumWidth = 8;
+            this.Column14.Name = "Column14";
+            this.Column14.Width = 133;
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "Reservation Privilege";
+            this.Column15.MinimumWidth = 8;
+            this.Column15.Name = "Column15";
+            this.Column15.Width = 176;
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Fine Rate";
+            this.Column16.MinimumWidth = 8;
+            this.Column16.Name = "Column16";
+            this.Column16.Width = 107;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Registration Date";
+            this.Column9.MinimumWidth = 8;
+            this.Column9.Name = "Column9";
+            this.Column9.Width = 156;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "Expiration Date";
+            this.Column10.MinimumWidth = 8;
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 142;
+            // 
+            // ColumnLastLogin
+            // 
+            this.ColumnLastLogin.HeaderText = "Last Login";
+            this.ColumnLastLogin.MinimumWidth = 8;
+            this.ColumnLastLogin.Name = "ColumnLastLogin";
+            this.ColumnLastLogin.Width = 110;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Status";
+            this.Column5.MinimumWidth = 8;
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 92;
+            // 
+            // ColumnProfilePicture
+            // 
+            this.ColumnProfilePicture.HeaderText = "Profile Picture";
+            this.ColumnProfilePicture.MinimumWidth = 8;
+            this.ColumnProfilePicture.Name = "ColumnProfilePicture";
+            this.ColumnProfilePicture.Text = "View Profile Picture";
+            this.ColumnProfilePicture.UseColumnTextForButtonValue = true;
+            this.ColumnProfilePicture.Width = 101;
+            // 
+            // ColumnValidID
+            // 
+            this.ColumnValidID.HeaderText = "Valid ID";
+            this.ColumnValidID.MinimumWidth = 8;
+            this.ColumnValidID.Name = "ColumnValidID";
+            this.ColumnValidID.Text = "View Valid ID";
+            this.ColumnValidID.UseColumnTextForButtonValue = true;
+            this.ColumnValidID.Width = 64;
+            // 
+            // Edit
+            // 
+            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Edit.HeaderText = "";
+            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
+            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Edit.MinimumWidth = 8;
+            this.Edit.Name = "Edit";
+            this.Edit.ToolTipText = "Edit member";
+            this.Edit.Width = 8;
+            // 
+            // Archive
+            // 
+            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Archive.HeaderText = "";
+            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
+            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Archive.MinimumWidth = 8;
+            this.Archive.Name = "Archive";
+            this.Archive.ToolTipText = "Archive member";
+            this.Archive.Width = 8;
+            // 
+            // RenewMembership
+            // 
+            this.RenewMembership.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.RenewMembership.HeaderText = "";
+            this.RenewMembership.Image = ((System.Drawing.Image)(resources.GetObject("RenewMembership.Image")));
+            this.RenewMembership.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.RenewMembership.MinimumWidth = 8;
+            this.RenewMembership.Name = "RenewMembership";
+            this.RenewMembership.Width = 8;
             // 
             // TxtSearchBar
             // 
@@ -299,176 +470,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 55;
             this.pictureBox1.TabStop = false;
-            // 
-            // Column17
-            // 
-            this.Column17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column17.HeaderText = "#";
-            this.Column17.MinimumWidth = 8;
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 54;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Member ID";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Full Name";
-            this.Column1.MinimumWidth = 20;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Member Type";
-            this.Column11.MinimumWidth = 8;
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Username";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Email";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 200;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Address";
-            this.Column8.MinimumWidth = 8;
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 150;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Contact Number";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Max Books Allowed";
-            this.Column12.MinimumWidth = 8;
-            this.Column12.Name = "Column12";
-            this.Column12.Width = 150;
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "Borrowing Period";
-            this.Column13.MinimumWidth = 8;
-            this.Column13.Name = "Column13";
-            this.Column13.Width = 150;
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Renewal Limit";
-            this.Column14.MinimumWidth = 8;
-            this.Column14.Name = "Column14";
-            this.Column14.Width = 150;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Reservation Privilege";
-            this.Column15.MinimumWidth = 8;
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 150;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Fine Rate";
-            this.Column16.MinimumWidth = 8;
-            this.Column16.Name = "Column16";
-            this.Column16.Width = 150;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "Registration Date";
-            this.Column9.MinimumWidth = 8;
-            this.Column9.Name = "Column9";
-            this.Column9.Width = 150;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "Expiration Date";
-            this.Column10.MinimumWidth = 8;
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 150;
-            // 
-            // ColumnLastLogin
-            // 
-            this.ColumnLastLogin.HeaderText = "Last Login";
-            this.ColumnLastLogin.MinimumWidth = 8;
-            this.ColumnLastLogin.Name = "ColumnLastLogin";
-            this.ColumnLastLogin.Width = 150;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Status";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
-            // 
-            // ColumnProfilePicture
-            // 
-            this.ColumnProfilePicture.HeaderText = "Profile Picture";
-            this.ColumnProfilePicture.MinimumWidth = 8;
-            this.ColumnProfilePicture.Name = "ColumnProfilePicture";
-            this.ColumnProfilePicture.Text = "View Profile Picture";
-            this.ColumnProfilePicture.UseColumnTextForButtonValue = true;
-            this.ColumnProfilePicture.Width = 150;
-            // 
-            // ColumnValidID
-            // 
-            this.ColumnValidID.HeaderText = "Valid ID";
-            this.ColumnValidID.MinimumWidth = 8;
-            this.ColumnValidID.Name = "ColumnValidID";
-            this.ColumnValidID.Text = "View Valid ID";
-            this.ColumnValidID.UseColumnTextForButtonValue = true;
-            this.ColumnValidID.Width = 150;
-            // 
-            // Edit
-            // 
-            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Edit.HeaderText = "";
-            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
-            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Edit.MinimumWidth = 8;
-            this.Edit.Name = "Edit";
-            this.Edit.ToolTipText = "Edit member";
-            this.Edit.Width = 8;
-            // 
-            // Archive
-            // 
-            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Archive.HeaderText = "";
-            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
-            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Archive.MinimumWidth = 8;
-            this.Archive.Name = "Archive";
-            this.Archive.ToolTipText = "Archive member";
-            this.Archive.Width = 8;
-            // 
-            // RenewMembership
-            // 
-            this.RenewMembership.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.RenewMembership.HeaderText = "";
-            this.RenewMembership.Image = ((System.Drawing.Image)(resources.GetObject("RenewMembership.Image")));
-            this.RenewMembership.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.RenewMembership.MinimumWidth = 8;
-            this.RenewMembership.Name = "RenewMembership";
-            this.RenewMembership.Width = 8;
             // 
             // UCMembers
             // 
