@@ -53,7 +53,6 @@
             this.ColumnBtnCopies = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TabCtrl = new System.Windows.Forms.TabControl();
             this.TabPgAddCharges = new System.Windows.Forms.TabPage();
@@ -199,12 +198,11 @@
             // 
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.groupBox1.Location = new System.Drawing.Point(635, 192);
+            this.groupBox1.Location = new System.Drawing.Point(595, 192);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(901, 603);
+            this.groupBox1.Size = new System.Drawing.Size(941, 603);
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Outstanding Penalties";
@@ -215,7 +213,7 @@
             this.panel1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.panel1.Location = new System.Drawing.Point(23, 33);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(853, 295);
+            this.panel1.Size = new System.Drawing.Size(889, 295);
             this.panel1.TabIndex = 60;
             // 
             // DgwInventory
@@ -242,7 +240,7 @@
             this.DgwInventory.Name = "DgwInventory";
             this.DgwInventory.RowHeadersWidth = 62;
             this.DgwInventory.RowTemplate.Height = 28;
-            this.DgwInventory.Size = new System.Drawing.Size(846, 272);
+            this.DgwInventory.Size = new System.Drawing.Size(882, 272);
             this.DgwInventory.TabIndex = 59;
             // 
             // ColumnNumbering
@@ -340,24 +338,12 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(22, 384);
+            this.label6.Location = new System.Drawing.Point(22, 350);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(137, 28);
             this.label6.TabIndex = 52;
             this.label6.Text = "Selected Total:";
             this.label6.Click += new System.EventHandler(this.LblMemberID_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(22, 349);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 28);
-            this.label5.TabIndex = 52;
-            this.label5.Text = "Total Balance:";
-            this.label5.Click += new System.EventHandler(this.LblMemberID_Click);
             // 
             // label1
             // 
@@ -380,7 +366,7 @@
             this.TabCtrl.Location = new System.Drawing.Point(37, 171);
             this.TabCtrl.Name = "TabCtrl";
             this.TabCtrl.SelectedIndex = 0;
-            this.TabCtrl.Size = new System.Drawing.Size(571, 624);
+            this.TabCtrl.Size = new System.Drawing.Size(534, 624);
             this.TabCtrl.TabIndex = 57;
             // 
             // TabPgAddCharges
@@ -391,7 +377,7 @@
             this.TabPgAddCharges.Location = new System.Drawing.Point(4, 34);
             this.TabPgAddCharges.Name = "TabPgAddCharges";
             this.TabPgAddCharges.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPgAddCharges.Size = new System.Drawing.Size(563, 586);
+            this.TabPgAddCharges.Size = new System.Drawing.Size(526, 586);
             this.TabPgAddCharges.TabIndex = 0;
             this.TabPgAddCharges.Text = "Add Charges";
             // 
@@ -399,14 +385,14 @@
             // 
             this.TxtAccessionNumber.Location = new System.Drawing.Point(189, 3);
             this.TxtAccessionNumber.Name = "TxtAccessionNumber";
-            this.TxtAccessionNumber.Size = new System.Drawing.Size(282, 30);
+            this.TxtAccessionNumber.Size = new System.Drawing.Size(247, 30);
             this.TxtAccessionNumber.TabIndex = 62;
             // 
             // NumPckAmount
             // 
             this.NumPckAmount.Location = new System.Drawing.Point(190, 1);
             this.NumPckAmount.Name = "NumPckAmount";
-            this.NumPckAmount.Size = new System.Drawing.Size(281, 30);
+            this.NumPckAmount.Size = new System.Drawing.Size(246, 30);
             this.NumPckAmount.TabIndex = 60;
             // 
             // CmbBxChargeType
@@ -418,7 +404,7 @@
             "Damaged Book Fee"});
             this.CmbBxChargeType.Location = new System.Drawing.Point(189, 0);
             this.CmbBxChargeType.Name = "CmbBxChargeType";
-            this.CmbBxChargeType.Size = new System.Drawing.Size(282, 33);
+            this.CmbBxChargeType.Size = new System.Drawing.Size(247, 33);
             this.CmbBxChargeType.TabIndex = 59;
             // 
             // LblAccessionNumber
@@ -454,7 +440,7 @@
             this.BtnAddToList.Location = new System.Drawing.Point(38, 241);
             this.BtnAddToList.Margin = new System.Windows.Forms.Padding(4);
             this.BtnAddToList.Name = "BtnAddToList";
-            this.BtnAddToList.Size = new System.Drawing.Size(187, 44);
+            this.BtnAddToList.Size = new System.Drawing.Size(175, 44);
             this.BtnAddToList.TabIndex = 61;
             this.BtnAddToList.Text = "Add to List";
             this.BtnAddToList.UseVisualStyleBackColor = false;
@@ -479,7 +465,7 @@
             this.TabPgWaiver.Location = new System.Drawing.Point(4, 34);
             this.TabPgWaiver.Name = "TabPgWaiver";
             this.TabPgWaiver.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPgWaiver.Size = new System.Drawing.Size(563, 586);
+            this.TabPgWaiver.Size = new System.Drawing.Size(526, 586);
             this.TabPgWaiver.TabIndex = 1;
             this.TabPgWaiver.Text = "Waiver";
             // 
@@ -498,7 +484,7 @@
             this.TabPgPayment.Location = new System.Drawing.Point(4, 34);
             this.TabPgPayment.Name = "TabPgPayment";
             this.TabPgPayment.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPgPayment.Size = new System.Drawing.Size(563, 586);
+            this.TabPgPayment.Size = new System.Drawing.Size(526, 586);
             this.TabPgPayment.TabIndex = 2;
             this.TabPgPayment.Text = "Payment";
             // 
@@ -783,7 +769,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColumnBtnCopies;
         private System.Windows.Forms.DataGridViewImageColumn Edit;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl TabCtrl;
         private System.Windows.Forms.TabPage TabPgAddCharges;

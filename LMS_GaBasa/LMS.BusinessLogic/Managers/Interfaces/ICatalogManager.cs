@@ -14,7 +14,7 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <summary>
         /// Gets books added within the last 7 days (new arrivals).
         /// </summary>
-        List<DTOCatalogBook> GetNewArrivals();
+        List<DTOCatalogBook> GetNewArrivals(int topCount = 8);
 
         /// <summary>
         /// Gets books with the most borrows (popular books).

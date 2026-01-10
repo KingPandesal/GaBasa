@@ -612,5 +612,44 @@ namespace LMS.DataAccess.Repositories
             param.Value = value ?? DBNull.Value;
             cmd.Parameters.Add(param);
         }
+
+        // Add this method to CirculationRepository class
+
+        /// <summary>
+        /// Gets the most borrowed BookIDs with their borrow counts, ordered by most borrowed first.
+        /// </summary>
+        /// <param name="topCount">Maximum number of results to return.</param>
+        /// <returns>Dictionary of BookID to borrow count.</returns>
+        public Dictionary<int, int> GetMostBorrowedBookIds(int topCount = 8)
+        {
+            var result = new Dictionary<int, int>();
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT TOP (@TopCount) bc.BookID, COUNT(*) AS BorrowCount
+                    FROM [BorrowingTransaction] bt
+                    INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                    GROUP BY bc.BookID
+                    ORDER BY BorrowCount DESC";
+
+                AddParameter(cmd, "@TopCount", DbType.Int32, topCount);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int bookId = reader.GetInt32(0);
+                        int count = reader.GetInt32(1);
+                        result[bookId] = count;
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

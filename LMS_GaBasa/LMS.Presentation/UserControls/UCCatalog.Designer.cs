@@ -482,6 +482,7 @@
             this.BtnBookViewDetails.TabIndex = 66;
             this.BtnBookViewDetails.Text = "View Details";
             this.BtnBookViewDetails.UseVisualStyleBackColor = false;
+            this.BtnBookViewDetails.Click += new System.EventHandler(this.BtnBookViewDetails_Click);
             // 
             // LblBookTitle
             // 

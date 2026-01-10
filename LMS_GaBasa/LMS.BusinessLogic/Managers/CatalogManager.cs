@@ -79,8 +79,9 @@ namespace LMS.BusinessLogic.Managers
 
         /// <summary>
         /// Gets books where the earliest BookCopy.DateAdded is within the last 7 days.
+        /// Returns at most topCount items ordered by most recent first.
         /// </summary>
-        public List<DTOCatalogBook> GetNewArrivals()
+        public List<DTOCatalogBook> GetNewArrivals(int topCount = 8)
         {
             var result = new List<DTOCatalogBook>();
             var oneWeekAgo = DateTime.Now.AddDays(-7);
@@ -105,37 +106,53 @@ namespace LMS.BusinessLogic.Managers
                 }
             }
 
-            // Order by most recent first
-            return result.OrderByDescending(b => b.DateAdded).ToList();
+            // Ensure a sane default if caller passes invalid topCount
+            if (topCount <= 0) topCount = 8;
+
+            // Order by most recent first and limit to requested count
+            return result.OrderByDescending(b => b.DateAdded).Take(topCount).ToList();
         }
 
         /// <summary>
-        /// Gets the most borrowed books. Uses BorrowCount from BookCopy status tracking.
-        /// Since there's no BorrowCount column yet, we'll count copies with Status = "Borrowed" historically.
-        /// For now, this returns books ordered by total copies as a placeholder.
-        /// TODO: Implement proper borrow count tracking when Borrow/Transaction table is available.
+        /// Gets the most borrowed books based on BorrowingTransaction records.
+        /// Orders by borrow count descending (most popular first), limited to topCount.
         /// </summary>
-        public List<DTOCatalogBook> GetPopularBooks(int topCount = 10)
+        public List<DTOCatalogBook> GetPopularBooks(int topCount = 8)
         {
             var result = new List<DTOCatalogBook>();
-            var allBooks = _bookRepo.GetAll() ?? new List<Book>();
 
-            foreach (var book in allBooks)
+            try
             {
-                var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                // Get most borrowed book IDs from circulation repository
+                var circulationRepo = new CirculationRepository();
+                var borrowCounts = circulationRepo.GetMostBorrowedBookIds(topCount);
 
-                // Use total copies count as a proxy for popularity until borrow tracking exists
-                int borrowCount = copies.Count;
+                if (borrowCounts == null || borrowCounts.Count == 0)
+                {
+                    // No borrow history exists - return empty list
+                    return result;
+                }
 
-                DateTime firstAdded = copies.Count > 0 ? copies.Min(c => c.DateAdded) : DateTime.MinValue;
+                // Fetch book details for each borrowed BookID, ordered by borrow count descending
+                foreach (var kvp in borrowCounts.OrderByDescending(x => x.Value))
+                {
+                    var book = _bookRepo.GetById(kvp.Key);
+                    if (book == null) continue;
 
-                var dto = MapToDTO(book, copies, firstAdded);
-                dto.BorrowCount = borrowCount;
-                result.Add(dto);
+                    var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
+                    DateTime firstAdded = copies.Count > 0 ? copies.Min(c => c.DateAdded) : DateTime.MinValue;
+
+                    var dto = MapToDTO(book, copies, firstAdded);
+                    dto.BorrowCount = kvp.Value;
+                    result.Add(dto);
+                }
+            }
+            catch
+            {
+                // On failure, return empty list
             }
 
-            // Order by borrow count descending, take top N
-            return result.OrderByDescending(b => b.BorrowCount).Take(topCount).ToList();
+            return result;
         }
 
         /// <summary>

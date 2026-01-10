@@ -132,7 +132,7 @@ namespace LMS.Presentation.UserControls
         {
             try
             {
-                var newArrivals = _catalogManager.GetNewArrivals();
+                var newArrivals = _catalogManager.GetNewArrivals(5);
                 PopulateBookSection(PnlNewArrivalsSection, newArrivals);
             }
             catch (Exception ex)
@@ -146,7 +146,7 @@ namespace LMS.Presentation.UserControls
         {
             try
             {
-                var popularBooks = _catalogManager.GetPopularBooks(10);
+                var popularBooks = _catalogManager.GetPopularBooks(5);
                 PopulateBookSection(PnlPopularBooksSection, popularBooks);
             }
             catch (Exception ex)
@@ -2116,6 +2116,11 @@ namespace LMS.Presentation.UserControls
                 Debug.WriteLine("IsCurrentUserMember threw: " + ex);
                 return false;
             }
+        }
+
+        private void BtnBookViewDetails_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
