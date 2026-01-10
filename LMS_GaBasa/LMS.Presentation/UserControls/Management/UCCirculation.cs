@@ -16,6 +16,9 @@ namespace LMS.Presentation.UserControls.Management
         private DTOCirculationMemberInfo _currentMember;
         private DTOCirculationBookInfo _currentBook;
 
+        // NEW: hold currently looked-up return info so calculations can reuse it
+        private DTOReturnInfo _currentReturn;
+
         // Max width for author label before truncating
         private const int MaxAuthorLabelWidth = 650;
 
@@ -53,12 +56,28 @@ namespace LMS.Presentation.UserControls.Management
             BtnReturnScanAccessionNumber.Click += BtnReturnScanAccessionNumber_Click;
             BtnCancelReturn.Click += BtnCancelReturn_Click;
 
+            // NEW: wire condition and penalty inputs (designer has these controls)
+            CmbBxReturnCondition.SelectedIndexChanged += CmbBxReturnCondition_SelectedIndexChanged;
+            NumPckReturnReplacementCost.ValueChanged += NumPckReturnReplacementCost_ValueChanged;
+
+            // Ensure numeric control has sane defaults for penalty entry
+            NumPckReturnReplacementCost.Minimum = 0;
+            NumPckReturnReplacementCost.DecimalPlaces = 2;
+            NumPckReturnReplacementCost.ThousandsSeparator = true;
+            // Limit to maximum of 10 digits (9,999,999,999)
+            NumPckReturnReplacementCost.Maximum = 9999999999m;
+            NumPckReturnReplacementCost.Enabled = false;
+
             // Initialize UI state
             ClearMemberResults();
             ClearBookResults();
 
             // Hide book checkout section initially
             GrpBxBookCheckout.Visible = false;
+
+            // Ensure penalty panel visibility reflects default condition
+            UpdatePenaltyPanelVisibility();
+            LblReturnTotalFine.Text = "Total Fine: ₱0.00";
         }
 
         #region Member Verification
@@ -430,7 +449,7 @@ namespace LMS.Presentation.UserControls.Management
 
             // Category
             LblBookCategory.Text = $"Category: {(!string.IsNullOrWhiteSpace(bookInfo.Category) ? bookInfo.Category : "N/A")}";
-
+            
             // Determine resource kind flags
             bool isEBook = resourceLabel.Equals("E-Book", StringComparison.OrdinalIgnoreCase);
             bool isPhysicalBook = resourceLabel.Equals("Book", StringComparison.OrdinalIgnoreCase);
@@ -791,6 +810,9 @@ namespace LMS.Presentation.UserControls.Management
                 return;
             }
 
+            // Save for later calculations
+            _currentReturn = info;
+
             // Populate UI
             LblReturnTitle.Text = $"Title: {(!string.IsNullOrWhiteSpace(info.Title) ? info.Title : "N/A")}";
             LblReturnBorrowDate.Text = $"Borrow Date: {info.BorrowDate:MMMM d, yyyy}";
@@ -800,18 +822,23 @@ namespace LMS.Presentation.UserControls.Management
             LblReturnBorrower.Text = $"Borrower: {(!string.IsNullOrWhiteSpace(info.MemberName) ? info.MemberName : "Unknown")}";
             LblReturnBorrower.ForeColor = Color.Black;
 
+            // Fine label uses info.FineAmount (DTOReturnInfo.FineAmount is derived by manager)
             if (info.DaysOverdue > 0)
             {
                 LblReturnStatus.Text = "Status: Overdue";
                 LblReturnStatus.ForeColor = Color.FromArgb(200, 0, 0);
-                LblReturnFine.Text = $"Fine: ₱{info.FineAmount:N2}";
             }
             else
             {
                 LblReturnStatus.Text = "Status: On time";
                 LblReturnStatus.ForeColor = Color.FromArgb(0, 200, 0);
-                LblReturnFine.Text = "Fine: ₱0.00";
             }
+
+            // Ensure penalty panel visibility reflects condition chosen
+            UpdatePenaltyPanelVisibility();
+
+            // Recalculate and display fine and total
+            RecalculateReturnTotals();
 
             // Keep ConfirmReturn disabled per your instruction (don't make it work yet)
             BtnConfirmReturn.Enabled = false;
@@ -819,6 +846,8 @@ namespace LMS.Presentation.UserControls.Management
 
         private void ClearReturnResults()
         {
+            _currentReturn = null;
+
             LblReturnTitle.Text = "Title: ";
             LblReturnBorrowDate.Text = "Borrow Date: ";
             LblReturnReturnDate.Text = "Return Date: ";
@@ -830,8 +859,81 @@ namespace LMS.Presentation.UserControls.Management
             // Reset borrower label
             LblReturnBorrower.Text = "Borrower: ";
             LblReturnBorrower.ForeColor = Color.Black;
+
+            // Reset penalty UI
+            NumPckReturnReplacementCost.Value = 0;
+            UpdatePenaltyPanelVisibility();
+            LblReturnTotalFine.Text = "Total Fine: ₱0.00";
         }
 
         #endregion
+
+        // NEW: event handlers and helpers for return condition / penalty calculations
+
+        private void CmbBxReturnCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePenaltyPanelVisibility();
+            RecalculateReturnTotals();
+        }
+
+        private void NumPckReturnReplacementCost_ValueChanged(object sender, EventArgs e)
+        {
+            RecalculateReturnTotals();
+        }
+
+        private void UpdatePenaltyPanelVisibility()
+        {
+            var cond = CmbBxReturnCondition.Text?.Trim();
+
+            // Show penalty panel for both "Damage" and "Lost"
+            bool showPenalty = string.Equals(cond, "Damage", StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(cond, "Lost", StringComparison.OrdinalIgnoreCase);
+
+            PnlforReturnPenaltyFee.Visible = showPenalty;
+            NumPckReturnReplacementCost.Enabled = showPenalty;
+
+            // If penalty is required, make it obvious to the user by focusing the control
+            if (showPenalty && _currentReturn != null)
+            {
+                // only focus when a return is loaded
+                try
+                {
+                    NumPckReturnReplacementCost.Focus();
+                }
+                catch
+                {
+                    // ignore focus errors
+                }
+            }
+        }
+
+        /// <summary>
+        /// Recalculates LblReturnFine and LblReturnTotalFine.
+        /// - Fine is taken from _currentReturn.FineAmount (manager-provided)
+        /// - Penalty (when Damage or Lost) is taken from NumPckReturnReplacementCost.Value
+        /// </summary>
+        private void RecalculateReturnTotals()
+        {
+            decimal fine = 0m;
+            if (_currentReturn != null)
+            {
+                fine = _currentReturn.FineAmount;
+            }
+
+            decimal penalty = 0m;
+            if (PnlforReturnPenaltyFee.Visible)
+            {
+                penalty = NumPckReturnReplacementCost.Value;
+            }
+
+            // Update displayed labels
+            LblReturnFine.Text = $"Fine: ₱{fine:N2}";
+            LblReturnTotalFine.Text = $"Total Fine: ₱{(fine + penalty):N2}";
+        }
+
+        private void LblReturnCondition_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

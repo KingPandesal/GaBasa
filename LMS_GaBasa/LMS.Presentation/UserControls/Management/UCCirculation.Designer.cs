@@ -65,8 +65,10 @@
             this.LblBookAuthor = new System.Windows.Forms.Label();
             this.TabPageReturn = new System.Windows.Forms.TabPage();
             this.GrpBxReturnBook = new System.Windows.Forms.GroupBox();
+            this.CmbBxReturnCondition = new System.Windows.Forms.ComboBox();
             this.BtnConfirmReturn = new System.Windows.Forms.Button();
             this.LblReturnBorrower = new System.Windows.Forms.Label();
+            this.LblReturnCondition = new System.Windows.Forms.Label();
             this.LblReturnFine = new System.Windows.Forms.Label();
             this.LblNote2 = new System.Windows.Forms.Label();
             this.LblReturnAccessionNumber = new System.Windows.Forms.Label();
@@ -94,6 +96,12 @@
             this.LblRenewOldDueDate = new System.Windows.Forms.Label();
             this.LblRenewBorrower = new System.Windows.Forms.Label();
             this.LblRenewTitle = new System.Windows.Forms.Label();
+            this.LblReturnReplacementCost = new System.Windows.Forms.Label();
+            this.NumPckReturnReplacementCost = new System.Windows.Forms.NumericUpDown();
+            this.LblReturnTotalFine = new System.Windows.Forms.Label();
+            this.FlwPnlforConditionCalculations = new System.Windows.Forms.FlowLayoutPanel();
+            this.PnlforReturnCondition = new System.Windows.Forms.Panel();
+            this.PnlforReturnPenaltyFee = new System.Windows.Forms.Panel();
             this.TabCtrlCirculation.SuspendLayout();
             this.TabPageBorrow.SuspendLayout();
             this.GrpBxBookCheckout.SuspendLayout();
@@ -103,6 +111,10 @@
             this.GrpBxReturnBook.SuspendLayout();
             this.TabPageRenew.SuspendLayout();
             this.GrpBxBookRenewal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckReturnReplacementCost)).BeginInit();
+            this.FlwPnlforConditionCalculations.SuspendLayout();
+            this.PnlforReturnCondition.SuspendLayout();
+            this.PnlforReturnPenaltyFee.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabCtrlCirculation
@@ -567,7 +579,6 @@
             // 
             this.GrpBxReturnBook.Controls.Add(this.BtnConfirmReturn);
             this.GrpBxReturnBook.Controls.Add(this.LblReturnBorrower);
-            this.GrpBxReturnBook.Controls.Add(this.LblReturnFine);
             this.GrpBxReturnBook.Controls.Add(this.LblNote2);
             this.GrpBxReturnBook.Controls.Add(this.LblReturnAccessionNumber);
             this.GrpBxReturnBook.Controls.Add(this.BtnReturnEnterAccessionNumber);
@@ -578,7 +589,8 @@
             this.GrpBxReturnBook.Controls.Add(this.LblReturnReturnDate);
             this.GrpBxReturnBook.Controls.Add(this.LblReturnBorrowDate);
             this.GrpBxReturnBook.Controls.Add(this.LblReturnTitle);
-            this.GrpBxReturnBook.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxReturnBook.Controls.Add(this.FlwPnlforConditionCalculations);
+            this.GrpBxReturnBook.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.GrpBxReturnBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxReturnBook.Location = new System.Drawing.Point(36, 31);
             this.GrpBxReturnBook.Name = "GrpBxReturnBook";
@@ -586,6 +598,19 @@
             this.GrpBxReturnBook.TabIndex = 14;
             this.GrpBxReturnBook.TabStop = false;
             this.GrpBxReturnBook.Text = "Return Book";
+            // 
+            // CmbBxReturnCondition
+            // 
+            this.CmbBxReturnCondition.FormattingEnabled = true;
+            this.CmbBxReturnCondition.Items.AddRange(new object[] {
+            "Good",
+            "Lost",
+            "Damage"});
+            this.CmbBxReturnCondition.Location = new System.Drawing.Point(133, 4);
+            this.CmbBxReturnCondition.Name = "CmbBxReturnCondition";
+            this.CmbBxReturnCondition.Size = new System.Drawing.Size(148, 36);
+            this.CmbBxReturnCondition.TabIndex = 56;
+            this.CmbBxReturnCondition.Text = "Good";
             // 
             // BtnConfirmReturn
             // 
@@ -606,35 +631,48 @@
             // LblReturnBorrower
             // 
             this.LblReturnBorrower.AutoSize = true;
-            this.LblReturnBorrower.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnBorrower.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnBorrower.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnBorrower.Location = new System.Drawing.Point(42, 458);
+            this.LblReturnBorrower.Location = new System.Drawing.Point(42, 198);
             this.LblReturnBorrower.Name = "LblReturnBorrower";
-            this.LblReturnBorrower.Size = new System.Drawing.Size(109, 30);
+            this.LblReturnBorrower.Size = new System.Drawing.Size(96, 28);
             this.LblReturnBorrower.TabIndex = 54;
             this.LblReturnBorrower.Text = "Borrower:";
+            // 
+            // LblReturnCondition
+            // 
+            this.LblReturnCondition.AutoSize = true;
+            this.LblReturnCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnCondition.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnCondition.Location = new System.Drawing.Point(3, 6);
+            this.LblReturnCondition.Name = "LblReturnCondition";
+            this.LblReturnCondition.Size = new System.Drawing.Size(103, 28);
+            this.LblReturnCondition.TabIndex = 54;
+            this.LblReturnCondition.Text = "Condition:";
+            this.LblReturnCondition.Click += new System.EventHandler(this.LblReturnCondition_Click);
             // 
             // LblReturnFine
             // 
             this.LblReturnFine.AutoSize = true;
-            this.LblReturnFine.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnFine.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnFine.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnFine.Location = new System.Drawing.Point(42, 381);
+            this.LblReturnFine.Location = new System.Drawing.Point(3, 101);
             this.LblReturnFine.Name = "LblReturnFine";
-            this.LblReturnFine.Size = new System.Drawing.Size(58, 30);
+            this.LblReturnFine.Padding = new System.Windows.Forms.Padding(2, 15, 0, 5);
+            this.LblReturnFine.Size = new System.Drawing.Size(54, 48);
             this.LblReturnFine.TabIndex = 54;
             this.LblReturnFine.Text = "Fine:";
             // 
             // LblNote2
             // 
             this.LblNote2.AutoSize = true;
-            this.LblNote2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.LblNote2.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblNote2.ForeColor = System.Drawing.Color.Black;
             this.LblNote2.Location = new System.Drawing.Point(43, 127);
             this.LblNote2.MaximumSize = new System.Drawing.Size(600, 0);
             this.LblNote2.MinimumSize = new System.Drawing.Size(100, 0);
             this.LblNote2.Name = "LblNote2";
-            this.LblNote2.Size = new System.Drawing.Size(591, 50);
+            this.LblNote2.Size = new System.Drawing.Size(579, 42);
             this.LblNote2.TabIndex = 0;
             this.LblNote2.Text = "*Books are identified by scanning the accession number barcode using a webcam. Ma" +
     "nual input is also supported.";
@@ -642,11 +680,11 @@
             // LblReturnAccessionNumber
             // 
             this.LblReturnAccessionNumber.AutoSize = true;
-            this.LblReturnAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnAccessionNumber.ForeColor = System.Drawing.Color.Black;
             this.LblReturnAccessionNumber.Location = new System.Drawing.Point(42, 82);
             this.LblReturnAccessionNumber.Name = "LblReturnAccessionNumber";
-            this.LblReturnAccessionNumber.Size = new System.Drawing.Size(147, 30);
+            this.LblReturnAccessionNumber.Size = new System.Drawing.Size(133, 28);
             this.LblReturnAccessionNumber.TabIndex = 0;
             this.LblReturnAccessionNumber.Text = "Accession No.";
             // 
@@ -709,44 +747,44 @@
             // LblReturnStatus
             // 
             this.LblReturnStatus.AutoSize = true;
-            this.LblReturnStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnStatus.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnStatus.Location = new System.Drawing.Point(42, 334);
+            this.LblReturnStatus.Location = new System.Drawing.Point(42, 375);
             this.LblReturnStatus.Name = "LblReturnStatus";
-            this.LblReturnStatus.Size = new System.Drawing.Size(75, 30);
+            this.LblReturnStatus.Size = new System.Drawing.Size(69, 28);
             this.LblReturnStatus.TabIndex = 53;
             this.LblReturnStatus.Text = "Status:";
             // 
             // LblReturnReturnDate
             // 
             this.LblReturnReturnDate.AutoSize = true;
-            this.LblReturnReturnDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnReturnDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnReturnDate.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnReturnDate.Location = new System.Drawing.Point(42, 287);
+            this.LblReturnReturnDate.Location = new System.Drawing.Point(42, 328);
             this.LblReturnReturnDate.Name = "LblReturnReturnDate";
-            this.LblReturnReturnDate.Size = new System.Drawing.Size(132, 30);
+            this.LblReturnReturnDate.Size = new System.Drawing.Size(119, 28);
             this.LblReturnReturnDate.TabIndex = 53;
             this.LblReturnReturnDate.Text = "Return Date:";
             // 
             // LblReturnBorrowDate
             // 
             this.LblReturnBorrowDate.AutoSize = true;
-            this.LblReturnBorrowDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnBorrowDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnBorrowDate.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnBorrowDate.Location = new System.Drawing.Point(42, 241);
+            this.LblReturnBorrowDate.Location = new System.Drawing.Point(42, 282);
             this.LblReturnBorrowDate.Name = "LblReturnBorrowDate";
-            this.LblReturnBorrowDate.Size = new System.Drawing.Size(140, 30);
+            this.LblReturnBorrowDate.Size = new System.Drawing.Size(125, 28);
             this.LblReturnBorrowDate.TabIndex = 53;
             this.LblReturnBorrowDate.Text = "Borrow Date:";
             // 
             // LblReturnTitle
             // 
             this.LblReturnTitle.AutoSize = true;
-            this.LblReturnTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblReturnTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblReturnTitle.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnTitle.Location = new System.Drawing.Point(42, 196);
+            this.LblReturnTitle.Location = new System.Drawing.Point(42, 241);
             this.LblReturnTitle.Name = "LblReturnTitle";
-            this.LblReturnTitle.Size = new System.Drawing.Size(59, 30);
+            this.LblReturnTitle.Size = new System.Drawing.Size(53, 28);
             this.LblReturnTitle.TabIndex = 53;
             this.LblReturnTitle.Text = "Title:";
             // 
@@ -777,7 +815,7 @@
             this.GrpBxBookRenewal.Controls.Add(this.LblRenewOldDueDate);
             this.GrpBxBookRenewal.Controls.Add(this.LblRenewBorrower);
             this.GrpBxBookRenewal.Controls.Add(this.LblRenewTitle);
-            this.GrpBxBookRenewal.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.GrpBxBookRenewal.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.GrpBxBookRenewal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.GrpBxBookRenewal.Location = new System.Drawing.Point(36, 31);
             this.GrpBxBookRenewal.Name = "GrpBxBookRenewal";
@@ -789,22 +827,22 @@
             // LblRenewRenewalLimit
             // 
             this.LblRenewRenewalLimit.AutoSize = true;
-            this.LblRenewRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewRenewalLimit.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewRenewalLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
             this.LblRenewRenewalLimit.Location = new System.Drawing.Point(42, 401);
             this.LblRenewRenewalLimit.Name = "LblRenewRenewalLimit";
-            this.LblRenewRenewalLimit.Size = new System.Drawing.Size(501, 30);
+            this.LblRenewRenewalLimit.Size = new System.Drawing.Size(440, 28);
             this.LblRenewRenewalLimit.TabIndex = 59;
             this.LblRenewRenewalLimit.Text = "✔️ Renewal limit not reached (1 / 3)                       ";
             // 
             // LblRenewActiveReservation
             // 
             this.LblRenewActiveReservation.AutoSize = true;
-            this.LblRenewActiveReservation.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewActiveReservation.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewActiveReservation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
             this.LblRenewActiveReservation.Location = new System.Drawing.Point(43, 359);
             this.LblRenewActiveReservation.Name = "LblRenewActiveReservation";
-            this.LblRenewActiveReservation.Size = new System.Drawing.Size(563, 30);
+            this.LblRenewActiveReservation.Size = new System.Drawing.Size(492, 28);
             this.LblRenewActiveReservation.TabIndex = 60;
             this.LblRenewActiveReservation.Text = "✔️ Book has no active reservations                                   ";
             // 
@@ -827,13 +865,13 @@
             // LblNote3
             // 
             this.LblNote3.AutoSize = true;
-            this.LblNote3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.LblNote3.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblNote3.ForeColor = System.Drawing.Color.Black;
             this.LblNote3.Location = new System.Drawing.Point(43, 127);
             this.LblNote3.MaximumSize = new System.Drawing.Size(600, 0);
             this.LblNote3.MinimumSize = new System.Drawing.Size(100, 0);
             this.LblNote3.Name = "LblNote3";
-            this.LblNote3.Size = new System.Drawing.Size(591, 50);
+            this.LblNote3.Size = new System.Drawing.Size(579, 42);
             this.LblNote3.TabIndex = 0;
             this.LblNote3.Text = "*Books are identified by scanning the accession number barcode using a webcam. Ma" +
     "nual input is also supported.";
@@ -841,11 +879,11 @@
             // LblRenewAccessionNumber
             // 
             this.LblRenewAccessionNumber.AutoSize = true;
-            this.LblRenewAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewAccessionNumber.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewAccessionNumber.ForeColor = System.Drawing.Color.Black;
             this.LblRenewAccessionNumber.Location = new System.Drawing.Point(42, 82);
             this.LblRenewAccessionNumber.Name = "LblRenewAccessionNumber";
-            this.LblRenewAccessionNumber.Size = new System.Drawing.Size(147, 30);
+            this.LblRenewAccessionNumber.Size = new System.Drawing.Size(133, 28);
             this.LblRenewAccessionNumber.TabIndex = 0;
             this.LblRenewAccessionNumber.Text = "Accession No.";
             // 
@@ -908,57 +946,119 @@
             // LblRenewRenewalStatus
             // 
             this.LblRenewRenewalStatus.AutoSize = true;
-            this.LblRenewRenewalStatus.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewRenewalStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewRenewalStatus.ForeColor = System.Drawing.Color.Black;
             this.LblRenewRenewalStatus.Location = new System.Drawing.Point(43, 530);
             this.LblRenewRenewalStatus.Name = "LblRenewRenewalStatus";
-            this.LblRenewRenewalStatus.Size = new System.Drawing.Size(245, 30);
+            this.LblRenewRenewalStatus.Size = new System.Drawing.Size(221, 28);
             this.LblRenewRenewalStatus.TabIndex = 53;
             this.LblRenewRenewalStatus.Text = "Renewal Status: Allowed";
             // 
             // LblRenewNewDueDate
             // 
             this.LblRenewNewDueDate.AutoSize = true;
-            this.LblRenewNewDueDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewNewDueDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewNewDueDate.ForeColor = System.Drawing.Color.Black;
             this.LblRenewNewDueDate.Location = new System.Drawing.Point(43, 484);
             this.LblRenewNewDueDate.Name = "LblRenewNewDueDate";
-            this.LblRenewNewDueDate.Size = new System.Drawing.Size(326, 30);
+            this.LblRenewNewDueDate.Size = new System.Drawing.Size(292, 28);
             this.LblRenewNewDueDate.TabIndex = 53;
             this.LblRenewNewDueDate.Text = "New Due Date: January 30, 2026";
             // 
             // LblRenewOldDueDate
             // 
             this.LblRenewOldDueDate.AutoSize = true;
-            this.LblRenewOldDueDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewOldDueDate.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewOldDueDate.ForeColor = System.Drawing.Color.Black;
             this.LblRenewOldDueDate.Location = new System.Drawing.Point(42, 286);
             this.LblRenewOldDueDate.Name = "LblRenewOldDueDate";
-            this.LblRenewOldDueDate.Size = new System.Drawing.Size(317, 30);
+            this.LblRenewOldDueDate.Size = new System.Drawing.Size(285, 28);
             this.LblRenewOldDueDate.TabIndex = 53;
             this.LblRenewOldDueDate.Text = "Old Due Date: January 15, 2026";
             // 
             // LblRenewBorrower
             // 
             this.LblRenewBorrower.AutoSize = true;
-            this.LblRenewBorrower.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewBorrower.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewBorrower.ForeColor = System.Drawing.Color.Black;
             this.LblRenewBorrower.Location = new System.Drawing.Point(42, 240);
             this.LblRenewBorrower.Name = "LblRenewBorrower";
-            this.LblRenewBorrower.Size = new System.Drawing.Size(270, 30);
+            this.LblRenewBorrower.Size = new System.Drawing.Size(238, 28);
             this.LblRenewBorrower.TabIndex = 53;
             this.LblRenewBorrower.Text = "Borrower: Jane Dele Crissy";
             // 
             // LblRenewTitle
             // 
             this.LblRenewTitle.AutoSize = true;
-            this.LblRenewTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.LblRenewTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.LblRenewTitle.ForeColor = System.Drawing.Color.Black;
             this.LblRenewTitle.Location = new System.Drawing.Point(42, 196);
             this.LblRenewTitle.Name = "LblRenewTitle";
-            this.LblRenewTitle.Size = new System.Drawing.Size(228, 30);
+            this.LblRenewTitle.Size = new System.Drawing.Size(208, 28);
             this.LblRenewTitle.TabIndex = 53;
             this.LblRenewTitle.Text = "Title: Unlucky Vacation";
+            // 
+            // LblReturnReplacementCost
+            // 
+            this.LblReturnReplacementCost.AutoSize = true;
+            this.LblReturnReplacementCost.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnReplacementCost.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnReplacementCost.Location = new System.Drawing.Point(6, 5);
+            this.LblReturnReplacementCost.Name = "LblReturnReplacementCost";
+            this.LblReturnReplacementCost.Size = new System.Drawing.Size(114, 28);
+            this.LblReturnReplacementCost.TabIndex = 54;
+            this.LblReturnReplacementCost.Text = "Penalty Fee:";
+            // 
+            // NumPckReturnReplacementCost
+            // 
+            this.NumPckReturnReplacementCost.Location = new System.Drawing.Point(136, 3);
+            this.NumPckReturnReplacementCost.Name = "NumPckReturnReplacementCost";
+            this.NumPckReturnReplacementCost.Size = new System.Drawing.Size(120, 34);
+            this.NumPckReturnReplacementCost.TabIndex = 57;
+            // 
+            // LblReturnTotalFine
+            // 
+            this.LblReturnTotalFine.AutoSize = true;
+            this.LblReturnTotalFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnTotalFine.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnTotalFine.Location = new System.Drawing.Point(3, 149);
+            this.LblReturnTotalFine.Name = "LblReturnTotalFine";
+            this.LblReturnTotalFine.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.LblReturnTotalFine.Size = new System.Drawing.Size(101, 28);
+            this.LblReturnTotalFine.TabIndex = 54;
+            this.LblReturnTotalFine.Text = "Total Fine:";
+            // 
+            // FlwPnlforConditionCalculations
+            // 
+            this.FlwPnlforConditionCalculations.Controls.Add(this.PnlforReturnCondition);
+            this.FlwPnlforConditionCalculations.Controls.Add(this.PnlforReturnPenaltyFee);
+            this.FlwPnlforConditionCalculations.Controls.Add(this.LblReturnFine);
+            this.FlwPnlforConditionCalculations.Controls.Add(this.LblReturnTotalFine);
+            this.FlwPnlforConditionCalculations.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.FlwPnlforConditionCalculations.Location = new System.Drawing.Point(36, 436);
+            this.FlwPnlforConditionCalculations.Name = "FlwPnlforConditionCalculations";
+            this.FlwPnlforConditionCalculations.Size = new System.Drawing.Size(309, 186);
+            this.FlwPnlforConditionCalculations.TabIndex = 58;
+            this.FlwPnlforConditionCalculations.WrapContents = false;
+            // 
+            // PnlforReturnCondition
+            // 
+            this.PnlforReturnCondition.Controls.Add(this.CmbBxReturnCondition);
+            this.PnlforReturnCondition.Controls.Add(this.LblReturnCondition);
+            this.PnlforReturnCondition.Location = new System.Drawing.Point(3, 3);
+            this.PnlforReturnCondition.Name = "PnlforReturnCondition";
+            this.PnlforReturnCondition.Size = new System.Drawing.Size(284, 47);
+            this.PnlforReturnCondition.TabIndex = 59;
+            // 
+            // PnlforReturnPenaltyFee
+            // 
+            this.PnlforReturnPenaltyFee.Controls.Add(this.NumPckReturnReplacementCost);
+            this.PnlforReturnPenaltyFee.Controls.Add(this.LblReturnReplacementCost);
+            this.PnlforReturnPenaltyFee.Location = new System.Drawing.Point(0, 53);
+            this.PnlforReturnPenaltyFee.Margin = new System.Windows.Forms.Padding(0);
+            this.PnlforReturnPenaltyFee.Name = "PnlforReturnPenaltyFee";
+            this.PnlforReturnPenaltyFee.Size = new System.Drawing.Size(284, 48);
+            this.PnlforReturnPenaltyFee.TabIndex = 59;
             // 
             // UCCirculation
             // 
@@ -982,6 +1082,13 @@
             this.TabPageRenew.ResumeLayout(false);
             this.GrpBxBookRenewal.ResumeLayout(false);
             this.GrpBxBookRenewal.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckReturnReplacementCost)).EndInit();
+            this.FlwPnlforConditionCalculations.ResumeLayout(false);
+            this.FlwPnlforConditionCalculations.PerformLayout();
+            this.PnlforReturnCondition.ResumeLayout(false);
+            this.PnlforReturnCondition.PerformLayout();
+            this.PnlforReturnPenaltyFee.ResumeLayout(false);
+            this.PnlforReturnPenaltyFee.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1054,5 +1161,13 @@
         private System.Windows.Forms.Label LblRenewNewDueDate;
         private System.Windows.Forms.Button BtnViewMemberValidID;
         private System.Windows.Forms.Label LblResourceType;
+        private System.Windows.Forms.ComboBox CmbBxReturnCondition;
+        private System.Windows.Forms.Label LblReturnCondition;
+        private System.Windows.Forms.NumericUpDown NumPckReturnReplacementCost;
+        private System.Windows.Forms.Label LblReturnReplacementCost;
+        private System.Windows.Forms.Panel PnlforReturnCondition;
+        private System.Windows.Forms.FlowLayoutPanel FlwPnlforConditionCalculations;
+        private System.Windows.Forms.Label LblReturnTotalFine;
+        private System.Windows.Forms.Panel PnlforReturnPenaltyFee;
     }
 }

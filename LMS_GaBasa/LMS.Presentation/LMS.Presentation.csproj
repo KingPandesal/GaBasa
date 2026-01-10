@@ -108,6 +108,12 @@
     <Compile Include="Popup\Circulation\BorrowReceiptForm.Designer.cs">
       <DependentUpon>BorrowReceiptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Circulation\ReturnReceiptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Circulation\ReturnReceiptForm.Designer.cs">
+      <DependentUpon>ReturnReceiptForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Inventory\AddBook.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,6 +373,9 @@
     <EmbeddedResource Include="Popup\Circulation\BorrowReceiptForm.resx">
       <DependentUpon>BorrowReceiptForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Circulation\ReturnReceiptForm.resx">
+      <DependentUpon>ReturnReceiptForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\Inventory\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
     </EmbeddedResource>
@@ -490,6 +499,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="User" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
