@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.Fine;
 
 namespace LMS.DataAccess.Interfaces
 {
@@ -67,5 +69,12 @@ namespace LMS.DataAccess.Interfaces
         /// <param name="condition">Condition string: "Lost" or "Damaged" (case-insensitive).</param>
         /// <returns>True if successful; otherwise false.</returns>
         bool CompleteReturnWithCondition(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount, string condition);
+
+        /// <summary>
+        /// Gets all fine records for a member.
+        /// </summary>
+        /// <param name="memberId">The Member ID.</param>
+        /// <returns>List of fine records.</returns>
+        List<DTOFineRecord> GetFinesByMemberId(int memberId);
     }
 }

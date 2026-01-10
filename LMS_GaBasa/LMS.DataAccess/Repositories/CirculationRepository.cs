@@ -5,6 +5,7 @@ using System.Linq;
 using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.Fine;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -650,6 +651,58 @@ namespace LMS.DataAccess.Repositories
             }
 
             return result;
+        }
+
+        public List<DTOFineRecord> GetFinesByMemberId(int memberId)
+        {
+            var fines = new List<DTOFineRecord>();
+
+            if (memberId <= 0)
+                return fines;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        f.FineID,
+                        f.TransactionID,
+                        f.MemberID,
+                        ISNULL(u.FirstName, '') + ' ' + ISNULL(u.LastName, '') AS MemberName,
+                        f.FineAmount,
+                        f.FineType,
+                        f.DateIssued,
+                        f.[Status]
+                    FROM [Fine] f
+                    INNER JOIN [Member] m ON f.MemberID = m.MemberID
+                    INNER JOIN [User] u ON m.UserID = u.UserID
+                    WHERE f.MemberID = @MemberID
+                    ORDER BY f.DateIssued DESC";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        fines.Add(new DTOFineRecord
+                        {
+                            FineID = reader.GetInt32(reader.GetOrdinal("FineID")),
+                            TransactionID = reader.IsDBNull(reader.GetOrdinal("TransactionID")) ? 0 : reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                            MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                            MemberName = reader.IsDBNull(reader.GetOrdinal("MemberName")) ? "" : reader.GetString(reader.GetOrdinal("MemberName")).Trim(),
+                            FineAmount = reader.IsDBNull(reader.GetOrdinal("FineAmount")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineAmount")),
+                            FineType = reader.IsDBNull(reader.GetOrdinal("FineType")) ? "" : reader.GetString(reader.GetOrdinal("FineType")),
+                            DateIssued = reader.IsDBNull(reader.GetOrdinal("DateIssued")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("DateIssued")),
+                            Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "" : reader.GetString(reader.GetOrdinal("Status"))
+                        });
+                    }
+                }
+            }
+
+            return fines;
         }
     }
 }

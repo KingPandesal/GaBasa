@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.Fine;
 
 namespace LMS.BusinessLogic.Managers.Interfaces
 {
@@ -71,5 +73,12 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="condition">The condition of the item being returned (Lost/Damaged).</param>
         /// <returns>True if successful; otherwise false.</returns>
         bool CompleteReturnWithCondition(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount, string condition);
+
+        /// <summary>
+        /// Gets all fine records for a member.
+        /// </summary>
+        /// <param name="memberId">The Member ID.</param>
+        /// <returns>List of fine records.</returns>
+        List<DTOFineRecord> GetFinesByMemberId(int memberId);
     }
 }

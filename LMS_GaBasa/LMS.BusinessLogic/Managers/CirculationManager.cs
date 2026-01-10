@@ -1,9 +1,11 @@
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
 using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.Fine;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LMS.BusinessLogic.Managers.Circulation
 {
@@ -108,6 +110,14 @@ namespace LMS.BusinessLogic.Managers.Circulation
             if (transactionId <= 0 || copyId <= 0 || memberId <= 0) return false;
             if (string.IsNullOrWhiteSpace(condition)) condition = "Damaged";
             return _circulationRepo.CompleteReturnWithCondition(transactionId, copyId, memberId, returnDate, fineAmount, condition);
+        }
+
+        public List<DTOFineRecord> GetFinesByMemberId(int memberId)
+        {
+            if (memberId <= 0)
+                return new List<DTOFineRecord>();
+
+            return _circulationRepo.GetFinesByMemberId(memberId);
         }
     }
 }
