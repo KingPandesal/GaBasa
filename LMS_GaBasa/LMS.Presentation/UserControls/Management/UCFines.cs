@@ -32,6 +32,9 @@ namespace LMS.Presentation.UserControls.Management
             CmbBxChargeType.SelectedIndexChanged += CmbBxChargeType_SelectedIndexChanged;
             BtnAddToList.Click += BtnAddToList_Click;
 
+            // Wire up waiver button
+            BtnWaive.Click += BtnWaive_Click;
+
             // Ensure numeric control rules
             try
             {
@@ -111,7 +114,7 @@ namespace LMS.Presentation.UserControls.Management
             LblStatus.Text = $"Status: {memberInfo.Status}";
             SetStatusColor(memberInfo.Status);
 
-            // 4. LblTotalFines - total fines from Fine table
+            // 4. LblTotalFines - total fines from Fine table (unpaid)
             LblTotalFines.Text = $"Total Fines: ₱{memberInfo.TotalUnpaidFines:N2}";
 
             // 5. LblBooksCurrentlyBorrowed - currently borrowed / limit from MemberType
@@ -158,12 +161,21 @@ namespace LMS.Presentation.UserControls.Management
 
         private void LoadFinesGrid(int memberId)
         {
+            // Reload fines and exclude waived entries so waived fines disappear immediately
             DgvFines.Rows.Clear();
-            _currentFines = _circulationManager.GetFinesByMemberId(memberId);
+            var allFines = _circulationManager.GetFinesByMemberId(memberId) ?? new List<DTOFineRecord>();
+
+            // Exclude waived fines from the grid
+            _currentFines = allFines
+                .Where(f => !string.Equals(f.Status, "Waived", StringComparison.OrdinalIgnoreCase))
+                .ToList();
 
             if (_currentFines == null || _currentFines.Count == 0)
             {
                 LblSelectedTotal.Text = "Selected Total: ₱0.00";
+
+                // Also refresh member totals so LblTotalFines is accurate
+                RefreshMemberTotals(memberId);
                 return;
             }
 
@@ -191,6 +203,30 @@ namespace LMS.Presentation.UserControls.Management
 
             // Reset selected total
             LblSelectedTotal.Text = "Selected Total: ₱0.00";
+
+            // Refresh member totals so LblTotalFines updates real-time
+            RefreshMemberTotals(memberId);
+        }
+
+        private void RefreshMemberTotals(int memberId)
+        {
+            try
+            {
+                // Get up-to-date member info (TotalUnpaidFines is computed from DB)
+                var memberInfo = _circulationManager.GetMemberByFormattedId($"MEM-{memberId}");
+                if (memberInfo != null)
+                {
+                    _currentMember = memberInfo;
+                    // Update only totals part to avoid overwriting other displayed fields unnecessarily
+                    LblTotalFines.Text = $"Total Fines: ₱{memberInfo.TotalUnpaidFines:N2}";
+                    LblBooksCurrentlyBorrowed.Text = $"Books Currently Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.MaxBooksAllowed}";
+                    LblOverdueCount.Text = $"Overdue Count: {memberInfo.OverdueCount}";
+                }
+            }
+            catch
+            {
+                // ignore refresh errors; do not block UI
+            }
         }
 
         private void ClearFinesGrid()
@@ -388,7 +424,7 @@ namespace LMS.Presentation.UserControls.Management
             {
                 MessageBox.Show("Charge added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Refresh fines grid
+                // Refresh fines grid (waived are excluded by LoadFinesGrid)
                 LoadFinesGrid(memberId);
 
                 // Reset inputs
@@ -398,6 +434,91 @@ namespace LMS.Presentation.UserControls.Management
             else
             {
                 MessageBox.Show("Failed to add charge. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
+        #region Waiver tab handlers
+
+        private void BtnWaive_Click(object sender, EventArgs e)
+        {
+            if (_currentMember == null)
+            {
+                MessageBox.Show("Please search and select a member first.", "No Member", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get selected fines (only unpaid ones can be waived)
+            var selectedFines = GetSelectedFines();
+            if (selectedFines == null || selectedFines.Count == 0)
+            {
+                MessageBox.Show("Please select at least one fine to waive.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Filter only unpaid fines
+            var unpaidFines = selectedFines.Where(f => string.Equals(f.Status, "Unpaid", StringComparison.OrdinalIgnoreCase)).ToList();
+            if (unpaidFines.Count == 0)
+            {
+                MessageBox.Show("Only unpaid fines can be waived. Please select unpaid fines.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get reason from TxtReason
+            var reason = TxtReason.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(reason))
+            {
+                MessageBox.Show("Please enter a reason for waiving the fine(s).", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TxtReason.Focus();
+                return;
+            }
+
+            // Confirm action
+            var fineIds = unpaidFines.Select(f => f.FineID).ToList();
+            decimal totalAmount = unpaidFines.Sum(f => f.FineAmount);
+
+            var confirmResult = MessageBox.Show(
+                $"Are you sure you want to waive {unpaidFines.Count} fine(s) totaling ₱{totalAmount:N2}?\n\nReason: {reason}",
+                "Confirm Waiver",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmResult != DialogResult.Yes)
+                return;
+
+            bool ok = false;
+            try
+            {
+                ok = _circulationManager.WaiveFines(fineIds, reason);
+            }
+            catch (Exception ex)
+            {
+                ok = false;
+                MessageBox.Show($"Error waiving fines: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (ok)
+            {
+                MessageBox.Show($"Successfully waived {unpaidFines.Count} fine(s).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh fines grid (waived entries are excluded)
+                LoadFinesGrid(_currentMember.MemberID);
+
+                // Clear reason textbox
+                TxtReason.Text = "";
+
+                // Refresh member info to update total fines (and update LblTotalFines)
+                var memberInfo = _circulationManager.GetMemberByFormattedId($"MEM-{_currentMember.MemberID}");
+                if (memberInfo != null)
+                {
+                    _currentMember = memberInfo;
+                    DisplayMemberInfo(memberInfo);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to waive fines. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

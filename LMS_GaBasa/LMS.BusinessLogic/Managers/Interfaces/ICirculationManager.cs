@@ -85,5 +85,10 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// Adds a fine charge record for a member. transactionId may be 0 (meaning no related borrowing).
         /// </summary>
         bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status);
+
+        /// <summary>
+        /// Waives the specified fines by updating their Status to 'Waived' and setting the Reason.
+        /// </summary>
+        bool WaiveFines(List<int> fineIds, string reason);
     }
 }

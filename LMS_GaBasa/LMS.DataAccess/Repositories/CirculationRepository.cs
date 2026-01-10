@@ -736,5 +736,45 @@ namespace LMS.DataAccess.Repositories
                 return rows > 0;
             }
         }
+
+        public bool WaiveFines(List<int> fineIds, string reason)
+        {
+            if (fineIds == null || fineIds.Count == 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    try
+                    {
+                        foreach (var fineId in fineIds)
+                        {
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = @"
+                                UPDATE [Fine]
+                                SET [Status] = 'Waived', [Reason] = @Reason
+                                WHERE FineID = @FineID AND [Status] = 'Unpaid'";
+
+                            AddParameter(cmd, "@Reason", DbType.String, reason ?? (object)DBNull.Value);
+                            AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { }
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

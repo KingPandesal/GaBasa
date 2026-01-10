@@ -82,5 +82,13 @@ namespace LMS.DataAccess.Interfaces
         /// </summary>
         /// <returns>True if inserted; otherwise false.</returns>
         bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status);
+
+        /// <summary>
+        /// Waives the specified fines by updating their Status to 'Waived' and setting the Reason.
+        /// </summary>
+        /// <param name="fineIds">List of FineIDs to waive.</param>
+        /// <param name="reason">The reason for waiving.</param>
+        /// <returns>True if all updated successfully; otherwise false.</returns>
+        bool WaiveFines(List<int> fineIds, string reason);
     }
 }

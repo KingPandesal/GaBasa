@@ -127,5 +127,13 @@ namespace LMS.BusinessLogic.Managers
             if (memberId <= 0) return false;
             return _circulationRepo.AddFineCharge(memberId, transactionId, amount, fineType, dateIssued, status);
         }
+
+        public bool WaiveFines(List<int> fineIds, string reason)
+        {
+            if (fineIds == null || fineIds.Count == 0)
+                return false;
+
+            return _circulationRepo.WaiveFines(fineIds, reason);
+        }
     }
 }

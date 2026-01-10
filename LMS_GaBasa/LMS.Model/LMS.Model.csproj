@@ -76,6 +76,7 @@
     <Compile Include="Models\Enums\UserStatus.cs" />
     <Compile Include="Models\Members\MemberProfile.cs" />
     <Compile Include="Models\Members\MemberType.cs" />
+    <Compile Include="Models\Transactions\AuditLog.cs" />
     <Compile Include="Models\Transactions\BorrowingTransaction.cs" />
     <Compile Include="Models\Transactions\Fine.cs" />
     <Compile Include="Models\Transactions\Payment.cs" />

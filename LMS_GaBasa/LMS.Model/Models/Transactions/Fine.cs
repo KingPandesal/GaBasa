@@ -19,8 +19,9 @@ namespace LMS.Model.Models.Transactions
         public string FineType { get; set; } 
         // Enum: Overdue, Lost, Damaged, CardReplacement
         public DateTime DateIssued { get; set; }
-        public string Status { get; set; } 
+        public string Status { get; set; }
         // Enum: Paid, Unpaid, Waived
+        public string Reason { get; set; }
     }
 
 }
