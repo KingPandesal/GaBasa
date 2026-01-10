@@ -65,11 +65,8 @@
             this.LblBookAuthor = new System.Windows.Forms.Label();
             this.TabPageReturn = new System.Windows.Forms.TabPage();
             this.GrpBxReturnBook = new System.Windows.Forms.GroupBox();
-            this.CmbBxReturnCondition = new System.Windows.Forms.ComboBox();
             this.BtnConfirmReturn = new System.Windows.Forms.Button();
             this.LblReturnBorrower = new System.Windows.Forms.Label();
-            this.LblReturnCondition = new System.Windows.Forms.Label();
-            this.LblReturnFine = new System.Windows.Forms.Label();
             this.LblNote2 = new System.Windows.Forms.Label();
             this.LblReturnAccessionNumber = new System.Windows.Forms.Label();
             this.BtnReturnEnterAccessionNumber = new System.Windows.Forms.Button();
@@ -80,6 +77,15 @@
             this.LblReturnReturnDate = new System.Windows.Forms.Label();
             this.LblReturnBorrowDate = new System.Windows.Forms.Label();
             this.LblReturnTitle = new System.Windows.Forms.Label();
+            this.FlwPnlforConditionCalculations = new System.Windows.Forms.FlowLayoutPanel();
+            this.PnlforReturnCondition = new System.Windows.Forms.Panel();
+            this.CmbBxReturnCondition = new System.Windows.Forms.ComboBox();
+            this.LblReturnCondition = new System.Windows.Forms.Label();
+            this.PnlforReturnPenaltyFee = new System.Windows.Forms.Panel();
+            this.NumPckReturnReplacementCost = new System.Windows.Forms.NumericUpDown();
+            this.LblReturnReplacementCost = new System.Windows.Forms.Label();
+            this.LblReturnFine = new System.Windows.Forms.Label();
+            this.LblReturnTotalFine = new System.Windows.Forms.Label();
             this.TabPageRenew = new System.Windows.Forms.TabPage();
             this.GrpBxBookRenewal = new System.Windows.Forms.GroupBox();
             this.LblRenewRenewalLimit = new System.Windows.Forms.Label();
@@ -96,12 +102,6 @@
             this.LblRenewOldDueDate = new System.Windows.Forms.Label();
             this.LblRenewBorrower = new System.Windows.Forms.Label();
             this.LblRenewTitle = new System.Windows.Forms.Label();
-            this.LblReturnReplacementCost = new System.Windows.Forms.Label();
-            this.NumPckReturnReplacementCost = new System.Windows.Forms.NumericUpDown();
-            this.LblReturnTotalFine = new System.Windows.Forms.Label();
-            this.FlwPnlforConditionCalculations = new System.Windows.Forms.FlowLayoutPanel();
-            this.PnlforReturnCondition = new System.Windows.Forms.Panel();
-            this.PnlforReturnPenaltyFee = new System.Windows.Forms.Panel();
             this.TabCtrlCirculation.SuspendLayout();
             this.TabPageBorrow.SuspendLayout();
             this.GrpBxBookCheckout.SuspendLayout();
@@ -109,12 +109,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.PicBxMemberProfilePicture)).BeginInit();
             this.TabPageReturn.SuspendLayout();
             this.GrpBxReturnBook.SuspendLayout();
-            this.TabPageRenew.SuspendLayout();
-            this.GrpBxBookRenewal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumPckReturnReplacementCost)).BeginInit();
             this.FlwPnlforConditionCalculations.SuspendLayout();
             this.PnlforReturnCondition.SuspendLayout();
             this.PnlforReturnPenaltyFee.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckReturnReplacementCost)).BeginInit();
+            this.TabPageRenew.SuspendLayout();
+            this.GrpBxBookRenewal.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabCtrlCirculation
@@ -122,12 +122,11 @@
             this.TabCtrlCirculation.Controls.Add(this.TabPageBorrow);
             this.TabCtrlCirculation.Controls.Add(this.TabPageReturn);
             this.TabCtrlCirculation.Controls.Add(this.TabPageRenew);
-            this.TabCtrlCirculation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabCtrlCirculation.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.TabCtrlCirculation.Location = new System.Drawing.Point(0, 0);
+            this.TabCtrlCirculation.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.TabCtrlCirculation.Location = new System.Drawing.Point(0, 36);
             this.TabCtrlCirculation.Name = "TabCtrlCirculation";
             this.TabCtrlCirculation.SelectedIndex = 0;
-            this.TabCtrlCirculation.Size = new System.Drawing.Size(1580, 936);
+            this.TabCtrlCirculation.Size = new System.Drawing.Size(1580, 900);
             this.TabCtrlCirculation.TabIndex = 0;
             // 
             // TabPageBorrow
@@ -138,10 +137,10 @@
             this.TabPageBorrow.Controls.Add(this.LblBookLoanType);
             this.TabPageBorrow.Controls.Add(this.LblBookAuthor);
             this.TabPageBorrow.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabPageBorrow.Location = new System.Drawing.Point(4, 50);
+            this.TabPageBorrow.Location = new System.Drawing.Point(4, 37);
             this.TabPageBorrow.Name = "TabPageBorrow";
             this.TabPageBorrow.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageBorrow.Size = new System.Drawing.Size(1572, 882);
+            this.TabPageBorrow.Size = new System.Drawing.Size(1572, 859);
             this.TabPageBorrow.TabIndex = 0;
             this.TabPageBorrow.Text = "Borrow";
             // 
@@ -568,10 +567,10 @@
             this.TabPageReturn.BackColor = System.Drawing.Color.White;
             this.TabPageReturn.Controls.Add(this.GrpBxReturnBook);
             this.TabPageReturn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabPageReturn.Location = new System.Drawing.Point(4, 37);
+            this.TabPageReturn.Location = new System.Drawing.Point(4, 41);
             this.TabPageReturn.Name = "TabPageReturn";
             this.TabPageReturn.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageReturn.Size = new System.Drawing.Size(1572, 895);
+            this.TabPageReturn.Size = new System.Drawing.Size(1572, 891);
             this.TabPageReturn.TabIndex = 1;
             this.TabPageReturn.Text = "Return";
             // 
@@ -599,19 +598,6 @@
             this.GrpBxReturnBook.TabStop = false;
             this.GrpBxReturnBook.Text = "Return Book";
             // 
-            // CmbBxReturnCondition
-            // 
-            this.CmbBxReturnCondition.FormattingEnabled = true;
-            this.CmbBxReturnCondition.Items.AddRange(new object[] {
-            "Good",
-            "Lost",
-            "Damage"});
-            this.CmbBxReturnCondition.Location = new System.Drawing.Point(133, 4);
-            this.CmbBxReturnCondition.Name = "CmbBxReturnCondition";
-            this.CmbBxReturnCondition.Size = new System.Drawing.Size(148, 36);
-            this.CmbBxReturnCondition.TabIndex = 56;
-            this.CmbBxReturnCondition.Text = "Good";
-            // 
             // BtnConfirmReturn
             // 
             this.BtnConfirmReturn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
@@ -638,30 +624,6 @@
             this.LblReturnBorrower.Size = new System.Drawing.Size(96, 28);
             this.LblReturnBorrower.TabIndex = 54;
             this.LblReturnBorrower.Text = "Borrower:";
-            // 
-            // LblReturnCondition
-            // 
-            this.LblReturnCondition.AutoSize = true;
-            this.LblReturnCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblReturnCondition.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnCondition.Location = new System.Drawing.Point(3, 6);
-            this.LblReturnCondition.Name = "LblReturnCondition";
-            this.LblReturnCondition.Size = new System.Drawing.Size(103, 28);
-            this.LblReturnCondition.TabIndex = 54;
-            this.LblReturnCondition.Text = "Condition:";
-            this.LblReturnCondition.Click += new System.EventHandler(this.LblReturnCondition_Click);
-            // 
-            // LblReturnFine
-            // 
-            this.LblReturnFine.AutoSize = true;
-            this.LblReturnFine.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblReturnFine.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnFine.Location = new System.Drawing.Point(3, 101);
-            this.LblReturnFine.Name = "LblReturnFine";
-            this.LblReturnFine.Padding = new System.Windows.Forms.Padding(2, 15, 0, 5);
-            this.LblReturnFine.Size = new System.Drawing.Size(54, 48);
-            this.LblReturnFine.TabIndex = 54;
-            this.LblReturnFine.Text = "Fine:";
             // 
             // LblNote2
             // 
@@ -787,6 +749,105 @@
             this.LblReturnTitle.Size = new System.Drawing.Size(53, 28);
             this.LblReturnTitle.TabIndex = 53;
             this.LblReturnTitle.Text = "Title:";
+            // 
+            // FlwPnlforConditionCalculations
+            // 
+            this.FlwPnlforConditionCalculations.Controls.Add(this.PnlforReturnCondition);
+            this.FlwPnlforConditionCalculations.Controls.Add(this.PnlforReturnPenaltyFee);
+            this.FlwPnlforConditionCalculations.Controls.Add(this.LblReturnFine);
+            this.FlwPnlforConditionCalculations.Controls.Add(this.LblReturnTotalFine);
+            this.FlwPnlforConditionCalculations.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.FlwPnlforConditionCalculations.Location = new System.Drawing.Point(36, 436);
+            this.FlwPnlforConditionCalculations.Name = "FlwPnlforConditionCalculations";
+            this.FlwPnlforConditionCalculations.Size = new System.Drawing.Size(309, 186);
+            this.FlwPnlforConditionCalculations.TabIndex = 58;
+            this.FlwPnlforConditionCalculations.WrapContents = false;
+            // 
+            // PnlforReturnCondition
+            // 
+            this.PnlforReturnCondition.Controls.Add(this.CmbBxReturnCondition);
+            this.PnlforReturnCondition.Controls.Add(this.LblReturnCondition);
+            this.PnlforReturnCondition.Location = new System.Drawing.Point(3, 3);
+            this.PnlforReturnCondition.Name = "PnlforReturnCondition";
+            this.PnlforReturnCondition.Size = new System.Drawing.Size(284, 47);
+            this.PnlforReturnCondition.TabIndex = 59;
+            // 
+            // CmbBxReturnCondition
+            // 
+            this.CmbBxReturnCondition.FormattingEnabled = true;
+            this.CmbBxReturnCondition.Items.AddRange(new object[] {
+            "Good",
+            "Lost",
+            "Damage"});
+            this.CmbBxReturnCondition.Location = new System.Drawing.Point(133, 4);
+            this.CmbBxReturnCondition.Name = "CmbBxReturnCondition";
+            this.CmbBxReturnCondition.Size = new System.Drawing.Size(148, 36);
+            this.CmbBxReturnCondition.TabIndex = 56;
+            this.CmbBxReturnCondition.Text = "Good";
+            // 
+            // LblReturnCondition
+            // 
+            this.LblReturnCondition.AutoSize = true;
+            this.LblReturnCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnCondition.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnCondition.Location = new System.Drawing.Point(3, 6);
+            this.LblReturnCondition.Name = "LblReturnCondition";
+            this.LblReturnCondition.Size = new System.Drawing.Size(103, 28);
+            this.LblReturnCondition.TabIndex = 54;
+            this.LblReturnCondition.Text = "Condition:";
+            this.LblReturnCondition.Click += new System.EventHandler(this.LblReturnCondition_Click);
+            // 
+            // PnlforReturnPenaltyFee
+            // 
+            this.PnlforReturnPenaltyFee.Controls.Add(this.NumPckReturnReplacementCost);
+            this.PnlforReturnPenaltyFee.Controls.Add(this.LblReturnReplacementCost);
+            this.PnlforReturnPenaltyFee.Location = new System.Drawing.Point(0, 53);
+            this.PnlforReturnPenaltyFee.Margin = new System.Windows.Forms.Padding(0);
+            this.PnlforReturnPenaltyFee.Name = "PnlforReturnPenaltyFee";
+            this.PnlforReturnPenaltyFee.Size = new System.Drawing.Size(284, 48);
+            this.PnlforReturnPenaltyFee.TabIndex = 59;
+            // 
+            // NumPckReturnReplacementCost
+            // 
+            this.NumPckReturnReplacementCost.Location = new System.Drawing.Point(136, 3);
+            this.NumPckReturnReplacementCost.Name = "NumPckReturnReplacementCost";
+            this.NumPckReturnReplacementCost.Size = new System.Drawing.Size(120, 34);
+            this.NumPckReturnReplacementCost.TabIndex = 57;
+            // 
+            // LblReturnReplacementCost
+            // 
+            this.LblReturnReplacementCost.AutoSize = true;
+            this.LblReturnReplacementCost.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnReplacementCost.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnReplacementCost.Location = new System.Drawing.Point(6, 5);
+            this.LblReturnReplacementCost.Name = "LblReturnReplacementCost";
+            this.LblReturnReplacementCost.Size = new System.Drawing.Size(114, 28);
+            this.LblReturnReplacementCost.TabIndex = 54;
+            this.LblReturnReplacementCost.Text = "Penalty Fee:";
+            // 
+            // LblReturnFine
+            // 
+            this.LblReturnFine.AutoSize = true;
+            this.LblReturnFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnFine.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnFine.Location = new System.Drawing.Point(3, 101);
+            this.LblReturnFine.Name = "LblReturnFine";
+            this.LblReturnFine.Padding = new System.Windows.Forms.Padding(2, 15, 0, 5);
+            this.LblReturnFine.Size = new System.Drawing.Size(54, 48);
+            this.LblReturnFine.TabIndex = 54;
+            this.LblReturnFine.Text = "Fine:";
+            // 
+            // LblReturnTotalFine
+            // 
+            this.LblReturnTotalFine.AutoSize = true;
+            this.LblReturnTotalFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblReturnTotalFine.ForeColor = System.Drawing.Color.Black;
+            this.LblReturnTotalFine.Location = new System.Drawing.Point(3, 149);
+            this.LblReturnTotalFine.Name = "LblReturnTotalFine";
+            this.LblReturnTotalFine.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.LblReturnTotalFine.Size = new System.Drawing.Size(101, 28);
+            this.LblReturnTotalFine.TabIndex = 54;
+            this.LblReturnTotalFine.Text = "Total Fine:";
             // 
             // TabPageRenew
             // 
@@ -998,68 +1059,6 @@
             this.LblRenewTitle.TabIndex = 53;
             this.LblRenewTitle.Text = "Title: Unlucky Vacation";
             // 
-            // LblReturnReplacementCost
-            // 
-            this.LblReturnReplacementCost.AutoSize = true;
-            this.LblReturnReplacementCost.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblReturnReplacementCost.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnReplacementCost.Location = new System.Drawing.Point(6, 5);
-            this.LblReturnReplacementCost.Name = "LblReturnReplacementCost";
-            this.LblReturnReplacementCost.Size = new System.Drawing.Size(114, 28);
-            this.LblReturnReplacementCost.TabIndex = 54;
-            this.LblReturnReplacementCost.Text = "Penalty Fee:";
-            // 
-            // NumPckReturnReplacementCost
-            // 
-            this.NumPckReturnReplacementCost.Location = new System.Drawing.Point(136, 3);
-            this.NumPckReturnReplacementCost.Name = "NumPckReturnReplacementCost";
-            this.NumPckReturnReplacementCost.Size = new System.Drawing.Size(120, 34);
-            this.NumPckReturnReplacementCost.TabIndex = 57;
-            // 
-            // LblReturnTotalFine
-            // 
-            this.LblReturnTotalFine.AutoSize = true;
-            this.LblReturnTotalFine.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblReturnTotalFine.ForeColor = System.Drawing.Color.Black;
-            this.LblReturnTotalFine.Location = new System.Drawing.Point(3, 149);
-            this.LblReturnTotalFine.Name = "LblReturnTotalFine";
-            this.LblReturnTotalFine.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.LblReturnTotalFine.Size = new System.Drawing.Size(101, 28);
-            this.LblReturnTotalFine.TabIndex = 54;
-            this.LblReturnTotalFine.Text = "Total Fine:";
-            // 
-            // FlwPnlforConditionCalculations
-            // 
-            this.FlwPnlforConditionCalculations.Controls.Add(this.PnlforReturnCondition);
-            this.FlwPnlforConditionCalculations.Controls.Add(this.PnlforReturnPenaltyFee);
-            this.FlwPnlforConditionCalculations.Controls.Add(this.LblReturnFine);
-            this.FlwPnlforConditionCalculations.Controls.Add(this.LblReturnTotalFine);
-            this.FlwPnlforConditionCalculations.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.FlwPnlforConditionCalculations.Location = new System.Drawing.Point(36, 436);
-            this.FlwPnlforConditionCalculations.Name = "FlwPnlforConditionCalculations";
-            this.FlwPnlforConditionCalculations.Size = new System.Drawing.Size(309, 186);
-            this.FlwPnlforConditionCalculations.TabIndex = 58;
-            this.FlwPnlforConditionCalculations.WrapContents = false;
-            // 
-            // PnlforReturnCondition
-            // 
-            this.PnlforReturnCondition.Controls.Add(this.CmbBxReturnCondition);
-            this.PnlforReturnCondition.Controls.Add(this.LblReturnCondition);
-            this.PnlforReturnCondition.Location = new System.Drawing.Point(3, 3);
-            this.PnlforReturnCondition.Name = "PnlforReturnCondition";
-            this.PnlforReturnCondition.Size = new System.Drawing.Size(284, 47);
-            this.PnlforReturnCondition.TabIndex = 59;
-            // 
-            // PnlforReturnPenaltyFee
-            // 
-            this.PnlforReturnPenaltyFee.Controls.Add(this.NumPckReturnReplacementCost);
-            this.PnlforReturnPenaltyFee.Controls.Add(this.LblReturnReplacementCost);
-            this.PnlforReturnPenaltyFee.Location = new System.Drawing.Point(0, 53);
-            this.PnlforReturnPenaltyFee.Margin = new System.Windows.Forms.Padding(0);
-            this.PnlforReturnPenaltyFee.Name = "PnlforReturnPenaltyFee";
-            this.PnlforReturnPenaltyFee.Size = new System.Drawing.Size(284, 48);
-            this.PnlforReturnPenaltyFee.TabIndex = 59;
-            // 
             // UCCirculation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -1079,16 +1078,16 @@
             this.TabPageReturn.ResumeLayout(false);
             this.GrpBxReturnBook.ResumeLayout(false);
             this.GrpBxReturnBook.PerformLayout();
-            this.TabPageRenew.ResumeLayout(false);
-            this.GrpBxBookRenewal.ResumeLayout(false);
-            this.GrpBxBookRenewal.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumPckReturnReplacementCost)).EndInit();
             this.FlwPnlforConditionCalculations.ResumeLayout(false);
             this.FlwPnlforConditionCalculations.PerformLayout();
             this.PnlforReturnCondition.ResumeLayout(false);
             this.PnlforReturnCondition.PerformLayout();
             this.PnlforReturnPenaltyFee.ResumeLayout(false);
             this.PnlforReturnPenaltyFee.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumPckReturnReplacementCost)).EndInit();
+            this.TabPageRenew.ResumeLayout(false);
+            this.GrpBxBookRenewal.ResumeLayout(false);
+            this.GrpBxBookRenewal.PerformLayout();
             this.ResumeLayout(false);
 
         }

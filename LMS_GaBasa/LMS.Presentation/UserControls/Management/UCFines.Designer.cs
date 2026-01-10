@@ -399,14 +399,14 @@
             // 
             this.TxtAccessionNumber.Location = new System.Drawing.Point(189, 3);
             this.TxtAccessionNumber.Name = "TxtAccessionNumber";
-            this.TxtAccessionNumber.Size = new System.Drawing.Size(196, 30);
+            this.TxtAccessionNumber.Size = new System.Drawing.Size(282, 30);
             this.TxtAccessionNumber.TabIndex = 62;
             // 
             // NumPckAmount
             // 
             this.NumPckAmount.Location = new System.Drawing.Point(190, 1);
             this.NumPckAmount.Name = "NumPckAmount";
-            this.NumPckAmount.Size = new System.Drawing.Size(196, 30);
+            this.NumPckAmount.Size = new System.Drawing.Size(281, 30);
             this.NumPckAmount.TabIndex = 60;
             // 
             // CmbBxChargeType
@@ -418,7 +418,7 @@
             "Damaged Book Fee"});
             this.CmbBxChargeType.Location = new System.Drawing.Point(189, 0);
             this.CmbBxChargeType.Name = "CmbBxChargeType";
-            this.CmbBxChargeType.Size = new System.Drawing.Size(196, 33);
+            this.CmbBxChargeType.Size = new System.Drawing.Size(282, 33);
             this.CmbBxChargeType.TabIndex = 59;
             // 
             // LblAccessionNumber
@@ -645,12 +645,12 @@
             this.BtnSearchMember.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnSearchMember.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnSearchMember.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSearchMember.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnSearchMember.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.BtnSearchMember.ForeColor = System.Drawing.Color.White;
-            this.BtnSearchMember.Location = new System.Drawing.Point(387, 78);
+            this.BtnSearchMember.Location = new System.Drawing.Point(387, 83);
             this.BtnSearchMember.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSearchMember.Name = "BtnSearchMember";
-            this.BtnSearchMember.Size = new System.Drawing.Size(131, 44);
+            this.BtnSearchMember.Size = new System.Drawing.Size(131, 34);
             this.BtnSearchMember.TabIndex = 54;
             this.BtnSearchMember.Text = "Search";
             this.BtnSearchMember.UseVisualStyleBackColor = false;
@@ -663,7 +663,7 @@
             this.FlowPnlforAddCharges.Controls.Add(this.PnlforAmount);
             this.FlowPnlforAddCharges.Location = new System.Drawing.Point(38, 39);
             this.FlowPnlforAddCharges.Name = "FlowPnlforAddCharges";
-            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(466, 182);
+            this.FlowPnlforAddCharges.Size = new System.Drawing.Size(477, 182);
             this.FlowPnlforAddCharges.TabIndex = 63;
             // 
             // PnlforAccessionNumber
@@ -672,7 +672,7 @@
             this.PnlforAccessionNumber.Controls.Add(this.LblAccessionNumber);
             this.PnlforAccessionNumber.Location = new System.Drawing.Point(3, 53);
             this.PnlforAccessionNumber.Name = "PnlforAccessionNumber";
-            this.PnlforAccessionNumber.Size = new System.Drawing.Size(405, 44);
+            this.PnlforAccessionNumber.Size = new System.Drawing.Size(471, 44);
             this.PnlforAccessionNumber.TabIndex = 0;
             // 
             // PnlforChargeType
@@ -681,7 +681,7 @@
             this.PnlforChargeType.Controls.Add(this.LblChargeType);
             this.PnlforChargeType.Location = new System.Drawing.Point(3, 3);
             this.PnlforChargeType.Name = "PnlforChargeType";
-            this.PnlforChargeType.Size = new System.Drawing.Size(405, 44);
+            this.PnlforChargeType.Size = new System.Drawing.Size(471, 44);
             this.PnlforChargeType.TabIndex = 1;
             // 
             // PnlforAmount
@@ -690,7 +690,7 @@
             this.PnlforAmount.Controls.Add(this.NumPckAmount);
             this.PnlforAmount.Location = new System.Drawing.Point(3, 103);
             this.PnlforAmount.Name = "PnlforAmount";
-            this.PnlforAmount.Size = new System.Drawing.Size(405, 44);
+            this.PnlforAmount.Size = new System.Drawing.Size(471, 44);
             this.PnlforAmount.TabIndex = 2;
             // 
             // LblAmounttoPay
