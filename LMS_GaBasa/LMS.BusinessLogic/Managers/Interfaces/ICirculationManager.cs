@@ -93,7 +93,8 @@ namespace LMS.BusinessLogic.Managers.Interfaces
 
         /// <summary>
         /// Processes payment for the specified fines.
+        /// Returns list of created PaymentIDs.
         /// </summary>
-        bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
+        List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
     }
 }

@@ -777,10 +777,17 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
-        public bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
+        /// <summary>
+        /// Processes payment for the specified fines.
+        /// Inserts Payment records and updates Fine.Status to 'Paid'.
+        /// Returns list of created PaymentIDs (empty on failure).
+        /// </summary>
+        public List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
         {
+            var paymentIds = new List<int>();
+
             if (fineIds == null || fineIds.Count == 0)
-                return false;
+                return paymentIds;
 
             if (string.IsNullOrWhiteSpace(paymentMode))
                 paymentMode = "Cash";
@@ -796,49 +803,54 @@ namespace LMS.DataAccess.Repositories
                     {
                         foreach (var fineId in fineIds)
                         {
-                            // 1) Get the fine amount for this fine
+                            // Get the fine amount for this fine and ensure it's still unpaid
                             cmd.Parameters.Clear();
                             cmd.CommandText = @"SELECT FineAmount FROM [Fine] WHERE FineID = @FineID AND [Status] = 'Unpaid'";
                             AddParameter(cmd, "@FineID", DbType.Int32, fineId);
 
                             var result = cmd.ExecuteScalar();
                             if (result == null || result == DBNull.Value)
-                                continue; // skip if not found or not unpaid
+                                continue; // skip if not found or already paid/waived
 
                             decimal fineAmount = Convert.ToDecimal(result);
 
-                            // 2) Insert Payment record
+                            // Insert Payment record and get PaymentID
                             cmd.Parameters.Clear();
                             cmd.CommandText = @"
                                 INSERT INTO [Payment] (FineID, PaymentDate, AmountPaid, PaymentMode)
-                                VALUES (@FineID, @PaymentDate, @AmountPaid, @PaymentMode)";
+                                VALUES (@FineID, @PaymentDate, @AmountPaid, @PaymentMode);
+                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                             AddParameter(cmd, "@FineID", DbType.Int32, fineId);
                             AddParameter(cmd, "@PaymentDate", DbType.DateTime, paymentDate);
                             AddParameter(cmd, "@AmountPaid", DbType.Decimal, fineAmount);
                             AddParameter(cmd, "@PaymentMode", DbType.String, paymentMode);
 
-                            cmd.ExecuteNonQuery();
+                            var inserted = cmd.ExecuteScalar();
+                            int paymentId = inserted == null || inserted == DBNull.Value ? 0 : Convert.ToInt32(inserted);
+                            if (paymentId > 0)
+                            {
+                                paymentIds.Add(paymentId);
 
-                            // 3) Update Fine status to 'Paid'
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = @"
-                                UPDATE [Fine]
-                                SET [Status] = 'Paid'
-                                WHERE FineID = @FineID";
+                                // Update Fine status to 'Paid'
+                                cmd.Parameters.Clear();
+                                cmd.CommandText = @"
+                                    UPDATE [Fine]
+                                    SET [Status] = 'Paid'
+                                    WHERE FineID = @FineID";
 
-                            AddParameter(cmd, "@FineID", DbType.Int32, fineId);
-
-                            cmd.ExecuteNonQuery();
+                                AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+                                cmd.ExecuteNonQuery();
+                            }
                         }
 
                         tran.Commit();
-                        return true;
+                        return paymentIds;
                     }
                     catch
                     {
                         try { tran.Rollback(); } catch { }
-                        return false;
+                        return new List<int>();
                     }
                 }
             }

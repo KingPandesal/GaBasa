@@ -8,6 +8,7 @@ using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Circulation;
 using LMS.Model.DTOs.Fine;
+using LMS.Presentation.Popup.Fines;
 
 namespace LMS.Presentation.UserControls.Management
 {
@@ -664,10 +665,15 @@ namespace LMS.Presentation.UserControls.Management
             if (confirmResult != DialogResult.Yes)
                 return;
 
+            DateTime paymentDate = DateTime.Now;
+
             bool ok = false;
+            List<int> paymentIds = null;
             try
             {
-                ok = _circulationManager.ProcessPayment(fineIds, paymentMode, DateTime.Now);
+                // ProcessPayment now returns the list of Payment IDs
+                paymentIds = _circulationManager.ProcessPayment(fineIds, paymentMode, paymentDate);
+                ok = (paymentIds != null && paymentIds.Count > 0);
             }
             catch (Exception ex)
             {
@@ -675,9 +681,28 @@ namespace LMS.Presentation.UserControls.Management
                 MessageBox.Show($"Error processing payment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            if (ok)
+            if (ok && paymentIds != null && paymentIds.Count > 0)
             {
                 MessageBox.Show($"Payment successful!\n\nChange: ₱{change:N2}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Show receipt - pass payment IDs so receipt can display Payment ID(s)
+                try
+                {
+                    using (var receipt = new FinePaymentReceipt(
+                        _currentMember,
+                        unpaidFines,
+                        amountToPay,
+                        paymentMode,
+                        paymentDate,
+                        paymentIds))
+                    {
+                        receipt.ShowDialog(this.FindForm());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Payment recorded but failed to show receipt: {ex.Message}", "Receipt Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
                 // Refresh fines grid (paid entries are excluded)
                 LoadFinesGrid(_currentMember.MemberID);

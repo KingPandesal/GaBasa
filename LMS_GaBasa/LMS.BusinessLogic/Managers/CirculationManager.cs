@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using LMS.DataAccess.Repositories;
+using System.Linq;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.Circulation;
 using LMS.Model.DTOs.Fine;
@@ -136,10 +136,10 @@ namespace LMS.BusinessLogic.Managers
             return _circulationRepo.WaiveFines(fineIds, reason);
         }
 
-        public bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
+        public List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
         {
             if (fineIds == null || fineIds.Count == 0)
-                return false;
+                return new List<int>();
 
             return _circulationRepo.ProcessPayment(fineIds, paymentMode, paymentDate);
         }

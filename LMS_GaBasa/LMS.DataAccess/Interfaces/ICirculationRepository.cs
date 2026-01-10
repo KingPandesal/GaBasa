@@ -94,11 +94,8 @@ namespace LMS.DataAccess.Interfaces
         /// <summary>
         /// Processes payment for the specified fines.
         /// Inserts Payment records and updates Fine.Status to 'Paid'.
+        /// Returns list of created PaymentIDs (empty on failure).
         /// </summary>
-        /// <param name="fineIds">List of FineIDs to pay.</param>
-        /// <param name="paymentMode">Payment mode (Cash or Online).</param>
-        /// <param name="paymentDate">Date/time of payment.</param>
-        /// <returns>True if successful; otherwise false.</returns>
-        bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
+        List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
     }
 }
