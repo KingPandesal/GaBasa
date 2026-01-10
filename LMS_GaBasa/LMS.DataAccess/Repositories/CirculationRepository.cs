@@ -776,5 +776,72 @@ namespace LMS.DataAccess.Repositories
                 }
             }
         }
+
+        public bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
+        {
+            if (fineIds == null || fineIds.Count == 0)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(paymentMode))
+                paymentMode = "Cash";
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    try
+                    {
+                        foreach (var fineId in fineIds)
+                        {
+                            // 1) Get the fine amount for this fine
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = @"SELECT FineAmount FROM [Fine] WHERE FineID = @FineID AND [Status] = 'Unpaid'";
+                            AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+
+                            var result = cmd.ExecuteScalar();
+                            if (result == null || result == DBNull.Value)
+                                continue; // skip if not found or not unpaid
+
+                            decimal fineAmount = Convert.ToDecimal(result);
+
+                            // 2) Insert Payment record
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = @"
+                                INSERT INTO [Payment] (FineID, PaymentDate, AmountPaid, PaymentMode)
+                                VALUES (@FineID, @PaymentDate, @AmountPaid, @PaymentMode)";
+
+                            AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+                            AddParameter(cmd, "@PaymentDate", DbType.DateTime, paymentDate);
+                            AddParameter(cmd, "@AmountPaid", DbType.Decimal, fineAmount);
+                            AddParameter(cmd, "@PaymentMode", DbType.String, paymentMode);
+
+                            cmd.ExecuteNonQuery();
+
+                            // 3) Update Fine status to 'Paid'
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = @"
+                                UPDATE [Fine]
+                                SET [Status] = 'Paid'
+                                WHERE FineID = @FineID";
+
+                            AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { }
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

@@ -135,5 +135,13 @@ namespace LMS.BusinessLogic.Managers
 
             return _circulationRepo.WaiveFines(fineIds, reason);
         }
+
+        public bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
+        {
+            if (fineIds == null || fineIds.Count == 0)
+                return false;
+
+            return _circulationRepo.ProcessPayment(fineIds, paymentMode, paymentDate);
+        }
     }
 }

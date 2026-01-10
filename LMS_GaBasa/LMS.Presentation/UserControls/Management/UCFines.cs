@@ -35,6 +35,10 @@ namespace LMS.Presentation.UserControls.Management
             // Wire up waiver button
             BtnWaive.Click += BtnWaive_Click;
 
+            // Wire up payment controls
+            NumPckAmountReceived.ValueChanged += NumPckAmountReceived_ValueChanged;
+            BtnSettlePayment.Click += BtnSettlePayment_Click;
+
             // Ensure numeric control rules
             try
             {
@@ -42,6 +46,11 @@ namespace LMS.Presentation.UserControls.Management
                 NumPckAmount.DecimalPlaces = 2;
                 NumPckAmount.Maximum = 999999999;
                 NumPckAmount.ThousandsSeparator = true;
+
+                NumPckAmountReceived.Minimum = 1;
+                NumPckAmountReceived.DecimalPlaces = 2;
+                NumPckAmountReceived.Maximum = 999999999;
+                NumPckAmountReceived.ThousandsSeparator = true;
             }
             catch { }
 
@@ -52,6 +61,7 @@ namespace LMS.Presentation.UserControls.Management
             // Initialize UI state
             ClearMemberInfo();
             ClearFinesGrid();
+            ResetPaymentTab();
 
             // Initial UI: hide accession panel until Damaged Book is chosen
             PnlforAccessionNumber.Visible = false;
@@ -161,13 +171,13 @@ namespace LMS.Presentation.UserControls.Management
 
         private void LoadFinesGrid(int memberId)
         {
-            // Reload fines and exclude waived entries so waived fines disappear immediately
+            // Reload fines and exclude waived/paid entries so they disappear immediately
             DgvFines.Rows.Clear();
             var allFines = _circulationManager.GetFinesByMemberId(memberId) ?? new List<DTOFineRecord>();
 
-            // Exclude waived fines from the grid
+            // Exclude waived and paid fines from the grid (only show unpaid)
             _currentFines = allFines
-                .Where(f => !string.Equals(f.Status, "Waived", StringComparison.OrdinalIgnoreCase))
+                .Where(f => string.Equals(f.Status, "Unpaid", StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
             if (_currentFines == null || _currentFines.Count == 0)
@@ -176,6 +186,7 @@ namespace LMS.Presentation.UserControls.Management
 
                 // Also refresh member totals so LblTotalFines is accurate
                 RefreshMemberTotals(memberId);
+                ResetPaymentTab();
                 return;
             }
 
@@ -206,6 +217,9 @@ namespace LMS.Presentation.UserControls.Management
 
             // Refresh member totals so LblTotalFines updates real-time
             RefreshMemberTotals(memberId);
+
+            // Reset payment tab
+            ResetPaymentTab();
         }
 
         private void RefreshMemberTotals(int memberId)
@@ -254,6 +268,8 @@ namespace LMS.Presentation.UserControls.Management
             if (DgvFines.Columns[e.ColumnIndex].Name == "ColumnCheckBox")
             {
                 CalculateSelectedTotal();
+                UpdatePaymentAmountToPay();
+                RecalculateChange();
             }
         }
 
@@ -305,6 +321,31 @@ namespace LMS.Presentation.UserControls.Management
             }
 
             return selected;
+        }
+
+        private decimal GetSelectedTotal()
+        {
+            decimal total = 0m;
+
+            foreach (DataGridViewRow row in DgvFines.Rows)
+            {
+                if (row.IsNewRow)
+                    continue;
+
+                var checkCell = row.Cells["ColumnCheckBox"];
+                bool isChecked = checkCell.Value != null && (bool)checkCell.Value;
+
+                if (isChecked)
+                {
+                    var fine = row.Tag as DTOFineRecord;
+                    if (fine != null)
+                    {
+                        total += fine.FineAmount;
+                    }
+                }
+            }
+
+            return total;
         }
 
         #endregion
@@ -519,6 +560,142 @@ namespace LMS.Presentation.UserControls.Management
             else
             {
                 MessageBox.Show("Failed to waive fines. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
+        #region Payment tab handlers
+
+        private void ResetPaymentTab()
+        {
+            LblValueAmounttoPay.Text = "₱0.00";
+            LblValueChange.Text = "₱0.00";
+            try { NumPckAmountReceived.Value = NumPckAmountReceived.Minimum; } catch { }
+            if (CmbBxMode.Items.Count > 0 && CmbBxMode.SelectedIndex < 0)
+                CmbBxMode.SelectedIndex = 0;
+        }
+
+        private void UpdatePaymentAmountToPay()
+        {
+            decimal amountToPay = GetSelectedTotal();
+            LblValueAmounttoPay.Text = $"₱{amountToPay:N2}";
+        }
+
+        private void NumPckAmountReceived_ValueChanged(object sender, EventArgs e)
+        {
+            RecalculateChange();
+        }
+
+        private void RecalculateChange()
+        {
+            decimal amountToPay = GetSelectedTotal();
+            decimal amountReceived = 0m;
+            try { amountReceived = NumPckAmountReceived.Value; } catch { amountReceived = 0m; }
+
+            decimal change = amountReceived - amountToPay;
+            LblValueChange.Text = $"₱{change:N2}";
+
+            // Change color: red if negative, green if positive/zero
+            if (change < 0)
+                LblValueChange.ForeColor = Color.FromArgb(200, 0, 0);
+            else
+                LblValueChange.ForeColor = Color.FromArgb(0, 150, 0);
+        }
+
+        private void BtnSettlePayment_Click(object sender, EventArgs e)
+        {
+            if (_currentMember == null)
+            {
+                MessageBox.Show("Please search and select a member first.", "No Member", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get selected fines
+            var selectedFines = GetSelectedFines();
+            if (selectedFines == null || selectedFines.Count == 0)
+            {
+                MessageBox.Show("Please select at least one fine to pay.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Filter only unpaid fines
+            var unpaidFines = selectedFines.Where(f => string.Equals(f.Status, "Unpaid", StringComparison.OrdinalIgnoreCase)).ToList();
+            if (unpaidFines.Count == 0)
+            {
+                MessageBox.Show("Only unpaid fines can be paid. Please select unpaid fines.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get payment mode
+            var paymentMode = CmbBxMode.SelectedItem?.ToString() ?? CmbBxMode.Text ?? "Cash";
+            if (string.IsNullOrWhiteSpace(paymentMode))
+                paymentMode = "Cash";
+
+            // Get amount received
+            decimal amountReceived = 0m;
+            try { amountReceived = NumPckAmountReceived.Value; } catch { amountReceived = 0m; }
+
+            decimal amountToPay = unpaidFines.Sum(f => f.FineAmount);
+
+            // Validate amount received >= amount to pay
+            if (amountReceived < amountToPay)
+            {
+                MessageBox.Show($"Insufficient amount received. Amount to pay is ₱{amountToPay:N2}.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                NumPckAmountReceived.Focus();
+                return;
+            }
+
+            decimal change = amountReceived - amountToPay;
+
+            // Confirm action
+            var fineIds = unpaidFines.Select(f => f.FineID).ToList();
+
+            var confirmResult = MessageBox.Show(
+                $"Settle payment for {unpaidFines.Count} fine(s)?\n\n" +
+                $"Amount to Pay: ₱{amountToPay:N2}\n" +
+                $"Amount Received: ₱{amountReceived:N2}\n" +
+                $"Change: ₱{change:N2}\n" +
+                $"Payment Mode: {paymentMode}",
+                "Confirm Payment",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmResult != DialogResult.Yes)
+                return;
+
+            bool ok = false;
+            try
+            {
+                ok = _circulationManager.ProcessPayment(fineIds, paymentMode, DateTime.Now);
+            }
+            catch (Exception ex)
+            {
+                ok = false;
+                MessageBox.Show($"Error processing payment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (ok)
+            {
+                MessageBox.Show($"Payment successful!\n\nChange: ₱{change:N2}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh fines grid (paid entries are excluded)
+                LoadFinesGrid(_currentMember.MemberID);
+
+                // Reset payment tab
+                ResetPaymentTab();
+
+                // Refresh member info to update total fines
+                var memberInfo = _circulationManager.GetMemberByFormattedId($"MEM-{_currentMember.MemberID}");
+                if (memberInfo != null)
+                {
+                    _currentMember = memberInfo;
+                    DisplayMemberInfo(memberInfo);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to process payment. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

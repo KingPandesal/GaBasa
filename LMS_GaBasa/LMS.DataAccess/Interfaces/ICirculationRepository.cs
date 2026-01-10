@@ -90,5 +90,15 @@ namespace LMS.DataAccess.Interfaces
         /// <param name="reason">The reason for waiving.</param>
         /// <returns>True if all updated successfully; otherwise false.</returns>
         bool WaiveFines(List<int> fineIds, string reason);
+
+        /// <summary>
+        /// Processes payment for the specified fines.
+        /// Inserts Payment records and updates Fine.Status to 'Paid'.
+        /// </summary>
+        /// <param name="fineIds">List of FineIDs to pay.</param>
+        /// <param name="paymentMode">Payment mode (Cash or Online).</param>
+        /// <param name="paymentDate">Date/time of payment.</param>
+        /// <returns>True if successful; otherwise false.</returns>
+        bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
     }
 }

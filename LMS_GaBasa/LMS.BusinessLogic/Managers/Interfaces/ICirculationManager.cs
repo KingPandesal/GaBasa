@@ -90,5 +90,10 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// Waives the specified fines by updating their Status to 'Waived' and setting the Reason.
         /// </summary>
         bool WaiveFines(List<int> fineIds, string reason);
+
+        /// <summary>
+        /// Processes payment for the specified fines.
+        /// </summary>
+        bool ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate);
     }
 }
