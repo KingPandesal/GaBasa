@@ -80,5 +80,10 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="memberId">The Member ID.</param>
         /// <returns>List of fine records.</returns>
         List<DTOFineRecord> GetFinesByMemberId(int memberId);
+
+        /// <summary>
+        /// Adds a fine charge record for a member. transactionId may be 0 (meaning no related borrowing).
+        /// </summary>
+        bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status);
     }
 }

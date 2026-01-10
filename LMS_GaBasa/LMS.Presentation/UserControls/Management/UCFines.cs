@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LMS.BusinessLogic.Managers.Circulation;
+using LMS.BusinessLogic.Managers;
 using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Circulation;
@@ -29,6 +29,19 @@ namespace LMS.Presentation.UserControls.Management
             TxtSearchMember.KeyDown += TxtSearchMember_KeyDown;
             BtnSearchMember.Click += BtnSearchMember_Click;
 
+            CmbBxChargeType.SelectedIndexChanged += CmbBxChargeType_SelectedIndexChanged;
+            BtnAddToList.Click += BtnAddToList_Click;
+
+            // Ensure numeric control rules
+            try
+            {
+                NumPckAmount.Minimum = 1;
+                NumPckAmount.DecimalPlaces = 2;
+                NumPckAmount.Maximum = 999999999;
+                NumPckAmount.ThousandsSeparator = true;
+            }
+            catch { }
+
             // Wire up grid checkbox events
             DgvFines.CellValueChanged += DgvFines_CellValueChanged;
             DgvFines.CurrentCellDirtyStateChanged += DgvFines_CurrentCellDirtyStateChanged;
@@ -36,6 +49,9 @@ namespace LMS.Presentation.UserControls.Management
             // Initialize UI state
             ClearMemberInfo();
             ClearFinesGrid();
+
+            // Initial UI: hide accession panel until Damaged Book is chosen
+            PnlforAccessionNumber.Visible = false;
         }
 
         private void TxtSearchMember_KeyDown(object sender, KeyEventArgs e)
@@ -164,10 +180,10 @@ namespace LMS.Presentation.UserControls.Management
                 row.Cells["ColumnMemberName"].Value = fine.MemberName;
                 row.Cells["ColumnFineAmount"].Value = $"₱{fine.FineAmount:N2}";
                 row.Cells["ColumnFineType"].Value = fine.FineType;
-                row.Cells["ColumnDateIssued"].Value = fine.DateIssued.ToString("MMM dd, yyyy");
+                row.Cells["ColumnDateIssued"].Value = fine.DateIssued == DateTime.MinValue ? "" : fine.DateIssued.ToString("MMM dd, yyyy");
                 row.Cells["ColumnStatus"].Value = fine.Status;
 
-                // Store the FineID and FineAmount in Tag for easy access
+                // Store the DTO for quick access
                 row.Tag = fine;
 
                 rowNum++;
@@ -230,9 +246,6 @@ namespace LMS.Presentation.UserControls.Management
             LblSelectedTotal.Text = $"Selected Total: ₱{total:N2}";
         }
 
-        /// <summary>
-        /// Gets the list of selected fine records (where checkbox is checked).
-        /// </summary>
         private List<DTOFineRecord> GetSelectedFines()
         {
             var selected = new List<DTOFineRecord>();
@@ -256,6 +269,136 @@ namespace LMS.Presentation.UserControls.Management
             }
 
             return selected;
+        }
+
+        #endregion
+
+        #region Add Charges tab handlers
+
+        private void CmbBxChargeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = CmbBxChargeType.SelectedItem?.ToString() ?? CmbBxChargeType.Text ?? string.Empty;
+            bool isDamaged = selected.IndexOf("damag", StringComparison.OrdinalIgnoreCase) >= 0;
+
+            PnlforAccessionNumber.Visible = isDamaged;
+
+            // Always enforce minimum value for amount
+            try
+            {
+                if (NumPckAmount.Minimum < 1)
+                    NumPckAmount.Minimum = 1;
+            }
+            catch { }
+        }
+
+        private void BtnAddToList_Click(object sender, EventArgs e)
+        {
+            if (_currentMember == null)
+            {
+                MessageBox.Show("Please search and select a member first.", "No Member", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selected = CmbBxChargeType.SelectedItem?.ToString() ?? CmbBxChargeType.Text ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(selected))
+            {
+                MessageBox.Show("Please select a charge type.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            decimal amount = 0m;
+            try { amount = NumPckAmount.Value; } catch { amount = 0m; }
+
+            if (amount < 1m)
+            {
+                MessageBox.Show("Amount must be at least 1.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int memberId = _currentMember.MemberID;
+            int transactionId = 0;
+            string fineType;
+            string status;
+
+            if (selected.IndexOf("id card", StringComparison.OrdinalIgnoreCase) >= 0
+                || selected.IndexOf("card replacement", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                // ID Card Replacement
+                fineType = "CardReplacement"; // DB-allowed FineType
+                status = "Unpaid";
+                transactionId = 0;
+            }
+            else if (selected.IndexOf("damag", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                // Damaged Book Fee - accession required
+                var accession = TxtAccessionNumber.Text?.Trim();
+                if (string.IsNullOrWhiteSpace(accession))
+                {
+                    MessageBox.Show("Please enter the Accession Number for the damaged copy.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TxtAccessionNumber.Focus();
+                    return;
+                }
+
+                // Validate accession exists and check LoanType
+                var bookInfo = _circulationManager.GetBookByAccession(accession);
+                if (bookInfo == null)
+                {
+                    MessageBox.Show($"Accession not found: {accession}", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TxtAccessionNumber.Focus();
+                    TxtAccessionNumber.SelectAll();
+                    return;
+                }
+
+                var loanType = (bookInfo.LoanType ?? string.Empty).Trim();
+
+                // Only allow when LoanType == "Reference" (this UI is for in-library Reference damage charges)
+                if (!string.Equals(loanType, "Reference", StringComparison.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show("Invalid Action: This book is a borrowable copy.", "Invalid Action", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TxtAccessionNumber.Focus();
+                    TxtAccessionNumber.SelectAll();
+                    return;
+                }
+
+                // For Reference copies, we allow adding a damage charge WITHOUT requiring an active borrowing.
+                transactionId = 0;
+                fineType = "Damaged"; // DB-allowed FineType
+                status = "Unpaid";    // record as unpaid
+            }
+            else
+            {
+                // Generic fallback
+                fineType = selected;
+                status = "Unpaid";
+                transactionId = 0;
+            }
+
+            bool ok = false;
+            try
+            {
+                ok = _circulationManager.AddFineCharge(memberId, transactionId, amount, fineType, DateTime.Now, status);
+            }
+            catch (Exception ex)
+            {
+                ok = false;
+                MessageBox.Show($"Error adding charge: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (ok)
+            {
+                MessageBox.Show("Charge added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh fines grid
+                LoadFinesGrid(memberId);
+
+                // Reset inputs
+                try { NumPckAmount.Value = NumPckAmount.Minimum; } catch { }
+                TxtAccessionNumber.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Failed to add charge. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion

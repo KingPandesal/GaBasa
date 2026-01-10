@@ -76,5 +76,11 @@ namespace LMS.DataAccess.Interfaces
         /// <param name="memberId">The Member ID.</param>
         /// <returns>List of fine records.</returns>
         List<DTOFineRecord> GetFinesByMemberId(int memberId);
+
+        /// <summary>
+        /// Inserts a fine (charge) for a member. If transactionId &lt;= 0 the DB value for TransactionID will be NULL.
+        /// </summary>
+        /// <returns>True if inserted; otherwise false.</returns>
+        bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status);
     }
 }

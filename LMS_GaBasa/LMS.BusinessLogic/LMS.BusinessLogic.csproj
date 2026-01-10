@@ -65,7 +65,6 @@
     <Compile Include="Helpers\UserImageHelper.cs" />
     <Compile Include="Managers\CatalogManager.cs" />
     <Compile Include="Managers\CirculationManager.cs" />
-    <Compile Include="Managers\Circulation\CirculationManager.cs" />
     <Compile Include="Managers\Interfaces\ICirculationManager.cs" />
     <Compile Include="Managers\IMemberManager.cs" />
     <Compile Include="Managers\Interfaces\ICatalogManager.cs" />
