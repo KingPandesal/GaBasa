@@ -33,7 +33,6 @@ namespace LMS.BusinessLogic.Managers.Circulation
             if (memberInfo == null)
                 return null;
 
-            // Populate borrowing statistics
             memberInfo.CurrentBorrowedCount = _circulationRepo.GetCurrentBorrowedCount(memberId.Value);
             memberInfo.OverdueCount = _circulationRepo.GetOverdueCount(memberId.Value);
             memberInfo.TotalUnpaidFines = _circulationRepo.GetTotalUnpaidFines(memberId.Value);
@@ -65,9 +64,6 @@ namespace LMS.BusinessLogic.Managers.Circulation
             if (book == null)
                 return null;
 
-            // Ensure Authors contains only a clean comma-separated list or "N/A"
-            // Repository returns authors filtered by Role='Author' where possible,
-            // but normalize here to be safe.
             if (string.IsNullOrWhiteSpace(book.Authors))
             {
                 book.Authors = "N/A";
@@ -105,6 +101,13 @@ namespace LMS.BusinessLogic.Managers.Circulation
                 return false;
 
             return _circulationRepo.CompleteReturnGood(transactionId, copyId, memberId, returnDate, fineAmount);
+        }
+
+        public bool CompleteReturnWithCondition(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount, string condition)
+        {
+            if (transactionId <= 0 || copyId <= 0 || memberId <= 0) return false;
+            if (string.IsNullOrWhiteSpace(condition)) condition = "Damaged";
+            return _circulationRepo.CompleteReturnWithCondition(transactionId, copyId, memberId, returnDate, fineAmount, condition);
         }
     }
 }

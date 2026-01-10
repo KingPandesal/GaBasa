@@ -49,15 +49,15 @@
             this.LblMemberType = new System.Windows.Forms.Label();
             this.LblName = new System.Windows.Forms.Label();
             this.PnlDesign = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.LblValueFine = new System.Windows.Forms.Label();
+            this.LblValueCondition = new System.Windows.Forms.Label();
+            this.LblFine = new System.Windows.Forms.Label();
+            this.LblCondition = new System.Windows.Forms.Label();
             this.LblUM = new System.Windows.Forms.Label();
             this.LblReturnReceipt = new System.Windows.Forms.Label();
             this.LblTagumCity = new System.Windows.Forms.Label();
             this.PicBxLogo = new System.Windows.Forms.PictureBox();
             this.LblMessage = new System.Windows.Forms.Label();
-            this.LblCondition = new System.Windows.Forms.Label();
-            this.LblValueCondition = new System.Windows.Forms.Label();
-            this.LblFine = new System.Windows.Forms.Label();
-            this.LblValueFine = new System.Windows.Forms.Label();
             this.PnlDesign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxLogo)).BeginInit();
             this.SuspendLayout();
@@ -310,6 +310,50 @@
             this.PnlDesign.Size = new System.Drawing.Size(559, 280);
             this.PnlDesign.TabIndex = 65;
             // 
+            // LblValueFine
+            // 
+            this.LblValueFine.AutoSize = true;
+            this.LblValueFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblValueFine.ForeColor = System.Drawing.Color.Black;
+            this.LblValueFine.Location = new System.Drawing.Point(365, 231);
+            this.LblValueFine.Name = "LblValueFine";
+            this.LblValueFine.Size = new System.Drawing.Size(58, 28);
+            this.LblValueFine.TabIndex = 10;
+            this.LblValueFine.Text = "value";
+            // 
+            // LblValueCondition
+            // 
+            this.LblValueCondition.AutoSize = true;
+            this.LblValueCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblValueCondition.ForeColor = System.Drawing.Color.Black;
+            this.LblValueCondition.Location = new System.Drawing.Point(416, 203);
+            this.LblValueCondition.Name = "LblValueCondition";
+            this.LblValueCondition.Size = new System.Drawing.Size(58, 28);
+            this.LblValueCondition.TabIndex = 10;
+            this.LblValueCondition.Text = "value";
+            // 
+            // LblFine
+            // 
+            this.LblFine.AutoSize = true;
+            this.LblFine.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblFine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblFine.Location = new System.Drawing.Point(307, 231);
+            this.LblFine.Name = "LblFine";
+            this.LblFine.Size = new System.Drawing.Size(52, 28);
+            this.LblFine.TabIndex = 8;
+            this.LblFine.Text = "Fine:";
+            // 
+            // LblCondition
+            // 
+            this.LblCondition.AutoSize = true;
+            this.LblCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblCondition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblCondition.Location = new System.Drawing.Point(307, 203);
+            this.LblCondition.Name = "LblCondition";
+            this.LblCondition.Size = new System.Drawing.Size(103, 28);
+            this.LblCondition.TabIndex = 8;
+            this.LblCondition.Text = "Condition:";
+            // 
             // LblUM
             // 
             this.LblUM.AutoSize = true;
@@ -366,50 +410,6 @@
             this.LblMessage.Text = "This receipt serves as official documentation of the book return transaction. Any" +
     " applicable fines or charges have been assessed in accordance with library polic" +
     "ies.";
-            // 
-            // LblCondition
-            // 
-            this.LblCondition.AutoSize = true;
-            this.LblCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblCondition.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblCondition.Location = new System.Drawing.Point(307, 203);
-            this.LblCondition.Name = "LblCondition";
-            this.LblCondition.Size = new System.Drawing.Size(103, 28);
-            this.LblCondition.TabIndex = 8;
-            this.LblCondition.Text = "Condition:";
-            // 
-            // LblValueCondition
-            // 
-            this.LblValueCondition.AutoSize = true;
-            this.LblValueCondition.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblValueCondition.ForeColor = System.Drawing.Color.Black;
-            this.LblValueCondition.Location = new System.Drawing.Point(416, 203);
-            this.LblValueCondition.Name = "LblValueCondition";
-            this.LblValueCondition.Size = new System.Drawing.Size(58, 28);
-            this.LblValueCondition.TabIndex = 10;
-            this.LblValueCondition.Text = "value";
-            // 
-            // LblFine
-            // 
-            this.LblFine.AutoSize = true;
-            this.LblFine.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblFine.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblFine.Location = new System.Drawing.Point(307, 231);
-            this.LblFine.Name = "LblFine";
-            this.LblFine.Size = new System.Drawing.Size(52, 28);
-            this.LblFine.TabIndex = 8;
-            this.LblFine.Text = "Fine:";
-            // 
-            // LblValueFine
-            // 
-            this.LblValueFine.AutoSize = true;
-            this.LblValueFine.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.LblValueFine.ForeColor = System.Drawing.Color.Black;
-            this.LblValueFine.Location = new System.Drawing.Point(416, 231);
-            this.LblValueFine.Name = "LblValueFine";
-            this.LblValueFine.Size = new System.Drawing.Size(58, 28);
-            this.LblValueFine.TabIndex = 10;
-            this.LblValueFine.Text = "value";
             // 
             // ReturnReceiptForm
             // 

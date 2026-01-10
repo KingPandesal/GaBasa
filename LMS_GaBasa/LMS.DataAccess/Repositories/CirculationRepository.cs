@@ -427,6 +427,114 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        /// <summary>
+        /// Handles returns where condition is Lost or Damaged.
+        /// Sets BorrowingTransaction.Status = 'Returned', ReturnDate = returnDate.
+        /// Sets BookCopy.Status = condition (normalized).
+        /// Inserts Fine record when fineAmount &gt; 0 with FineType = condition.
+        /// </summary>
+        public bool CompleteReturnWithCondition(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount, string condition)
+        {
+            if (transactionId <= 0 || copyId <= 0 || memberId <= 0)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(condition))
+                condition = "Damaged";
+
+            // Normalize condition to allowed DB values
+            string normalizedCondition;
+            var c = condition.Trim().ToLowerInvariant();
+            if (c.StartsWith("lost"))
+                normalizedCondition = "Lost";
+            else if (c.StartsWith("damag")) // matches "Damage" or "Damaged"
+                normalizedCondition = "Damaged";
+            else
+                normalizedCondition = CultureInfoInvariantTitle(condition);
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    try
+                    {
+                        // 1) Update BorrowingTransaction
+                        cmd.CommandText = @"
+                            UPDATE [BorrowingTransaction]
+                            SET [Status] = 'Returned', ReturnDate = @ReturnDate
+                            WHERE TransactionID = @TransactionID";
+
+                        AddParameter(cmd, "@ReturnDate", DbType.DateTime, returnDate);
+                        AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+
+                        int rows = cmd.ExecuteNonQuery();
+                        if (rows == 0)
+                        {
+                            tran.Rollback();
+                            return false;
+                        }
+
+                        // 2) Update BookCopy: set to Lost/Damaged
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"
+                            UPDATE [BookCopy]
+                            SET [Status] = @Status
+                            WHERE CopyID = @CopyID";
+
+                        AddParameter(cmd, "@Status", DbType.String, normalizedCondition);
+                        AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                        rows = cmd.ExecuteNonQuery();
+                        if (rows == 0)
+                        {
+                            tran.Rollback();
+                            return false;
+                        }
+
+                        // 3) Insert Fine record if any
+                        if (fineAmount > 0)
+                        {
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = @"
+                                INSERT INTO [Fine] (MemberID, TransactionID, FineAmount, FineType, DateIssued, [Status])
+                                VALUES (@MemberID, @TransactionID, @FineAmount, @FineType, @DateIssued, 'Unpaid')";
+
+                            AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                            AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+                            AddParameter(cmd, "@FineAmount", DbType.Decimal, fineAmount);
+                            AddParameter(cmd, "@FineType", DbType.String, normalizedCondition);
+                            AddParameter(cmd, "@DateIssued", DbType.DateTime, returnDate);
+
+                            rows = cmd.ExecuteNonQuery();
+                            if (rows == 0)
+                            {
+                                tran.Rollback();
+                                return false;
+                            }
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { }
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Helper to title-case unknown condition safely (no external globalization dependency here)
+        private string CultureInfoInvariantTitle(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "Damaged";
+            input = input.Trim().ToLowerInvariant();
+            return char.ToUpperInvariant(input[0]) + input.Substring(1);
+        }
+
         private string GetAuthorsForBook(int bookId)
         {
             try

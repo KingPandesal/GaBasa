@@ -65,7 +65,8 @@ namespace LMS.Presentation.UserControls.Management
             NumPckReturnReplacementCost.ValueChanged += NumPckReturnReplacementCost_ValueChanged;
 
             // Ensure numeric control has sane defaults for penalty entry
-            NumPckReturnReplacementCost.Minimum = 0;
+            // Require minimum of 1 (no 0)
+            NumPckReturnReplacementCost.Minimum = 1;
             NumPckReturnReplacementCost.DecimalPlaces = 2;
             NumPckReturnReplacementCost.ThousandsSeparator = true;
             // Limit to maximum of 10 digits (9,999,999,999)
@@ -844,16 +845,14 @@ namespace LMS.Presentation.UserControls.Management
             // Recalculate and display fine and total
             RecalculateReturnTotals();
 
-            // Enable confirm only for "Good" condition (we're implementing Good first)
+            // Enable confirm for actionable conditions: Good, Damage/Damaged, Lost
             var cond = CmbBxReturnCondition.Text?.Trim();
-            if (string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase))
-            {
-                BtnConfirmReturn.Enabled = true;
-            }
-            else
-            {
-                BtnConfirmReturn.Enabled = false;
-            }
+            bool actionable = string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase)
+                              || string.Equals(cond, "Damage", StringComparison.OrdinalIgnoreCase)
+                              || string.Equals(cond, "Damaged", StringComparison.OrdinalIgnoreCase)
+                              || string.Equals(cond, "Lost", StringComparison.OrdinalIgnoreCase);
+
+            BtnConfirmReturn.Enabled = actionable;
         }
 
         private void ClearReturnResults()
@@ -873,7 +872,15 @@ namespace LMS.Presentation.UserControls.Management
             LblReturnBorrower.ForeColor = Color.Black;
 
             // Reset penalty UI
-            NumPckReturnReplacementCost.Value = 0;
+            // set to Minimum (1) to respect new requirement (no zero)
+            try
+            {
+                NumPckReturnReplacementCost.Value = NumPckReturnReplacementCost.Minimum;
+            }
+            catch
+            {
+                // ignore if designer not yet initialized
+            }
             UpdatePenaltyPanelVisibility();
             LblReturnTotalFine.Text = "Total Fine: ₱0.00";
         }
@@ -891,7 +898,12 @@ namespace LMS.Presentation.UserControls.Management
             if (_currentReturn != null)
             {
                 var cond = CmbBxReturnCondition.Text?.Trim();
-                BtnConfirmReturn.Enabled = string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase);
+                bool actionable = string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase)
+                                  || string.Equals(cond, "Damage", StringComparison.OrdinalIgnoreCase)
+                                  || string.Equals(cond, "Damaged", StringComparison.OrdinalIgnoreCase)
+                                  || string.Equals(cond, "Lost", StringComparison.OrdinalIgnoreCase);
+
+                BtnConfirmReturn.Enabled = actionable;
             }
         }
 
@@ -910,6 +922,20 @@ namespace LMS.Presentation.UserControls.Management
 
             PnlforReturnPenaltyFee.Visible = showPenalty;
             NumPckReturnReplacementCost.Enabled = showPenalty;
+
+            // If enabling penalty, ensure value respects new minimum (1)
+            if (showPenalty)
+            {
+                try
+                {
+                    if (NumPckReturnReplacementCost.Value < NumPckReturnReplacementCost.Minimum)
+                        NumPckReturnReplacementCost.Value = NumPckReturnReplacementCost.Minimum;
+                }
+                catch
+                {
+                    // ignore control errors
+                }
+            }
 
             // If penalty is required, make it obvious to the user by focusing the control
             if (showPenalty && _currentReturn != null)
@@ -967,26 +993,59 @@ namespace LMS.Presentation.UserControls.Management
                 }
 
                 var cond = CmbBxReturnCondition.Text?.Trim();
-                if (!string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(cond))
                 {
-                    MessageBox.Show("Only the 'Good' condition is handled by this action. Use the appropriate workflow for other conditions.", "Not Implemented", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Please select a return condition.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                decimal fine = _currentReturn.FineAmount;
-                // Include time in the return date (use current local date and time)
+                // compute penalty (replacement cost) only when penalty panel is visible
+                decimal penalty = 0m;
+                if (PnlforReturnPenaltyFee.Visible)
+                    penalty = NumPckReturnReplacementCost.Value;
+
+                // overdue fine (from manager-provided DTO)
+                decimal overdueFine = _currentReturn?.FineAmount ?? 0m;
+
+                // total fine to be recorded (overdue + replacement/penalty)
+                decimal totalFine = overdueFine + penalty;
+
                 DateTime returnDate = DateTime.Now;
 
-                // Store returnInfo before clearing so we can show receipt
+                // store for receipt before clearing
                 var returnInfoForReceipt = _currentReturn;
                 int transactionId = _currentReturn.TransactionID;
 
-                bool success = _circulationManager.CompleteReturnGood(
-                    _currentReturn.TransactionID,
-                    _currentReturn.CopyID,
-                    _currentReturn.MemberID,
-                    returnDate,
-                    fine);
+                bool success = false;
+
+                if (string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase))
+                {
+                    // existing good flow
+                    success = _circulationManager.CompleteReturnGood(
+                        _currentReturn.TransactionID,
+                        _currentReturn.CopyID,
+                        _currentReturn.MemberID,
+                        returnDate,
+                        overdueFine);
+                }
+                else if (string.Equals(cond, "Damage", StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(cond, "Damaged", StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(cond, "Lost", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Lost/Damaged flow: record BookCopy status accordingly and create fine if totalFine > 0
+                    success = _circulationManager.CompleteReturnWithCondition(
+                        _currentReturn.TransactionID,
+                        _currentReturn.CopyID,
+                        _currentReturn.MemberID,
+                        returnDate,
+                        totalFine,
+                        cond);
+                }
+                else
+                {
+                    MessageBox.Show("Condition not supported by this workflow.", "Not Implemented", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
                 if (success)
                 {
@@ -994,30 +1053,30 @@ namespace LMS.Presentation.UserControls.Management
                     LblReturnStatus.Text = "Status: Returned";
                     LblReturnStatus.ForeColor = Color.FromArgb(0, 200, 0);
                     LblReturnReturnDate.Text = $"Return Date: {returnDate:MMMM d, yyyy h:mm tt}";
-                    LblReturnFine.Text = $"Fine: ₱{fine:N2}";
-                    LblReturnTotalFine.Text = $"Total Fine: ₱{fine:N2}";
+                    LblReturnFine.Text = $"Fine: ₱{overdueFine:N2}";
+                    LblReturnTotalFine.Text = $"Total Fine: ₱{totalFine:N2}";
                     BtnConfirmReturn.Enabled = false;
 
-                    if (fine > 0m)
+                    if (totalFine > 0m)
                     {
-                        MessageBox.Show($"Return processed. Fine recorded (Unpaid): ₱{fine:N2}", "Returned with Fine", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Return processed. Fine recorded (Unpaid): ₱{totalFine:N2}", "Returned with Fine", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         MessageBox.Show("Return processed successfully.", "Returned", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
-                    // Clear the active return since it's completed
+                    // Clear active return
                     _currentReturn = null;
 
-                    // Show return receipt
+                    // Show return receipt (includes condition and total fine)
                     try
                     {
                         using (var receipt = new LMS.Presentation.Popup.Circulation.ReturnReceiptForm(
                             transactionId,
                             returnInfoForReceipt,
                             returnDate,
-                            fine,
+                            totalFine,
                             cond))
                         {
                             receipt.ShowDialog(this);
@@ -1025,7 +1084,6 @@ namespace LMS.Presentation.UserControls.Management
                     }
                     catch (Exception ex)
                     {
-                        // Don't fail the return if receipt fails — surface a friendly message
                         MessageBox.Show($"Return recorded but failed to show receipt: {ex.Message}", "Receipt Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }

@@ -44,14 +44,28 @@ namespace LMS.DataAccess.Interfaces
         /// <summary>
         /// Completes a return transaction for condition "Good".
         /// Updates BorrowingTransaction (Status=Returned, ReturnDate), BookCopy (Status=Available),
-        /// and optionally creates a Fine record if there's an overdue fine.
+        /// and optionally creates a Fine record if there's an overdue amount.
         /// </summary>
         /// <param name="transactionId">The BorrowingTransaction ID.</param>
         /// <param name="copyId">The BookCopy ID.</param>
         /// <param name="memberId">The Member ID.</param>
-        /// <param name="returnDate">The return date.</param>
+        /// <param name="returnDate">The return date/time.</param>
         /// <param name="fineAmount">The overdue fine amount (0 if no fine).</param>
         /// <returns>True if successful; otherwise false.</returns>
         bool CompleteReturnGood(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount);
+
+        /// <summary>
+        /// Completes a return transaction for non-good conditions (e.g., "Lost", "Damaged").
+        /// Updates BorrowingTransaction (Status=Returned, ReturnDate), BookCopy (Status = condition),
+        /// and if fineAmount &gt; 0 inserts a Fine record with FineType set to the condition.
+        /// </summary>
+        /// <param name="transactionId">The BorrowingTransaction ID.</param>
+        /// <param name="copyId">The BookCopy ID.</param>
+        /// <param name="memberId">The Member ID.</param>
+        /// <param name="returnDate">The return date/time.</param>
+        /// <param name="fineAmount">Total fine/penalty to record (0 if none).</param>
+        /// <param name="condition">Condition string: "Lost" or "Damaged" (case-insensitive).</param>
+        /// <returns>True if successful; otherwise false.</returns>
+        bool CompleteReturnWithCondition(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount, string condition);
     }
 }

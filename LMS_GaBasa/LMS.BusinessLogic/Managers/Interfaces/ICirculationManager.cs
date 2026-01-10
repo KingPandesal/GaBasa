@@ -59,5 +59,17 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="fineAmount">The overdue fine amount (0 if no fine).</param>
         /// <returns>True if successful; otherwise false.</returns>
         bool CompleteReturnGood(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount);
+
+        /// <summary>
+        /// Completes a return when condition is Lost/Damaged.
+        /// </summary>
+        /// <param name="transactionId">The BorrowingTransaction ID.</param>
+        /// <param name="copyId">The BookCopy ID.</param>
+        /// <param name="memberId">The Member ID.</param>
+        /// <param name="returnDate">The return date.</param>
+        /// <param name="fineAmount">The overdue fine amount (0 if no fine).</param>
+        /// <param name="condition">The condition of the item being returned (Lost/Damaged).</param>
+        /// <returns>True if successful; otherwise false.</returns>
+        bool CompleteReturnWithCondition(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount, string condition);
     }
 }
