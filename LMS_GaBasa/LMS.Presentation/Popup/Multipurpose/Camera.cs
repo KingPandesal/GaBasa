@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using AForge.Video;
@@ -128,6 +129,8 @@ namespace LMS.Presentation.Popup.Multipurpose
             // If you added a VideoSourcePlayer named VideoPlayer in Designer, set its VideoSource
             if (VideoPlayer != null)
             {
+                // attach overlay paint handler so user sees guide box
+                VideoPlayer.Paint += VideoPlayer_Paint;
                 VideoPlayer.VideoSource = _videoDevice;
                 VideoPlayer.Start();
             }
@@ -148,6 +151,9 @@ namespace LMS.Presentation.Popup.Multipurpose
 
                 if (VideoPlayer != null)
                 {
+                    // detach overlay paint handler
+                    VideoPlayer.Paint -= VideoPlayer_Paint;
+
                     if (VideoPlayer.VideoSource != null)
                     {
                         VideoPlayer.SignalToStop();
@@ -203,7 +209,7 @@ namespace LMS.Presentation.Popup.Multipurpose
                     var text = result.Text.Trim();
 
                     // Validate: our accession numbers follow pattern like BK-2026-0001, TH-2026-0001, etc.
-                    // Accept if it looks like a valid accession or is at least 5 chars
+                    // Accept if it looks like a valid accession or is at least 3 chars
                     if (text.Length < 3)
                         return; // too short, likely noise
 
@@ -249,6 +255,63 @@ namespace LMS.Presentation.Popup.Multipurpose
             int x = (width - w) / 2;
             int y = (height - h) / 2;
             return new Rectangle(x, y, Math.Max(1, w), Math.Max(1, h));
+        }
+
+        private void VideoPlayer_Paint(object sender, PaintEventArgs e)
+        {
+            // Draw a semi-transparent overlay with a clear/outlined central guide box.
+            try
+            {
+                var ctrl = sender as Control;
+                if (ctrl == null) return;
+
+                var g = e.Graphics;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                int w = ctrl.ClientSize.Width;
+                int h = ctrl.ClientSize.Height;
+
+                // Guide box is center 70% of smaller dimension by 35% height proportionally
+                // We'll reuse GetCentralCrop style: use ratio 0.7
+                Rectangle guide = GetCentralCrop(w, h, 0.7f);
+
+                // dim outside area
+                using (var dimBrush = new SolidBrush(Color.FromArgb(120, 0, 0, 0)))
+                {
+                    // Top
+                    g.FillRectangle(dimBrush, 0, 0, w, guide.Top);
+                    // Bottom
+                    g.FillRectangle(dimBrush, 0, guide.Bottom, w, h - guide.Bottom);
+                    // Left
+                    g.FillRectangle(dimBrush, 0, guide.Top, guide.Left, guide.Height);
+                    // Right
+                    g.FillRectangle(dimBrush, guide.Right, guide.Top, w - guide.Right, guide.Height);
+                }
+
+                // draw guide border
+                using (var pen = new Pen(Color.FromArgb(220, 175, 37, 50), 3f))
+                {
+                    g.DrawRectangle(pen, guide);
+
+                    // crosshair lines to help alignment
+                    g.DrawLine(pen, guide.Left, guide.Top + guide.Height / 2, guide.Right, guide.Top + guide.Height / 2);
+                    g.DrawLine(pen, guide.Left + guide.Width / 2, guide.Top, guide.Left + guide.Width / 2, guide.Bottom);
+                }
+
+                // instruction text
+                string instr = "Align barcode inside the box";
+                using (var font = new Font("Segoe UI", 10f, FontStyle.Bold, GraphicsUnit.Pixel))
+                using (var brush = new SolidBrush(Color.FromArgb(230, 255, 255, 255)))
+                using (var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                {
+                    RectangleF textRect = new RectangleF(guide.Left, Math.Max(2, guide.Top - 28), guide.Width, 24);
+                    g.DrawString(instr, font, brush, textRect, sf);
+                }
+            }
+            catch
+            {
+                // ignore paint errors to avoid crashing UI
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
