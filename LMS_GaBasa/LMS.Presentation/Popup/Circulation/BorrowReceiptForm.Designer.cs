@@ -85,7 +85,7 @@
             this.LblTagumCity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.LblTagumCity.Location = new System.Drawing.Point(280, 88);
             this.LblTagumCity.Name = "LblTagumCity";
-            this.LblTagumCity.Size = new System.Drawing.Size(123, 28);
+            this.LblTagumCity.Size = new System.Drawing.Size(107, 20);
             this.LblTagumCity.TabIndex = 2;
             this.LblTagumCity.Text = "TAGUM CITY";
             // 
@@ -299,7 +299,7 @@
             this.LblMessage.AutoSize = true;
             this.LblMessage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.LblMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblMessage.Location = new System.Drawing.Point(48, 475);
+            this.LblMessage.Location = new System.Drawing.Point(33, 533);
             this.LblMessage.Name = "LblMessage";
             this.LblMessage.Size = new System.Drawing.Size(355, 21);
             this.LblMessage.TabIndex = 8;
@@ -310,7 +310,7 @@
             this.Lbl4.AutoSize = true;
             this.Lbl4.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Lbl4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.Lbl4.Location = new System.Drawing.Point(37, 522);
+            this.Lbl4.Location = new System.Drawing.Point(52, 487);
             this.Lbl4.Name = "Lbl4";
             this.Lbl4.Size = new System.Drawing.Size(129, 28);
             this.Lbl4.TabIndex = 8;
@@ -321,7 +321,7 @@
             // 
             this.PnlDesign2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.PnlDesign2.ForeColor = System.Drawing.Color.Blue;
-            this.PnlDesign2.Location = new System.Drawing.Point(171, 560);
+            this.PnlDesign2.Location = new System.Drawing.Point(186, 517);
             this.PnlDesign2.Name = "PnlDesign2";
             this.PnlDesign2.Size = new System.Drawing.Size(200, 1);
             this.PnlDesign2.TabIndex = 14;
@@ -360,22 +360,21 @@
             // 
             // BorrowReceiptForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(637, 644);
             this.Controls.Add(this.PnlDesign2);
             this.Controls.Add(this.PnlDesign);
             this.Controls.Add(this.BtnPreviewReceipt);
-            this.Controls.Add(this.Lbl4);
             this.Controls.Add(this.BtnPrintReceipt);
             this.Controls.Add(this.LblMessage);
+            this.Controls.Add(this.Lbl4);
             this.Controls.Add(this.PicBxLogo);
             this.Controls.Add(this.LblTransactionID);
             this.Controls.Add(this.LblUM);
             this.Controls.Add(this.LblBorrowReceipt);
             this.Controls.Add(this.LblTagumCity);
-            this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
