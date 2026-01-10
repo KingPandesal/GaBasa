@@ -1,5 +1,5 @@
-﻿using LMS.Model.DTOs.Circulation;
-using System;
+﻿using System;
+using LMS.Model.DTOs.Circulation;
 
 namespace LMS.DataAccess.Interfaces
 {
@@ -40,5 +40,18 @@ namespace LMS.DataAccess.Interfaces
         /// Gets an active (not-yet-returned) borrowing transaction by accession number.
         /// </summary>
         DTOReturnInfo GetActiveBorrowingByAccession(string accessionNumber);
+
+        /// <summary>
+        /// Completes a return transaction for condition "Good".
+        /// Updates BorrowingTransaction (Status=Returned, ReturnDate), BookCopy (Status=Available),
+        /// and optionally creates a Fine record if there's an overdue fine.
+        /// </summary>
+        /// <param name="transactionId">The BorrowingTransaction ID.</param>
+        /// <param name="copyId">The BookCopy ID.</param>
+        /// <param name="memberId">The Member ID.</param>
+        /// <param name="returnDate">The return date.</param>
+        /// <param name="fineAmount">The overdue fine amount (0 if no fine).</param>
+        /// <returns>True if successful; otherwise false.</returns>
+        bool CompleteReturnGood(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount);
     }
 }

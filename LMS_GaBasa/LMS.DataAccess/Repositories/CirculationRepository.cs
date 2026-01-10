@@ -348,6 +348,85 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        public bool CompleteReturnGood(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount)
+        {
+            if (transactionId <= 0 || copyId <= 0 || memberId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.Transaction = tran;
+                    try
+                    {
+                        // 1. Update BorrowingTransaction: Status = 'Returned', ReturnDate = returnDate
+                        cmd.CommandText = @"
+                            UPDATE [BorrowingTransaction]
+                            SET [Status] = 'Returned', ReturnDate = @ReturnDate
+                            WHERE TransactionID = @TransactionID";
+
+                        AddParameter(cmd, "@ReturnDate", DbType.DateTime, returnDate);
+                        AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected == 0)
+                        {
+                            tran.Rollback();
+                            return false;
+                        }
+
+                        // 2. Update BookCopy: Status = 'Available'
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = @"
+                            UPDATE [BookCopy]
+                            SET [Status] = 'Available'
+                            WHERE CopyID = @CopyID";
+
+                        AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                        rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected == 0)
+                        {
+                            tran.Rollback();
+                            return false;
+                        }
+
+                        // 3. If there's a fine (overdue), insert into Fine table
+                        if (fineAmount > 0)
+                        {
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = @"
+                                INSERT INTO [Fine] (MemberID, TransactionID, FineAmount, FineType, DateIssued, [Status])
+                                VALUES (@MemberID, @TransactionID, @FineAmount, 'Overdue', @DateIssued, 'Unpaid')";
+
+                            AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                            AddParameter(cmd, "@TransactionID", DbType.Int32, transactionId);
+                            AddParameter(cmd, "@FineAmount", DbType.Decimal, fineAmount);
+                            AddParameter(cmd, "@DateIssued", DbType.DateTime, returnDate);
+
+                            rowsAffected = cmd.ExecuteNonQuery();
+                            if (rowsAffected == 0)
+                            {
+                                tran.Rollback();
+                                return false;
+                            }
+                        }
+
+                        tran.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        try { tran.Rollback(); } catch { }
+                        return false;
+                    }
+                }
+            }
+        }
+
         private string GetAuthorsForBook(int bookId)
         {
             try

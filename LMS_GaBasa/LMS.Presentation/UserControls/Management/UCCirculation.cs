@@ -56,6 +56,10 @@ namespace LMS.Presentation.UserControls.Management
             BtnReturnScanAccessionNumber.Click += BtnReturnScanAccessionNumber_Click;
             BtnCancelReturn.Click += BtnCancelReturn_Click;
 
+            // Wire confirm return button (now implemented)
+            BtnConfirmReturn.Click -= BtnConfirmReturn_Click;
+            BtnConfirmReturn.Click += BtnConfirmReturn_Click;
+
             // NEW: wire condition and penalty inputs (designer has these controls)
             CmbBxReturnCondition.SelectedIndexChanged += CmbBxReturnCondition_SelectedIndexChanged;
             NumPckReturnReplacementCost.ValueChanged += NumPckReturnReplacementCost_ValueChanged;
@@ -840,8 +844,16 @@ namespace LMS.Presentation.UserControls.Management
             // Recalculate and display fine and total
             RecalculateReturnTotals();
 
-            // Keep ConfirmReturn disabled per your instruction (don't make it work yet)
-            BtnConfirmReturn.Enabled = false;
+            // Enable confirm only for "Good" condition (we're implementing Good first)
+            var cond = CmbBxReturnCondition.Text?.Trim();
+            if (string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase))
+            {
+                BtnConfirmReturn.Enabled = true;
+            }
+            else
+            {
+                BtnConfirmReturn.Enabled = false;
+            }
         }
 
         private void ClearReturnResults()
@@ -874,6 +886,13 @@ namespace LMS.Presentation.UserControls.Management
         {
             UpdatePenaltyPanelVisibility();
             RecalculateReturnTotals();
+
+            // When user switches condition while a return is loaded, re-evaluate enable state
+            if (_currentReturn != null)
+            {
+                var cond = CmbBxReturnCondition.Text?.Trim();
+                BtnConfirmReturn.Enabled = string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         private void NumPckReturnReplacementCost_ValueChanged(object sender, EventArgs e)
@@ -929,6 +948,73 @@ namespace LMS.Presentation.UserControls.Management
             // Update displayed labels
             LblReturnFine.Text = $"Fine: ₱{fine:N2}";
             LblReturnTotalFine.Text = $"Total Fine: ₱{(fine + penalty):N2}";
+        }
+
+        /// <summary>
+        /// Confirm return button handler — implements "Good" condition behavior:
+        /// - Marks transaction Returned and sets ReturnDate
+        /// - Marks BookCopy Available
+        /// - If overdue fine exists, inserts Fine row (handled in repository)
+        /// </summary>
+        private void BtnConfirmReturn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentReturn == null)
+                {
+                    MessageBox.Show("Please lookup a borrowing transaction first.", "No Transaction", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var cond = CmbBxReturnCondition.Text?.Trim();
+                if (!string.Equals(cond, "Good", StringComparison.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show("Only the 'Good' condition is handled by this action. Use the appropriate workflow for other conditions.", "Not Implemented", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                decimal fine = _currentReturn.FineAmount;
+                // Include time in the return date (use current local date and time)
+                DateTime returnDate = DateTime.Now;
+
+                bool success = _circulationManager.CompleteReturnGood(
+                    _currentReturn.TransactionID,
+                    _currentReturn.CopyID,
+                    _currentReturn.MemberID,
+                    returnDate,
+                    fine);
+
+                if (success)
+                {
+                    // Update UI to reflect return (show date + time)
+                    LblReturnStatus.Text = "Status: Returned";
+                    LblReturnStatus.ForeColor = Color.FromArgb(0, 200, 0);
+                    LblReturnReturnDate.Text = $"Return Date: {returnDate:MMMM d, yyyy h:mm tt}";
+                    LblReturnFine.Text = $"Fine: ₱{fine:N2}";
+                    LblReturnTotalFine.Text = $"Total Fine: ₱{fine:N2}";
+                    BtnConfirmReturn.Enabled = false;
+
+                    if (fine > 0m)
+                    {
+                        MessageBox.Show($"Return processed. Fine recorded (Unpaid): ₱{fine:N2}", "Returned with Fine", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Return processed successfully.", "Returned", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    // Clear the active return since it's completed
+                    _currentReturn = null;
+                }
+                else
+                {
+                    MessageBox.Show("Failed to process the return. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error processing return: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LblReturnCondition_Click(object sender, EventArgs e)

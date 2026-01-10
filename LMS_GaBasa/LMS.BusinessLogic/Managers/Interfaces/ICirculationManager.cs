@@ -1,5 +1,5 @@
-using LMS.Model.DTOs.Circulation;
 using System;
+using LMS.Model.DTOs.Circulation;
 
 namespace LMS.BusinessLogic.Managers.Interfaces
 {
@@ -41,10 +41,23 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate);
 
         /// <summary>
-        /// NEW: Lookup active borrowing by accession (for returns)
+        /// Lookup active borrowing by accession (for returns).
         /// </summary>
         /// <param name="accessionNumber">Accession number of the book/copy.</param>
         /// <returns>Active borrowing information if found; otherwise null.</returns>
         DTOReturnInfo GetActiveBorrowingByAccession(string accessionNumber);
+
+        /// <summary>
+        /// Completes a return with condition "Good".
+        /// Updates transaction status to Returned, sets return date, marks copy as Available,
+        /// and creates a Fine record if there's an overdue amount.
+        /// </summary>
+        /// <param name="transactionId">The BorrowingTransaction ID.</param>
+        /// <param name="copyId">The BookCopy ID.</param>
+        /// <param name="memberId">The Member ID.</param>
+        /// <param name="returnDate">The return date.</param>
+        /// <param name="fineAmount">The overdue fine amount (0 if no fine).</param>
+        /// <returns>True if successful; otherwise false.</returns>
+        bool CompleteReturnGood(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount);
     }
 }

@@ -1,9 +1,9 @@
 using System;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
 using LMS.BusinessLogic.Managers.Interfaces;
-using LMS.Model.DTOs.Circulation;
 using LMS.DataAccess.Interfaces;
+using LMS.Model.DTOs.Circulation;
 
 namespace LMS.BusinessLogic.Managers.Circulation
 {
@@ -97,6 +97,14 @@ namespace LMS.BusinessLogic.Managers.Circulation
         {
             if (string.IsNullOrWhiteSpace(accessionNumber)) return null;
             return _circulationRepo.GetActiveBorrowingByAccession(accessionNumber.Trim());
+        }
+
+        public bool CompleteReturnGood(int transactionId, int copyId, int memberId, DateTime returnDate, decimal fineAmount)
+        {
+            if (transactionId <= 0 || copyId <= 0 || memberId <= 0)
+                return false;
+
+            return _circulationRepo.CompleteReturnGood(transactionId, copyId, memberId, returnDate, fineAmount);
         }
     }
 }
