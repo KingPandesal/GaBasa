@@ -18,6 +18,7 @@ namespace LMS.Presentation.UserControls
     public partial class UCCatalog : UserControl
     {
         private readonly ICatalogManager _catalogManager;
+        private readonly IReservationManager _reservationManager;
 
         // search results UI
         private ListView _lvSearchResults;
@@ -69,6 +70,8 @@ namespace LMS.Presentation.UserControls
                 new BookAuthorRepository(),
                 new AuthorRepository(),
                 new CategoryRepository());
+
+            _reservationManager = new ReservationManager();
 
             // wire search textbox (designer must have TxtSearch).
             // Attach Enter-key handler so search only triggers when user presses Enter.
@@ -446,7 +449,66 @@ namespace LMS.Presentation.UserControls
             var btn = sender as Button;
             if (btn?.Tag is int bookId)
             {
-                MessageBox.Show($"Reserve Book ID: {bookId}", "Reserve");
+                // Show confirmation dialog
+                var result = MessageBox.Show(
+                    "Do you want to reserve this book?",
+                    "Reserve Book",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        // Get member ID from current user
+                        if (_currentUser == null)
+                        {
+                            MessageBox.Show("You must be logged in to reserve a book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        var reservationManager = new LMS.BusinessLogic.Managers.ReservationManager();
+                        int memberId = reservationManager.GetMemberIdByUserId(_currentUser.UserID);
+
+                        if (memberId <= 0)
+                        {
+                            MessageBox.Show("Unable to find your member profile.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        // Check if already reserved
+                        if (reservationManager.HasActiveReservation(bookId, memberId))
+                        {
+                            MessageBox.Show("You already have an active reservation for this book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
+                        // Create the reservation
+                        var reservation = reservationManager.CreateReservation(bookId, memberId);
+
+                        if (reservation != null)
+                        {
+                            MessageBox.Show(
+                                "This book has been reserved for you. Please check back later for availability.",
+                                "Reservation Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Unable to reserve this book. Please try again later.",
+                                "Reservation Failed",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("BtnReserve_Click failed: " + ex);
+                        MessageBox.Show("An error occurred while reserving the book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
 
@@ -1426,7 +1488,66 @@ namespace LMS.Presentation.UserControls
                 var actionText = info.Item.SubItems[colIndex].Text;
                 if (!string.IsNullOrWhiteSpace(actionText) && actionText.Equals("Reserve", StringComparison.OrdinalIgnoreCase))
                 {
-                    MessageBox.Show($"Reserve clicked for Book ID: {dto.BookID}", "Reserve", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Show confirmation dialog
+                    var result = MessageBox.Show(
+                        "Do you want to reserve this book?",
+                        "Reserve Book",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            // Get member ID from current user
+                            if (_currentUser == null)
+                            {
+                                MessageBox.Show("You must be logged in to reserve a book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            var reservationManager = new LMS.BusinessLogic.Managers.ReservationManager();
+                            int memberId = reservationManager.GetMemberIdByUserId(_currentUser.UserID);
+
+                            if (memberId <= 0)
+                            {
+                                MessageBox.Show("Unable to find your member profile.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            // Check if already reserved
+                            if (reservationManager.HasActiveReservation(dto.BookID, memberId))
+                            {
+                                MessageBox.Show("You already have an active reservation for this book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
+
+                            // Create the reservation
+                            var reservation = reservationManager.CreateReservation(dto.BookID, memberId);
+
+                            if (reservation != null)
+                            {
+                                MessageBox.Show(
+                                    "This book has been reserved for you. Please check back later for availability.",
+                                    "Reservation Successful",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show(
+                                    "Unable to reserve this book. Please try again later.",
+                                    "Reservation Failed",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("Reserve from ListView failed: " + ex);
+                            MessageBox.Show("An error occurred while reserving the book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
                 return;
             }

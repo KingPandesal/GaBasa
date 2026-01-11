@@ -95,7 +95,18 @@ namespace LMS.BusinessLogic.Security
                     return false;
 
                 // Reservation allowed only when the MemberType grants the privilege.
-                return profile.ReservationPrivilege;
+                if (!profile.ReservationPrivilege)
+                    return false;
+
+                // Deny reservation if member has unpaid fines
+                if (profile.TotalUnpaidFines > 0)
+                    return false;
+
+                // Deny reservation if member has overdue items
+                if (profile.OverdueCount > 0)
+                    return false;
+
+                return true;
             }
             catch
             {
