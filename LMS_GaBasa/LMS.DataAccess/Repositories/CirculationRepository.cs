@@ -4,8 +4,9 @@ using System.Data;
 using System.Linq;
 using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
-using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.MemberFeatures.Overdue;
 using LMS.Model.DTOs.Fine;
+using LMS.Model.DTOs.Circulation;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -1263,6 +1264,93 @@ namespace LMS.DataAccess.Repositories
                 var result = cmd.ExecuteScalar();
                 return result != null && result != DBNull.Value ? result.ToString() : null;
             }
+        }
+
+        /// <summary>
+        /// Gets all overdue books for a member.
+        /// </summary>
+        /// <param name="memberId">The member ID.</param>
+        /// <returns>List of overdue book items.</returns>
+        public List<DTOOverdueBookItem> GetOverdueBooksForMember(int memberId)
+        {
+            var result = new List<DTOOverdueBookItem>();
+
+            if (memberId <= 0)
+                return result;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        bt.TransactionID,
+                        bt.CopyID,
+                        bc.BookID,
+                        bc.AccessionNumber,
+                        b.Title,
+                        b.CoverImage,
+                        c.Name AS Category,
+                        bt.BorrowDate,
+                        bt.DueDate,
+                        ISNULL(mt.FineRate, 0) AS FineRate,
+                        ISNULL(mt.MaxFineCap, 0) AS MaxFineCap
+                    FROM [BorrowingTransaction] bt
+                    INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    LEFT JOIN [Category] c ON b.CategoryID = c.CategoryID
+                    INNER JOIN [Member] m ON bt.MemberID = m.MemberID
+                    LEFT JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                    WHERE bt.MemberID = @MemberID
+                      AND bt.ReturnDate IS NULL
+                      AND (bt.[Status] = 'Overdue' OR bt.DueDate < @Today)
+                    ORDER BY bt.DueDate ASC";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+                AddParameter(cmd, "@Today", DbType.DateTime, DateTime.Today);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int bookId = reader.GetInt32(reader.GetOrdinal("BookID"));
+                        DateTime dueDate = reader.GetDateTime(reader.GetOrdinal("DueDate"));
+                        decimal fineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate"));
+                        decimal maxCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap"));
+
+                        int daysOverdue = (DateTime.Today - dueDate.Date).Days;
+                        if (daysOverdue < 0) daysOverdue = 0;
+
+                        decimal currentFine = daysOverdue * fineRate;
+                        if (maxCap > 0 && currentFine > maxCap)
+                            currentFine = maxCap;
+
+                        var item = new DTOOverdueBookItem
+                        {
+                            TransactionID = reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                            CopyID = reader.GetInt32(reader.GetOrdinal("CopyID")),
+                            BookID = bookId,
+                            AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? "" : reader.GetString(reader.GetOrdinal("AccessionNumber")),
+                            Title = reader.IsDBNull(reader.GetOrdinal("Title")) ? "" : reader.GetString(reader.GetOrdinal("Title")),
+                            CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? "" : reader.GetString(reader.GetOrdinal("CoverImage")),
+                            Category = reader.IsDBNull(reader.GetOrdinal("Category")) ? "" : reader.GetString(reader.GetOrdinal("Category")),
+                            BorrowDate = reader.GetDateTime(reader.GetOrdinal("BorrowDate")),
+                            DueDate = dueDate,
+                            DaysOverdue = daysOverdue,
+                            FineRate = fineRate,
+                            CurrentFine = currentFine
+                        };
+
+                        // Get authors for this book
+                        item.Authors = GetAuthorsForBook(bookId);
+
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }
