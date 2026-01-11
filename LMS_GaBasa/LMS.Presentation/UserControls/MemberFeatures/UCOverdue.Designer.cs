@@ -29,9 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCOverdue));
-            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -47,12 +50,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -72,6 +71,7 @@
             this.label34 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label35 = new System.Windows.Forms.Label();
+            this.bigTextBox1 = new ReaLTaiizor.Controls.BigTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -80,25 +80,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
-            // 
-            // TxtSearchBar
-            // 
-            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
-            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
-            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
-            this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(31, 34);
-            this.TxtSearchBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 48);
-            this.TxtSearchBar.Multiline = false;
-            this.TxtSearchBar.Name = "TxtSearchBar";
-            this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1341, 48);
-            this.TxtSearchBar.TabIndex = 41;
-            this.TxtSearchBar.Text = "Search title, author, or ISBN...";
-            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.TxtSearchBar.UseSystemPasswordChar = false;
             // 
             // label1
             // 
@@ -135,6 +116,52 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1343, 239);
             this.panel1.TabIndex = 46;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.BackColor = System.Drawing.Color.Red;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label29.ForeColor = System.Drawing.Color.White;
+            this.label29.Location = new System.Drawing.Point(984, 45);
+            this.label29.Name = "label29";
+            this.label29.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.label29.Size = new System.Drawing.Size(80, 26);
+            this.label29.TabIndex = 51;
+            this.label29.Text = "Overdue";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.BackColor = System.Drawing.Color.Red;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label25.ForeColor = System.Drawing.Color.White;
+            this.label25.Location = new System.Drawing.Point(317, 45);
+            this.label25.Name = "label25";
+            this.label25.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.label25.Size = new System.Drawing.Size(80, 26);
+            this.label25.TabIndex = 49;
+            this.label25.Text = "Overdue";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(902, 182);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(219, 20);
+            this.label22.TabIndex = 44;
+            this.label22.Text = "CURRENT FINE: P 50.00";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(235, 182);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(219, 20);
+            this.label20.TabIndex = 43;
+            this.label20.Text = "CURRENT FINE: P 50.00";
             // 
             // label6
             // 
@@ -293,26 +320,6 @@
             this.panel2.Size = new System.Drawing.Size(546, 53);
             this.panel2.TabIndex = 48;
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Segoe UI Historic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(12, 6);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(193, 23);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "Total Outstanding  Fine:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(235, 182);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(219, 20);
-            this.label20.TabIndex = 43;
-            this.label20.Text = "CURRENT FINE: P 50.00";
-            // 
             // label21
             // 
             this.label21.AutoSize = true;
@@ -323,41 +330,15 @@
             this.label21.TabIndex = 1;
             this.label21.Text = "Please return these items immediately to avoid further charges.";
             // 
-            // label22
+            // label19
             // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(902, 182);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(219, 20);
-            this.label22.TabIndex = 44;
-            this.label22.Text = "CURRENT FINE: P 50.00";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.BackColor = System.Drawing.Color.Red;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(317, 45);
-            this.label25.Name = "label25";
-            this.label25.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label25.Size = new System.Drawing.Size(80, 26);
-            this.label25.TabIndex = 49;
-            this.label25.Text = "Overdue";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.BackColor = System.Drawing.Color.Red;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(984, 45);
-            this.label29.Name = "label29";
-            this.label29.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label29.Size = new System.Drawing.Size(80, 26);
-            this.label29.TabIndex = 51;
-            this.label29.Text = "Overdue";
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Segoe UI Historic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(12, 6);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(193, 23);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Total Outstanding  Fine:";
             // 
             // panel3
             // 
@@ -579,15 +560,34 @@
             this.label35.TabIndex = 1;
             this.label35.Text = "Inspirational Women Leaders...";
             // 
+            // bigTextBox1
+            // 
+            this.bigTextBox1.BackColor = System.Drawing.Color.White;
+            this.bigTextBox1.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
+            this.bigTextBox1.ForeColor = System.Drawing.Color.DimGray;
+            this.bigTextBox1.Image = null;
+            this.bigTextBox1.Location = new System.Drawing.Point(31, 34);
+            this.bigTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bigTextBox1.MaxLength = 32767;
+            this.bigTextBox1.MinimumSize = new System.Drawing.Size(0, 40);
+            this.bigTextBox1.Multiline = false;
+            this.bigTextBox1.Name = "bigTextBox1";
+            this.bigTextBox1.ReadOnly = false;
+            this.bigTextBox1.Size = new System.Drawing.Size(1341, 46);
+            this.bigTextBox1.TabIndex = 53;
+            this.bigTextBox1.Text = "Search title, author, or ISBN...";
+            this.bigTextBox1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.bigTextBox1.UseSystemPasswordChar = false;
+            // 
             // UCOverdue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.bigTextBox1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.TxtSearchBar);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCOverdue";
@@ -608,7 +608,6 @@
         }
 
         #endregion
-        private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
@@ -651,5 +650,6 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label35;
+        private ReaLTaiizor.Controls.BigTextBox bigTextBox1;
     }
 }

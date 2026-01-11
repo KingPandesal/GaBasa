@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCBorrowed));
             this.label1 = new System.Windows.Forms.Label();
-            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,7 +61,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.bigTextBox1 = new ReaLTaiizor.Controls.BigTextBox();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -74,30 +74,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(26, 107);
+            this.label1.Location = new System.Drawing.Point(26, 104);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(176, 30);
             this.label1.TabIndex = 37;
             this.label1.Text = "Borrowed Books";
-            // 
-            // TxtSearchBar
-            // 
-            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
-            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
-            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
-            this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(31, 34);
-            this.TxtSearchBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 48);
-            this.TxtSearchBar.Multiline = false;
-            this.TxtSearchBar.Name = "TxtSearchBar";
-            this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1341, 48);
-            this.TxtSearchBar.TabIndex = 36;
-            this.TxtSearchBar.Text = "Search title, author, or ISBN...";
-            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.TxtSearchBar.UseSystemPasswordChar = false;
             // 
             // panel3
             // 
@@ -116,11 +97,24 @@
             this.panel3.Controls.Add(this.label36);
             this.panel3.Controls.Add(this.pictureBox6);
             this.panel3.Controls.Add(this.label37);
-            this.panel3.Location = new System.Drawing.Point(29, 167);
+            this.panel3.Location = new System.Drawing.Point(30, 162);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1343, 239);
             this.panel3.TabIndex = 44;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Red;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label19.ForeColor = System.Drawing.Color.White;
+            this.label19.Location = new System.Drawing.Point(318, 45);
+            this.label19.Name = "label19";
+            this.label19.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.label19.Size = new System.Drawing.Size(80, 26);
+            this.label19.TabIndex = 43;
+            this.label19.Text = "Overdue";
             // 
             // label6
             // 
@@ -440,28 +434,34 @@
             this.label18.TabIndex = 1;
             this.label18.Text = "Inspirational Women Leaders...";
             // 
-            // label19
+            // bigTextBox1
             // 
-            this.label19.AutoSize = true;
-            this.label19.BackColor = System.Drawing.Color.Red;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(318, 45);
-            this.label19.Name = "label19";
-            this.label19.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label19.Size = new System.Drawing.Size(80, 26);
-            this.label19.TabIndex = 43;
-            this.label19.Text = "Overdue";
+            this.bigTextBox1.BackColor = System.Drawing.Color.White;
+            this.bigTextBox1.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
+            this.bigTextBox1.ForeColor = System.Drawing.Color.DimGray;
+            this.bigTextBox1.Image = null;
+            this.bigTextBox1.Location = new System.Drawing.Point(31, 34);
+            this.bigTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bigTextBox1.MaxLength = 32767;
+            this.bigTextBox1.MinimumSize = new System.Drawing.Size(0, 40);
+            this.bigTextBox1.Multiline = false;
+            this.bigTextBox1.Name = "bigTextBox1";
+            this.bigTextBox1.ReadOnly = false;
+            this.bigTextBox1.Size = new System.Drawing.Size(1341, 46);
+            this.bigTextBox1.TabIndex = 46;
+            this.bigTextBox1.Text = "Search title, author, or ISBN...";
+            this.bigTextBox1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.bigTextBox1.UseSystemPasswordChar = false;
             // 
             // UCBorrowed
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.bigTextBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.TxtSearchBar);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCBorrowed";
             this.Size = new System.Drawing.Size(1404, 749);
@@ -480,7 +480,6 @@
 
         #endregion
         private System.Windows.Forms.Label label1;
-        private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
@@ -512,5 +511,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
+        private ReaLTaiizor.Controls.BigTextBox bigTextBox1;
     }
 }
