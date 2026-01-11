@@ -11,6 +11,7 @@ using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.Model.DTOs.Catalog;
 using LMS.DataAccess.Repositories;
 using LMS.Model.Models.Catalog;
+using LMS.Model.Models.Enums;
 
 namespace LMS.Presentation.UserControls
 {
@@ -114,6 +115,37 @@ namespace LMS.Presentation.UserControls
             try { InitializeSortControls(); } catch { }
         }
 
+        /// <summary>
+        /// Checks if current user is a Member role (not Librarian/Staff).
+        /// </summary>
+        private bool IsUserMemberRole()
+        {
+            if (_currentUser == null) return false;
+            return _currentUser.Role == Role.Member;
+        }
+
+        /// <summary>
+        /// Checks if the current Member user can reserve books (has ReservationPrivilege, i.e., not Guest).
+        /// Returns false for Librarian/Staff or if permission check fails.
+        /// </summary>
+        private bool CanCurrentUserReserve()
+        {
+            // Must be a Member first
+            if (!IsUserMemberRole()) return false;
+
+            // Use permission service to check ReservationPrivilege
+            try
+            {
+                if (_permissionService != null && _currentUser != null)
+                    return _permissionService.CanReserveBooks(_currentUser);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("CanCurrentUserReserve failed: " + ex);
+            }
+            return false;
+        }
+
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             PerformSearch();
@@ -194,9 +226,6 @@ namespace LMS.Presentation.UserControls
             }
             catch { }
         }
-
-        // Replace the existing CreateBookPanel method with this version.
-        // Fix: declare and compute isBookAvailable before use.
 
         private Panel CreateBookPanel(DTOCatalogBook book)
         {
@@ -280,23 +309,26 @@ namespace LMS.Presentation.UserControls
             btnViewDetails.Click += BtnViewDetails_Click;
             panel.Controls.Add(btnViewDetails);
 
-            // Determine availability (DECLARED HERE so it's in scope)
+            // Determine availability
             bool isBookAvailable = (book != null) &&
                                    (string.Equals(book.Status, "Available", StringComparison.OrdinalIgnoreCase)
                                     || string.Equals(book.Status, "Available Online", StringComparison.OrdinalIgnoreCase));
 
-            // Determine permission to reserve: prefer IPermissionService if provided, otherwise allow by default
-            bool canReserve = true;
+            // Check if book is Reference type (cannot be reserved)
+            bool isReferenceLoan = false;
             try
             {
-                if (_permissionService != null && _currentUser != null)
-                    canReserve = _permissionService.CanReserveBooks(_currentUser);
+                var loanType = book?.LoanType;
+                isReferenceLoan = !string.IsNullOrWhiteSpace(loanType) && loanType.Trim().Equals("Reference", StringComparison.OrdinalIgnoreCase);
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Permission check failed, defaulting to allow reserve UI: " + ex);
-                canReserve = true;
-            }
+            catch { isReferenceLoan = false; }
+
+            // Reserve button logic:
+            // - Only show for Members (not Librarian/Staff)
+            // - Only show if member has ReservationPrivilege (not Guest)
+            // - Only show if book is NOT available
+            // - Only show if book is NOT Reference type
+            bool showReserve = IsUserMemberRole() && CanCurrentUserReserve() && !isBookAvailable && !isReferenceLoan;
 
             var btnReserve = new Button
             {
@@ -309,9 +341,8 @@ namespace LMS.Presentation.UserControls
                 Font = new Font("Segoe UI", 8F),
                 Cursor = Cursors.Hand,
                 Tag = book?.BookID ?? (object)null,
-                // Show only when book is NOT available and permission allows reserving
-                Visible = !isBookAvailable && canReserve,
-                Enabled = !isBookAvailable && canReserve
+                Visible = showReserve,
+                Enabled = showReserve
             };
             btnReserve.FlatAppearance.BorderColor = Color.FromArgb(175, 37, 50);
             btnReserve.Click += BtnReserve_Click;
@@ -597,11 +628,63 @@ namespace LMS.Presentation.UserControls
                     });
                 }
 
-                // Availability -> Status
+                // Availability filter - match UCInventory logic for "Available Online"
                 if (isMeaningful(filters.Availability))
                 {
                     var avail = filters.Availability.Trim();
-                    predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.Status) && string.Equals(dto.Status.Trim(), avail, StringComparison.OrdinalIgnoreCase));
+
+                    if (string.Equals(avail, "Available Online", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Match UCInventory logic:
+                        // A book is digital if ResourceType == "E-Book" OR DownloadURL is not empty
+                        // Digital books with a DownloadURL are "Available Online"
+                        predicates.Add(dto =>
+                        {
+                            try
+                            {
+                                // Check if digital resource (ResourceType is E-Book or has DownloadURL)
+                                bool isEbook = !string.IsNullOrWhiteSpace(dto.ResourceType) &&
+                                               (dto.ResourceType.IndexOf("ebook", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                                dto.ResourceType.IndexOf("e-book", StringComparison.OrdinalIgnoreCase) >= 0);
+
+                                // Try to get DownloadURL (may be null if DTO doesn't have this property yet)
+                                string downloadUrl = null;
+                                try
+                                {
+                                    var prop = dto.GetType().GetProperty("DownloadURL");
+                                    if (prop != null)
+                                        downloadUrl = prop.GetValue(dto) as string;
+                                }
+                                catch { }
+
+                                bool hasDownloadUrl = !string.IsNullOrWhiteSpace(downloadUrl);
+                                bool isDigital = isEbook || hasDownloadUrl;
+
+                                // Per UCInventory: digital with DownloadURL => Available Online
+                                if (isDigital && hasDownloadUrl)
+                                    return true;
+
+                                // Also match if MaterialFormat is "Digital"
+                                bool isDigitalFormat = !string.IsNullOrWhiteSpace(dto.MaterialFormat) &&
+                                                       dto.MaterialFormat.IndexOf("digital", StringComparison.OrdinalIgnoreCase) >= 0;
+                                if (isDigitalFormat && hasDownloadUrl)
+                                    return true;
+
+                                // Fallback: also match if Status explicitly says "Available Online"
+                                if (!string.IsNullOrWhiteSpace(dto.Status) &&
+                                    dto.Status.IndexOf("Available Online", StringComparison.OrdinalIgnoreCase) >= 0)
+                                    return true;
+
+                                return false;
+                            }
+                            catch { return false; }
+                        });
+                    }
+                    else
+                    {
+                        // Existing behavior: filter by Status string (Available / Unavailable)
+                        predicates.Add(dto => !string.IsNullOrWhiteSpace(dto.Status) && string.Equals(dto.Status.Trim(), avail, StringComparison.OrdinalIgnoreCase));
+                    }
                 }
 
                 // ResourceType (reflection) -- skip when DTO doesn't contain the property
@@ -897,7 +980,7 @@ namespace LMS.Presentation.UserControls
 
             if (!string.IsNullOrWhiteSpace(mainQuery)) parts.Add(mainQuery);
             if (!string.IsNullOrWhiteSpace(title)) parts.Add($"title:{title}");
-            // if (!string.IsNullOrWhiteSpace(author)) parts.Add($"author:{author}");
+            if (!string.IsNullOrWhiteSpace(author)) parts.Add($"author:{author}");
             if (!string.IsNullOrWhiteSpace(isbn)) parts.Add($"isbn:{isbn}");
             if (!string.IsNullOrWhiteSpace(subject)) parts.Add($"subject:{subject}");
 
@@ -1101,20 +1184,10 @@ namespace LMS.Presentation.UserControls
 
                 try { _lvSearchResults.Width = Math.Max(500, FlwPnlBooks.ClientSize.Width - 10); } catch { }
 
-                // Determine if current user can reserve (use injected permission service when available).
-                bool canReserve;
-                try
-                {
-                    if (_permissionService != null && _currentUser != null)
-                        canReserve = _permissionService.CanReserveBooks(_currentUser);
-                    else
-                        canReserve = IsCurrentUserMember(); // fallback
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("ShowSearchResults: permission check failed, falling back to member heuristic: " + ex);
-                    canReserve = IsCurrentUserMember();
-                }
+                // Determine if current user can reserve:
+                // - Must be Member role
+                // - Must have ReservationPrivilege (not Guest, not Librarian/Staff)
+                bool canReserve = CanCurrentUserReserve();
 
                 _lvSearchResults.BeginUpdate();
                 _lvSearchResults.Items.Clear();
@@ -1177,8 +1250,19 @@ namespace LMS.Presentation.UserControls
                         bool isAvailable = string.Equals(dto.Status, "Available", StringComparison.OrdinalIgnoreCase)
                                            || string.Equals(dto.Status, "Available Online", StringComparison.OrdinalIgnoreCase);
 
-                        // Only show "Reserve" when book is NOT available AND current user has reserve permission (member)
-                        item.SubItems.Add((isAvailable || !canReserve) ? string.Empty : "Reserve");
+                        bool isReference = false;
+                        try
+                        {
+                            isReference = !string.IsNullOrWhiteSpace(dto.LoanType) && dto.LoanType.Trim().Equals("Reference", StringComparison.OrdinalIgnoreCase);
+                        }
+                        catch { isReference = false; }
+
+                        // Only show "Reserve" when:
+                        // - Book is NOT available
+                        // - Book is NOT reference-only
+                        // - Current user is Member with ReservationPrivilege (not Guest, not Librarian/Staff)
+                        bool showReserve = !isAvailable && !isReference && canReserve;
+                        item.SubItems.Add(showReserve ? "Reserve" : string.Empty);
                         item.Tag = dto;
                         _lvSearchResults.Items.Add(item);
                     }
@@ -1379,7 +1463,6 @@ namespace LMS.Presentation.UserControls
 
             return -1;
         }
-
 
         // Replace the existing CreateViewBookDetailsIfAvailable method in UCCatalog with this implementation.
         // This ensures the created ViewBookDetails form receives the current user and permission service
@@ -2056,8 +2139,7 @@ namespace LMS.Presentation.UserControls
                 if (claimsPrincipal != null && claimsPrincipal.Claims != null)
                 {
                     // Candidate claim types to inspect
-                    var roleClaimTypes = new[]
-                    {
+                    var roleClaimTypes = new[] {
                         System.Security.Claims.ClaimTypes.Role,
                         "role",
                         "roles",
@@ -2089,7 +2171,7 @@ namespace LMS.Presentation.UserControls
                         }
                         catch (Exception ex)
                         {
-                            Debug.WriteLine($"IsCurrentUserMember: Inspecting claim threw: {ex.Message}");
+                            Debug.WriteLine($"IsCurrentUserMember: Inspecting claim threw: {ex}");
                         }
                     }
 

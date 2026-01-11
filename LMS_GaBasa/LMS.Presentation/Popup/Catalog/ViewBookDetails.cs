@@ -527,6 +527,15 @@ namespace LMS.Presentation.Popup.Catalog
                     return;
                 }
 
+                // Determine if this resource is reference-only
+                bool isReferenceLoan = false;
+                try
+                {
+                    var loanType = _currentBook.LoanType;
+                    isReferenceLoan = !string.IsNullOrWhiteSpace(loanType) && loanType.Trim().Equals("Reference", StringComparison.OrdinalIgnoreCase);
+                }
+                catch { isReferenceLoan = false; }
+
                 // use permission service if available, otherwise fall back to RolePermissionService
                 IPermissionService perm = _permissionService ?? (IPermissionService)new RolePermissionService();
 
@@ -549,11 +558,18 @@ namespace LMS.Presentation.Popup.Catalog
                     Debug.WriteLine("UpdateActionButtons: error counting copies: " + ex);
                 }
 
+                // If the resource is reference-only, never show Borrow or Reserve regardless of permissions/availability.
+                if (isReferenceLoan)
+                {
+                    // Borrow and Reserve remain hidden (download already handled above).
+                    return;
+                }
+
                 if (availableCopies > 0)
                 {
                     if (canBorrow)
                     {
-                        try { BtnBorrow.Visible = BtnBorrow.Enabled = false; } catch { }
+                        try { BtnBorrow.Visible = BtnBorrow.Enabled = false; } catch { } // preserved original behavior (no borrow UI shown in this path)
                     }
                     // do not show reserve when copies are available
                 }

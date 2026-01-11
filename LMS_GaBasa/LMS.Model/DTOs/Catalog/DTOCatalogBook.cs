@@ -38,5 +38,9 @@ namespace LMS.Model.DTOs.Catalog
 
         // NEW: Language (mapped from Book.Language) used by language filter
         public string Language { get; set; }
+
+        // NEW: Download URL for digital resources (E-Book, digital periodicals, etc.)
+        // Used to determine "Available Online" status
+        public string DownloadURL { get; set; }
     }
 }

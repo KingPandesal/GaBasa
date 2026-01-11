@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LMS.Model.Models.Enums;
+using LMS.DataAccess.Repositories;
 
 namespace LMS.BusinessLogic.Security
 {
@@ -70,12 +71,39 @@ namespace LMS.BusinessLogic.Security
         // member actions
         public bool CanWishlistBooks(User user)
             => user.Role == Role.Member;
+
         public bool CanBorrowBooks(User user)
             => user.Role == Role.Member;
+
         public bool CanReturnBooks(User user)
             => user.Role == Role.Member;
+
         public bool CanReserveBooks(User user)
-            => user.Role == Role.Member;
+        {
+            // Require Member role
+            if (user == null || user.Role != Role.Member)
+                return false;
+
+            try
+            {
+                // Use MemberRepository to obtain the member profile DTO which contains ReservationPrivilege.
+                var repo = new MemberRepository();
+                var profile = repo.GetMemberProfileByUserId(user.UserID);
+
+                // If we couldn't load profile, deny by default.
+                if (profile == null)
+                    return false;
+
+                // Reservation allowed only when the MemberType grants the privilege.
+                return profile.ReservationPrivilege;
+            }
+            catch
+            {
+                // On any error, be conservative and deny reservation capability.
+                return false;
+            }
+        }
+
         public bool CanCancelReservation(User user)
             => user.Role == Role.Member;
 
