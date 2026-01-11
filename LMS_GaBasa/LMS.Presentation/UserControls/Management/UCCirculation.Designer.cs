@@ -521,6 +521,7 @@
             this.BtnEnterMemberID.TabIndex = 51;
             this.BtnEnterMemberID.Text = "Enter";
             this.BtnEnterMemberID.UseVisualStyleBackColor = false;
+            this.BtnEnterMemberID.Click += new System.EventHandler(this.BtnEnterMemberID_Click_1);
             // 
             // TxtMemberID
             // 

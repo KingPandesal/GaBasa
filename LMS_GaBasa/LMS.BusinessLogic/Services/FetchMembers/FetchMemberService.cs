@@ -1,5 +1,6 @@
 ﻿using LMS.BusinessLogic.Helpers;
 using LMS.DataAccess.Interfaces;
+using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Member;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,29 @@ namespace LMS.BusinessLogic.Services.FetchMembers
             // Auto-expire members whose expiration date has passed
             _memberRepo.UpdateExpiredMembers();
 
-            var members = _memberRepo.GetAllMembers();
+            // Get base member list from repository
+            var members = _memberRepo.GetAllMembers() ?? new List<DTOFetchAllMembers>();
 
-            // Apply formatted ID to each member
+            // Use circulation repo to fetch per-member dynamic values (overdues, unpaid fines)
+            var circulationRepo = new CirculationRepository();
+
+            // Apply formatted ID and populate dynamic fields
             foreach (var member in members)
             {
-                member.FormattedID = UserIdFormatter.FormatMemberId(member.MemberID);
+                try
+                {
+                    member.FormattedID = UserIdFormatter.FormatMemberId(member.MemberID);
+
+                    // Populate dynamic values used for penalty/effective calculations in the UI
+                    member.OverdueCount = circulationRepo.GetOverdueCount(member.MemberID);
+                    member.TotalUnpaidFines = circulationRepo.GetTotalUnpaidFines(member.MemberID);
+                }
+                catch
+                {
+                    // Ignore errors for individual members to keep list loading robust
+                    member.OverdueCount = member.OverdueCount; // no-op; explicit to show intent
+                    member.TotalUnpaidFines = member.TotalUnpaidFines;
+                }
             }
 
             return members;

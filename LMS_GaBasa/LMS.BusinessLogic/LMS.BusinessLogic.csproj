@@ -69,8 +69,10 @@
     <Compile Include="Managers\IMemberManager.cs" />
     <Compile Include="Managers\Interfaces\ICatalogManager.cs" />
     <Compile Include="Managers\Interfaces\IInventoryManager.cs" />
+    <Compile Include="Managers\Interfaces\IReservationManager.cs" />
     <Compile Include="Managers\InventoryManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
+    <Compile Include="Managers\ReservationManager.cs" />
     <Compile Include="Services\AddMember\AddMemberService.cs" />
     <Compile Include="Services\AddMember\IAddMemberService.cs" />
     <Compile Include="Services\AddUser\AddUserService.cs" />

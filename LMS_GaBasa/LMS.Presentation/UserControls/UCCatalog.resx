@@ -1279,7 +1279,7 @@
         F5CYEwgEAoEwR/FUXd1HfviN6xwwT01j/n9+kOaB3iK5ZwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="PicBxBookCoverImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABLAAAAahCAYAAAC0NHPYAAAABGdBTUEAALGPC/xhBQAA/8dJREFUeF7s
         3eebFNXaNvz7L3ifZys5mdN2G/Y2bJlIjooiikqaHMk5ByUjQRRByYgEQUQQQTKSc46Tc4ZJPTmc73Gt
@@ -20000,7 +20000,7 @@
         QmCC
 </value>
   </data>
-  <data name="PicBxBookCoverImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABLAAAAahCAYAAAC0NHPYAAAABGdBTUEAALGPC/xhBQAA/8dJREFUeF7s
         3eebFNXaNvz7L3ifZys5mdN2G/Y2bJlIjooiikqaHMk5ByUjQRRByYgEQUQQQTKSc46Tc4ZJPTmc73Gt

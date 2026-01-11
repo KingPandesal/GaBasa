@@ -35,7 +35,14 @@ namespace LMS.DataAccess.Interfaces
         /// </summary>
         DTOCirculationBookInfo GetBookInfoByAccession(string accessionNumber);
 
-        // Add a borrowing transaction and mark the copy as borrowed. Returns new TransactionID (>0) on success, 0 on failure.
+        /// <summary>
+        /// Adds a borrowing transaction and marks the copy as borrowed.
+        /// </summary>
+        /// <param name="copyId">The Copy ID.</param>
+        /// <param name="memberId">The Member ID.</param>
+        /// <param name="borrowDate">The borrow date.</param>
+        /// <param name="dueDate">The due date.</param>
+        /// <returns>The new TransactionID if successful; otherwise, 0.</returns>
         int CreateBorrowingTransaction(int copyId, int memberId, DateTime borrowDate, DateTime dueDate);
 
         /// <summary>
@@ -120,5 +127,33 @@ namespace LMS.DataAccess.Interfaces
         /// Returns true on success and outputs the new due date.
         /// </summary>
         bool RenewBorrowingTransaction(int transactionId, out DateTime newDueDate);
+
+        /// <summary>
+        /// Updates the Member table Status field for the specified member.
+        /// </summary>
+        /// <param name="memberId">The Member ID.</param>
+        /// <param name="status">The new status (e.g., "Active", "Suspended").</param>
+        /// <returns>True if updated; otherwise false.</returns>
+        bool UpdateMemberStatus(int memberId, string status);
+
+        /// <summary>
+        /// Gets the MaxFineCap for a member from their MemberType.
+        /// </summary>
+        /// <param name="memberId">The Member ID.</param>
+        /// <returns>The MaxFineCap value, or 0 if not found.</returns>
+        decimal GetMemberMaxFineCap(int memberId);
+
+        /// <summary>
+        /// Checks if member's total unpaid fines have reached or exceeded MaxFineCap and suspends them if so.
+        /// </summary>
+        /// <param name="memberId">The Member ID.</param>
+        void CheckAndSuspendMemberIfNeeded(int memberId);
+
+        /// <summary>
+        /// Checks if member's total unpaid fines have dropped below MaxFineCap and reactivates them if so.
+        /// Only reactivates if current status is "Suspended".
+        /// </summary>
+        /// <param name="memberId">The Member ID.</param>
+        void CheckAndReactivateMemberIfNeeded(int memberId);
     }
 }

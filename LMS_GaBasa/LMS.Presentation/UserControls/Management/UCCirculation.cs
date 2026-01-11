@@ -13,6 +13,7 @@ namespace LMS.Presentation.UserControls.Management
     public partial class UCCirculation : UserControl
     {
         private readonly ICirculationManager _circulationManager;
+        private readonly ReservationRepository _reservationRepository;
         private DTOCirculationMemberInfo _currentMember;
         private DTOCirculationBookInfo _currentBook;
 
@@ -32,6 +33,7 @@ namespace LMS.Presentation.UserControls.Management
             // Setup dependencies
             var circulationRepo = new CirculationRepository();
             _circulationManager = new CirculationManager(circulationRepo);
+            _reservationRepository = new ReservationRepository();
 
             // Wire up events
             TxtMemberID.KeyDown += TxtMemberID_KeyDown;
@@ -231,9 +233,83 @@ namespace LMS.Presentation.UserControls.Management
             DisplayEligibilityChecks(memberInfo);
         }
 
+        /// <summary>
+        /// Penalty level:
+        /// 0 => good (no fines, no overdues)
+        /// 1 => has fine OR has overdue (minus 1 to privileges)
+        /// 2 => has BOTH fine AND overdue (minus 2 to privileges)
+        /// </summary>
+        private int GetPenaltyLevel(DTOCirculationMemberInfo member)
+        {
+            if (member == null) return 0;
+            bool hasFines = member.TotalUnpaidFines > 0m;
+            bool hasOverdues = member.OverdueCount > 0;
+            if (hasFines && hasOverdues) return 2;
+            if (hasFines || hasOverdues) return 1;
+            return 0;
+        }
+
+        private int EffectiveMaxBooksAllowed(DTOCirculationMemberInfo member)
+        {
+            if (member == null) return 0;
+            int penalty = GetPenaltyLevel(member);
+            return Math.Max(0, member.MaxBooksAllowed - penalty);
+        }
+
+        private int EffectiveBorrowingPeriod(DTOCirculationMemberInfo member)
+        {
+            if (member == null) return 1;
+            int penalty = GetPenaltyLevel(member);
+            return Math.Max(1, member.BorrowingPeriod - penalty);
+        }
+
+        private int EffectiveRenewalLimit(DTOCirculationMemberInfo member)
+        {
+            if (member == null) return 0;
+            int penalty = GetPenaltyLevel(member);
+            return Math.Max(0, member.RenewalLimit - penalty);
+        }
+
+        private bool EffectiveReservationPrivilege(DTOCirculationMemberInfo member)
+        {
+            if (member == null) return false;
+            // any penalty disables reservation
+            return member.ReservationPrivilege && GetPenaltyLevel(member) == 0;
+        }
+
+        /// <summary>
+        /// Borrow eligibility using effective values (respects status, overdues, effective limits and fine cap).
+        /// </summary>
+        private bool CanBorrowWithPenalty(DTOCirculationMemberInfo member)
+        {
+            if (member == null) return false;
+            if (!string.Equals(member.Status, "Active", StringComparison.OrdinalIgnoreCase)) return false;
+
+            // No overdue allowed (policy)
+            if (member.OverdueCount > 0) return false;
+
+            // Borrow limit check uses effective max books
+            if (member.CurrentBorrowedCount >= EffectiveMaxBooksAllowed(member)) return false;
+
+            // Fine cap: if MaxFineCap is > 0 then unpaid fines must be below cap
+            if (member.MaxFineCap > 0m && member.TotalUnpaidFines >= member.MaxFineCap) return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Calculate due date for a member using effective borrowing period.
+        /// </summary>
+        private DateTime CalculateDueDateForMember(DTOCirculationMemberInfo member)
+        {
+            int days = member != null ? EffectiveBorrowingPeriod(member) : 14;
+            return DateTime.Today.AddDays(days);
+        }
+
         private void DisplayBorrowingStatistics(DTOCirculationMemberInfo memberInfo)
         {
-            LblBorrowed.Text = $"Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.MaxBooksAllowed}";
+            // Show current / effective limit
+            LblBorrowed.Text = $"Borrowed: {memberInfo.CurrentBorrowedCount} / {EffectiveMaxBooksAllowed(memberInfo)}";
             LblOverdue.Text = $"Overdue: {memberInfo.OverdueCount}";
             LblFine.Text = $"Fine: ₱{memberInfo.TotalUnpaidFines:N2}";
         }
@@ -251,7 +327,7 @@ namespace LMS.Presentation.UserControls.Management
                 LblMemberActive.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
-            if (memberInfo.HasNoOverdue)
+            if (memberInfo.OverdueCount == 0)
             {
                 LblNoOverdueBooks.Text = "✔️ No Overdue Books";
                 LblNoOverdueBooks.ForeColor = Color.FromArgb(0, 200, 0);
@@ -262,7 +338,8 @@ namespace LMS.Presentation.UserControls.Management
                 LblNoOverdueBooks.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
-            if (memberInfo.IsBorrowLimitOk)
+            // Borrow limit uses effective max books after penalty
+            if (memberInfo.CurrentBorrowedCount < EffectiveMaxBooksAllowed(memberInfo))
             {
                 LblBorrowLimitOK.Text = "✔️ Borrow Limit OK";
                 LblBorrowLimitOK.ForeColor = Color.FromArgb(0, 200, 0);
@@ -273,8 +350,28 @@ namespace LMS.Presentation.UserControls.Management
                 LblBorrowLimitOK.ForeColor = Color.FromArgb(200, 0, 0);
             }
 
+            // Renewal limit - show effective renewal limit on the renewal label used by the renewal UI
+            // (LblRenewRenewalLimit is the label that shows "✔️ Renewal limit not reached (1 / 3)")
+            if (LblRenewRenewalLimit != null)
+            {
+                LblRenewRenewalLimit.Text = $"✔️ Renewal limit not reached (0 / {EffectiveRenewalLimit(memberInfo)})";
+                LblRenewRenewalLimit.ForeColor = Color.FromArgb(0, 200, 0);
+            }
+
+            // Reservation privilege - disabled if any penalty
+            //if (EffectiveReservationPrivilege(memberInfo))
+            //{
+            //    LblReservationPrivilege.Text = "✔️ Reservation Allowed";
+            //    LblReservationPrivilege.ForeColor = Color.FromArgb(0, 200, 0);
+            //}
+            //else
+            //{
+            //    LblReservationPrivilege.Text = "❌ Cannot Reserve";
+            //    LblReservationPrivilege.ForeColor = Color.FromArgb(200, 0, 0);
+            //}
+
             string capText = $"₱{memberInfo.MaxFineCap:N2}";
-            if (memberInfo.IsFineWithinLimit)
+            if (memberInfo.MaxFineCap <= 0 || memberInfo.TotalUnpaidFines < memberInfo.MaxFineCap)
             {
                 LblFineLimit.Text = $"✔️ Fine within allowed limit ({capText})";
                 LblFineLimit.ForeColor = Color.FromArgb(0, 200, 0);
@@ -288,7 +385,7 @@ namespace LMS.Presentation.UserControls.Management
 
         private void UpdateBookCheckoutVisibility(DTOCirculationMemberInfo memberInfo)
         {
-            GrpBxBookCheckout.Visible = memberInfo.CanBorrow;
+            GrpBxBookCheckout.Visible = CanBorrowWithPenalty(memberInfo);
         }
 
         private void SetStatusColor(string status)
@@ -577,6 +674,18 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookLoanType.ForeColor = Color.Black;
             }
 
+            // Check if this copy has an active reservation
+            bool hasActiveReservation = false;
+            try
+            {
+                hasActiveReservation = _reservationRepository.HasActiveReservationForCopy(bookInfo.CopyID);
+            }
+            catch
+            {
+                // If check fails, assume no reservation
+                hasActiveReservation = false;
+            }
+
             // Status label: if loan type is Reference -> special message
             bool isReferenceLoan = string.Equals(displayLoanType, "Reference", StringComparison.OrdinalIgnoreCase);
             bool isAvailable = string.Equals(bookInfo.CopyStatus, "Available", StringComparison.OrdinalIgnoreCase);
@@ -586,6 +695,12 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookStatus.Text = "Status: In-Library Use";
                 LblBookStatus.ForeColor = Color.FromArgb(200, 0, 0);
             }
+            else if (hasActiveReservation)
+            {
+                // Show Reserved status if copy has an active reservation
+                LblBookStatus.Text = "Status: Reserved";
+                LblBookStatus.ForeColor = Color.FromArgb(200, 150, 0); // Orange/amber color for reserved
+            }
             else
             {
                 LblBookStatus.Text = $"Status: {(string.IsNullOrWhiteSpace(bookInfo.CopyStatus) ? "Unknown" : bookInfo.CopyStatus)}";
@@ -594,16 +709,16 @@ namespace LMS.Presentation.UserControls.Management
 
             // Due Date rules:
             DateTime? showDue = null;
-            if (_currentMember != null && isAvailable)
+            if (_currentMember != null && isAvailable && !hasActiveReservation)
             {
                 if (isPhysicalBook)
                 {
                     if (string.Equals(displayLoanType, "Circulation", StringComparison.OrdinalIgnoreCase))
-                        showDue = _currentMember.CalculateDueDate();
+                        showDue = CalculateDueDateForMember(_currentMember);
                 }
                 else if (isOtherNonBook && string.IsNullOrWhiteSpace(bookInfo.DownloadURL))
                 {
-                    showDue = _currentMember.CalculateDueDate();
+                    showDue = CalculateDueDateForMember(_currentMember);
                 }
             }
 
@@ -618,11 +733,11 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
             }
 
-            // Update button state based on computed rules
-            UpdateConfirmBorrowButton(bookInfo);
+            // Update button state based on computed rules (pass reservation flag)
+            UpdateConfirmBorrowButton(bookInfo, hasActiveReservation);
         }
 
-        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo)
+        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo, bool hasActiveReservation = false)
         {
             var resType = (bookInfo.ResourceType ?? string.Empty).Trim();
             bool isEBook = resType.Equals("EBook", StringComparison.OrdinalIgnoreCase);
@@ -638,6 +753,24 @@ namespace LMS.Presentation.UserControls.Management
             // Default disabled state
             BtnConfirmBorrow.Enabled = false;
             BtnConfirmBorrow.BackColor = Color.Gray;
+
+            // If current member exists but is not eligible due to fines/overdues/status, prevent borrowing
+            if (_currentMember != null && !CanBorrowWithPenalty(_currentMember))
+            {
+                BtnConfirmBorrow.Text = "Not Eligible";
+                BtnConfirmBorrow.Enabled = false;
+                BtnConfirmBorrow.BackColor = Color.Gray;
+                return;
+            }
+
+            // If copy has an active reservation, prevent borrowing
+            if (hasActiveReservation)
+            {
+                BtnConfirmBorrow.Text = "Reserved";
+                BtnConfirmBorrow.Enabled = false;
+                BtnConfirmBorrow.BackColor = Color.Gray;
+                return;
+            }
 
             // 1) E-Book (digital) -> never borrow
             if (isEBook)
@@ -662,7 +795,7 @@ namespace LMS.Presentation.UserControls.Management
                     return;
                 }
 
-                // All good
+                // All good and member is eligible (checked earlier)
                 BtnConfirmBorrow.Enabled = true;
                 BtnConfirmBorrow.Text = "Confirm Borrow";
                 BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
@@ -679,7 +812,7 @@ namespace LMS.Presentation.UserControls.Management
                     return;
                 }
 
-                // physical and available -> allow borrow
+                // physical and available -> allow borrow (member eligibility checked earlier)
                 if (isAvailable)
                 {
                     BtnConfirmBorrow.Enabled = true;
@@ -771,7 +904,7 @@ namespace LMS.Presentation.UserControls.Management
                 int memberId = _currentMember.MemberID;
 
                 DateTime borrowDate = DateTime.Now;
-                DateTime dueDate = _currentMember.CalculateDueDate();
+                DateTime dueDate = CalculateDueDateForMember(_currentMember);
 
                 int transId = _circulationManager.CreateBorrowingTransaction(copyId, memberId, borrowDate, dueDate);
 
@@ -925,7 +1058,7 @@ namespace LMS.Presentation.UserControls.Management
                 LblReturnStatus.ForeColor = Color.FromArgb(0, 200, 0);
             }
 
-            // Ensure penalty panel visibility reflects condition chosen
+            // Ensure penalty panel visibility reflects condition
             UpdatePenaltyPanelVisibility();
 
             // Recalculate and display fine and total
@@ -1345,6 +1478,11 @@ namespace LMS.Presentation.UserControls.Management
         }
 
         private void LblReturnCondition_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnEnterMemberID_Click_1(object sender, EventArgs e)
         {
 
         }

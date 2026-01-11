@@ -32,6 +32,10 @@ namespace LMS.Presentation.Popup.Catalog
             // Use Shown + BeginInvoke so layout has finished and scroll values are valid.
             this.Shown -= ViewBookDetails_Shown;
             this.Shown += ViewBookDetails_Shown;
+
+            // Wire up the Reserve button click handler
+            try { BtnReserve.Click -= BtnReserve_Click; } catch { }
+            try { BtnReserve.Click += BtnReserve_Click; } catch { }
         }
 
         private void ViewBookDetails_Shown(object sender, EventArgs e)
@@ -527,6 +531,15 @@ namespace LMS.Presentation.Popup.Catalog
                     return;
                 }
 
+                // Determine if this resource is reference-only
+                bool isReferenceLoan = false;
+                try
+                {
+                    var loanType = _currentBook.LoanType;
+                    isReferenceLoan = !string.IsNullOrWhiteSpace(loanType) && loanType.Trim().Equals("Reference", StringComparison.OrdinalIgnoreCase);
+                }
+                catch { isReferenceLoan = false; }
+
                 // use permission service if available, otherwise fall back to RolePermissionService
                 IPermissionService perm = _permissionService ?? (IPermissionService)new RolePermissionService();
 
@@ -549,11 +562,18 @@ namespace LMS.Presentation.Popup.Catalog
                     Debug.WriteLine("UpdateActionButtons: error counting copies: " + ex);
                 }
 
+                // If the resource is reference-only, never show Borrow or Reserve regardless of permissions/availability.
+                if (isReferenceLoan)
+                {
+                    // Borrow and Reserve remain hidden (download already handled above).
+                    return;
+                }
+
                 if (availableCopies > 0)
                 {
                     if (canBorrow)
                     {
-                        try { BtnBorrow.Visible = BtnBorrow.Enabled = false; } catch { }
+                        try { BtnBorrow.Visible = BtnBorrow.Enabled = false; } catch { } // preserved original behavior (no borrow UI shown in this path)
                     }
                     // do not show reserve when copies are available
                 }
@@ -734,6 +754,90 @@ namespace LMS.Presentation.Popup.Catalog
             {
                 Debug.WriteLine("BtnCancel_Click (download) failed: " + ex);
                 MessageBox.Show("Failed to open download link dialog.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Reserve button click in ViewBookDetails.
+        /// Shows a confirmation dialog, creates reservation in DB, and displays result.
+        /// </summary>
+        private void BtnReserve_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentBook == null)
+                {
+                    MessageBox.Show("No book selected.", "Reserve", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_currentUser == null)
+                {
+                    MessageBox.Show("You must be logged in to reserve a book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Show confirmation dialog
+                var result = MessageBox.Show(
+                    "Do you want to reserve this book?",
+                    "Reserve Book",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        var reservationManager = new LMS.BusinessLogic.Managers.ReservationManager();
+                        int memberId = reservationManager.GetMemberIdByUserId(_currentUser.UserID);
+
+                        if (memberId <= 0)
+                        {
+                            MessageBox.Show("Unable to find your member profile.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        // Check if already reserved
+                        if (reservationManager.HasActiveReservation(_currentBook.BookID, memberId))
+                        {
+                            MessageBox.Show("You already have an active reservation for this book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
+                        // Create the reservation
+                        var reservation = reservationManager.CreateReservation(_currentBook.BookID, memberId);
+
+                        if (reservation != null)
+                        {
+                            MessageBox.Show(
+                                "This book has been reserved for you. Please check back later for availability.",
+                                "Reservation Successful",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+
+                            // Hide the reserve button after successful reservation
+                            try { BtnReserve.Visible = BtnReserve.Enabled = false; } catch { }
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Unable to reserve this book. Please try again later.",
+                                "Reservation Failed",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("CreateReservation failed: " + ex);
+                        MessageBox.Show("An error occurred while reserving the book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("BtnReserve_Click failed: " + ex);
+                MessageBox.Show("Failed to reserve book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

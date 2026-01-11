@@ -228,19 +228,36 @@ namespace LMS.Presentation.UserControls.Management
 
             foreach (var member in members)
             {
+                // Format effective values - show penalty indicator if reduced
+                string maxBooksDisplay = member.PenaltyLevel > 0
+                    ? $"{member.EffectiveMaxBooksAllowed} (-{member.PenaltyLevel})"
+                    : member.MaxBooksAllowed.ToString();
+
+                string borrowingPeriodDisplay = member.PenaltyLevel > 0
+                    ? $"{member.EffectiveBorrowingPeriod} days (-{member.PenaltyLevel})"
+                    : $"{member.BorrowingPeriod} days";
+
+                string renewalLimitDisplay = member.PenaltyLevel > 0
+                    ? $"{member.EffectiveRenewalLimit} (-{member.PenaltyLevel})"
+                    : member.RenewalLimit.ToString();
+
+                string reservationDisplay = member.EffectiveReservationPrivilege ? "Yes" : "No";
+                if (member.ReservationPrivilege && !member.EffectiveReservationPrivilege)
+                    reservationDisplay = "No (Penalty)";
+
                 DgwMembers.Rows.Add(
                     rowNumber++,
-                    member.FormattedID,  // Changed from member.MemberID
+                    member.FormattedID,
                     member.FullName,
                     member.MemberType,
                     member.Username,
                     member.Email,
                     member.Address,
                     member.ContactNumber,
-                    member.MaxBooksAllowed,
-                    $"{member.BorrowingPeriod} days",
-                    member.RenewalLimit,
-                    member.ReservationPrivilege ? "Yes" : "No",
+                    maxBooksDisplay,
+                    borrowingPeriodDisplay,
+                    renewalLimitDisplay,
+                    reservationDisplay,
                     $"₱{member.FineRate:F2}",
                     member.RegistrationDate.ToString("MMM dd, yyyy"),
                     member.ExpirationDate.ToString("MMM dd, yyyy"),
