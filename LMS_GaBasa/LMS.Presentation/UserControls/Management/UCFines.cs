@@ -128,8 +128,9 @@ namespace LMS.Presentation.UserControls.Management
             // 4. LblTotalFines - total fines from Fine table (unpaid)
             LblTotalFines.Text = $"Total Fines: ₱{memberInfo.TotalUnpaidFines:N2}";
 
-            // 5. LblBooksCurrentlyBorrowed - currently borrowed / limit from MemberType
-            LblBooksCurrentlyBorrowed.Text = $"Books Currently Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.MaxBooksAllowed}";
+            // 5. LblBooksCurrentlyBorrowed - currently borrowed / effective limit
+            // Show effective limit with penalty applied
+            LblBooksCurrentlyBorrowed.Text = $"Books Currently Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.EffectiveMaxBooksAllowed}";
 
             // 6. LblOverdueCount - how many overdues they have
             LblOverdueCount.Text = $"Overdue Count: {memberInfo.OverdueCount}";
@@ -232,10 +233,14 @@ namespace LMS.Presentation.UserControls.Management
                 if (memberInfo != null)
                 {
                     _currentMember = memberInfo;
-                    // Update only totals part to avoid overwriting other displayed fields unnecessarily
+                    // Update totals with effective values
                     LblTotalFines.Text = $"Total Fines: ₱{memberInfo.TotalUnpaidFines:N2}";
-                    LblBooksCurrentlyBorrowed.Text = $"Books Currently Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.MaxBooksAllowed}";
+                    LblBooksCurrentlyBorrowed.Text = $"Books Currently Borrowed: {memberInfo.CurrentBorrowedCount} / {memberInfo.EffectiveMaxBooksAllowed}";
                     LblOverdueCount.Text = $"Overdue Count: {memberInfo.OverdueCount}";
+
+                    // Update status in real-time as well
+                    LblStatus.Text = $"Status: {memberInfo.Status}";
+                    SetStatusColor(memberInfo.Status);
                 }
             }
             catch

@@ -146,7 +146,43 @@ namespace LMS.BusinessLogic.Managers
 
         public DTORenewalInfo GetRenewalInfoByAccession(string accessionNumber)
         {
-            return _circulationRepo.GetRenewalInfoByAccession(accessionNumber);
+            if (string.IsNullOrWhiteSpace(accessionNumber))
+                return null;
+
+            var info = _circulationRepo.GetRenewalInfoByAccession(accessionNumber.Trim());
+            if (info == null)
+                return null;
+
+            // Fetch member info so we can apply penalty adjustments and get current fines/overdues
+            var member = _circulationRepo.GetMemberInfoByMemberId(info.MemberID);
+            if (member != null)
+            {
+                // Need to populate these since GetMemberInfoByMemberId doesn't include them
+                member.OverdueCount = _circulationRepo.GetOverdueCount(info.MemberID);
+                member.TotalUnpaidFines = _circulationRepo.GetTotalUnpaidFines(info.MemberID);
+
+                // Determine penalty level: 0 = none, 1 = has fine OR overdue, 2 = has both
+                bool hasFines = member.TotalUnpaidFines > 0m;
+                bool hasOverdues = member.OverdueCount > 0;
+
+                int penalty = 0;
+                if (hasFines && hasOverdues) penalty = 2;
+                else if (hasFines || hasOverdues) penalty = 1;
+
+                // Apply penalty to the borrowing period used for new due date calculation
+                info.BorrowingPeriod = Math.Max(1, member.BorrowingPeriod - penalty);
+
+                // Apply penalty to renewal limit (override repo-provided MaxRenewals with effective value)
+                info.MaxRenewals = Math.Max(0, member.RenewalLimit - penalty);
+            }
+
+            // Re-evaluate renewal eligibility using adjusted MaxRenewals
+            info.IsWithinRenewalLimit = info.RenewalCount < info.MaxRenewals;
+
+            // CanRenew is computed automatically from IsWithinRenewalLimit and HasActiveReservation
+            // No need to set it - it's a read-only computed property
+
+            return info;
         }
 
         public bool RenewBorrowingTransaction(int transactionId, out DateTime newDueDate)

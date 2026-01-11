@@ -57,18 +57,106 @@ namespace LMS.Presentation.UserControls.Profile
             LblActualRegDate.Text = profile.RegistrationDate.ToString("MMMM d, yyyy");
             LblActualExpDate.Text = profile.ExpirationDate.ToString("MMMM d, yyyy");
 
-            // Member privileges
-            LblNumberMaxBooksAllowed.Text = $"{profile.MaxBooksAllowed} books";
-            LblNumberBorrowingPeriod.Text = $"{profile.BorrowingPeriod} days";
-            LblNumberRenewalLimit.Text = $"{profile.RenewalLimit} times";
-            LblBoolReservationPrivilege.Text = profile.ReservationPrivilege ? "Yes" : "No";
+            // Calculate penalty level and effective privileges
+            int penaltyLevel = CalculatePenaltyLevel(profile);
+            int effectiveMaxBooks = Math.Max(0, profile.MaxBooksAllowed - penaltyLevel);
+            int effectiveBorrowingPeriod = Math.Max(1, profile.BorrowingPeriod - penaltyLevel);
+            int effectiveRenewalLimit = Math.Max(0, profile.RenewalLimit - penaltyLevel);
+            bool effectiveReservationPrivilege = profile.ReservationPrivilege && penaltyLevel == 0;
+
+            // Member privileges - show effective values with penalty indicator when applicable
+            if (penaltyLevel > 0)
+            {
+                LblNumberMaxBooksAllowed.Text = $"{effectiveMaxBooks} books (-{penaltyLevel})";
+                LblNumberMaxBooksAllowed.ForeColor = Color.FromArgb(200, 0, 0);
+
+                LblNumberBorrowingPeriod.Text = $"{effectiveBorrowingPeriod} days (-{penaltyLevel})";
+                LblNumberBorrowingPeriod.ForeColor = Color.FromArgb(200, 0, 0);
+
+                LblNumberRenewalLimit.Text = $"{effectiveRenewalLimit} times (-{penaltyLevel})";
+                LblNumberRenewalLimit.ForeColor = Color.FromArgb(200, 0, 0);
+
+                if (profile.ReservationPrivilege && !effectiveReservationPrivilege)
+                {
+                    LblBoolReservationPrivilege.Text = "No (Penalty)";
+                    LblBoolReservationPrivilege.ForeColor = Color.FromArgb(200, 0, 0);
+                }
+                else
+                {
+                    LblBoolReservationPrivilege.Text = effectiveReservationPrivilege ? "Yes" : "No";
+                    LblBoolReservationPrivilege.ForeColor = Color.Black;
+                }
+            }
+            else
+            {
+                LblNumberMaxBooksAllowed.Text = $"{profile.MaxBooksAllowed} books";
+                LblNumberMaxBooksAllowed.ForeColor = Color.Black;
+
+                LblNumberBorrowingPeriod.Text = $"{profile.BorrowingPeriod} days";
+                LblNumberBorrowingPeriod.ForeColor = Color.Black;
+
+                LblNumberRenewalLimit.Text = $"{profile.RenewalLimit} times";
+                LblNumberRenewalLimit.ForeColor = Color.Black;
+
+                LblBoolReservationPrivilege.Text = profile.ReservationPrivilege ? "Yes" : "No";
+                LblBoolReservationPrivilege.ForeColor = Color.Black;
+            }
+
             LblNumberFineRate.Text = $"₱ {profile.FineRate:N2} / day";
+
+            // Account Standing
+            SetAccountStanding(profile);
 
             // Reposition labels to prevent overlap
             RepositionHeaderLabels();
 
             // Load profile photo
             LoadProfileImage(profile.PhotoPath);
+        }
+
+        /// <summary>
+        /// Calculates the penalty level based on fines and overdues.
+        /// 0 = good standing (no fines, no overdues)
+        /// 1 = has fine OR overdue
+        /// 2 = has BOTH fine AND overdue
+        /// </summary>
+        private int CalculatePenaltyLevel(MemberProfileDto profile)
+        {
+            bool hasFines = profile.TotalUnpaidFines > 0m;
+            bool hasOverdues = profile.OverdueCount > 0;
+
+            if (hasFines && hasOverdues) return 2;
+            if (hasFines || hasOverdues) return 1;
+            return 0;
+        }
+
+        /// <summary>
+        /// Determines and displays the account standing based on fines and overdues.
+        /// </summary>
+        private void SetAccountStanding(MemberProfileDto profile)
+        {
+            bool hasFines = profile.TotalUnpaidFines > 0;
+            bool hasOverdues = profile.OverdueCount > 0;
+            bool fineExceedsMaxCap = profile.MaxFineCap > 0 && profile.TotalUnpaidFines >= profile.MaxFineCap;
+
+            // Suspended: fine reached MaxFineCap
+            if (fineExceedsMaxCap)
+            {
+                LblActualAccountStanding.Text = "Suspended";
+                LblActualAccountStanding.ForeColor = Color.FromArgb(200, 0, 0); // Red
+            }
+            // Restricted: has at least 1 fine or overdue
+            else if (hasFines || hasOverdues)
+            {
+                LblActualAccountStanding.Text = "Restricted";
+                LblActualAccountStanding.ForeColor = Color.FromArgb(255, 165, 0); // Orange
+            }
+            // Good: no fines and no overdues
+            else
+            {
+                LblActualAccountStanding.Text = "Good";
+                LblActualAccountStanding.ForeColor = Color.FromArgb(0, 200, 0); // Green
+            }
         }
 
         /// <summary>
@@ -151,7 +239,7 @@ namespace LMS.Presentation.UserControls.Profile
         /// </summary>
         private void BtnViewValidID_Click(object sender, EventArgs e)
         {
-            MemberProfileDto profile = _memberProfileService.GetMemberProfile(_currentUserId);
+            MemberProfileDto profile = _member_profile_service_getprofile_safe();
             if (profile == null)
             {
                 MessageBox.Show("Could not load member profile.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -169,6 +257,19 @@ namespace LMS.Presentation.UserControls.Profile
             var viewForm = new ViewValidID();
             viewForm.LoadValidID(resolvedPath);
             viewForm.ShowDialog();
+        }
+
+        // small helper to safely get profile in event handlers
+        private MemberProfileDto _member_profile_service_getprofile_safe()
+        {
+            try
+            {
+                return _memberProfileService.GetMemberProfile(_currentUserId);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>

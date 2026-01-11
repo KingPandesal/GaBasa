@@ -36,7 +36,18 @@ namespace LMS.DataAccess.Repositories
                         m.MemberID, m.[Address], m.RegistrationDate, m.ExpirationDate, 
                         m.ValidID, m.[Status] AS MemberStatus,
                         mt.TypeName, mt.MaxBooksAllowed, mt.BorrowingPeriod, 
-                        mt.RenewalLimit, mt.ReservationPrivilege, mt.FineRate
+                        mt.RenewalLimit, mt.ReservationPrivilege, mt.FineRate, mt.MaxFineCap,
+                        -- Calculate TotalUnpaidFines from Fine table
+                        ISNULL((SELECT SUM(f.FineAmount) 
+                                FROM [Fine] f 
+                                WHERE f.MemberID = m.MemberID 
+                                  AND f.[Status] = 'Unpaid'), 0) AS TotalUnpaidFines,
+                        -- Calculate OverdueCount from BorrowingTransaction
+                        ISNULL((SELECT COUNT(*) 
+                                FROM [BorrowingTransaction] bt 
+                                WHERE bt.MemberID = m.MemberID 
+                                  AND bt.ReturnDate IS NULL
+                                  AND (bt.[Status] = 'Overdue' OR bt.DueDate < GETDATE())), 0) AS OverdueCount
                     FROM [User] u
                     INNER JOIN [Member] m ON u.UserID = m.UserID
                     INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
@@ -73,7 +84,10 @@ namespace LMS.DataAccess.Repositories
                         BorrowingPeriod = reader.IsDBNull(reader.GetOrdinal("BorrowingPeriod")) ? 0 : reader.GetInt32(reader.GetOrdinal("BorrowingPeriod")),
                         RenewalLimit = reader.IsDBNull(reader.GetOrdinal("RenewalLimit")) ? 0 : reader.GetInt32(reader.GetOrdinal("RenewalLimit")),
                         ReservationPrivilege = !reader.IsDBNull(reader.GetOrdinal("ReservationPrivilege")) && reader.GetBoolean(reader.GetOrdinal("ReservationPrivilege")),
-                        FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate"))
+                        FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate")),
+                        MaxFineCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap")),
+                        TotalUnpaidFines = reader.IsDBNull(reader.GetOrdinal("TotalUnpaidFines")) ? 0m : reader.GetDecimal(reader.GetOrdinal("TotalUnpaidFines")),
+                        OverdueCount = reader.IsDBNull(reader.GetOrdinal("OverdueCount")) ? 0 : reader.GetInt32(reader.GetOrdinal("OverdueCount"))
                     };
                 }
             }

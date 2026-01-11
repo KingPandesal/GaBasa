@@ -46,7 +46,9 @@ namespace LMS.DataAccess.Repositories
                         mt.MaxBooksAllowed,
                         mt.FineRate,
                         mt.MaxFineCap,
-                        mt.BorrowingPeriod
+                        mt.BorrowingPeriod,
+                        mt.RenewalLimit,
+                        mt.ReservationPrivilege
                     FROM [Member] m
                     INNER JOIN [User] u ON m.UserID = u.UserID
                     INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
@@ -72,7 +74,9 @@ namespace LMS.DataAccess.Repositories
                         MaxBooksAllowed = reader.IsDBNull(reader.GetOrdinal("MaxBooksAllowed")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaxBooksAllowed")),
                         FineRate = reader.IsDBNull(reader.GetOrdinal("FineRate")) ? 0m : reader.GetDecimal(reader.GetOrdinal("FineRate")),
                         MaxFineCap = reader.IsDBNull(reader.GetOrdinal("MaxFineCap")) ? 0m : reader.GetDecimal(reader.GetOrdinal("MaxFineCap")),
-                        BorrowingPeriod = reader.IsDBNull(reader.GetOrdinal("BorrowingPeriod")) ? 14 : reader.GetInt32(reader.GetOrdinal("BorrowingPeriod"))
+                        BorrowingPeriod = reader.IsDBNull(reader.GetOrdinal("BorrowingPeriod")) ? 14 : reader.GetInt32(reader.GetOrdinal("BorrowingPeriod")),
+                        RenewalLimit = reader.IsDBNull(reader.GetOrdinal("RenewalLimit")) ? 2 : reader.GetInt32(reader.GetOrdinal("RenewalLimit")),
+                        ReservationPrivilege = !reader.IsDBNull(reader.GetOrdinal("ReservationPrivilege")) && reader.GetBoolean(reader.GetOrdinal("ReservationPrivilege"))
                     };
                 }
             }
@@ -417,6 +421,13 @@ namespace LMS.DataAccess.Repositories
                         }
 
                         tran.Commit();
+
+                        // After adding a fine, check if member should be suspended
+                        if (fineAmount > 0)
+                        {
+                            CheckAndSuspendMemberIfNeeded(memberId);
+                        }
+
                         return true;
                     }
                     catch
@@ -517,6 +528,13 @@ namespace LMS.DataAccess.Repositories
                         }
 
                         tran.Commit();
+
+                        // After adding a fine, check if member should be suspended
+                        if (fineAmount > 0)
+                        {
+                            CheckAndSuspendMemberIfNeeded(memberId);
+                        }
+
                         return true;
                     }
                     catch
@@ -707,6 +725,7 @@ namespace LMS.DataAccess.Repositories
 
         /// <summary>
         /// Inserts a fine charge for the member. If transactionId &lt;= 0, TransactionID will be inserted as NULL.
+        /// Also checks if member should be suspended after the fine is added.
         /// </summary>
         public bool AddFineCharge(int memberId, int transactionId, decimal amount, string fineType, DateTime dateIssued, string status)
         {
@@ -733,7 +752,15 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@Status", DbType.String, status);
 
                 int rows = cmd.ExecuteNonQuery();
-                return rows > 0;
+                
+                if (rows > 0)
+                {
+                    // After adding a fine, check if member should be suspended
+                    CheckAndSuspendMemberIfNeeded(memberId);
+                    return true;
+                }
+                
+                return false;
             }
         }
 
@@ -741,6 +768,8 @@ namespace LMS.DataAccess.Repositories
         {
             if (fineIds == null || fineIds.Count == 0)
                 return false;
+
+            int? memberId = null;
 
             using (var conn = _db.GetConnection())
             {
@@ -753,6 +782,17 @@ namespace LMS.DataAccess.Repositories
                     {
                         foreach (var fineId in fineIds)
                         {
+                            // Get member ID before updating (for reactivation check)
+                            if (!memberId.HasValue)
+                            {
+                                cmd.Parameters.Clear();
+                                cmd.CommandText = @"SELECT MemberID FROM [Fine] WHERE FineID = @FineID";
+                                AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+                                var result = cmd.ExecuteScalar();
+                                if (result != null && result != DBNull.Value)
+                                    memberId = Convert.ToInt32(result);
+                            }
+
                             cmd.Parameters.Clear();
                             cmd.CommandText = @"
                                 UPDATE [Fine]
@@ -766,6 +806,13 @@ namespace LMS.DataAccess.Repositories
                         }
 
                         tran.Commit();
+
+                        // After waiving fines, check if member should be reactivated
+                        if (memberId.HasValue && memberId.Value > 0)
+                        {
+                            CheckAndReactivateMemberIfNeeded(memberId.Value);
+                        }
+
                         return true;
                     }
                     catch
@@ -780,6 +827,7 @@ namespace LMS.DataAccess.Repositories
         /// <summary>
         /// Processes payment for the specified fines.
         /// Inserts Payment records and updates Fine.Status to 'Paid'.
+        /// Also checks if member should be reactivated after payment.
         /// Returns list of created PaymentIDs (empty on failure).
         /// </summary>
         public List<int> ProcessPayment(List<int> fineIds, string paymentMode, DateTime paymentDate)
@@ -792,6 +840,8 @@ namespace LMS.DataAccess.Repositories
             if (string.IsNullOrWhiteSpace(paymentMode))
                 paymentMode = "Cash";
 
+            int? memberId = null;
+
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
@@ -803,48 +853,61 @@ namespace LMS.DataAccess.Repositories
                     {
                         foreach (var fineId in fineIds)
                         {
-                            // Get the fine amount for this fine and ensure it's still unpaid
+                            // Get the fine amount and member ID for this fine and ensure it's still unpaid
                             cmd.Parameters.Clear();
-                            cmd.CommandText = @"SELECT FineAmount FROM [Fine] WHERE FineID = @FineID AND [Status] = 'Unpaid'";
+                            cmd.CommandText = @"SELECT FineAmount, MemberID FROM [Fine] WHERE FineID = @FineID AND [Status] = 'Unpaid'";
                             AddParameter(cmd, "@FineID", DbType.Int32, fineId);
 
-                            var result = cmd.ExecuteScalar();
-                            if (result == null || result == DBNull.Value)
-                                continue; // skip if not found or already paid/waived
-
-                            decimal fineAmount = Convert.ToDecimal(result);
-
-                            // Insert Payment record and get PaymentID
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = @"
-                                INSERT INTO [Payment] (FineID, PaymentDate, AmountPaid, PaymentMode)
-                                VALUES (@FineID, @PaymentDate, @AmountPaid, @PaymentMode);
-                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
-                            AddParameter(cmd, "@FineID", DbType.Int32, fineId);
-                            AddParameter(cmd, "@PaymentDate", DbType.DateTime, paymentDate);
-                            AddParameter(cmd, "@AmountPaid", DbType.Decimal, fineAmount);
-                            AddParameter(cmd, "@PaymentMode", DbType.String, paymentMode);
-
-                            var inserted = cmd.ExecuteScalar();
-                            int paymentId = inserted == null || inserted == DBNull.Value ? 0 : Convert.ToInt32(inserted);
-                            if (paymentId > 0)
+                            using (var reader = cmd.ExecuteReader())
                             {
-                                paymentIds.Add(paymentId);
+                                if (!reader.Read())
+                                    continue; // skip if not found or already paid/waived
 
-                                // Update Fine status to 'Paid'
+                                decimal fineAmount = reader.GetDecimal(0);
+                                if (!memberId.HasValue)
+                                    memberId = reader.GetInt32(1);
+
+                                reader.Close();
+
+                                // Insert Payment record and get PaymentID
                                 cmd.Parameters.Clear();
                                 cmd.CommandText = @"
-                                    UPDATE [Fine]
-                                    SET [Status] = 'Paid'
-                                    WHERE FineID = @FineID";
+                                    INSERT INTO [Payment] (FineID, PaymentDate, AmountPaid, PaymentMode)
+                                    VALUES (@FineID, @PaymentDate, @AmountPaid, @PaymentMode);
+                                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                                 AddParameter(cmd, "@FineID", DbType.Int32, fineId);
-                                cmd.ExecuteNonQuery();
+                                AddParameter(cmd, "@PaymentDate", DbType.DateTime, paymentDate);
+                                AddParameter(cmd, "@AmountPaid", DbType.Decimal, fineAmount);
+                                AddParameter(cmd, "@PaymentMode", DbType.String, paymentMode);
+
+                                var inserted = cmd.ExecuteScalar();
+                                int paymentId = inserted == null || inserted == DBNull.Value ? 0 : Convert.ToInt32(inserted);
+                                if (paymentId > 0)
+                                {
+                                    paymentIds.Add(paymentId);
+
+                                    // Update Fine status to 'Paid'
+                                    cmd.Parameters.Clear();
+                                    cmd.CommandText = @"
+                                        UPDATE [Fine]
+                                        SET [Status] = 'Paid'
+                                        WHERE FineID = @FineID";
+
+                                    AddParameter(cmd, "@FineID", DbType.Int32, fineId);
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
 
                         tran.Commit();
+
+                        // After successful payment, check if member should be reactivated
+                        if (memberId.HasValue && memberId.Value > 0)
+                        {
+                            CheckAndReactivateMemberIfNeeded(memberId.Value);
+                        }
+
                         return paymentIds;
                     }
                     catch
@@ -1086,6 +1149,119 @@ namespace LMS.DataAccess.Repositories
                         return false;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Updates the Member table Status field for the specified member.
+        /// </summary>
+        public bool UpdateMemberStatus(int memberId, string status)
+        {
+            if (memberId <= 0 || string.IsNullOrWhiteSpace(status))
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    UPDATE [Member]
+                    SET [Status] = @Status
+                    WHERE MemberID = @MemberID";
+
+                AddParameter(cmd, "@Status", DbType.String, status.Trim());
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the MaxFineCap for a member from their MemberType.
+        /// </summary>
+        public decimal GetMemberMaxFineCap(int memberId)
+        {
+            if (memberId <= 0)
+                return 0m;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT ISNULL(mt.MaxFineCap, 0)
+                    FROM [Member] m
+                    INNER JOIN [MemberType] mt ON m.MemberTypeID = mt.MemberTypeID
+                    WHERE m.MemberID = @MemberID";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                var result = cmd.ExecuteScalar();
+                return result != null && result != DBNull.Value ? Convert.ToDecimal(result) : 0m;
+            }
+        }
+
+        /// <summary>
+        /// Checks if member's total unpaid fines have reached or exceeded MaxFineCap and suspends them if so.
+        /// </summary>
+        public void CheckAndSuspendMemberIfNeeded(int memberId)
+        {
+            if (memberId <= 0) return;
+
+            decimal totalFines = GetTotalUnpaidFines(memberId);
+            decimal maxCap = GetMemberMaxFineCap(memberId);
+
+            // Only suspend if MaxFineCap > 0 and fines have reached it
+            if (maxCap > 0 && totalFines >= maxCap)
+            {
+                UpdateMemberStatus(memberId, "Suspended");
+            }
+        }
+
+        /// <summary>
+        /// Checks if member's total unpaid fines have dropped below MaxFineCap and reactivates them if so.
+        /// Only reactivates if current status is "Suspended".
+        /// </summary>
+        public void CheckAndReactivateMemberIfNeeded(int memberId)
+        {
+            if (memberId <= 0) return;
+
+            // First check if member is currently suspended
+            string currentStatus = GetMemberStatus(memberId);
+            if (!string.Equals(currentStatus, "Suspended", StringComparison.OrdinalIgnoreCase))
+                return; // Only reactivate suspended members
+
+            decimal totalFines = GetTotalUnpaidFines(memberId);
+            decimal maxCap = GetMemberMaxFineCap(memberId);
+
+            // Reactivate if fines are now below the cap (or cap is 0 meaning no limit)
+            if (maxCap <= 0 || totalFines < maxCap)
+            {
+                UpdateMemberStatus(memberId, "Active");
+            }
+        }
+
+        /// <summary>
+        /// Gets the current status of a member.
+        /// </summary>
+        private string GetMemberStatus(int memberId)
+        {
+            if (memberId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"SELECT [Status] FROM [Member] WHERE MemberID = @MemberID";
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                var result = cmd.ExecuteScalar();
+                return result != null && result != DBNull.Value ? result.ToString() : null;
             }
         }
     }

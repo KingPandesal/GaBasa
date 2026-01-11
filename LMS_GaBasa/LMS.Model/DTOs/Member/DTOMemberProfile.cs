@@ -23,6 +23,11 @@ namespace LMS.Model.DTOs.Member
         public int RenewalLimit { get; set; }
         public bool ReservationPrivilege { get; set; }
         public decimal FineRate { get; set; }
+        public decimal MaxFineCap { get; set; }
+
+        // Account Standing data
+        public decimal TotalUnpaidFines { get; set; }
+        public int OverdueCount { get; set; }
     }
 
 }

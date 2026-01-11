@@ -23,11 +23,52 @@ namespace LMS.Model.DTOs.Circulation
         public decimal FineRate { get; set; }
         public decimal MaxFineCap { get; set; }
         public int BorrowingPeriod { get; set; } // in days
+        public int RenewalLimit { get; set; }
+        public bool ReservationPrivilege { get; set; }
 
         // Borrowing statistics
         public int CurrentBorrowedCount { get; set; }
         public int OverdueCount { get; set; }
         public decimal TotalUnpaidFines { get; set; }
+
+        /// <summary>
+        /// Calculates the penalty level based on fines and overdues.
+        /// 0 = Good standing, 1 = has fine OR overdue, 2 = has BOTH fine AND overdue
+        /// </summary>
+        public int PenaltyLevel
+        {
+            get
+            {
+                bool hasFines = TotalUnpaidFines > 0;
+                bool hasOverdues = OverdueCount > 0;
+
+                if (hasFines && hasOverdues)
+                    return 2; // Both fine and overdue
+                if (hasFines || hasOverdues)
+                    return 1; // Either fine or overdue
+                return 0; // Good standing
+            }
+        }
+        /// <summary>
+        /// Effective max books allowed after applying penalty reduction.
+        /// </summary>
+        public int EffectiveMaxBooksAllowed => Math.Max(0, MaxBooksAllowed - PenaltyLevel);
+
+        /// <summary>
+        /// Effective borrowing period after applying penalty reduction.
+        /// </summary>
+        public int EffectiveBorrowingPeriod => Math.Max(1, BorrowingPeriod - PenaltyLevel);
+
+        /// <summary>
+        /// Effective renewal limit after applying penalty reduction.
+        /// </summary>
+        public int EffectiveRenewalLimit => Math.Max(0, RenewalLimit - PenaltyLevel);
+        
+        /// <summary>
+        /// Effective reservation privilege - disabled if any penalty exists.
+        /// </summary>
+        public bool EffectiveReservationPrivilege => ReservationPrivilege && PenaltyLevel == 0;
+
 
         // Eligibility checks
         public bool IsActive => string.Equals(Status, "Active", StringComparison.OrdinalIgnoreCase);
