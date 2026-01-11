@@ -29,234 +29,150 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCReserve));
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.PnlOverdueBooks = new System.Windows.Forms.Panel();
+            this.Pnl1 = new System.Windows.Forms.Panel();
+            this.LblOverdue = new System.Windows.Forms.Label();
+            this.LblViewDetails = new System.Windows.Forms.Label();
+            this.LblAccesionNumber = new System.Windows.Forms.Label();
+            this.LblResourceType = new System.Windows.Forms.Label();
+            this.LblCategory = new System.Windows.Forms.Label();
+            this.PicBxBookCoverImage = new System.Windows.Forms.PictureBox();
+            this.LblTitle = new System.Windows.Forms.Label();
+            this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
+            this.LblSearch = new System.Windows.Forms.Label();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.label37 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.LblOverdueBooks = new System.Windows.Forms.Label();
+            this.LblExpirationDate = new System.Windows.Forms.Label();
+            this.LblReservationDate = new System.Windows.Forms.Label();
+            this.PnlOverdueBooks.SuspendLayout();
+            this.Pnl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCoverImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox2
+            // PnlOverdueBooks
             // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(671, 0);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(199, 237);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 25;
-            this.pictureBox2.TabStop = false;
+            this.PnlOverdueBooks.Controls.Add(this.Pnl1);
+            this.PnlOverdueBooks.Location = new System.Drawing.Point(31, 162);
+            this.PnlOverdueBooks.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PnlOverdueBooks.Name = "PnlOverdueBooks";
+            this.PnlOverdueBooks.Size = new System.Drawing.Size(1511, 622);
+            this.PnlOverdueBooks.TabIndex = 83;
             // 
-            // label8
+            // Pnl1
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label8.Location = new System.Drawing.Point(235, 113);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(150, 20);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Acc. No: 12324321";
+            this.Pnl1.Controls.Add(this.LblExpirationDate);
+            this.Pnl1.Controls.Add(this.LblReservationDate);
+            this.Pnl1.Controls.Add(this.LblOverdue);
+            this.Pnl1.Controls.Add(this.LblViewDetails);
+            this.Pnl1.Controls.Add(this.LblAccesionNumber);
+            this.Pnl1.Controls.Add(this.LblResourceType);
+            this.Pnl1.Controls.Add(this.LblCategory);
+            this.Pnl1.Controls.Add(this.PicBxBookCoverImage);
+            this.Pnl1.Controls.Add(this.LblTitle);
+            this.Pnl1.Location = new System.Drawing.Point(7, 7);
+            this.Pnl1.Name = "Pnl1";
+            this.Pnl1.Size = new System.Drawing.Size(738, 303);
+            this.Pnl1.TabIndex = 50;
             // 
-            // label7
+            // LblOverdue
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label7.Location = new System.Drawing.Point(235, 92);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(224, 20);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Author: Just Kidding Rowling";
+            this.LblOverdue.AutoSize = true;
+            this.LblOverdue.BackColor = System.Drawing.Color.Red;
+            this.LblOverdue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOverdue.ForeColor = System.Drawing.Color.White;
+            this.LblOverdue.Location = new System.Drawing.Point(351, 49);
+            this.LblOverdue.Name = "LblOverdue";
+            this.LblOverdue.Padding = new System.Windows.Forms.Padding(4);
+            this.LblOverdue.Size = new System.Drawing.Size(95, 36);
+            this.LblOverdue.TabIndex = 49;
+            this.LblOverdue.Text = "Overdue";
             // 
-            // panel1
+            // LblViewDetails
             // 
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.label12);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.pictureBox2);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(30, 162);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1343, 239);
-            this.panel1.TabIndex = 43;
+            this.LblViewDetails.AutoSize = true;
+            this.LblViewDetails.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LblViewDetails.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblViewDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblViewDetails.Location = new System.Drawing.Point(599, 251);
+            this.LblViewDetails.Name = "LblViewDetails";
+            this.LblViewDetails.Size = new System.Drawing.Size(117, 28);
+            this.LblViewDetails.TabIndex = 36;
+            this.LblViewDetails.Text = "View Details";
             // 
-            // label6
+            // LblAccesionNumber
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label6.Location = new System.Drawing.Point(1205, 206);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(103, 20);
-            this.label6.TabIndex = 42;
-            this.label6.Text = "View Details";
+            this.LblAccesionNumber.AutoSize = true;
+            this.LblAccesionNumber.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblAccesionNumber.Location = new System.Drawing.Point(258, 134);
+            this.LblAccesionNumber.Name = "LblAccesionNumber";
+            this.LblAccesionNumber.Size = new System.Drawing.Size(83, 28);
+            this.LblAccesionNumber.TabIndex = 6;
+            this.LblAccesionNumber.Text = "Acc. No:";
             // 
-            // label9
+            // LblResourceType
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(902, 173);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(258, 20);
-            this.label9.TabIndex = 41;
-            this.label9.Text = "DUE DATE: January 12, 2026";
+            this.LblResourceType.AutoSize = true;
+            this.LblResourceType.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblResourceType.Location = new System.Drawing.Point(258, 108);
+            this.LblResourceType.Name = "LblResourceType";
+            this.LblResourceType.Size = new System.Drawing.Size(140, 28);
+            this.LblResourceType.TabIndex = 5;
+            this.LblResourceType.Text = "Resource Type:";
             // 
-            // label10
+            // LblCategory
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label10.Location = new System.Drawing.Point(902, 113);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(150, 20);
-            this.label10.TabIndex = 40;
-            this.label10.Text = "Acc. No: 12324321";
+            this.LblCategory.AutoSize = true;
+            this.LblCategory.BackColor = System.Drawing.Color.OrangeRed;
+            this.LblCategory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblCategory.ForeColor = System.Drawing.Color.White;
+            this.LblCategory.Location = new System.Drawing.Point(261, 49);
+            this.LblCategory.Name = "LblCategory";
+            this.LblCategory.Padding = new System.Windows.Forms.Padding(4);
+            this.LblCategory.Size = new System.Drawing.Size(72, 36);
+            this.LblCategory.TabIndex = 2;
+            this.LblCategory.Text = "Thesis";
             // 
-            // label11
+            // PicBxBookCoverImage
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label11.Location = new System.Drawing.Point(902, 92);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(224, 20);
-            this.label11.TabIndex = 39;
-            this.label11.Text = "Author: Just Kidding Rowling";
+            this.PicBxBookCoverImage.Image = ((System.Drawing.Image)(resources.GetObject("PicBxBookCoverImage.Image")));
+            this.PicBxBookCoverImage.Location = new System.Drawing.Point(-3, -5);
+            this.PicBxBookCoverImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PicBxBookCoverImage.Name = "PicBxBookCoverImage";
+            this.PicBxBookCoverImage.Size = new System.Drawing.Size(226, 296);
+            this.PicBxBookCoverImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBxBookCoverImage.TabIndex = 0;
+            this.PicBxBookCoverImage.TabStop = false;
             // 
-            // label12
+            // LblTitle
             // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.OrangeRed;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(904, 45);
-            this.label12.Name = "label12";
-            this.label12.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label12.Size = new System.Drawing.Size(67, 26);
-            this.label12.TabIndex = 38;
-            this.label12.Text = "Thesis";
+            this.LblTitle.AutoSize = true;
+            this.LblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTitle.Location = new System.Drawing.Point(253, 3);
+            this.LblTitle.Name = "LblTitle";
+            this.LblTitle.Size = new System.Drawing.Size(380, 36);
+            this.LblTitle.TabIndex = 1;
+            this.LblTitle.Text = "Inspirational Women Leaders...";
             // 
-            // label13
+            // PicBxSearchIcon
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(897, 8);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(316, 30);
-            this.label13.TabIndex = 37;
-            this.label13.Text = "Inspirational Women Leaders...";
+            this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
+            this.PicBxSearchIcon.Location = new System.Drawing.Point(36, 35);
+            this.PicBxSearchIcon.Name = "PicBxSearchIcon";
+            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
+            this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxSearchIcon.TabIndex = 81;
+            this.PicBxSearchIcon.TabStop = false;
             // 
-            // label2
+            // LblSearch
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label2.Location = new System.Drawing.Point(538, 206);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(103, 20);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "View Details";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(235, 173);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(258, 20);
-            this.label5.TabIndex = 35;
-            this.label5.Text = "DUE DATE: January 12, 2026";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.OrangeRed;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(237, 45);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label4.Size = new System.Drawing.Size(67, 26);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Thesis";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 2);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(201, 237);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(230, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(316, 30);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Inspirational Women Leaders...";
+            this.LblSearch.AutoSize = true;
+            this.LblSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblSearch.Location = new System.Drawing.Point(75, 36);
+            this.LblSearch.Name = "LblSearch";
+            this.LblSearch.Size = new System.Drawing.Size(70, 28);
+            this.LblSearch.TabIndex = 80;
+            this.LblSearch.Text = "Search";
             // 
             // TxtSearchBar
             // 
@@ -264,446 +180,87 @@
             this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
             this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
             this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(31, 34);
-            this.TxtSearchBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TxtSearchBar.Location = new System.Drawing.Point(155, 32);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(1500, 40);
             this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 40);
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1341, 46);
-            this.TxtSearchBar.TabIndex = 41;
-            this.TxtSearchBar.Text = "Search title, author, or ISBN...";
+            this.TxtSearchBar.Size = new System.Drawing.Size(1391, 40);
+            this.TxtSearchBar.TabIndex = 79;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
             // 
-            // label1
+            // LblOverdueBooks
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(26, 104);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(170, 30);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "Reserved Books";
+            this.LblOverdueBooks.AutoSize = true;
+            this.LblOverdueBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOverdueBooks.Location = new System.Drawing.Point(30, 103);
+            this.LblOverdueBooks.Name = "LblOverdueBooks";
+            this.LblOverdueBooks.Size = new System.Drawing.Size(213, 36);
+            this.LblOverdueBooks.TabIndex = 82;
+            this.LblOverdueBooks.Text = "Borrowed Books";
             // 
-            // panel3
+            // LblExpirationDate
             // 
-            this.panel3.Controls.Add(this.label14);
-            this.panel3.Controls.Add(this.label15);
-            this.panel3.Controls.Add(this.label16);
-            this.panel3.Controls.Add(this.label17);
-            this.panel3.Controls.Add(this.label18);
-            this.panel3.Controls.Add(this.label23);
-            this.panel3.Controls.Add(this.label24);
-            this.panel3.Controls.Add(this.label27);
-            this.panel3.Controls.Add(this.pictureBox5);
-            this.panel3.Controls.Add(this.label28);
-            this.panel3.Controls.Add(this.label31);
-            this.panel3.Controls.Add(this.label32);
-            this.panel3.Controls.Add(this.pictureBox6);
-            this.panel3.Controls.Add(this.label35);
-            this.panel3.Location = new System.Drawing.Point(29, 442);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1343, 239);
-            this.panel3.TabIndex = 44;
+            this.LblExpirationDate.AutoSize = true;
+            this.LblExpirationDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblExpirationDate.Location = new System.Drawing.Point(254, 215);
+            this.LblExpirationDate.Name = "LblExpirationDate";
+            this.LblExpirationDate.Size = new System.Drawing.Size(367, 28);
+            this.LblExpirationDate.TabIndex = 51;
+            this.LblExpirationDate.Text = "EXPIRATION DATE: January 15, 2026 ";
             // 
-            // label14
+            // LblReservationDate
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label14.Location = new System.Drawing.Point(1205, 206);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(103, 20);
-            this.label14.TabIndex = 42;
-            this.label14.Text = "View Details";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(902, 173);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(258, 20);
-            this.label15.TabIndex = 41;
-            this.label15.Text = "DUE DATE: January 12, 2026";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label16.Location = new System.Drawing.Point(902, 113);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(150, 20);
-            this.label16.TabIndex = 40;
-            this.label16.Text = "Acc. No: 12324321";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label17.Location = new System.Drawing.Point(902, 92);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(224, 20);
-            this.label17.TabIndex = 39;
-            this.label17.Text = "Author: Just Kidding Rowling";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.Color.OrangeRed;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(904, 45);
-            this.label18.Name = "label18";
-            this.label18.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label18.Size = new System.Drawing.Size(67, 26);
-            this.label18.TabIndex = 38;
-            this.label18.Text = "Thesis";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(897, 8);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(316, 30);
-            this.label23.TabIndex = 37;
-            this.label23.Text = "Inspirational Women Leaders...";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label24.Location = new System.Drawing.Point(538, 206);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(103, 20);
-            this.label24.TabIndex = 36;
-            this.label24.Text = "View Details";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(235, 173);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(258, 20);
-            this.label27.TabIndex = 35;
-            this.label27.Text = "DUE DATE: January 12, 2026";
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(671, 0);
-            this.pictureBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(199, 237);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 25;
-            this.pictureBox5.TabStop = false;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label28.Location = new System.Drawing.Point(235, 113);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(150, 20);
-            this.label28.TabIndex = 6;
-            this.label28.Text = "Acc. No: 12324321";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label31.Location = new System.Drawing.Point(235, 92);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(224, 20);
-            this.label31.TabIndex = 5;
-            this.label31.Text = "Author: Just Kidding Rowling";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.BackColor = System.Drawing.Color.OrangeRed;
-            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label32.ForeColor = System.Drawing.Color.White;
-            this.label32.Location = new System.Drawing.Point(237, 45);
-            this.label32.Name = "label32";
-            this.label32.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label32.Size = new System.Drawing.Size(67, 26);
-            this.label32.TabIndex = 2;
-            this.label32.Text = "Thesis";
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(3, 2);
-            this.pictureBox6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(201, 237);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 0;
-            this.pictureBox6.TabStop = false;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.Location = new System.Drawing.Point(230, 8);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(316, 30);
-            this.label35.TabIndex = 1;
-            this.label35.Text = "Inspirational Women Leaders...";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label19);
-            this.panel2.Controls.Add(this.label20);
-            this.panel2.Controls.Add(this.label21);
-            this.panel2.Controls.Add(this.label22);
-            this.panel2.Controls.Add(this.label25);
-            this.panel2.Controls.Add(this.label26);
-            this.panel2.Controls.Add(this.label29);
-            this.panel2.Controls.Add(this.label30);
-            this.panel2.Controls.Add(this.pictureBox3);
-            this.panel2.Controls.Add(this.label33);
-            this.panel2.Controls.Add(this.label34);
-            this.panel2.Controls.Add(this.label36);
-            this.panel2.Controls.Add(this.pictureBox4);
-            this.panel2.Controls.Add(this.label37);
-            this.panel2.Location = new System.Drawing.Point(30, 702);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1343, 47);
-            this.panel2.TabIndex = 45;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label19.Location = new System.Drawing.Point(1205, 206);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(103, 20);
-            this.label19.TabIndex = 42;
-            this.label19.Text = "View Details";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(902, 173);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(258, 20);
-            this.label20.TabIndex = 41;
-            this.label20.Text = "DUE DATE: January 12, 2026";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label21.Location = new System.Drawing.Point(902, 113);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(150, 20);
-            this.label21.TabIndex = 40;
-            this.label21.Text = "Acc. No: 12324321";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label22.Location = new System.Drawing.Point(902, 92);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(224, 20);
-            this.label22.TabIndex = 39;
-            this.label22.Text = "Author: Just Kidding Rowling";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.BackColor = System.Drawing.Color.OrangeRed;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(904, 45);
-            this.label25.Name = "label25";
-            this.label25.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label25.Size = new System.Drawing.Size(67, 26);
-            this.label25.TabIndex = 38;
-            this.label25.Text = "Thesis";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(897, 8);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(316, 30);
-            this.label26.TabIndex = 37;
-            this.label26.Text = "Inspirational Women Leaders...";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label29.Location = new System.Drawing.Point(538, 206);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(103, 20);
-            this.label29.TabIndex = 36;
-            this.label29.Text = "View Details";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(235, 173);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(258, 20);
-            this.label30.TabIndex = 35;
-            this.label30.Text = "DUE DATE: January 12, 2026";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(671, 0);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(199, 237);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 25;
-            this.pictureBox3.TabStop = false;
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label33.Location = new System.Drawing.Point(235, 113);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(150, 20);
-            this.label33.TabIndex = 6;
-            this.label33.Text = "Acc. No: 12324321";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label34.Location = new System.Drawing.Point(235, 92);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(224, 20);
-            this.label34.TabIndex = 5;
-            this.label34.Text = "Author: Just Kidding Rowling";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.BackColor = System.Drawing.Color.OrangeRed;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label36.ForeColor = System.Drawing.Color.White;
-            this.label36.Location = new System.Drawing.Point(237, 45);
-            this.label36.Name = "label36";
-            this.label36.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.label36.Size = new System.Drawing.Size(67, 26);
-            this.label36.TabIndex = 2;
-            this.label36.Text = "Thesis";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(3, 2);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(201, 237);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 0;
-            this.pictureBox4.TabStop = false;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label37.Location = new System.Drawing.Point(230, 8);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(316, 30);
-            this.label37.TabIndex = 1;
-            this.label37.Text = "Inspirational Women Leaders...";
+            this.LblReservationDate.AutoSize = true;
+            this.LblReservationDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblReservationDate.Location = new System.Drawing.Point(254, 186);
+            this.LblReservationDate.Name = "LblReservationDate";
+            this.LblReservationDate.Size = new System.Drawing.Size(383, 28);
+            this.LblReservationDate.TabIndex = 50;
+            this.LblReservationDate.Text = "RESERVATION DATE: January 12, 2026 ";
             // 
             // UCReserve
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.PnlOverdueBooks);
+            this.Controls.Add(this.PicBxSearchIcon);
+            this.Controls.Add(this.LblSearch);
             this.Controls.Add(this.TxtSearchBar);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LblOverdueBooks);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCReserve";
-            this.Size = new System.Drawing.Size(1404, 749);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.Size = new System.Drawing.Size(1580, 936);
+            this.PnlOverdueBooks.ResumeLayout(false);
+            this.Pnl1.ResumeLayout(false);
+            this.Pnl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCoverImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label3;
+
+        private System.Windows.Forms.Panel PnlOverdueBooks;
+        private System.Windows.Forms.Panel Pnl1;
+        private System.Windows.Forms.Label LblOverdue;
+        private System.Windows.Forms.Label LblViewDetails;
+        private System.Windows.Forms.Label LblAccesionNumber;
+        private System.Windows.Forms.Label LblResourceType;
+        private System.Windows.Forms.Label LblCategory;
+        private System.Windows.Forms.PictureBox PicBxBookCoverImage;
+        private System.Windows.Forms.Label LblTitle;
+        private System.Windows.Forms.PictureBox PicBxSearchIcon;
+        private System.Windows.Forms.Label LblSearch;
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label LblOverdueBooks;
+        private System.Windows.Forms.Label LblExpirationDate;
+        private System.Windows.Forms.Label LblReservationDate;
     }
 }
