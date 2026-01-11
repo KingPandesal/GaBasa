@@ -33,24 +33,25 @@
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
             this.CmbBxStatusFilter = new System.Windows.Forms.ComboBox();
-            this.CmbBxCategoryFilter = new System.Windows.Forms.ComboBox();
-            this.CmbBxLocationFilter = new System.Windows.Forms.ComboBox();
-            this.CmbBxResourceTypeFilter = new System.Windows.Forms.ComboBox();
             this.BtnApply = new System.Windows.Forms.Button();
             this.LblSearch = new System.Windows.Forms.Label();
-            this.BtnAddReservation = new System.Windows.Forms.Button();
             this.LblPaginationPrevious = new System.Windows.Forms.Button();
             this.LblPaginationNext = new System.Windows.Forms.Button();
             this.LblPaginationShowEntries = new System.Windows.Forms.Label();
             this.LblEntries = new System.Windows.Forms.Label();
             this.CmbBxPaginationNumbers = new System.Windows.Forms.ComboBox();
             this.LblShow = new System.Windows.Forms.Label();
-            this.DgwInventory = new System.Windows.Forms.DataGridView();
-            this.Edit = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Archive = new System.Windows.Forms.DataGridViewImageColumn();
+            this.DgvReservation = new System.Windows.Forms.DataGridView();
             this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnMembername = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBookTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAccessionNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnReservationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnExpirationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgwInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvReservation)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewImageColumn1
@@ -89,43 +90,15 @@
             // 
             this.CmbBxStatusFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBxStatusFilter.FormattingEnabled = true;
-            this.CmbBxStatusFilter.Location = new System.Drawing.Point(788, 35);
+            this.CmbBxStatusFilter.Items.AddRange(new object[] {
+            "Active",
+            "Cancelled",
+            "Completed"});
+            this.CmbBxStatusFilter.Location = new System.Drawing.Point(1295, 36);
             this.CmbBxStatusFilter.Name = "CmbBxStatusFilter";
             this.CmbBxStatusFilter.Size = new System.Drawing.Size(139, 36);
             this.CmbBxStatusFilter.TabIndex = 91;
             this.CmbBxStatusFilter.Text = "All Status";
-            // 
-            // CmbBxCategoryFilter
-            // 
-            this.CmbBxCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxCategoryFilter.FormattingEnabled = true;
-            this.CmbBxCategoryFilter.Location = new System.Drawing.Point(936, 35);
-            this.CmbBxCategoryFilter.Name = "CmbBxCategoryFilter";
-            this.CmbBxCategoryFilter.Size = new System.Drawing.Size(146, 36);
-            this.CmbBxCategoryFilter.TabIndex = 90;
-            this.CmbBxCategoryFilter.Text = "All Category";
-            // 
-            // CmbBxLocationFilter
-            // 
-            this.CmbBxLocationFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxLocationFilter.FormattingEnabled = true;
-            this.CmbBxLocationFilter.Items.AddRange(new object[] {
-            ""});
-            this.CmbBxLocationFilter.Location = new System.Drawing.Point(1287, 35);
-            this.CmbBxLocationFilter.Name = "CmbBxLocationFilter";
-            this.CmbBxLocationFilter.Size = new System.Drawing.Size(139, 36);
-            this.CmbBxLocationFilter.TabIndex = 89;
-            this.CmbBxLocationFilter.Text = "All Location";
-            // 
-            // CmbBxResourceTypeFilter
-            // 
-            this.CmbBxResourceTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBxResourceTypeFilter.FormattingEnabled = true;
-            this.CmbBxResourceTypeFilter.Location = new System.Drawing.Point(1092, 35);
-            this.CmbBxResourceTypeFilter.Name = "CmbBxResourceTypeFilter";
-            this.CmbBxResourceTypeFilter.Size = new System.Drawing.Size(185, 36);
-            this.CmbBxResourceTypeFilter.TabIndex = 86;
-            this.CmbBxResourceTypeFilter.Text = "All Resource Type";
             // 
             // BtnApply
             // 
@@ -151,22 +124,6 @@
             this.LblSearch.Size = new System.Drawing.Size(70, 28);
             this.LblSearch.TabIndex = 84;
             this.LblSearch.Text = "Search";
-            // 
-            // BtnAddReservation
-            // 
-            this.BtnAddReservation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAddReservation.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAddReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAddReservation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnAddReservation.ForeColor = System.Drawing.Color.White;
-            this.BtnAddReservation.Location = new System.Drawing.Point(1330, 123);
-            this.BtnAddReservation.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnAddReservation.Name = "BtnAddReservation";
-            this.BtnAddReservation.Size = new System.Drawing.Size(211, 46);
-            this.BtnAddReservation.TabIndex = 83;
-            this.BtnAddReservation.Text = "+ Add Reservation";
-            this.BtnAddReservation.UseVisualStyleBackColor = false;
-            this.BtnAddReservation.Click += new System.EventHandler(this.BtnAddReservation_Click);
             // 
             // LblPaginationPrevious
             // 
@@ -242,43 +199,26 @@
             this.LblShow.TabIndex = 77;
             this.LblShow.Text = "Show";
             // 
-            // DgwInventory
+            // DgvReservation
             // 
-            this.DgwInventory.AllowUserToAddRows = false;
-            this.DgwInventory.BackgroundColor = System.Drawing.Color.White;
-            this.DgwInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgwInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Edit,
-            this.Archive});
-            this.DgwInventory.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.DgwInventory.Location = new System.Drawing.Point(36, 200);
-            this.DgwInventory.Name = "DgwInventory";
-            this.DgwInventory.RowHeadersWidth = 62;
-            this.DgwInventory.RowTemplate.Height = 28;
-            this.DgwInventory.Size = new System.Drawing.Size(1509, 490);
-            this.DgwInventory.TabIndex = 76;
-            // 
-            // Edit
-            // 
-            this.Edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Edit.HeaderText = "";
-            this.Edit.Image = ((System.Drawing.Image)(resources.GetObject("Edit.Image")));
-            this.Edit.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Edit.MinimumWidth = 8;
-            this.Edit.Name = "Edit";
-            this.Edit.ToolTipText = "Edit user";
-            this.Edit.Width = 8;
-            // 
-            // Archive
-            // 
-            this.Archive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Archive.HeaderText = "";
-            this.Archive.Image = ((System.Drawing.Image)(resources.GetObject("Archive.Image")));
-            this.Archive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Archive.MinimumWidth = 8;
-            this.Archive.Name = "Archive";
-            this.Archive.ToolTipText = "Archive user";
-            this.Archive.Width = 8;
+            this.DgvReservation.AllowUserToAddRows = false;
+            this.DgvReservation.BackgroundColor = System.Drawing.Color.White;
+            this.DgvReservation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvReservation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnNumbering,
+            this.ColumnMembername,
+            this.ColumnBookTitle,
+            this.ColumnAccessionNumber,
+            this.ColumnReservationDate,
+            this.ColumnExpirationDate,
+            this.ColumnStatus});
+            this.DgvReservation.GridColor = System.Drawing.SystemColors.ControlLight;
+            this.DgvReservation.Location = new System.Drawing.Point(36, 200);
+            this.DgvReservation.Name = "DgvReservation";
+            this.DgvReservation.RowHeadersWidth = 62;
+            this.DgvReservation.RowTemplate.Height = 28;
+            this.DgvReservation.Size = new System.Drawing.Size(1509, 490);
+            this.DgvReservation.TabIndex = 76;
             // 
             // TxtSearchBar
             // 
@@ -287,16 +227,65 @@
             this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
             this.TxtSearchBar.Image = null;
             this.TxtSearchBar.Location = new System.Drawing.Point(155, 32);
-            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(1200, 40);
             this.TxtSearchBar.MaxLength = 32767;
             this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(614, 40);
+            this.TxtSearchBar.Size = new System.Drawing.Size(1121, 40);
             this.TxtSearchBar.TabIndex = 75;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
+            // 
+            // ColumnNumbering
+            // 
+            this.ColumnNumbering.HeaderText = "#";
+            this.ColumnNumbering.MinimumWidth = 8;
+            this.ColumnNumbering.Name = "ColumnNumbering";
+            this.ColumnNumbering.Width = 150;
+            // 
+            // ColumnMembername
+            // 
+            this.ColumnMembername.HeaderText = "Member Name";
+            this.ColumnMembername.MinimumWidth = 8;
+            this.ColumnMembername.Name = "ColumnMembername";
+            this.ColumnMembername.Width = 150;
+            // 
+            // ColumnBookTitle
+            // 
+            this.ColumnBookTitle.HeaderText = "Book Title";
+            this.ColumnBookTitle.MinimumWidth = 8;
+            this.ColumnBookTitle.Name = "ColumnBookTitle";
+            this.ColumnBookTitle.Width = 150;
+            // 
+            // ColumnAccessionNumber
+            // 
+            this.ColumnAccessionNumber.HeaderText = "Accession Number";
+            this.ColumnAccessionNumber.MinimumWidth = 8;
+            this.ColumnAccessionNumber.Name = "ColumnAccessionNumber";
+            this.ColumnAccessionNumber.Width = 150;
+            // 
+            // ColumnReservationDate
+            // 
+            this.ColumnReservationDate.HeaderText = "Reservation Date";
+            this.ColumnReservationDate.MinimumWidth = 8;
+            this.ColumnReservationDate.Name = "ColumnReservationDate";
+            this.ColumnReservationDate.Width = 150;
+            // 
+            // ColumnExpirationDate
+            // 
+            this.ColumnExpirationDate.HeaderText = "Expiration Date";
+            this.ColumnExpirationDate.MinimumWidth = 8;
+            this.ColumnExpirationDate.Name = "ColumnExpirationDate";
+            this.ColumnExpirationDate.Width = 150;
+            // 
+            // ColumnStatus
+            // 
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.MinimumWidth = 8;
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.Width = 150;
             // 
             // UCReservation
             // 
@@ -305,24 +294,20 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.PicBxSearchIcon);
             this.Controls.Add(this.CmbBxStatusFilter);
-            this.Controls.Add(this.CmbBxCategoryFilter);
-            this.Controls.Add(this.CmbBxLocationFilter);
-            this.Controls.Add(this.CmbBxResourceTypeFilter);
             this.Controls.Add(this.BtnApply);
             this.Controls.Add(this.LblSearch);
-            this.Controls.Add(this.BtnAddReservation);
             this.Controls.Add(this.LblPaginationPrevious);
             this.Controls.Add(this.LblPaginationNext);
             this.Controls.Add(this.LblPaginationShowEntries);
             this.Controls.Add(this.LblEntries);
             this.Controls.Add(this.CmbBxPaginationNumbers);
             this.Controls.Add(this.LblShow);
-            this.Controls.Add(this.DgwInventory);
+            this.Controls.Add(this.DgvReservation);
             this.Controls.Add(this.TxtSearchBar);
             this.Name = "UCReservation";
             this.Size = new System.Drawing.Size(1580, 936);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DgwInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvReservation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,21 +318,22 @@
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
         private System.Windows.Forms.PictureBox PicBxSearchIcon;
         private System.Windows.Forms.ComboBox CmbBxStatusFilter;
-        private System.Windows.Forms.ComboBox CmbBxCategoryFilter;
-        private System.Windows.Forms.ComboBox CmbBxLocationFilter;
-        private System.Windows.Forms.ComboBox CmbBxResourceTypeFilter;
         private System.Windows.Forms.Button BtnApply;
         private System.Windows.Forms.Label LblSearch;
-        private System.Windows.Forms.Button BtnAddReservation;
         private System.Windows.Forms.Button LblPaginationPrevious;
         private System.Windows.Forms.Button LblPaginationNext;
         private System.Windows.Forms.Label LblPaginationShowEntries;
         private System.Windows.Forms.Label LblEntries;
         private System.Windows.Forms.ComboBox CmbBxPaginationNumbers;
         private System.Windows.Forms.Label LblShow;
-        private System.Windows.Forms.DataGridView DgwInventory;
+        private System.Windows.Forms.DataGridView DgvReservation;
         private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
-        private System.Windows.Forms.DataGridViewImageColumn Edit;
-        private System.Windows.Forms.DataGridViewImageColumn Archive;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNumbering;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnMembername;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnBookTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAccessionNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnReservationDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnExpirationDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
     }
 }

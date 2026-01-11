@@ -4,6 +4,7 @@ using System.Data;
 using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.Models.Transactions;
+using LMS.Model.DTOs.Reservation;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -130,6 +131,58 @@ namespace LMS.DataAccess.Repositories
             return reservations;
         }
 
+        /// <summary>
+        /// Gets all reservations with joined member and book info for display in the management view.
+        /// </summary>
+        public List<DTOReservationView> GetAllForDisplay()
+        {
+            var reservations = new List<DTOReservationView>();
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT 
+                        r.ReservationID,
+                        r.CopyID,
+                        r.MemberID,
+                        r.ReservationDate,
+                        r.ExpirationDate,
+                        r.[Status],
+                        ISNULL(u.FirstName, '') + ' ' + ISNULL(u.LastName, '') AS MemberName,
+                        b.Title AS BookTitle,
+                        bc.AccessionNumber
+                    FROM [Reservation] r
+                    INNER JOIN [Member] m ON r.MemberID = m.MemberID
+                    INNER JOIN [User] u ON m.UserID = u.UserID
+                    INNER JOIN [BookCopy] bc ON r.CopyID = bc.CopyID
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    ORDER BY r.ReservationDate DESC";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        reservations.Add(new DTOReservationView
+                        {
+                            ReservationID = reader.IsDBNull(reader.GetOrdinal("ReservationID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ReservationID")),
+                            CopyID = reader.IsDBNull(reader.GetOrdinal("CopyID")) ? 0 : reader.GetInt32(reader.GetOrdinal("CopyID")),
+                            MemberID = reader.IsDBNull(reader.GetOrdinal("MemberID")) ? 0 : reader.GetInt32(reader.GetOrdinal("MemberID")),
+                            ReservationDate = reader.IsDBNull(reader.GetOrdinal("ReservationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ReservationDate")),
+                            ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
+                            Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "Active" : reader.GetString(reader.GetOrdinal("Status")),
+                            MemberName = reader.IsDBNull(reader.GetOrdinal("MemberName")) ? string.Empty : reader.GetString(reader.GetOrdinal("MemberName")).Trim(),
+                            BookTitle = reader.IsDBNull(reader.GetOrdinal("BookTitle")) ? string.Empty : reader.GetString(reader.GetOrdinal("BookTitle")),
+                            AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? string.Empty : reader.GetString(reader.GetOrdinal("AccessionNumber"))
+                        });
+                    }
+                }
+            }
+
+            return reservations;
+        }
+
         public bool HasActiveReservationForBook(int bookId, int memberId)
         {
             if (bookId <= 0 || memberId <= 0)
@@ -139,7 +192,6 @@ namespace LMS.DataAccess.Repositories
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                // Check if member has an active reservation for any copy of this book
                 cmd.CommandText = @"
                     SELECT COUNT(*)
                     FROM [Reservation] r
@@ -229,10 +281,6 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
-        /// <summary>
-        /// Updates all active reservations that have passed their expiration date to "Expired" status.
-        /// </summary>
-        /// <returns>Number of reservations updated.</returns>
         public int ExpireOverdueReservations()
         {
             using (var conn = _db.GetConnection())
@@ -241,7 +289,7 @@ namespace LMS.DataAccess.Repositories
                 conn.Open();
                 cmd.CommandText = @"
                     UPDATE [Reservation]
-                    SET [Status] = 'Completed'
+                    SET [Status] = 'Cancelled'
                     WHERE [Status] = 'Active'
                       AND ExpirationDate < @Today";
 
@@ -277,8 +325,6 @@ namespace LMS.DataAccess.Repositories
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                // Get a copy that is NOT Available (e.g., Borrowed, Reserved, etc.)
-                // Prefer copies that are not already reserved by checking Reservation table
                 cmd.CommandText = @"
                     SELECT TOP 1 bc.CopyID
                     FROM [BookCopy] bc
@@ -295,7 +341,6 @@ namespace LMS.DataAccess.Repositories
                 if (result != null && result != DBNull.Value)
                     return Convert.ToInt32(result);
 
-                // Fallback: get any copy (even if already reserved, for edge cases)
                 cmd.Parameters.Clear();
                 cmd.CommandText = @"
                     SELECT TOP 1 bc.CopyID

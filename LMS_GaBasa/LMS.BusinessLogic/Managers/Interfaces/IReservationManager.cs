@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LMS.Model.Models.Transactions;
+using LMS.Model.DTOs.Reservation;
 
 namespace LMS.BusinessLogic.Managers.Interfaces
 {
@@ -58,5 +59,10 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// </summary>
         /// <returns>List of all reservations.</returns>
         List<Reservation> GetAllReservations();
+
+        /// <summary>
+        /// Gets all reservations with joined member and book info for display.
+        /// </summary>
+        List<DTOReservationView> GetAllReservationsForDisplay();
     }
 }

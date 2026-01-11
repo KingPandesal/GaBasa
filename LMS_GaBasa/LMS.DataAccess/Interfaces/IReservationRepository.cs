@@ -85,5 +85,11 @@ namespace LMS.DataAccess.Interfaces
         /// </summary>
         /// <returns>List of all reservations.</returns>
         List<Reservation> GetAll();
+
+        /// <summary>
+        /// Gets all reservations with joined member and book info for display.
+        /// </summary>
+        /// <returns>List of reservations for display.</returns>
+        List<LMS.Model.DTOs.Reservation.DTOReservationView> GetAllForDisplay();
     }
 }

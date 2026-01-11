@@ -241,18 +241,6 @@
     <Compile Include="Popup\Profile\EditMemberProfile.Designer.cs">
       <DependentUpon>EditMemberProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Popup\Reservation\AddReservation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Popup\Reservation\AddReservation.Designer.cs">
-      <DependentUpon>AddReservation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Popup\Reservation\EditReservation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Popup\Reservation\EditReservation.Designer.cs">
-      <DependentUpon>EditReservation.cs</DependentUpon>
-    </Compile>
     <Compile Include="Popup\Users\AddUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -454,12 +442,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Profile\EditMemberProfile.resx">
       <DependentUpon>EditMemberProfile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Popup\Reservation\AddReservation.resx">
-      <DependentUpon>AddReservation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Popup\Reservation\EditReservation.resx">
-      <DependentUpon>EditReservation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Users\AddUser.resx">
       <DependentUpon>AddUser.cs</DependentUpon>

@@ -4,6 +4,7 @@ using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.DataAccess.Interfaces;
 using LMS.DataAccess.Repositories;
 using LMS.Model.Models.Transactions;
+using LMS.Model.DTOs.Reservation;
 
 namespace LMS.BusinessLogic.Managers
 {
@@ -13,8 +14,6 @@ namespace LMS.BusinessLogic.Managers
     public class ReservationManager : IReservationManager
     {
         private readonly IReservationRepository _reservationRepository;
-
-        // Default reservation period in days
         private const int DefaultReservationPeriodDays = 3;
 
         public ReservationManager() : this(new ReservationRepository()) { }
@@ -31,16 +30,13 @@ namespace LMS.BusinessLogic.Managers
             if (memberId <= 0)
                 throw new ArgumentException("Invalid member ID.", nameof(memberId));
 
-            // Check if member already has an active reservation for this book
             if (HasActiveReservation(bookId, memberId))
-                return null; // Already reserved
+                return null;
 
-            // Find an unavailable copy to reserve
             int copyId = _reservationRepository.GetUnavailableCopyIdForBook(bookId);
             if (copyId <= 0)
-                return null; // No copy available for reservation
+                return null;
 
-            // Create the reservation
             var reservation = new Reservation
             {
                 CopyID = copyId,
@@ -52,7 +48,7 @@ namespace LMS.BusinessLogic.Managers
 
             int reservationId = _reservationRepository.Add(reservation);
             if (reservationId <= 0)
-                return null; // Insert failed
+                return null;
 
             reservation.ReservationID = reservationId;
             return reservation;
@@ -62,7 +58,6 @@ namespace LMS.BusinessLogic.Managers
         {
             if (bookId <= 0 || memberId <= 0)
                 return false;
-
             return _reservationRepository.HasActiveReservationForBook(bookId, memberId);
         }
 
@@ -70,7 +65,6 @@ namespace LMS.BusinessLogic.Managers
         {
             if (memberId <= 0)
                 return new List<Reservation>();
-
             return _reservationRepository.GetActiveByMemberId(memberId);
         }
 
@@ -78,7 +72,6 @@ namespace LMS.BusinessLogic.Managers
         {
             if (reservationId <= 0)
                 return false;
-
             return _reservationRepository.UpdateStatus(reservationId, "Cancelled");
         }
 
@@ -86,26 +79,25 @@ namespace LMS.BusinessLogic.Managers
         {
             if (userId <= 0)
                 return 0;
-
             return _reservationRepository.GetMemberIdByUserId(userId);
         }
 
-        /// <summary>
-        /// Updates all active reservations that have passed their expiration date to "Expired" status.
-        /// </summary>
-        /// <returns>Number of reservations that were expired.</returns>
         public int ExpireOverdueReservations()
         {
             return _reservationRepository.ExpireOverdueReservations();
         }
 
-        /// <summary>
-        /// Gets all reservations (for management view).
-        /// </summary>
-        /// <returns>List of all reservations.</returns>
         public List<Reservation> GetAllReservations()
         {
             return _reservationRepository.GetAll();
+        }
+
+        /// <summary>
+        /// Gets all reservations with joined member and book info for display.
+        /// </summary>
+        public List<DTOReservationView> GetAllReservationsForDisplay()
+        {
+            return _reservationRepository.GetAllForDisplay();
         }
     }
 }
