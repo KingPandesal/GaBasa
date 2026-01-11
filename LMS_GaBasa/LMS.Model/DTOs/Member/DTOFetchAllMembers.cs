@@ -34,6 +34,11 @@ namespace LMS.Model.DTOs.Member
         public decimal TotalUnpaidFines { get; set; }
 
         /// <summary>
+        /// Returns true if the member's account is suspended.
+        /// </summary>
+        public bool IsSuspended => string.Equals(Status, "Suspended", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
         /// Penalty level: 0 = good, 1 = has fine OR overdue, 2 = has BOTH fine AND overdue
         /// </summary>
         public int PenaltyLevel
@@ -51,22 +56,53 @@ namespace LMS.Model.DTOs.Member
 
         /// <summary>
         /// Effective max books allowed after penalty reduction.
+        /// Returns 0 if member is suspended.
         /// </summary>
-        public int EffectiveMaxBooksAllowed => Math.Max(0, MaxBooksAllowed - PenaltyLevel);
+        public int EffectiveMaxBooksAllowed
+        {
+            get
+            {
+                if (IsSuspended) return 0;
+                return Math.Max(0, MaxBooksAllowed - PenaltyLevel);
+            }
+        }
 
         /// <summary>
         /// Effective borrowing period after penalty reduction.
+        /// Returns 0 if member is suspended.
         /// </summary>
-        public int EffectiveBorrowingPeriod => Math.Max(1, BorrowingPeriod - PenaltyLevel);
+        public int EffectiveBorrowingPeriod
+        {
+            get
+            {
+                if (IsSuspended) return 0;
+                return Math.Max(1, BorrowingPeriod - PenaltyLevel);
+            }
+        }
 
         /// <summary>
         /// Effective renewal limit after penalty reduction.
+        /// Returns 0 if member is suspended.
         /// </summary>
-        public int EffectiveRenewalLimit => Math.Max(0, RenewalLimit - PenaltyLevel);
+        public int EffectiveRenewalLimit
+        {
+            get
+            {
+                if (IsSuspended) return 0;
+                return Math.Max(0, RenewalLimit - PenaltyLevel);
+            }
+        }
 
         /// <summary>
-        /// Effective reservation privilege - disabled if any penalty exists.
+        /// Effective reservation privilege - disabled if any penalty exists or if suspended.
         /// </summary>
-        public bool EffectiveReservationPrivilege => ReservationPrivilege && PenaltyLevel == 0;
+        public bool EffectiveReservationPrivilege
+        {
+            get
+            {
+                if (IsSuspended) return false;
+                return ReservationPrivilege && PenaltyLevel == 0;
+            }
+        }
     }
 }

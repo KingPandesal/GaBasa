@@ -228,22 +228,38 @@ namespace LMS.Presentation.UserControls.Management
 
             foreach (var member in members)
             {
-                // Format effective values - show penalty indicator if reduced
-                string maxBooksDisplay = member.PenaltyLevel > 0
-                    ? $"{member.EffectiveMaxBooksAllowed} (-{member.PenaltyLevel})"
-                    : member.MaxBooksAllowed.ToString();
+                string maxBooksDisplay;
+                string borrowingPeriodDisplay;
+                string renewalLimitDisplay;
+                string reservationDisplay;
 
-                string borrowingPeriodDisplay = member.PenaltyLevel > 0
-                    ? $"{member.EffectiveBorrowingPeriod} days (-{member.PenaltyLevel})"
-                    : $"{member.BorrowingPeriod} days";
+                // If member is suspended, show 0 for all privileges with "Suspended" indicator
+                if (member.IsSuspended)
+                {
+                    maxBooksDisplay = "0 (Suspended)";
+                    borrowingPeriodDisplay = "0 days (Suspended)";
+                    renewalLimitDisplay = "0 (Suspended)";
+                    reservationDisplay = "No (Suspended)";
+                }
+                else
+                {
+                    // Format effective values - show penalty indicator if reduced
+                    maxBooksDisplay = member.PenaltyLevel > 0
+                        ? $"{member.EffectiveMaxBooksAllowed} (-{member.PenaltyLevel})"
+                        : member.MaxBooksAllowed.ToString();
 
-                string renewalLimitDisplay = member.PenaltyLevel > 0
-                    ? $"{member.EffectiveRenewalLimit} (-{member.PenaltyLevel})"
-                    : member.RenewalLimit.ToString();
+                    borrowingPeriodDisplay = member.PenaltyLevel > 0
+                        ? $"{member.EffectiveBorrowingPeriod} days (-{member.PenaltyLevel})"
+                        : $"{member.BorrowingPeriod} days";
 
-                string reservationDisplay = member.EffectiveReservationPrivilege ? "Yes" : "No";
-                if (member.ReservationPrivilege && !member.EffectiveReservationPrivilege)
-                    reservationDisplay = "No (Penalty)";
+                    renewalLimitDisplay = member.PenaltyLevel > 0
+                        ? $"{member.EffectiveRenewalLimit} (-{member.PenaltyLevel})"
+                        : member.RenewalLimit.ToString();
+
+                    reservationDisplay = member.EffectiveReservationPrivilege ? "Yes" : "No";
+                    if (member.ReservationPrivilege && !member.EffectiveReservationPrivilege)
+                        reservationDisplay = "No (Penalty)";
+                }
 
                 DgwMembers.Rows.Add(
                     rowNumber++,
