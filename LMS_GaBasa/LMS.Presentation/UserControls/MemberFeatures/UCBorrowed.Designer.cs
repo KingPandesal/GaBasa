@@ -52,9 +52,10 @@
             // PicBxSearchIcon
             // 
             this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
-            this.PicBxSearchIcon.Location = new System.Drawing.Point(36, 35);
+            this.PicBxSearchIcon.Location = new System.Drawing.Point(32, 28);
+            this.PicBxSearchIcon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PicBxSearchIcon.Name = "PicBxSearchIcon";
-            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
+            this.PicBxSearchIcon.Size = new System.Drawing.Size(29, 27);
             this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxSearchIcon.TabIndex = 76;
             this.PicBxSearchIcon.TabStop = false;
@@ -63,9 +64,9 @@
             // 
             this.LblSearch.AutoSize = true;
             this.LblSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblSearch.Location = new System.Drawing.Point(75, 36);
+            this.LblSearch.Location = new System.Drawing.Point(67, 29);
             this.LblSearch.Name = "LblSearch";
-            this.LblSearch.Size = new System.Drawing.Size(70, 28);
+            this.LblSearch.Size = new System.Drawing.Size(61, 23);
             this.LblSearch.TabIndex = 75;
             this.LblSearch.Text = "Search";
             // 
@@ -75,14 +76,15 @@
             this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
             this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
             this.TxtSearchBar.Image = null;
-            this.TxtSearchBar.Location = new System.Drawing.Point(155, 32);
-            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(1500, 40);
+            this.TxtSearchBar.Location = new System.Drawing.Point(138, 26);
+            this.TxtSearchBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(1333, 32);
             this.TxtSearchBar.MaxLength = 32767;
-            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 26);
             this.TxtSearchBar.Multiline = false;
             this.TxtSearchBar.Name = "TxtSearchBar";
             this.TxtSearchBar.ReadOnly = false;
-            this.TxtSearchBar.Size = new System.Drawing.Size(1391, 40);
+            this.TxtSearchBar.Size = new System.Drawing.Size(1236, 32);
             this.TxtSearchBar.TabIndex = 74;
             this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.TxtSearchBar.UseSystemPasswordChar = false;
@@ -90,10 +92,10 @@
             // PnlOverdueBooks
             // 
             this.PnlOverdueBooks.Controls.Add(this.Pnl1);
-            this.PnlOverdueBooks.Location = new System.Drawing.Point(31, 162);
+            this.PnlOverdueBooks.Location = new System.Drawing.Point(28, 130);
             this.PnlOverdueBooks.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PnlOverdueBooks.Name = "PnlOverdueBooks";
-            this.PnlOverdueBooks.Size = new System.Drawing.Size(1511, 622);
+            this.PnlOverdueBooks.Size = new System.Drawing.Size(1343, 498);
             this.PnlOverdueBooks.TabIndex = 78;
             // 
             // Pnl1
@@ -107,8 +109,9 @@
             this.Pnl1.Controls.Add(this.PicBxBookCoverImage);
             this.Pnl1.Controls.Add(this.LblTitle);
             this.Pnl1.Location = new System.Drawing.Point(0, 0);
+            this.Pnl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Pnl1.Name = "Pnl1";
-            this.Pnl1.Size = new System.Drawing.Size(738, 303);
+            this.Pnl1.Size = new System.Drawing.Size(656, 242);
             this.Pnl1.TabIndex = 50;
             // 
             // LblOverdue
@@ -117,10 +120,10 @@
             this.LblOverdue.BackColor = System.Drawing.Color.Red;
             this.LblOverdue.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblOverdue.ForeColor = System.Drawing.Color.White;
-            this.LblOverdue.Location = new System.Drawing.Point(357, 56);
+            this.LblOverdue.Location = new System.Drawing.Point(317, 45);
             this.LblOverdue.Name = "LblOverdue";
-            this.LblOverdue.Padding = new System.Windows.Forms.Padding(4);
-            this.LblOverdue.Size = new System.Drawing.Size(95, 36);
+            this.LblOverdue.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.LblOverdue.Size = new System.Drawing.Size(83, 29);
             this.LblOverdue.TabIndex = 49;
             this.LblOverdue.Text = "Overdue";
             // 
@@ -130,9 +133,9 @@
             this.LblViewDetails.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LblViewDetails.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblViewDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.LblViewDetails.Location = new System.Drawing.Point(605, 258);
+            this.LblViewDetails.Location = new System.Drawing.Point(538, 206);
             this.LblViewDetails.Name = "LblViewDetails";
-            this.LblViewDetails.Size = new System.Drawing.Size(117, 28);
+            this.LblViewDetails.Size = new System.Drawing.Size(102, 23);
             this.LblViewDetails.TabIndex = 36;
             this.LblViewDetails.Text = "View Details";
             // 
@@ -140,9 +143,9 @@
             // 
             this.LblDueDate.AutoSize = true;
             this.LblDueDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblDueDate.Location = new System.Drawing.Point(264, 199);
+            this.LblDueDate.Location = new System.Drawing.Point(235, 159);
             this.LblDueDate.Name = "LblDueDate";
-            this.LblDueDate.Size = new System.Drawing.Size(284, 28);
+            this.LblDueDate.Size = new System.Drawing.Size(240, 23);
             this.LblDueDate.TabIndex = 35;
             this.LblDueDate.Text = "DUE DATE: January 12, 2026";
             // 
@@ -150,9 +153,9 @@
             // 
             this.LblAccesionNumber.AutoSize = true;
             this.LblAccesionNumber.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblAccesionNumber.Location = new System.Drawing.Point(264, 141);
+            this.LblAccesionNumber.Location = new System.Drawing.Point(235, 113);
             this.LblAccesionNumber.Name = "LblAccesionNumber";
-            this.LblAccesionNumber.Size = new System.Drawing.Size(83, 28);
+            this.LblAccesionNumber.Size = new System.Drawing.Size(73, 23);
             this.LblAccesionNumber.TabIndex = 6;
             this.LblAccesionNumber.Text = "Acc. No:";
             // 
@@ -160,9 +163,9 @@
             // 
             this.LblResourceType.AutoSize = true;
             this.LblResourceType.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblResourceType.Location = new System.Drawing.Point(264, 115);
+            this.LblResourceType.Location = new System.Drawing.Point(235, 92);
             this.LblResourceType.Name = "LblResourceType";
-            this.LblResourceType.Size = new System.Drawing.Size(140, 28);
+            this.LblResourceType.Size = new System.Drawing.Size(123, 23);
             this.LblResourceType.TabIndex = 5;
             this.LblResourceType.Text = "Resource Type:";
             // 
@@ -172,10 +175,10 @@
             this.LblCategory.BackColor = System.Drawing.Color.OrangeRed;
             this.LblCategory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblCategory.ForeColor = System.Drawing.Color.White;
-            this.LblCategory.Location = new System.Drawing.Point(267, 56);
+            this.LblCategory.Location = new System.Drawing.Point(237, 45);
             this.LblCategory.Name = "LblCategory";
-            this.LblCategory.Padding = new System.Windows.Forms.Padding(4);
-            this.LblCategory.Size = new System.Drawing.Size(72, 36);
+            this.LblCategory.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.LblCategory.Size = new System.Drawing.Size(64, 29);
             this.LblCategory.TabIndex = 2;
             this.LblCategory.Text = "Thesis";
             // 
@@ -185,7 +188,7 @@
             this.PicBxBookCoverImage.Location = new System.Drawing.Point(3, 2);
             this.PicBxBookCoverImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PicBxBookCoverImage.Name = "PicBxBookCoverImage";
-            this.PicBxBookCoverImage.Size = new System.Drawing.Size(226, 296);
+            this.PicBxBookCoverImage.Size = new System.Drawing.Size(201, 237);
             this.PicBxBookCoverImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PicBxBookCoverImage.TabIndex = 0;
             this.PicBxBookCoverImage.TabStop = false;
@@ -194,9 +197,9 @@
             // 
             this.LblTitle.AutoSize = true;
             this.LblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblTitle.Location = new System.Drawing.Point(259, 10);
+            this.LblTitle.Location = new System.Drawing.Point(230, 8);
             this.LblTitle.Name = "LblTitle";
-            this.LblTitle.Size = new System.Drawing.Size(380, 36);
+            this.LblTitle.Size = new System.Drawing.Size(316, 30);
             this.LblTitle.TabIndex = 1;
             this.LblTitle.Text = "Inspirational Women Leaders...";
             // 
@@ -204,15 +207,15 @@
             // 
             this.LblOverdueBooks.AutoSize = true;
             this.LblOverdueBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblOverdueBooks.Location = new System.Drawing.Point(30, 103);
+            this.LblOverdueBooks.Location = new System.Drawing.Point(27, 82);
             this.LblOverdueBooks.Name = "LblOverdueBooks";
-            this.LblOverdueBooks.Size = new System.Drawing.Size(213, 36);
+            this.LblOverdueBooks.Size = new System.Drawing.Size(176, 30);
             this.LblOverdueBooks.TabIndex = 77;
             this.LblOverdueBooks.Text = "Borrowed Books";
             // 
             // UCBorrowed
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.PnlOverdueBooks);
@@ -222,7 +225,7 @@
             this.Controls.Add(this.TxtSearchBar);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCBorrowed";
-            this.Size = new System.Drawing.Size(1580, 936);
+            this.Size = new System.Drawing.Size(1404, 749);
             ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).EndInit();
             this.PnlOverdueBooks.ResumeLayout(false);
             this.Pnl1.ResumeLayout(false);
