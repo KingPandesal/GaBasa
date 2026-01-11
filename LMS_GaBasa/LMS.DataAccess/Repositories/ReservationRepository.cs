@@ -131,6 +131,68 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
+        /// <summary>
+        /// Checks if a specific book copy has an active reservation.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>True if the copy has an active reservation.</returns>
+        public bool HasActiveReservationForCopy(int copyId)
+        {
+            if (copyId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT COUNT(*)
+                    FROM [Reservation]
+                    WHERE CopyID = @CopyID 
+                      AND [Status] = 'Active'";
+
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                var count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the active reservation for a specific copy, if any.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>The active Reservation, or null if none exists.</returns>
+        public Reservation GetActiveReservationByCopyId(int copyId)
+        {
+            if (copyId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT TOP 1 ReservationID, CopyID, MemberID, ReservationDate, ExpirationDate, [Status]
+                    FROM [Reservation]
+                    WHERE CopyID = @CopyID 
+                      AND [Status] = 'Active'
+                    ORDER BY ReservationDate ASC";
+
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return MapReservation(reader);
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public bool UpdateStatus(int reservationId, string status)
         {
             if (reservationId <= 0 || string.IsNullOrWhiteSpace(status))

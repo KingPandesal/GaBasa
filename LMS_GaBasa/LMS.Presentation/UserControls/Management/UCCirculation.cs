@@ -13,6 +13,7 @@ namespace LMS.Presentation.UserControls.Management
     public partial class UCCirculation : UserControl
     {
         private readonly ICirculationManager _circulationManager;
+        private readonly ReservationRepository _reservationRepository;
         private DTOCirculationMemberInfo _currentMember;
         private DTOCirculationBookInfo _currentBook;
 
@@ -32,6 +33,7 @@ namespace LMS.Presentation.UserControls.Management
             // Setup dependencies
             var circulationRepo = new CirculationRepository();
             _circulationManager = new CirculationManager(circulationRepo);
+            _reservationRepository = new ReservationRepository();
 
             // Wire up events
             TxtMemberID.KeyDown += TxtMemberID_KeyDown;
@@ -672,6 +674,18 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookLoanType.ForeColor = Color.Black;
             }
 
+            // Check if this copy has an active reservation
+            bool hasActiveReservation = false;
+            try
+            {
+                hasActiveReservation = _reservationRepository.HasActiveReservationForCopy(bookInfo.CopyID);
+            }
+            catch
+            {
+                // If check fails, assume no reservation
+                hasActiveReservation = false;
+            }
+
             // Status label: if loan type is Reference -> special message
             bool isReferenceLoan = string.Equals(displayLoanType, "Reference", StringComparison.OrdinalIgnoreCase);
             bool isAvailable = string.Equals(bookInfo.CopyStatus, "Available", StringComparison.OrdinalIgnoreCase);
@@ -681,6 +695,12 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookStatus.Text = "Status: In-Library Use";
                 LblBookStatus.ForeColor = Color.FromArgb(200, 0, 0);
             }
+            else if (hasActiveReservation)
+            {
+                // Show Reserved status if copy has an active reservation
+                LblBookStatus.Text = "Status: Reserved";
+                LblBookStatus.ForeColor = Color.FromArgb(200, 150, 0); // Orange/amber color for reserved
+            }
             else
             {
                 LblBookStatus.Text = $"Status: {(string.IsNullOrWhiteSpace(bookInfo.CopyStatus) ? "Unknown" : bookInfo.CopyStatus)}";
@@ -689,7 +709,7 @@ namespace LMS.Presentation.UserControls.Management
 
             // Due Date rules:
             DateTime? showDue = null;
-            if (_currentMember != null && isAvailable)
+            if (_currentMember != null && isAvailable && !hasActiveReservation)
             {
                 if (isPhysicalBook)
                 {
@@ -713,11 +733,11 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
             }
 
-            // Update button state based on computed rules
-            UpdateConfirmBorrowButton(bookInfo);
+            // Update button state based on computed rules (pass reservation flag)
+            UpdateConfirmBorrowButton(bookInfo, hasActiveReservation);
         }
 
-        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo)
+        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo, bool hasActiveReservation = false)
         {
             var resType = (bookInfo.ResourceType ?? string.Empty).Trim();
             bool isEBook = resType.Equals("EBook", StringComparison.OrdinalIgnoreCase);
@@ -738,6 +758,15 @@ namespace LMS.Presentation.UserControls.Management
             if (_currentMember != null && !CanBorrowWithPenalty(_currentMember))
             {
                 BtnConfirmBorrow.Text = "Not Eligible";
+                BtnConfirmBorrow.Enabled = false;
+                BtnConfirmBorrow.BackColor = Color.Gray;
+                return;
+            }
+
+            // If copy has an active reservation, prevent borrowing
+            if (hasActiveReservation)
+            {
+                BtnConfirmBorrow.Text = "Reserved";
                 BtnConfirmBorrow.Enabled = false;
                 BtnConfirmBorrow.BackColor = Color.Gray;
                 return;

@@ -39,6 +39,21 @@ namespace LMS.DataAccess.Interfaces
         bool HasActiveReservationForBook(int bookId, int memberId);
 
         /// <summary>
+        /// Checks if a specific book copy has an active reservation.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>True if the copy has an active reservation.</returns>
+        bool HasActiveReservationForCopy(int copyId);
+
+        /// <summary>
+        /// Gets the active reservation for a specific copy, if any.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>The active Reservation, or null if none exists.</returns>
+        Reservation GetActiveReservationByCopyId(int copyId);
+
+
+        /// <summary>
         /// Updates the status of a reservation.
         /// </summary>
         /// <param name="reservationId">The reservation ID.</param>
