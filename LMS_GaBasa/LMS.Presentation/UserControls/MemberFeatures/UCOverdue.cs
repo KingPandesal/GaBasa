@@ -13,7 +13,7 @@ namespace LMS.Presentation.UserControls.MemberFeatures
     public partial class UCOverdue : UserControl
     {
         private readonly CirculationRepository _circulationRepository;
-        private readonly ReservationRepository _reservationRepository;
+        private readonly ReservationRepository _reservation_repository;
         private int _memberId;
         private List<DTOOverdueBookItem> _overdueBooks;
         private List<DTOOverdueBookItem> _filteredBooks;
@@ -30,7 +30,7 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             InitializeComponent();
 
             _circulationRepository = new CirculationRepository();
-            _reservationRepository = new ReservationRepository();
+            _reservation_repository = new ReservationRepository();
 
             // Wire up events
             this.Load += UCOverdue_Load;
@@ -79,7 +79,7 @@ namespace LMS.Presentation.UserControls.MemberFeatures
                         if (userIdProp != null)
                         {
                             int userId = (int)userIdProp.GetValue(currentUser);
-                            _memberId = _reservationRepository.GetMemberIdByUserId(userId);
+                            _memberId = _reservation_repository.GetMemberIdByUserId(userId);
                         }
                     }
                 }
@@ -116,6 +116,34 @@ namespace LMS.Presentation.UserControls.MemberFeatures
                     b.Category = string.IsNullOrWhiteSpace(b.Category) ? "N/A" : b.Category;
                 }
 
+                // If template panel is present, put resource type into its label (keeps template consistent)
+                try
+                {
+                    if (_overdueBooks.Count > 0 && LblResourceType != null)
+                    {
+                        var first = _overdueBooks[0];
+
+                        string resourceType = first.GetType().GetProperty("ResourceType") != null
+                            ? (first.GetType().GetProperty("ResourceType").GetValue(first) as string)
+                            : null;
+
+                        // Fallback to repository lookup if DTO doesn't contain ResourceType
+                        if (string.IsNullOrWhiteSpace(resourceType) && !string.IsNullOrWhiteSpace(first.AccessionNumber))
+                        {
+                            try
+                            {
+                                var info = _circulationRepository.GetBookInfoByAccession(first.AccessionNumber);
+                                if (info != null)
+                                    resourceType = info.ResourceType;
+                            }
+                            catch { /* ignore DB lookup errors */ }
+                        }
+
+                        LblResourceType.Text = $"Resource Type: {GetFriendlyResourceType(resourceType)}";
+                    }
+                }
+                catch { /* non-fatal */ }
+
                 _filteredBooks = _overdueBooks;
                 ApplySearchFilter();
             }
@@ -147,7 +175,7 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             }
             else
             {
-                // Only search by Title and AccessionNumber per request.
+                // Search only by Title and AccessionNumber as requested
                 _filteredBooks = _overdueBooks.Where(b =>
                     (b.Title?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     (b.AccessionNumber?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -261,16 +289,35 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             };
             card.Controls.Add(lblOverdue);
 
-            // Authors
-            var lblAuthors = new Label
+            // Resource Type (formatted) - prefer DTO value, fallback to DB lookup via accession if missing
+            string resourceType = null;
+            var prop = book.GetType().GetProperty("ResourceType");
+            if (prop != null)
+                resourceType = prop.GetValue(book) as string;
+
+            if (string.IsNullOrWhiteSpace(resourceType) && !string.IsNullOrWhiteSpace(book.AccessionNumber))
             {
-                Text = $"Author(s): {TruncateText(book.Authors ?? "N/A", 45)}",
+                try
+                {
+                    var info = _circulationRepository.GetBookInfoByAccession(book.AccessionNumber);
+                    if (info != null)
+                        resourceType = info.ResourceType;
+                }
+                catch
+                {
+                    // ignore DB lookup errors
+                }
+            }
+
+            var lblResourceType = new Label
+            {
+                Text = $"Resource Type: {GetFriendlyResourceType(resourceType)}",
                 Font = new Font("Segoe UI", 10),
                 Location = new Point(170, 80),
                 AutoSize = true,
                 MaximumSize = new Size(250, 0)
             };
-            card.Controls.Add(lblAuthors);
+            card.Controls.Add(lblResourceType);
 
             // Accession Number
             var lblAccession = new Label
@@ -319,6 +366,61 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             card.Controls.Add(lblViewDetails);
 
             return card;
+        }
+
+        private string GetFriendlyResourceType(string resourceType)
+        {
+            if (string.IsNullOrWhiteSpace(resourceType))
+                return "N/A";
+
+            switch (resourceType.Trim().ToLowerInvariant())
+            {
+                case "physicalbook":
+                case "physical":
+                case "book":
+                    return "Book";
+                case "ebook":
+                case "e-book":
+                    return "E-Book";
+                case "thesis":
+                    return "Thesis";
+                case "periodical":
+                case "periodicals":
+                    return "Periodical";
+                case "av":
+                case "audio-visual":
+                case "audio visual":
+                    return "Audio-Visual";
+                default:
+                    return char.ToUpperInvariant(resourceType[0]) + resourceType.Substring(1);
+            }
+        }
+
+        /// <summary>
+        /// Formats the authors string:
+        /// - if empty -> "N/A"
+        /// - splits on commas, trims entries
+        /// - if <= maxAuthors show all joined by comma
+        /// - if > maxAuthors show first maxAuthors then ", ..."
+        /// </summary>
+        private string FormatAuthorsList(string authorsCsv, int maxAuthors = 3)
+        {
+            if (string.IsNullOrWhiteSpace(authorsCsv))
+                return "N/A";
+
+            var parts = authorsCsv
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => p.Trim())
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .ToList();
+
+            if (parts.Count == 0)
+                return "N/A";
+
+            if (parts.Count <= maxAuthors)
+                return string.Join(", ", parts);
+
+            return string.Join(", ", parts.Take(maxAuthors)) + ", ...";
         }
 
         private void ViewBookDetails(int bookId)

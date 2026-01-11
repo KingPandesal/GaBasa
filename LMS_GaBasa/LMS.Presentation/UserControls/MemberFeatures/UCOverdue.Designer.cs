@@ -37,7 +37,7 @@
             this.LblViewDetails = new System.Windows.Forms.Label();
             this.LblDueDate = new System.Windows.Forms.Label();
             this.LblAccesionNumber = new System.Windows.Forms.Label();
-            this.LblAuthors = new System.Windows.Forms.Label();
+            this.LblResourceType = new System.Windows.Forms.Label();
             this.LblCategory = new System.Windows.Forms.Label();
             this.PicBxBookCoverImage = new System.Windows.Forms.PictureBox();
             this.LblTitle = new System.Windows.Forms.Label();
@@ -80,7 +80,7 @@
             this.Pnl1.Controls.Add(this.LblViewDetails);
             this.Pnl1.Controls.Add(this.LblDueDate);
             this.Pnl1.Controls.Add(this.LblAccesionNumber);
-            this.Pnl1.Controls.Add(this.LblAuthors);
+            this.Pnl1.Controls.Add(this.LblResourceType);
             this.Pnl1.Controls.Add(this.LblCategory);
             this.Pnl1.Controls.Add(this.PicBxBookCoverImage);
             this.Pnl1.Controls.Add(this.LblTitle);
@@ -143,15 +143,15 @@
             this.LblAccesionNumber.TabIndex = 6;
             this.LblAccesionNumber.Text = "Acc. No:";
             // 
-            // LblAuthors
+            // LblResourceType
             // 
-            this.LblAuthors.AutoSize = true;
-            this.LblAuthors.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.LblAuthors.Location = new System.Drawing.Point(264, 115);
-            this.LblAuthors.Name = "LblAuthors";
-            this.LblAuthors.Size = new System.Drawing.Size(100, 25);
-            this.LblAuthors.TabIndex = 5;
-            this.LblAuthors.Text = "Author(s):";
+            this.LblResourceType.AutoSize = true;
+            this.LblResourceType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.LblResourceType.Location = new System.Drawing.Point(264, 115);
+            this.LblResourceType.Name = "LblResourceType";
+            this.LblResourceType.Size = new System.Drawing.Size(151, 25);
+            this.LblResourceType.TabIndex = 5;
+            this.LblResourceType.Text = "Resource Type:";
             // 
             // LblCategory
             // 
@@ -288,7 +288,7 @@
         private System.Windows.Forms.Label LblViewDetails;
         private System.Windows.Forms.Label LblDueDate;
         private System.Windows.Forms.Label LblAccesionNumber;
-        private System.Windows.Forms.Label LblAuthors;
+        private System.Windows.Forms.Label LblResourceType;
         private System.Windows.Forms.Label LblCategory;
         private System.Windows.Forms.PictureBox PicBxBookCoverImage;
         private System.Windows.Forms.Label LblTitle;
