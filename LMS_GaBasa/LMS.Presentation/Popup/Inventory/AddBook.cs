@@ -670,110 +670,173 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 var selectedType = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
 
-                // --- Publication year/date validation per selected resource-type control ---
-                string pubYearText = null;
-                Control pubYearControl = null;
-                string label = "Publication year";
-
+                // 1) Standard identifier validation first (ISBN / ISSN / DOI / UPC)
+                string standardIdError;
                 switch (selectedType)
                 {
                     case ResourceType.PhysicalBook:
-                        pubYearText = TxtBKPublicationYear.Text;
-                        pubYearControl = TxtBKPublicationYear;
-                        label = "Publication year";
+                        if (!ValidateISBN(TxtBKISBN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtBKISBN.Focus();
+                            return;
+                        }
                         break;
+
                     case ResourceType.Periodical:
-                        pubYearText = TxtPRPubDate.Text;
-                        pubYearControl = TxtPRPubDate;
-                        label = "Publication date";
+                        if (!ValidateISSN(TxtPRISSN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtPRISSN.Focus();
+                            return;
+                        }
                         break;
+
                     case ResourceType.Thesis:
-                        pubYearText = TxtBxTHPublicationYear.Text;
-                        pubYearControl = TxtBxTHPublicationYear;
-                        label = "Publication year";
+                        if (!ValidateDOI(TxtTHDOI.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtTHDOI.Focus();
+                            return;
+                        }
                         break;
+
                     case ResourceType.AV:
-                        pubYearText = TxtAVPublicationYear.Text;
-                        pubYearControl = TxtAVPublicationYear;
-                        label = "Publication year";
+                        if (!ValidateUPCISAN(TxtAVUPCISAN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtAVUPCISAN.Focus();
+                            return;
+                        }
                         break;
+
                     case ResourceType.EBook:
-                        pubYearText = TxtEBPublicationYear.Text;
-                        pubYearControl = TxtEBPublicationYear;
-                        label = "Publication year";
+                        if (!ValidateISBN(TxtEBISBN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtEBISBN.Focus();
+                            return;
+                        }
                         break;
                 }
 
-                // Validate presence first
-                if (string.IsNullOrWhiteSpace(pubYearText))
+                // 2) Perform resource-type specific validations in the requested order BEFORE building DTO.
+                // This avoids confusing duplicate or out-of-order error messages.
+                if (selectedType == ResourceType.PhysicalBook)
                 {
-                    MessageBox.Show($"{label} is required.", "Validation Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    pubYearControl?.Focus();
-                    return;
-                }
+                    // Order:
+                    // 1. ISBN (already validated)
+                    // 2. Call Number
+                    if (string.IsNullOrWhiteSpace(TxtBKCallNumber.Text))
+                    {
+                        MessageBox.Show("Call number is required.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBKCallNumber.Focus();
+                        return;
+                    }
 
-                // If contains letters, show digits-only error
-                if (pubYearText.Any(char.IsLetter))
-                {
-                    MessageBox.Show($"{label} must contain digits only.", "Validation Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    pubYearControl?.Focus();
-                    return;
-                }
+                    // 3. Title
+                    if (string.IsNullOrWhiteSpace(TxtBKTitle.Text))
+                    {
+                        MessageBox.Show("Title is required.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBKTitle.Focus();
+                        return;
+                    }
 
-                // Validate pages input: allow large numbers and common formatting (commas), clamp if too large.
-                var pagesText = TxtBKNoOfPages.Text?.Trim();
-                if (!string.IsNullOrEmpty(pagesText))
-                {
-                    int pages = ParseInt(pagesText);
-                    if (pages <= 0)
+                    // 4. Authors
+                    if (_authors == null || _authors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one author.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxBKAuthors?.Focus();
+                        return;
+                    }
+
+                    // 5. Publisher (required and must contain a letter)
+                    var pubText = CmbBxBKPublisher.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(pubText))
+                    {
+                        MessageBox.Show("Publisher is required.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxBKPublisher.Focus();
+                        return;
+                    }
+                    if (!ContainsLetter(pubText))
+                    {
+                        MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxBKPublisher.Focus();
+                        return;
+                    }
+
+                    // 6. Publication Year (presence, digits-only, not future)
+                    var bkPubYear = TxtBKPublicationYear.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(bkPubYear))
+                    {
+                        MessageBox.Show("Publication year is required.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBKPublicationYear.Focus();
+                        return;
+                    }
+                    if (bkPubYear.Any(char.IsLetter))
+                    {
+                        MessageBox.Show("Publication year must contain digits only.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBKPublicationYear.Focus();
+                        return;
+                    }
+                    int bkYear = ParseInt(bkPubYear);
+                    if (bkYear > DateTime.Now.Year)
+                    {
+                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBKPublicationYear.Focus();
+                        return;
+                    }
+
+                    // 7. Category
+                    if (string.IsNullOrWhiteSpace(CmbBxBKCategory.Text))
+                    {
+                        MessageBox.Show("Category is required for physical books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxBKCategory.Focus();
+                        return;
+                    }
+
+                    // 8. Number of Pages (required, positive)
+                    var pagesTextBK = TxtBKNoOfPages.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(pagesTextBK))
+                    {
+                        MessageBox.Show("Number of pages is required.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBKNoOfPages.Focus();
+                        return;
+                    }
+                    int pagesBK = ParseInt(pagesTextBK);
+                    if (pagesBK <= 0)
                     {
                         MessageBox.Show("Number of pages should be a positive integer.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         TxtBKNoOfPages.Focus();
                         return;
                     }
-                }
 
-                // Publisher validation: must contain at least one letter if provided
-                var publisherText = CmbBxBKPublisher.Text?.Trim();
-                if (!string.IsNullOrWhiteSpace(publisherText) && !ContainsLetter(publisherText))
-                {
-                    MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    CmbBxBKPublisher.Focus();
-                    return;
-                }
-
-                // Periodical-specific: ISSN required (do this before BuildDTOFromForm so message uses ISSN)
-                if (selectedType == ResourceType.Periodical)
-                {
-                    if (string.IsNullOrWhiteSpace(TxtPRISSN.Text))
+                    // 9. Physical Description
+                    if (string.IsNullOrWhiteSpace(TxtBKPhysicalDescription.Text))
                     {
-                        MessageBox.Show("ISSN is required.", "Validation Error",
+                        MessageBox.Show("Physical description is required for physical books.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtPRISSN.Focus();
+                        TxtBKPhysicalDescription.Focus();
                         return;
                     }
 
-                    // Require volume and issue for periodicals
-                    var volText = TxtPRVolume.Text?.Trim();
-                    var issueText = TxtPRIssue.Text?.Trim();
-                    if (string.IsNullOrWhiteSpace(volText) || string.IsNullOrWhiteSpace(issueText))
-                    {
-                        MessageBox.Show("Volume and issue are required for periodicals.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        if (string.IsNullOrWhiteSpace(volText)) TxtPRVolume.Focus();
-                        else TxtPRIssue.Focus();
-                        return;
-                    }
-                }
-
-                // LoanType is required when Physical Book selected
-                if (selectedType == ResourceType.PhysicalBook)
-                {
-                    // RdoBtnBKCirculation and RdoBtnBKReference are the two radios introduced for loan type.
+                    // 10. LoanType (Circulation or Reference)
                     if ((RdoBtnBKCirculation == null || !RdoBtnBKCirculation.Checked)
                         && (RdoBtnBKReference == null || !RdoBtnBKReference.Checked))
                     {
@@ -782,26 +845,120 @@ namespace LMS.Presentation.Popup.Inventory
                         return;
                     }
                 }
-
-                var dto = BuildDTOFromForm();
-
-                // Additional periodical-specific validation depending on material format
-                if (dto.ResourceType == ResourceType.Periodical)
+                else if (selectedType == ResourceType.Periodical)
                 {
-                    // If PR physical is selected → require physical description AND copy info
+                    // Order:
+                    // 1. ISSN (already validated)
+                    // 2. Call Number
+                    if (string.IsNullOrWhiteSpace(TxtPRCsllNumber.Text))
+                    {
+                        MessageBox.Show("Call number is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRCsllNumber.Focus();
+                        return;
+                    }
+
+                    // 3. Title
+                    if (string.IsNullOrWhiteSpace(TxtPRTitle.Text))
+                    {
+                        MessageBox.Show("Title is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRTitle.Focus();
+                        return;
+                    }
+
+                    // 4. Authors
+                    if (_prAuthors == null || _prAuthors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one author for the periodical.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxPRAuthors?.Focus();
+                        return;
+                    }
+
+                    // 5. Publisher
+                    var prPub = CmbBxPRPublisher.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(prPub))
+                    {
+                        MessageBox.Show("Publisher is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxPRPublisher.Focus();
+                        return;
+                    }
+                    if (!ContainsLetter(prPub))
+                    {
+                        MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxPRPublisher.Focus();
+                        return;
+                    }
+
+                    // 6. Publication Date (presence). We allow formats but require presence.
+                    var prPubDate = TxtPRPubDate.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(prPubDate))
+                    {
+                        MessageBox.Show("Publication date is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRPubDate.Focus();
+                        return;
+                    }
+
+                    // 7. Volume
+                    if (string.IsNullOrWhiteSpace(TxtPRVolume.Text))
+                    {
+                        MessageBox.Show("Volume is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRVolume.Focus();
+                        return;
+                    }
+
+                    // 8. Issue
+                    if (string.IsNullOrWhiteSpace(TxtPRIssue.Text))
+                    {
+                        MessageBox.Show("Issue is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRIssue.Focus();
+                        return;
+                    }
+
+                    // 9. Pages
+                    var prPagesText = TxtPRPages.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(prPagesText))
+                    {
+                        MessageBox.Show("Pages is required for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRPages.Focus();
+                        return;
+                    }
+                    int prPages = ParseInt(prPagesText);
+                    if (prPages <= 0)
+                    {
+                        MessageBox.Show("Pages must be a positive integer.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtPRPages.Focus();
+                        return;
+                    }
+
+                    // 10. Material Format (Physical vs Digital) — require selection and related fields
+                    if ((RdoBtnPRPhysical == null || !RdoBtnPRPhysical.Checked)
+                        && (RdoBtnPRDigital == null || !RdoBtnPRDigital.Checked))
+                    {
+                        MessageBox.Show("Please select material format (Physical or Digital) for periodicals.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     if (RdoBtnPRPhysical != null && RdoBtnPRPhysical.Checked)
                     {
-                        // physical: require physical description and copy information
-                        if (string.IsNullOrWhiteSpace(dto.PhysicalDescription))
+                        if (string.IsNullOrWhiteSpace(CmbBxPRPhysicalDescription.Text))
                         {
                             MessageBox.Show("Please select a physical description for the periodical.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            CmbBxPRPhysicalDescription?.Focus();
+                            CmbBxPRPhysicalDescription.Focus();
                             return;
                         }
 
-                        // copies must be > 0 for physical periodicals
-                        if (dto.InitialCopyCount <= 0)
+                        if (NumPckNoOfCopies.Value <= 0)
                         {
                             MessageBox.Show("Please specify the number of copies for a physical periodical.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -809,15 +966,15 @@ namespace LMS.Presentation.Popup.Inventory
                             return;
                         }
 
-                        // require status and location for physical copies
-                        if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+                        if (string.IsNullOrWhiteSpace(CmbBxCopyStatus.Text))
                         {
                             MessageBox.Show("Please select a copy status for the periodical copies.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             CmbBxCopyStatus.Focus();
                             return;
                         }
-                        if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+
+                        if (string.IsNullOrWhiteSpace(TxtLocation.Text))
                         {
                             MessageBox.Show("Please provide a location for the periodical copies.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -825,7 +982,6 @@ namespace LMS.Presentation.Popup.Inventory
                             return;
                         }
                     }
-                    // If PR digital is selected → require only format + download URL, explicitly ignore copy info
                     else if (RdoBtnPRDigital != null && RdoBtnPRDigital.Checked)
                     {
                         if (string.IsNullOrWhiteSpace(CmbBxPRFormat.Text))
@@ -843,207 +999,32 @@ namespace LMS.Presentation.Popup.Inventory
                             TxtPRDownloadURL.Focus();
                             return;
                         }
-
-                        // Ensure DTO won't create copies for digital periodicals
-                        dto.InitialCopyCount = 0;
-                        dto.CopyStatus = string.Empty;
-                        dto.CopyLocation = string.Empty;
-                    }
-                    // If neither material-format radio is chosen, require the user to choose one
-                    else
-                    {
-                        MessageBox.Show("Please select material format (Physical or Digital) for periodicals.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
                     }
                 }
-
-                // --- Audio-Visual validation and material-format handling ---
-                if (dto.ResourceType == ResourceType.AV)
+                else if (selectedType == ResourceType.Thesis)
                 {
-                    // Required: UPC/ISAN stored in ISBN
-                    if (string.IsNullOrWhiteSpace(dto.ISBN))
-                    {
-                        MessageBox.Show("UPC/ISAN is required for audio-visual resources.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVUPCISAN?.Focus();
-                        return;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(dto.CallNumber))
-                    {
-                        MessageBox.Show("Call number is required for audio-visual resources.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVCallNumber?.Focus();
-                        return;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(dto.Title))
-                    {
-                        MessageBox.Show("Title is required for audio-visual resources.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVTitle?.Focus();
-                        return;
-                    }
-
-                    if (dto.Authors == null || dto.Authors.Count == 0)
-                    {
-                        MessageBox.Show("Please add at least one author for the audio-visual resource.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CmbBxAVAuthors?.Focus();
-                        return;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(dto.Publisher))
-                    {
-                        MessageBox.Show("Publisher is required for audio-visual resources.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CmbBxAVPublisher?.Focus();
-                        return;
-                    }
-
-                    // Publication year should not be greater than current year
-                    if (dto.PublicationYear > DateTime.Now.Year)
-                    {
-                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVPublicationYear?.Focus();
-                        return;
-                    }
-
-                    // Category required for AV
-                    if (string.IsNullOrWhiteSpace(CmbBxAVCategory.Text))
-                    {
-                        MessageBox.Show("Category is required for audio-visual resources.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CmbBxAVCategory?.Focus();
-                        return;
-                    }
-
-                    // Duration: user should enter number only (we store it in Pages column).
-                    var durationRaw = TxtAVDuration.Text?.Trim();
-                    if (string.IsNullOrWhiteSpace(durationRaw))
-                    {
-                        MessageBox.Show("Duration is required. Enter a number (seconds).", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVDuration?.Focus();
-                        return;
-                    }
-
-                    // Ensure digits only
-                    if (!durationRaw.All(char.IsDigit))
-                    {
-                        MessageBox.Show("Duration must contain digits only. Do not include H/M/S suffix.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVDuration?.Focus();
-                        return;
-                    }
-
-                    int durationSeconds = ParseInt(durationRaw);
-                    if (durationSeconds <= 0)
-                    {
-                        MessageBox.Show("Duration must be a positive integer (seconds).", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtAVDuration?.Focus();
-                        return;
-                    }
-
-                    // Material format handling
-                    if (RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked)
-                    {
-                        // physical: require physical description and copy information
-                        if (string.IsNullOrWhiteSpace(CmbBxAVPhysicalDescription.Text))
-                        {
-                            MessageBox.Show("Please select a physical description for the AV resource.", "Validation Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            CmbBxAVPhysicalDescription?.Focus();
-                            return;
-                        }
-
-                        if (dto.InitialCopyCount <= 0)
-                        {
-                            MessageBox.Show("Please specify the number of copies for a physical AV resource.", "Validation Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            NumPckNoOfCopies.Focus();
-                            return;
-                        }
-
-                        if (string.IsNullOrWhiteSpace(dto.CopyStatus))
-                        {
-                            MessageBox.Show("Please select a copy status for the AV copies.", "Validation Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            CmbBxCopyStatus.Focus();
-                            return;
-                        }
-
-                        if (string.IsNullOrWhiteSpace(dto.CopyLocation))
-                        {
-                            MessageBox.Show("Please provide a location for the AV copies.", "Validation Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            TxtLocation.Focus();
-                            return;
-                        }
-                    }
-                    else if (RdoBtnAVDigital != null && RdoBtnAVDigital.Checked)
-                    {
-                        // digital: require format and download URL, explicitly ignore copy info
-                        if (string.IsNullOrWhiteSpace(CmbBxAVFormat.Text))
-                        {
-                            MessageBox.Show("Please select a digital format for the AV resource.", "Validation Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            CmbBxAVFormat.Focus();
-                            return;
-                        }
-
-                        if (string.IsNullOrWhiteSpace(TxtAVDownloadURL.Text))
-                        {
-                            MessageBox.Show("Please provide a Download URL for the digital AV resource.", "Validation Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            TxtAVDownloadURL.Focus();
-                            return;
-                        }
-
-                        dto.InitialCopyCount = 0;
-                        dto.CopyStatus = string.Empty;
-                        dto.CopyLocation = string.Empty;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please select material format (Physical or Digital) for audio-visual resources.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
-
-                // --- Thesis validation and material-format handling per guide ---
-                if (dto.ResourceType == ResourceType.Thesis)
-                {
-                    // Required fields
-                    if (string.IsNullOrWhiteSpace(dto.ISBN)) // DOI stored in ISBN
-                    {
-                        MessageBox.Show("DOI is required for theses.", "Validation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtTHDOI?.Focus();
-                        return;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(dto.CallNumber))
+                    // Order:
+                    // 1. DOI (already validated)
+                    // 2. Call Number
+                    if (string.IsNullOrWhiteSpace(TxtTHCallNumber.Text))
                     {
                         MessageBox.Show("Call number is required for theses.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtTHCallNumber?.Focus();
+                        TxtTHCallNumber.Focus();
                         return;
                     }
 
-                    if (string.IsNullOrWhiteSpace(dto.Title))
+                    // 3. Title
+                    if (string.IsNullOrWhiteSpace(TxtTHTitle.Text))
                     {
                         MessageBox.Show("Title is required for theses.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtTHTitle?.Focus();
+                        TxtTHTitle.Focus();
                         return;
                     }
 
-                    if (dto.Authors == null || dto.Authors.Count == 0)
+                    // 4. Author(s)
+                    if (_thAuthors == null || _thAuthors.Count == 0)
                     {
                         MessageBox.Show("Please add at least one author for the thesis.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1051,7 +1032,8 @@ namespace LMS.Presentation.Popup.Inventory
                         return;
                     }
 
-                    if (dto.Editors == null || dto.Editors.Count == 0)
+                    // 5. Adviser(s)
+                    if (_thAdvisers == null || _thAdvisers.Count == 0)
                     {
                         MessageBox.Show("Please add at least one adviser for the thesis.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1059,53 +1041,95 @@ namespace LMS.Presentation.Popup.Inventory
                         return;
                     }
 
-                    if (string.IsNullOrWhiteSpace(dto.Publisher))
+                    // 6. Publisher
+                    var thPub = CmbBxTHPublisher.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(thPub))
                     {
                         MessageBox.Show("Publisher is required for theses.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CmbBxTHPublisher?.Focus();
+                        CmbBxTHPublisher.Focus();
+                        return;
+                    }
+                    if (!ContainsLetter(thPub))
+                    {
+                        MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxTHPublisher.Focus();
                         return;
                     }
 
+                    // 7. Publication year
+                    var thPubYear = TxtBxTHPublicationYear.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(thPubYear))
+                    {
+                        MessageBox.Show("Publication year is required for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBxTHPublicationYear.Focus();
+                        return;
+                    }
+                    if (thPubYear.Any(char.IsLetter))
+                    {
+                        MessageBox.Show("Publication year must contain digits only.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBxTHPublicationYear.Focus();
+                        return;
+                    }
+                    int thYear = ParseInt(thPubYear);
+                    if (thYear > DateTime.Now.Year)
+                    {
+                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtBxTHPublicationYear.Focus();
+                        return;
+                    }
+
+                    // 8. Degree Level
                     if (string.IsNullOrWhiteSpace(CmbBxTHDegreeLevel.Text))
                     {
                         MessageBox.Show("Degree level is required for theses.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CmbBxTHDegreeLevel?.Focus();
+                        CmbBxTHDegreeLevel.Focus();
                         return;
                     }
 
-                    // Publication year should not be greater than current year
-                    if (dto.PublicationYear > DateTime.Now.Year)
+                    // 9. Number of Pages
+                    var thPagesText = TxtBxTHNoOfPages.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(thPagesText))
                     {
-                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                        MessageBox.Show("Number of pages is required for theses.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtBxTHPublicationYear?.Focus();
+                        TxtBxTHNoOfPages.Focus();
                         return;
                     }
-
-                    // Pages required and positive
-                    if (dto.Pages <= 0)
+                    int thPages = ParseInt(thPagesText);
+                    if (thPages <= 0)
                     {
-                        MessageBox.Show("Number of pages is required and must be a positive integer for theses.", "Validation Error",
+                        MessageBox.Show("Number of pages must be a positive integer for theses.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtBxTHNoOfPages?.Focus();
+                        TxtBxTHNoOfPages.Focus();
                         return;
                     }
 
-                    // Material format handling
+                    // 10. Material Format (Physical or Digital)
+                    if ((RdoBtnTHPhysical == null || !RdoBtnTHPhysical.Checked)
+                        && (RdoBtnTHDigital == null || !RdoBtnTHDigital.Checked))
+                    {
+                        MessageBox.Show("Please select material format (Physical or Digital) for theses.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     if (RdoBtnTHPhysical != null && RdoBtnTHPhysical.Checked)
                     {
-                        // physical: require physical description and copy information
                         if (string.IsNullOrWhiteSpace(CmbBxTHPhysicalDescription.Text))
                         {
                             MessageBox.Show("Please select a physical description for the thesis.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            CmbBxTHPhysicalDescription?.Focus();
+                            CmbBxTHPhysicalDescription.Focus();
                             return;
                         }
 
-                        if (dto.InitialCopyCount <= 0)
+                        if (NumPckNoOfCopies.Value <= 0)
                         {
                             MessageBox.Show("Please specify the number of copies for a physical thesis.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1113,7 +1137,7 @@ namespace LMS.Presentation.Popup.Inventory
                             return;
                         }
 
-                        if (string.IsNullOrWhiteSpace(dto.CopyStatus))
+                        if (string.IsNullOrWhiteSpace(CmbBxCopyStatus.Text))
                         {
                             MessageBox.Show("Please select a copy status for the thesis copies.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1121,7 +1145,7 @@ namespace LMS.Presentation.Popup.Inventory
                             return;
                         }
 
-                        if (string.IsNullOrWhiteSpace(dto.CopyLocation))
+                        if (string.IsNullOrWhiteSpace(TxtLocation.Text))
                         {
                             MessageBox.Show("Please provide a location for the thesis copies.", "Validation Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1131,7 +1155,6 @@ namespace LMS.Presentation.Popup.Inventory
                     }
                     else if (RdoBtnTHDigital != null && RdoBtnTHDigital.Checked)
                     {
-                        // digital: require format and download URL, explicitly ignore copy info
                         if (string.IsNullOrWhiteSpace(CmbBxTHFormat.Text))
                         {
                             MessageBox.Show("Please select a digital format for the thesis.", "Validation Error",
@@ -1147,24 +1170,343 @@ namespace LMS.Presentation.Popup.Inventory
                             TxtTHDownloadURL.Focus();
                             return;
                         }
-
-                        // ensure no copies are created for digital theses
-                        dto.InitialCopyCount = 0;
-                        dto.CopyStatus = string.Empty;
-                        dto.CopyLocation = string.Empty;
                     }
-                    else
+                }
+                else if (selectedType == ResourceType.AV)
+                {
+                    // Order:
+                    // 1. UPC/ISAN (already validated)
+                    // 2. Call Number
+                    if (string.IsNullOrWhiteSpace(TxtAVCallNumber.Text))
                     {
-                        MessageBox.Show("Please select material format (Physical or Digital) for theses.", "Validation Error",
+                        MessageBox.Show("Call number is required for audio-visual resources.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVCallNumber.Focus();
+                        return;
+                    }
+
+                    // 3. Title
+                    if (string.IsNullOrWhiteSpace(TxtAVTitle.Text))
+                    {
+                        MessageBox.Show("Title is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVTitle.Focus();
+                        return;
+                    }
+
+                    // 4. Author(s)
+                    if (_avAuthors == null || _avAuthors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one author for the AV resource.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVAuthors?.Focus();
+                        return;
+                    }
+
+                    // 5. Publisher
+                    var avPub = CmbBxAVPublisher.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(avPub))
+                    {
+                        MessageBox.Show("Publisher is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVPublisher.Focus();
+                        return;
+                    }
+                    if (!ContainsLetter(avPub))
+                    {
+                        MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVPublisher.Focus();
+                        return;
+                    }
+
+                    // 6. Publication Year
+                    var avPubYear = TxtAVPublicationYear.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(avPubYear))
+                    {
+                        MessageBox.Show("Publication year is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVPublicationYear.Focus();
+                        return;
+                    }
+                    if (avPubYear.Any(char.IsLetter))
+                    {
+                        MessageBox.Show("Publication year must contain digits only.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVPublicationYear.Focus();
+                        return;
+                    }
+                    int avYear = ParseInt(avPubYear);
+                    if (avYear > DateTime.Now.Year)
+                    {
+                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVPublicationYear.Focus();
+                        return;
+                    }
+
+                    // 7. Category
+                    if (string.IsNullOrWhiteSpace(CmbBxAVCategory.Text))
+                    {
+                        MessageBox.Show("Category is required for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxAVCategory.Focus();
+                        return;
+                    }
+
+                    // 8. Duration (seconds)
+                    var durationRaw = TxtAVDuration.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(durationRaw))
+                    {
+                        MessageBox.Show("Duration is required. Enter a number (seconds).", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVDuration.Focus();
+                        return;
+                    }
+                    if (!durationRaw.All(char.IsDigit))
+                    {
+                        MessageBox.Show("Duration must contain digits only. Do not include H/M/S suffix.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVDuration.Focus();
+                        return;
+                    }
+                    int durationSeconds = ParseInt(durationRaw);
+                    if (durationSeconds <= 0)
+                    {
+                        MessageBox.Show("Duration must be a positive integer (seconds).", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtAVDuration.Focus();
+                        return;
+                    }
+
+                    // 9. Material Format
+                    if ((RdoBtnAVPhysical == null || !RdoBtnAVPhysical.Checked)
+                        && (RdoBtnAVDigital == null || !RdoBtnAVDigital.Checked))
+                    {
+                        MessageBox.Show("Please select material format (Physical or Digital) for audio-visual resources.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (RdoBtnAVPhysical != null && RdoBtnAVPhysical.Checked)
+                    {
+                        if (string.IsNullOrWhiteSpace(CmbBxAVPhysicalDescription.Text))
+                        {
+                            MessageBox.Show("Please select a physical description for the AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxAVPhysicalDescription.Focus();
+                            return;
+                        }
+
+                        if (NumPckNoOfCopies.Value <= 0)
+                        {
+                            MessageBox.Show("Please specify the number of copies for a physical AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            NumPckNoOfCopies.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(CmbBxCopyStatus.Text))
+                        {
+                            MessageBox.Show("Please select a copy status for the AV copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxCopyStatus.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(TxtLocation.Text))
+                        {
+                            MessageBox.Show("Please provide a location for the AV copies.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtLocation.Focus();
+                            return;
+                        }
+                    }
+                    else if (RdoBtnAVDigital != null && RdoBtnAVDigital.Checked)
+                    {
+                        if (string.IsNullOrWhiteSpace(CmbBxAVFormat.Text))
+                        {
+                            MessageBox.Show("Please select a digital format for the AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CmbBxAVFormat.Focus();
+                            return;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(TxtAVDownloadURL.Text))
+                        {
+                            MessageBox.Show("Please provide a Download URL for the digital AV resource.", "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtAVDownloadURL.Focus();
+                            return;
+                        }
+                    }
+                }
+                else if (selectedType == ResourceType.EBook)
+                {
+                    // Order:
+                    // 1. ISBN (already validated)
+                    // 2. Call Number
+                    if (string.IsNullOrWhiteSpace(TxtEBCallNumber.Text))
+                    {
+                        MessageBox.Show("Call number is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBCallNumber.Focus();
+                        return;
+                    }
+
+                    // 3. Title
+                    if (string.IsNullOrWhiteSpace(TxtEBTitle.Text))
+                    {
+                        MessageBox.Show("Title is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBTitle.Focus();
+                        return;
+                    }
+
+                    // 4. Authors
+                    if (_ebAuthors == null || _ebAuthors.Count == 0)
+                    {
+                        MessageBox.Show("Please add at least one author for the e-book.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxEBAuthors?.Focus();
+                        return;
+                    }
+
+                    // 5. Publisher
+                    var ebPub = CmbBxEBPublisher.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(ebPub))
+                    {
+                        MessageBox.Show("Publisher is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxEBPublisher.Focus();
+                        return;
+                    }
+                    if (!ContainsLetter(ebPub))
+                    {
+                        MessageBox.Show("Publisher name must contain at least one letter and may include digits.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxEBPublisher.Focus();
+                        return;
+                    }
+
+                    // 6. Publication Year
+                    var ebPubYear = TxtEBPublicationYear.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(ebPubYear))
+                    {
+                        MessageBox.Show("Publication year is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBPublicationYear.Focus();
+                        return;
+                    }
+                    if (ebPubYear.Any(char.IsLetter))
+                    {
+                        MessageBox.Show("Publication year must contain digits only.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBPublicationYear.Focus();
+                        return;
+                    }
+                    int ebYear = ParseInt(ebPubYear);
+                    if (ebYear > DateTime.Now.Year)
+                    {
+                        MessageBox.Show("Publication year cannot be in the future.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBPublicationYear.Focus();
+                        return;
+                    }
+
+                    // 7. Category
+                    if (string.IsNullOrWhiteSpace(CmbBxEBCategory.Text))
+                    {
+                        MessageBox.Show("Category is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxEBCategory.Focus();
+                        return;
+                    }
+
+                    // 8. Number of Pages
+                    var ebPages = TxtEBNoOfPages.Text?.Trim();
+                    if (string.IsNullOrWhiteSpace(ebPages))
+                    {
+                        MessageBox.Show("Number of pages is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBNoOfPages.Focus();
+                        return;
+                    }
+                    int ebPagesInt = ParseInt(ebPages);
+                    if (ebPagesInt <= 0)
+                    {
+                        MessageBox.Show("Number of pages must be a positive integer for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBNoOfPages.Focus();
+                        return;
+                    }
+
+                    // 9. Format
+                    if (string.IsNullOrWhiteSpace(CmbBxEBFormat.Text))
+                    {
+                        MessageBox.Show("Format is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CmbBxEBFormat.Focus();
+                        return;
+                    }
+
+                    // 10. Download URL
+                    if (string.IsNullOrWhiteSpace(TxtEBDownloadURL.Text))
+                    {
+                        MessageBox.Show("Download URL is required for e-books.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtEBDownloadURL.Focus();
                         return;
                     }
                 }
 
-                // Set the AddedByID to the currently logged in user id (Program.CurrentUserId).
-                dto.AddedByID = Program.CurrentUserId;
+                // 3) Build DTO now that control-level validation order is satisfied.
+                var dto = BuildDTOFromForm();
 
-                // Optionally validate and stop early if not set
+                // 4) Perform any DTO-dependent adjustments/validations (copies/format handling).
+                // Periodical: ensure copies cleared for digital (BuildDTOFromForm already sets this, but ensure consistency)
+                if (dto.ResourceType == ResourceType.Periodical)
+                {
+                    if (RdoBtnPRDigital != null && RdoBtnPRDigital.Checked)
+                    {
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                }
+
+                // Thesis: if digital ensure no copies and download URL present; if physical require copy info (already validated above)
+                if (dto.ResourceType == ResourceType.Thesis)
+                {
+                    if (RdoBtnTHDigital != null && RdoBtnTHDigital.Checked)
+                    {
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                }
+
+                // AV: if digital ensure no copies and download URL present; if physical keep copies (validated above)
+                if (dto.ResourceType == ResourceType.AV)
+                {
+                    if (RdoBtnAVDigital != null && RdoBtnAVDigital.Checked)
+                    {
+                        dto.InitialCopyCount = 0;
+                        dto.CopyStatus = string.Empty;
+                        dto.CopyLocation = string.Empty;
+                    }
+                }
+
+                // EBook: always digital -> ensure no copies
+                if (dto.ResourceType == ResourceType.EBook)
+                {
+                    dto.InitialCopyCount = 0;
+                    dto.CopyStatus = string.Empty;
+                    dto.CopyLocation = string.Empty;
+                }
+
+                // 5) Set AddedByID and run manager-level validation
+                dto.AddedByID = Program.CurrentUserId;
                 if (dto.AddedByID <= 0)
                 {
                     MessageBox.Show("Unable to determine the current user. Please sign in before adding books.", "Error",
@@ -1172,7 +1514,6 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                // Validate (shared validation)
                 if (!_inventoryManager.ValidateBookData(dto, out string errorMessage))
                 {
                     MessageBox.Show(errorMessage, "Validation Error",
@@ -1180,12 +1521,11 @@ namespace LMS.Presentation.Popup.Inventory
                     return;
                 }
 
-                // Save
+                // 6) Save
                 var result = _inventoryManager.AddBook(dto);
 
                 if (result.Success)
                 {
-                    // Generate barcodes only when BookCopy accessions were created (service returns accession list only when copies were made).
                     try
                     {
                         if (result.AccessionNumbers != null && result.AccessionNumbers.Count > 0)
@@ -2103,6 +2443,112 @@ namespace LMS.Presentation.Popup.Inventory
         private void LblAVLanguage_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private bool ValidateISBN(string isbn, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(isbn))
+            {
+                errorMessage = "ISBN is required.";
+                return false;
+            }
+
+            // Remove any non-digit characters for counting
+            string digitsOnly = new string(isbn.Where(char.IsDigit).ToArray());
+            int digitCount = digitsOnly.Length;
+
+            if (digitCount != 10 && digitCount != 13 && digitCount != 17)
+            {
+                errorMessage = "ISBN must be exactly 10, 13, or 17 digits.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates ISSN format: only numbers, letters, and hyphens; 8-9 characters total.
+        /// </summary>
+        private bool ValidateISSN(string issn, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(issn))
+            {
+                errorMessage = "ISSN is required.";
+                return false;
+            }
+
+            // Check allowed characters: letters, digits, hyphens only
+            if (!Regex.IsMatch(issn, @"^[A-Za-z0-9\-]+$"))
+            {
+                errorMessage = "ISSN must contain only numbers, letters, and hyphens.";
+                return false;
+            }
+
+            if (issn.Length < 8 || issn.Length > 9)
+            {
+                errorMessage = "ISSN must be 8-9 characters.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates DOI format: must start with "10." and contain "/".
+        /// </summary>
+        private bool ValidateDOI(string doi, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(doi))
+            {
+                errorMessage = "DOI is required.";
+                return false;
+            }
+
+            if (!doi.StartsWith("10."))
+            {
+                errorMessage = "DOI must start with \"10.\"";
+                return false;
+            }
+
+            if (!doi.Contains("/"))
+            {
+                errorMessage = "DOI must contain a \"/\" character.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates UPC/ISAN format: letters, numbers, hyphens only; must be 12, 15, 24, or 32 characters.
+        /// </summary>
+        private bool ValidateUPCISAN(string upcIsan, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(upcIsan))
+            {
+                errorMessage = "UPC/ISAN is required.";
+                return false;
+            }
+
+            // Check allowed characters: letters, digits, hyphens only
+            if (!Regex.IsMatch(upcIsan, @"^[A-Za-z0-9\-]+$"))
+            {
+                errorMessage = "UPC/ISAN must contain only letters, numbers, and hyphens.";
+                return false;
+            }
+
+            int len = upcIsan.Length;
+            if (len != 12 && len != 15 && len != 24 && len != 32)
+            {
+                errorMessage = "UPC/ISAN must be 12, 15, 24, or 32 characters.";
+                return false;
+            }
+
+            return true;
         }
     }
 }

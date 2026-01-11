@@ -50,6 +50,7 @@
     <Compile Include="DTOs\Fine\DTOFineRecord.cs" />
     <Compile Include="DTOs\MemberFeatures\Borrowed\DTOBorrowedBookItem.cs" />
     <Compile Include="DTOs\MemberFeatures\Overdue\DTOOverdueBookItem.cs" />
+    <Compile Include="DTOs\MemberFeatures\Reserve\DTOReservedBookItem.cs" />
     <Compile Include="DTOs\Member\DTOCreateMember.cs" />
     <Compile Include="DTOs\Member\DTOCreateMemberResult.cs" />
     <Compile Include="DTOs\Member\DTOEditMember.cs" />
