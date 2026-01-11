@@ -52,14 +52,19 @@ namespace LMS.DataAccess.Interfaces
         /// <returns>The active Reservation, or null if none exists.</returns>
         Reservation GetActiveReservationByCopyId(int copyId);
 
-
         /// <summary>
         /// Updates the status of a reservation.
         /// </summary>
         /// <param name="reservationId">The reservation ID.</param>
-        /// <param name="status">The new status (Active, Cancelled, Completed).</param>
+        /// <param name="status">The new status (Active, Cancelled, Completed, Expired).</param>
         /// <returns>True if updated successfully.</returns>
         bool UpdateStatus(int reservationId, string status);
+
+        /// <summary>
+        /// Updates all active reservations that have passed their expiration date to "Expired" status.
+        /// </summary>
+        /// <returns>Number of reservations updated.</returns>
+        int ExpireOverdueReservations();
 
         /// <summary>
         /// Gets the member ID from a user ID.
@@ -74,5 +79,11 @@ namespace LMS.DataAccess.Interfaces
         /// <param name="bookId">The book ID.</param>
         /// <returns>A CopyID that is not Available, or 0 if none found.</returns>
         int GetUnavailableCopyIdForBook(int bookId);
+
+        /// <summary>
+        /// Gets all reservations (for management view).
+        /// </summary>
+        /// <returns>List of all reservations.</returns>
+        List<Reservation> GetAll();
     }
 }

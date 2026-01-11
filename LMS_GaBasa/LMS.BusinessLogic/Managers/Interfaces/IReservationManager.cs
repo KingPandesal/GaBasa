@@ -45,5 +45,18 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="userId">The user ID.</param>
         /// <returns>The member ID, or 0 if not found.</returns>
         int GetMemberIdByUserId(int userId);
+
+        /// <summary>
+        /// Updates all active reservations that have passed their expiration date to "Expired" status.
+        /// Should be called on application startup or when viewing reservations.
+        /// </summary>
+        /// <returns>Number of reservations that were expired.</returns>
+        int ExpireOverdueReservations();
+
+        /// <summary>
+        /// Gets all reservations (for management view).
+        /// </summary>
+        /// <returns>List of all reservations.</returns>
+        List<Reservation> GetAllReservations();
     }
 }

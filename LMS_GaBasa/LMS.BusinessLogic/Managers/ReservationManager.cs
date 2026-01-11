@@ -89,5 +89,23 @@ namespace LMS.BusinessLogic.Managers
 
             return _reservationRepository.GetMemberIdByUserId(userId);
         }
+
+        /// <summary>
+        /// Updates all active reservations that have passed their expiration date to "Expired" status.
+        /// </summary>
+        /// <returns>Number of reservations that were expired.</returns>
+        public int ExpireOverdueReservations()
+        {
+            return _reservationRepository.ExpireOverdueReservations();
+        }
+
+        /// <summary>
+        /// Gets all reservations (for management view).
+        /// </summary>
+        /// <returns>List of all reservations.</returns>
+        public List<Reservation> GetAllReservations()
+        {
+            return _reservationRepository.GetAll();
+        }
     }
 }

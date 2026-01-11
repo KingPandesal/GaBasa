@@ -105,6 +105,31 @@ namespace LMS.DataAccess.Repositories
             return reservations;
         }
 
+        public List<Reservation> GetAll()
+        {
+            var reservations = new List<Reservation>();
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT ReservationID, CopyID, MemberID, ReservationDate, ExpirationDate, [Status]
+                    FROM [Reservation]
+                    ORDER BY ReservationDate DESC";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        reservations.Add(MapReservation(reader));
+                    }
+                }
+            }
+
+            return reservations;
+        }
+
         public bool HasActiveReservationForBook(int bookId, int memberId)
         {
             if (bookId <= 0 || memberId <= 0)
@@ -131,11 +156,6 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
-        /// <summary>
-        /// Checks if a specific book copy has an active reservation.
-        /// </summary>
-        /// <param name="copyId">The copy ID.</param>
-        /// <returns>True if the copy has an active reservation.</returns>
         public bool HasActiveReservationForCopy(int copyId)
         {
             if (copyId <= 0)
@@ -158,11 +178,6 @@ namespace LMS.DataAccess.Repositories
             }
         }
 
-        /// <summary>
-        /// Gets the active reservation for a specific copy, if any.
-        /// </summary>
-        /// <param name="copyId">The copy ID.</param>
-        /// <returns>The active Reservation, or null if none exists.</returns>
         public Reservation GetActiveReservationByCopyId(int copyId)
         {
             if (copyId <= 0)
@@ -211,6 +226,28 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@Status", DbType.String, status, 50);
 
                 return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        /// <summary>
+        /// Updates all active reservations that have passed their expiration date to "Expired" status.
+        /// </summary>
+        /// <returns>Number of reservations updated.</returns>
+        public int ExpireOverdueReservations()
+        {
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    UPDATE [Reservation]
+                    SET [Status] = 'Completed'
+                    WHERE [Status] = 'Active'
+                      AND ExpirationDate < @Today";
+
+                AddParameter(cmd, "@Today", DbType.DateTime, DateTime.Today);
+
+                return cmd.ExecuteNonQuery();
             }
         }
 
