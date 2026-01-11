@@ -48,6 +48,7 @@
     <Compile Include="DTOs\Circulation\DTORenewalInfo.cs" />
     <Compile Include="DTOs\Circulation\DTOReturnInfo.cs" />
     <Compile Include="DTOs\Fine\DTOFineRecord.cs" />
+    <Compile Include="DTOs\MemberFeatures\Borrowed\DTOBorrowedBookItem.cs" />
     <Compile Include="DTOs\MemberFeatures\Overdue\DTOOverdueBookItem.cs" />
     <Compile Include="DTOs\Member\DTOCreateMember.cs" />
     <Compile Include="DTOs\Member\DTOCreateMemberResult.cs" />

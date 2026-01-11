@@ -7,6 +7,7 @@ using LMS.DataAccess.Interfaces;
 using LMS.Model.DTOs.MemberFeatures.Overdue;
 using LMS.Model.DTOs.Fine;
 using LMS.Model.DTOs.Circulation;
+using LMS.Model.DTOs.MemberFeatures.Borrowed;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -1344,6 +1345,78 @@ namespace LMS.DataAccess.Repositories
 
                         // Get authors for this book
                         item.Authors = GetAuthorsForBook(bookId);
+
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets all currently borrowed books for a member (not overdue, not returned).
+        /// </summary>
+        /// <param name="memberId">The member ID.</param>
+        /// <returns>List of borrowed book items.</returns>
+        public List<DTOBorrowedBookItem> GetBorrowedBooksForMember(int memberId)
+        {
+            var result = new List<DTOBorrowedBookItem>();
+
+            if (memberId <= 0)
+                return result;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                cmd.CommandText = @"
+                    SELECT 
+                        bt.TransactionID,
+                        bt.CopyID,
+                        bc.BookID,
+                        bc.AccessionNumber,
+                        b.Title,
+                        b.CoverImage,
+                        b.ResourceType,
+                        c.Name AS Category,
+                        bt.BorrowDate,
+                        bt.DueDate
+                    FROM [BorrowingTransaction] bt
+                    INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    LEFT JOIN [Category] c ON b.CategoryID = c.CategoryID
+                    WHERE bt.MemberID = @MemberID
+                      AND bt.ReturnDate IS NULL
+                      AND bt.[Status] IN ('Borrowed', 'Overdue')
+                    ORDER BY bt.DueDate ASC";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime dueDate = reader.GetDateTime(reader.GetOrdinal("DueDate"));
+                        bool isOverdue = DateTime.Today > dueDate.Date;
+                        int daysUntilDue = (dueDate.Date - DateTime.Today).Days;
+
+                        var item = new DTOBorrowedBookItem
+                        {
+                            TransactionID = reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                            CopyID = reader.GetInt32(reader.GetOrdinal("CopyID")),
+                            BookID = reader.GetInt32(reader.GetOrdinal("BookID")),
+                            AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? "" : reader.GetString(reader.GetOrdinal("AccessionNumber")),
+                            Title = reader.IsDBNull(reader.GetOrdinal("Title")) ? "" : reader.GetString(reader.GetOrdinal("Title")),
+                            CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? "" : reader.GetString(reader.GetOrdinal("CoverImage")),
+                            ResourceType = reader.IsDBNull(reader.GetOrdinal("ResourceType")) ? "" : reader.GetString(reader.GetOrdinal("ResourceType")),
+                            Category = reader.IsDBNull(reader.GetOrdinal("Category")) ? "" : reader.GetString(reader.GetOrdinal("Category")),
+                            BorrowDate = reader.GetDateTime(reader.GetOrdinal("BorrowDate")),
+                            DueDate = dueDate,
+                            IsOverdue = isOverdue,
+                            DaysUntilDue = daysUntilDue
+                        };
 
                         result.Add(item);
                     }
