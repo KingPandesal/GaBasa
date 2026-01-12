@@ -828,11 +828,11 @@ namespace LMS.Presentation.Popup.Inventory
                     }
 
                     // 9. Physical Description
-                    if (string.IsNullOrWhiteSpace(TxtBKPhysicalDescription.Text))
+                    if (string.IsNullOrWhiteSpace(CmbBxBKPhysicalDescription.Text))
                     {
                         MessageBox.Show("Physical description is required for physical books.", "Validation Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TxtBKPhysicalDescription.Focus();
+                        CmbBxBKPhysicalDescription.Focus();
                         return;
                     }
 
@@ -1580,7 +1580,7 @@ namespace LMS.Presentation.Popup.Inventory
                 CategoryName = CmbBxBKCategory.Text.Trim(),
                 Language = CmbBxBKLanguage.Text.Trim(),
                 Pages = ParseInt(TxtBKNoOfPages.Text),
-                PhysicalDescription = TxtBKPhysicalDescription.Text.Trim(),
+                PhysicalDescription = CmbBxBKPhysicalDescription.Text.Trim(),
                 CallNumber = TxtBKCallNumber.Text.Trim(),
                 CoverImage = SaveCoverImage(),
                 // If user hasn't selected a resource type, default to PhysicalBook for saving to preserve backwards compatibility.

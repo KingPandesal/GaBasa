@@ -212,12 +212,12 @@ namespace LMS.Presentation.UserControls.Management
                     if (DgvReservation.Columns.Contains("ColumnReservationDate"))
                         row.Cells["ColumnReservationDate"].Value = r.ReservationDate != DateTime.MinValue
                             ? r.ReservationDate.ToString("MMMM dd, yyyy")
-                            : string.Empty;
+                            : "N/A";
 
                     if (DgvReservation.Columns.Contains("ColumnExpirationDate"))
                         row.Cells["ColumnExpirationDate"].Value = r.ExpirationDate != DateTime.MinValue
                             ? r.ExpirationDate.ToString("MMMM dd, yyyy")
-                            : string.Empty;
+                            : "N/A";
 
                     if (DgvReservation.Columns.Contains("ColumnStatus"))
                     {

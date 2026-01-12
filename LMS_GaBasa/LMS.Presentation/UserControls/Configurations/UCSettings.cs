@@ -16,5 +16,15 @@ namespace LMS.Presentation.UserControls.Configurations
         {
             InitializeComponent();
         }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

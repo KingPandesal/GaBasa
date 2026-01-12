@@ -59,7 +59,6 @@
             this.CmbBxBKLanguage = new System.Windows.Forms.ComboBox();
             this.TxtBKCallNumber = new System.Windows.Forms.TextBox();
             this.LblBKCallNumber = new System.Windows.Forms.Label();
-            this.TxtBKPhysicalDescription = new System.Windows.Forms.TextBox();
             this.LblBKLoanType = new System.Windows.Forms.Label();
             this.LblBKPhysicalDescription = new System.Windows.Forms.Label();
             this.TxtBKNoOfPages = new System.Windows.Forms.TextBox();
@@ -262,6 +261,7 @@
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.CmbBxBKPhysicalDescription = new System.Windows.Forms.ComboBox();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -502,10 +502,10 @@
             this.GrpBxPhysicalBook.Controls.Add(this.BtnBKAddEditor);
             this.GrpBxPhysicalBook.Controls.Add(this.LstBxBKAuthor);
             this.GrpBxPhysicalBook.Controls.Add(this.BtnBKAddAuthor);
+            this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKPhysicalDescription);
             this.GrpBxPhysicalBook.Controls.Add(this.CmbBxBKLanguage);
             this.GrpBxPhysicalBook.Controls.Add(this.TxtBKCallNumber);
             this.GrpBxPhysicalBook.Controls.Add(this.LblBKCallNumber);
-            this.GrpBxPhysicalBook.Controls.Add(this.TxtBKPhysicalDescription);
             this.GrpBxPhysicalBook.Controls.Add(this.LblBKLoanType);
             this.GrpBxPhysicalBook.Controls.Add(this.LblBKPhysicalDescription);
             this.GrpBxPhysicalBook.Controls.Add(this.TxtBKNoOfPages);
@@ -685,16 +685,6 @@
             this.LblBKCallNumber.TabIndex = 91;
             this.LblBKCallNumber.Text = "Call Number";
             this.LblBKCallNumber.Click += new System.EventHandler(this.LblCallNumber_Click);
-            // 
-            // TxtBKPhysicalDescription
-            // 
-            this.TxtBKPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.TxtBKPhysicalDescription.ForeColor = System.Drawing.Color.Black;
-            this.TxtBKPhysicalDescription.Location = new System.Drawing.Point(234, 979);
-            this.TxtBKPhysicalDescription.Name = "TxtBKPhysicalDescription";
-            this.TxtBKPhysicalDescription.Size = new System.Drawing.Size(322, 34);
-            this.TxtBKPhysicalDescription.TabIndex = 90;
-            this.TxtBKPhysicalDescription.TextChanged += new System.EventHandler(this.TxtPhysicalDescription_TextChanged);
             // 
             // LblBKLoanType
             // 
@@ -3059,6 +3049,23 @@
             this.comboBox2.Size = new System.Drawing.Size(353, 36);
             this.comboBox2.TabIndex = 68;
             // 
+            // CmbBxBKPhysicalDescription
+            // 
+            this.CmbBxBKPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxBKPhysicalDescription.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxBKPhysicalDescription.FormattingEnabled = true;
+            this.CmbBxBKPhysicalDescription.Items.AddRange(new object[] {
+            "Hardcover",
+            "Paperback",
+            "Mass market paperback",
+            "Spiral bound",
+            "Board book"});
+            this.CmbBxBKPhysicalDescription.Location = new System.Drawing.Point(224, 979);
+            this.CmbBxBKPhysicalDescription.Name = "CmbBxBKPhysicalDescription";
+            this.CmbBxBKPhysicalDescription.Size = new System.Drawing.Size(332, 36);
+            this.CmbBxBKPhysicalDescription.TabIndex = 93;
+            this.CmbBxBKPhysicalDescription.SelectedIndexChanged += new System.EventHandler(this.CmbBxLanguage_SelectedIndexChanged);
+            // 
             // AddBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -3140,7 +3147,6 @@
         private System.Windows.Forms.Label LblBKPublisher;
         private System.Windows.Forms.TextBox TxtBKCallNumber;
         private System.Windows.Forms.Label LblBKCallNumber;
-        private System.Windows.Forms.TextBox TxtBKPhysicalDescription;
         private System.Windows.Forms.Label LblBKPhysicalDescription;
         private System.Windows.Forms.TextBox TxtBKNoOfPages;
         private System.Windows.Forms.Label LblBKNoOfPages;
@@ -3355,5 +3361,6 @@
         private System.Windows.Forms.TextBox TxtEBDownloadURL;
         private System.Windows.Forms.Label LblEBDownloadURL;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox CmbBxBKPhysicalDescription;
     }
 }

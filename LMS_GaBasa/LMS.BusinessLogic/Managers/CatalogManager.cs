@@ -62,14 +62,58 @@ namespace LMS.BusinessLogic.Managers
 
         public List<string> GetAllLanguages()
         {
-            // Placeholder - implement if you have a Language table
-            return new List<string> { "English", "Spanish", "French", "German", "Italian", "Portuguese",
-            "Chinese", "Japanese", "Korean", "Russian", "Arabic", "Hindi",
-            "Tagalog", "Cebuano", "Ilocano", "Hiligaynon", "Waray", "Bikol",
-            "Dutch", "Swedish", "Norwegian", "Danish", "Finnish", "Polish",
-            "Greek", "Turkish", "Vietnamese", "Thai", "Indonesian", "Malay",
-            "Hebrew", "Persian", "Bengali", "Urdu", "Tamil", "Telugu" };
-            
+            return new List<string>
+            {
+                "Afrikaans",
+                "Arabic",
+                "Bengali",
+                "Burmese",
+                "Cebuano",
+                "Chinese",
+                "Czech",
+                "Danish",
+                "Dutch",
+                "English",
+                "Finnish",
+                "French",
+                "German",
+                "Greek",
+                "Gujarati",
+                "Hebrew",
+                "Hindi",
+                "Hiligaynon",
+                "Hungarian",
+                "Icelandic",
+                "Ilocano",
+                "Indonesian",
+                "Italian",
+                "Japanese",
+                "Korean",
+                "Latvian",
+                "Lithuanian",
+                "Malay",
+                "Malayalam",
+                "Marathi",
+                "Norwegian",
+                "Persian",
+                "Polish",
+                "Portuguese",
+                "Punjabi",
+                "Russian",
+                "Spanish",
+                "Swahili",
+                "Swedish",
+                "Tagalog",
+                "Tamil",
+                "Telugu",
+                "Thai",
+                "Turkish",
+                "Ukrainian",
+                "Urdu",
+                "Vietnamese",
+                "Waray",
+                "Zulu"
+            }.OrderBy(l => l).ToList(); // Sort alphabetically
         }
 
         public void AddLanguageIfNotExists(string language)
@@ -93,53 +137,15 @@ namespace LMS.BusinessLogic.Managers
             {
                 var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
 
-                // Determine if digital resource
+                // Exclude digital resources: E-Book or any book with a DownloadURL
                 bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
 
-                DateTime firstAdded;
-
-                if (copies.Count > 0)
-                {
-                    // Get the earliest DateAdded from copies
-                    firstAdded = copies.Min(c => c.DateAdded);
-                }
-                else if (isDigital)
-                {
-                    // Digital resources with no copies: use Book.DateAdded if available, else skip
-                    // Check if Book entity has a DateAdded property (via reflection for safety)
-                    try
-                    {
-                        var dateProp = book.GetType().GetProperty("DateAdded");
-                        if (dateProp != null)
-                        {
-                            var val = dateProp.GetValue(book);
-                            if (val is DateTime dt && dt > DateTime.MinValue)
-                            {
-                                firstAdded = dt;
-                            }
-                            else
-                            {
-                                // No date available; include digital resources anyway with current date
-                                // so they appear in results (user can see them)
-                                firstAdded = DateTime.Now;
-                            }
-                        }
-                        else
-                        {
-                            // No DateAdded property; include with current date
-                            firstAdded = DateTime.Now;
-                        }
-                    }
-                    catch
-                    {
-                        firstAdded = DateTime.Now;
-                    }
-                }
-                else
-                {
-                    // Physical book with no copies - skip
+                // Only include physical books that actually have copies
+                if (copies.Count == 0 || isDigital)
                     continue;
-                }
+
+                // Use the earliest DateAdded from copies (first copy)
+                DateTime firstAdded = copies.Min(c => c.DateAdded);
 
                 if (firstAdded >= oneWeekAgo)
                 {
@@ -147,10 +153,8 @@ namespace LMS.BusinessLogic.Managers
                 }
             }
 
-            // Ensure a sane default if caller passes invalid topCount
             if (topCount <= 0) topCount = 8;
 
-            // Order by most recent first and limit to requested count
             return result.OrderByDescending(b => b.DateAdded).Take(topCount).ToList();
         }
 
@@ -159,6 +163,12 @@ namespace LMS.BusinessLogic.Managers
         /// Orders by borrow count descending (most popular first), limited to topCount.
         /// If no borrow history exists, returns all books to ensure catalog has data.
         /// </summary>
+        /// <summary>
+        /// Gets the most borrowed books based on BorrowingTransaction records.
+        /// Groups multiple copies of the same book under the same BookId.
+        /// Each book appears only once, sorted by total borrow count descending.
+        /// Only includes physical books (excludes E-Books and digital resources).
+        /// </summary>
         public List<DTOCatalogBook> GetPopularBooks(int topCount = 8)
         {
             var result = new List<DTOCatalogBook>();
@@ -166,19 +176,31 @@ namespace LMS.BusinessLogic.Managers
             try
             {
                 // Get most borrowed book IDs from circulation repository
+                // This already groups by BookID and counts all copies' borrows
                 var circulationRepo = new CirculationRepository();
-                var borrowCounts = circulationRepo.GetMostBorrowedBookIds(topCount);
+                var borrowCounts = circulationRepo.GetMostBorrowedBookIds(topCount * 2); // Get more to filter out digital
 
                 if (borrowCounts != null && borrowCounts.Count > 0)
                 {
                     // Fetch book details for each borrowed BookID, ordered by borrow count descending
                     foreach (var kvp in borrowCounts.OrderByDescending(x => x.Value))
                     {
+                        if (result.Count >= topCount)
+                            break;
+
                         var book = _bookRepo.GetById(kvp.Key);
                         if (book == null) continue;
 
+                        // Exclude digital resources: E-Book or any book with a DownloadURL
+                        bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
+                        if (isDigital) continue;
+
                         var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
-                        DateTime firstAdded = copies.Count > 0 ? copies.Min(c => c.DateAdded) : DateTime.Now;
+
+                        // Only include physical books that have copies
+                        if (copies.Count == 0) continue;
+
+                        DateTime firstAdded = copies.Min(c => c.DateAdded);
 
                         var dto = MapToDTO(book, copies, firstAdded);
                         dto.BorrowCount = kvp.Value;
@@ -192,7 +214,7 @@ namespace LMS.BusinessLogic.Managers
                     return result.Take(topCount).ToList();
                 }
 
-                // Otherwise, supplement with ALL books (including digital) to ensure catalog works
+                // Otherwise, supplement with physical books that have copies (no borrows yet)
                 var allBooks = _bookRepo.GetAll() ?? new List<Book>();
                 var existingIds = new HashSet<int>(result.Select(r => r.BookID));
 
@@ -200,8 +222,16 @@ namespace LMS.BusinessLogic.Managers
                 {
                     if (existingIds.Contains(book.BookID)) continue;
 
+                    // Exclude digital resources
+                    bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
+                    if (isDigital) continue;
+
                     var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
-                    DateTime firstAdded = copies.Count > 0 ? copies.Min(c => c.DateAdded) : DateTime.Now;
+
+                    // Only include physical books that have copies
+                    if (copies.Count == 0) continue;
+
+                    DateTime firstAdded = copies.Min(c => c.DateAdded);
 
                     var dto = MapToDTO(book, copies, firstAdded);
                     dto.BorrowCount = 0;
@@ -213,14 +243,20 @@ namespace LMS.BusinessLogic.Managers
             }
             catch
             {
-                // On failure, try to return all books as fallback
+                // On failure, try to return physical books as fallback
                 try
                 {
                     var allBooks = _bookRepo.GetAll() ?? new List<Book>();
                     foreach (var book in allBooks)
                     {
+                        // Exclude digital resources
+                        bool isDigital = book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(book.DownloadURL);
+                        if (isDigital) continue;
+
                         var copies = _bookCopyRepo.GetByBookId(book.BookID) ?? new List<BookCopy>();
-                        DateTime firstAdded = copies.Count > 0 ? copies.Min(c => c.DateAdded) : DateTime.Now;
+                        if (copies.Count == 0) continue;
+
+                        DateTime firstAdded = copies.Min(c => c.DateAdded);
 
                         var dto = MapToDTO(book, copies, firstAdded);
                         dto.BorrowCount = 0;
