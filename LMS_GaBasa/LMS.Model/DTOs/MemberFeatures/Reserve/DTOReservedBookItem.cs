@@ -24,5 +24,6 @@ namespace LMS.Model.DTOs.MemberFeatures.Reserve
         public DateTime ExpirationDate { get; set; }
         public int DaysUntilExpiration { get; set; }
         public bool IsExpired { get; set; }
+        public int QueuePosition { get; set; }
     }
 }

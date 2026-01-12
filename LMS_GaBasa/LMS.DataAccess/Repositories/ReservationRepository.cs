@@ -5,6 +5,7 @@ using LMS.DataAccess.Database;
 using LMS.DataAccess.Interfaces;
 using LMS.Model.Models.Transactions;
 using LMS.Model.DTOs.Reservation;
+using LMS.Model.DTOs.MemberFeatures.Reserve;
 
 namespace LMS.DataAccess.Repositories
 {
@@ -539,6 +540,90 @@ namespace LMS.DataAccess.Repositories
                 var result = cmd.ExecuteScalar();
                 return result == null || result == DBNull.Value ? 0 : Convert.ToInt32(result);
             }
+        }
+
+        /// <summary>
+        /// Gets all reserved books for a member with book info for display.
+        /// </summary>
+        public List<DTOReservedBookItem> GetReservedBooksForMember(int memberId)
+        {
+            var reservations = new List<DTOReservedBookItem>();
+
+            if (memberId <= 0)
+                return reservations;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT 
+                        r.ReservationID,
+                        r.CopyID,
+                        b.BookID,
+                        bc.AccessionNumber,
+                        b.Title,
+                        c.Name AS Category,
+                        b.ResourceType,
+                        b.CoverImage,
+                        r.[Status],
+                        r.ReservationDate,
+                        r.ExpirationDate,
+                        (SELECT COUNT(*) 
+                         FROM [Reservation] r2 
+                         INNER JOIN [BookCopy] bc2 ON r2.CopyID = bc2.CopyID
+                         WHERE bc2.BookID = b.BookID 
+                           AND r2.[Status] = 'Active' 
+                           AND (r2.ReservationDate < r.ReservationDate 
+                                OR (r2.ReservationDate = r.ReservationDate AND r2.ReservationID < r.ReservationID))) + 1 AS QueuePosition
+                    FROM [Reservation] r
+                    INNER JOIN [BookCopy] bc ON r.CopyID = bc.CopyID
+                    INNER JOIN [Book] b ON bc.BookID = b.BookID
+                    LEFT JOIN [Category] c ON b.CategoryID = c.CategoryID
+                    WHERE r.MemberID = @MemberID AND r.[Status] = 'Active'
+                    ORDER BY r.ReservationDate DESC";
+
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var expirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) 
+                            ? (DateTime?)null 
+                            : reader.GetDateTime(reader.GetOrdinal("ExpirationDate"));
+
+                        int daysUntilExpiration = 0;
+                        bool isExpired = false;
+
+                        if (expirationDate.HasValue)
+                        {
+                            daysUntilExpiration = (int)(expirationDate.Value.Date - DateTime.Now.Date).TotalDays;
+                            isExpired = daysUntilExpiration < 0;
+                        }
+
+                        reservations.Add(new DTOReservedBookItem
+                        {
+                            ReservationID = reader.GetInt32(reader.GetOrdinal("ReservationID")),
+                            CopyID = reader.GetInt32(reader.GetOrdinal("CopyID")),
+                            BookID = reader.GetInt32(reader.GetOrdinal("BookID")),
+                            AccessionNumber = reader.IsDBNull(reader.GetOrdinal("AccessionNumber")) ? string.Empty : reader.GetString(reader.GetOrdinal("AccessionNumber")),
+                            Title = reader.IsDBNull(reader.GetOrdinal("Title")) ? string.Empty : reader.GetString(reader.GetOrdinal("Title")),
+                            Category = reader.IsDBNull(reader.GetOrdinal("Category")) ? "N/A" : reader.GetString(reader.GetOrdinal("Category")),
+                            ResourceType = reader.IsDBNull(reader.GetOrdinal("ResourceType")) ? string.Empty : reader.GetString(reader.GetOrdinal("ResourceType")),
+                            CoverImage = reader.IsDBNull(reader.GetOrdinal("CoverImage")) ? string.Empty : reader.GetString(reader.GetOrdinal("CoverImage")),
+                            Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "Active" : reader.GetString(reader.GetOrdinal("Status")),
+                            ReservationDate = reader.GetDateTime(reader.GetOrdinal("ReservationDate")),
+                            ExpirationDate = expirationDate ?? DateTime.MinValue,
+                            DaysUntilExpiration = daysUntilExpiration,
+                            IsExpired = isExpired,
+                            QueuePosition = reader.GetInt32(reader.GetOrdinal("QueuePosition"))
+                        });
+                    }
+                }
+            }
+
+            return reservations;
         }
     }
 }
