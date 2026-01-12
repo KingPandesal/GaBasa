@@ -69,6 +69,10 @@ namespace LMS.Presentation.Popup.Inventory
             DgwBookCopy.CellContentClick -= DgwBookCopy_CellContentClick;
             DgwBookCopy.CellContentClick += DgwBookCopy_CellContentClick;
 
+            // Wire search bar event for real-time filtering
+            TxtSearchBar.TextChanged -= TxtSearchBar_TextChanged;
+            TxtSearchBar.TextChanged += TxtSearchBar_TextChanged;
+
             if (!string.IsNullOrWhiteSpace(_bookTitle))
                 this.Text = $"View book copy - {_bookTitle}";
         }
@@ -157,11 +161,27 @@ namespace LMS.Presentation.Popup.Inventory
             }
         }
 
+        private void TxtSearchBar_TextChanged(object sender, EventArgs e)
+        {
+            ApplyFilters();
+        }
+
         private void ApplyFilters()
         {
             if (_allCopies == null) _allCopies = new List<BookCopy>();
 
             var filtered = _allCopies.AsEnumerable();
+
+            // Apply search filter (accession number, location, added by)
+            string searchText = TxtSearchBar.Text?.Trim() ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                filtered = filtered.Where(c =>
+                    SafePropertyString(() => c.AccessionNumber).IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    SafePropertyString(() => c.Location).IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    GetUserName(SafeProperty(() => c.AddedByID) as int? ?? 0).IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0
+                );
+            }
 
             string selectedLocation = CmbBxLocationFilter.SelectedItem?.ToString() ?? CmbBxLocationFilter.Text;
             if (!string.IsNullOrWhiteSpace(selectedLocation) && !selectedLocation.Equals("All Location", StringComparison.OrdinalIgnoreCase))
@@ -176,6 +196,21 @@ namespace LMS.Presentation.Popup.Inventory
 
             _filteredCopies = filtered.ToList();
             DisplayCopies(_filteredCopies);
+            UpdateCopyCountLabels();
+        }
+
+        private void UpdateCopyCountLabels()
+        {
+            // Calculate total copies (excluding deleted)
+            var activeCopies = _allCopies.Where(c => !(c.CopyID > 0 && _deletedCopyIds.Contains(c.CopyID))).ToList();
+            int totalCopies = activeCopies.Count;
+
+            // Calculate available for borrow (status = "Available")
+            int availableForBorrow = activeCopies.Count(c =>
+                SafePropertyString(() => c.Status).Equals("Available", StringComparison.OrdinalIgnoreCase));
+
+            LblTotalCopies.Text = $"Total Copies: {totalCopies}";
+            LblAvailableForBorrow.Text = $"Available for borrow: {availableForBorrow}";
         }
 
         private void DisplayCopies(List<BookCopy> copies)
@@ -606,6 +641,9 @@ namespace LMS.Presentation.Popup.Inventory
                             SetCellValue(row, "ColumnStatus", SafePropertyString(() => copy.Status));
                             SetCellValue(row, "ColumnLocation", SafePropertyString(() => copy.Location));
                             row.DefaultCellStyle.BackColor = Color.LightYellow;
+
+                            // Update labels in case status changed
+                            UpdateCopyCountLabels();
                         }
                     }
                 }

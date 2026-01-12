@@ -47,7 +47,13 @@
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.LblCancel = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
+            this.PicBxSearchIcon = new System.Windows.Forms.PictureBox();
+            this.LblSearch = new System.Windows.Forms.Label();
+            this.TxtSearchBar = new ReaLTaiizor.Controls.BigTextBox();
+            this.LblAvailableForBorrow = new System.Windows.Forms.Label();
+            this.LblTotalCopies = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // DgwBookCopy
@@ -248,12 +254,75 @@
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = false;
             // 
+            // PicBxSearchIcon
+            // 
+            this.PicBxSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("PicBxSearchIcon.Image")));
+            this.PicBxSearchIcon.Location = new System.Drawing.Point(33, 30);
+            this.PicBxSearchIcon.Name = "PicBxSearchIcon";
+            this.PicBxSearchIcon.Size = new System.Drawing.Size(33, 34);
+            this.PicBxSearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PicBxSearchIcon.TabIndex = 95;
+            this.PicBxSearchIcon.TabStop = false;
+            // 
+            // LblSearch
+            // 
+            this.LblSearch.AutoSize = true;
+            this.LblSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblSearch.Location = new System.Drawing.Point(72, 31);
+            this.LblSearch.Name = "LblSearch";
+            this.LblSearch.Size = new System.Drawing.Size(70, 28);
+            this.LblSearch.TabIndex = 94;
+            this.LblSearch.Text = "Search";
+            // 
+            // TxtSearchBar
+            // 
+            this.TxtSearchBar.BackColor = System.Drawing.Color.White;
+            this.TxtSearchBar.Font = new System.Drawing.Font("Yu Gothic UI", 10F);
+            this.TxtSearchBar.ForeColor = System.Drawing.Color.DimGray;
+            this.TxtSearchBar.Image = null;
+            this.TxtSearchBar.Location = new System.Drawing.Point(148, 24);
+            this.TxtSearchBar.MaximumSize = new System.Drawing.Size(897, 40);
+            this.TxtSearchBar.MaxLength = 32767;
+            this.TxtSearchBar.MinimumSize = new System.Drawing.Size(0, 33);
+            this.TxtSearchBar.Multiline = false;
+            this.TxtSearchBar.Name = "TxtSearchBar";
+            this.TxtSearchBar.ReadOnly = false;
+            this.TxtSearchBar.Size = new System.Drawing.Size(282, 40);
+            this.TxtSearchBar.TabIndex = 93;
+            this.TxtSearchBar.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.TxtSearchBar.UseSystemPasswordChar = false;
+            // 
+            // LblAvailableForBorrow
+            // 
+            this.LblAvailableForBorrow.AutoSize = true;
+            this.LblAvailableForBorrow.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblAvailableForBorrow.Location = new System.Drawing.Point(28, 116);
+            this.LblAvailableForBorrow.Name = "LblAvailableForBorrow";
+            this.LblAvailableForBorrow.Size = new System.Drawing.Size(195, 28);
+            this.LblAvailableForBorrow.TabIndex = 96;
+            this.LblAvailableForBorrow.Text = "Available for borrow:";
+            // 
+            // LblTotalCopies
+            // 
+            this.LblTotalCopies.AutoSize = true;
+            this.LblTotalCopies.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.LblTotalCopies.Location = new System.Drawing.Point(28, 79);
+            this.LblTotalCopies.Name = "LblTotalCopies";
+            this.LblTotalCopies.Size = new System.Drawing.Size(127, 28);
+            this.LblTotalCopies.TabIndex = 97;
+            this.LblTotalCopies.Text = "Total Copies :";
+            // 
             // ViewBookCopy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(978, 553);
+            this.Controls.Add(this.LblAvailableForBorrow);
+            this.Controls.Add(this.LblTotalCopies);
+            this.Controls.Add(this.PicBxSearchIcon);
+            this.Controls.Add(this.LblSearch);
+            this.Controls.Add(this.TxtSearchBar);
             this.Controls.Add(this.LblCancel);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.CmbBxStatusFilter);
@@ -268,7 +337,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View book copy";
             ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBxSearchIcon)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -292,5 +363,10 @@
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
         private System.Windows.Forms.Button LblCancel;
         private System.Windows.Forms.Button BtnSave;
+        private System.Windows.Forms.PictureBox PicBxSearchIcon;
+        private System.Windows.Forms.Label LblSearch;
+        private ReaLTaiizor.Controls.BigTextBox TxtSearchBar;
+        private System.Windows.Forms.Label LblAvailableForBorrow;
+        private System.Windows.Forms.Label LblTotalCopies;
     }
 }
