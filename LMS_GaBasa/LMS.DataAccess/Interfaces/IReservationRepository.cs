@@ -143,5 +143,13 @@ namespace LMS.DataAccess.Interfaces
         /// <param name="reservationPeriodDays">Number of days until the reservation expires.</param>
         /// <returns>The reservation that was activated, or null if no reservations in queue.</returns>
         Reservation ActivateNextReservationInQueue(int copyId, int reservationPeriodDays);
+
+        /// <summary>
+        /// Checks if a member currently has an active borrow for any copy of a book.
+        /// </summary>
+        /// <param name="bookId">The book ID.</param>
+        /// <param name="memberId">The member ID.</param>
+        /// <returns>True if the member has an active (unreturned) borrow for this book.</returns>
+        bool HasActiveBorrowForBook(int bookId, int memberId);
     }
 }

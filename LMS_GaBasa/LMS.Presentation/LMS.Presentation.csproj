@@ -211,6 +211,12 @@
     <Compile Include="Popup\Members\EditMember.Designer.cs">
       <DependentUpon>EditMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Members\ViewEachMemberBookInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Members\ViewEachMemberBookInfo.Designer.cs">
+      <DependentUpon>ViewEachMemberBookInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Multipurpose\Camera.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Members\EditMember.resx">
       <DependentUpon>EditMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Members\ViewEachMemberBookInfo.resx">
+      <DependentUpon>ViewEachMemberBookInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Multipurpose\Camera.resx">
       <DependentUpon>Camera.cs</DependentUpon>

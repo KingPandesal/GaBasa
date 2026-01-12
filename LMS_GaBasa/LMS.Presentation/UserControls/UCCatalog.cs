@@ -326,12 +326,32 @@ namespace LMS.Presentation.UserControls
             }
             catch { isReferenceLoan = false; }
 
+            // Check if current member already has an active borrow for this book
+            bool memberHasActiveBorrow = false;
+            try
+            {
+                if (_currentUser != null && IsUserMemberRole())
+                {
+                    int memberId = _reservationManager.GetMemberIdByUserId(_currentUser.UserID);
+                    if (memberId > 0 && book != null)
+                    {
+                        try
+                        {
+                            memberHasActiveBorrow = _reservationManager.HasActiveBorrowForBook(book.BookID, memberId);
+                        }
+                        catch { memberHasActiveBorrow = false; }
+                    }
+                }
+            }
+            catch { memberHasActiveBorrow = false; }
+
             // Reserve button logic:
             // - Only show for Members (not Librarian/Staff)
             // - Only show if member has ReservationPrivilege (not Guest)
             // - Only show if book is NOT available
             // - Only show if book is NOT Reference type
-            bool showReserve = IsUserMemberRole() && CanCurrentUserReserve() && !isBookAvailable && !isReferenceLoan;
+            // - Only show if member does NOT currently have an active borrow of this book
+            bool showReserve = IsUserMemberRole() && CanCurrentUserReserve() && !isBookAvailable && !isReferenceLoan && !memberHasActiveBorrow;
 
             var btnReserve = new Button
             {
@@ -1250,6 +1270,13 @@ namespace LMS.Presentation.UserControls
                 // - Must be Member role
                 // - Must have ReservationPrivilege (not Guest, not Librarian/Staff)
                 bool canReserve = CanCurrentUserReserve();
+                int currentMemberId = 0;
+                try
+                {
+                    if (_currentUser != null)
+                        currentMemberId = _reservationManager.GetMemberIdByUserId(_currentUser.UserID);
+                }
+                catch { currentMemberId = 0; }
 
                 _lvSearchResults.BeginUpdate();
                 _lvSearchResults.Items.Clear();
@@ -1319,12 +1346,28 @@ namespace LMS.Presentation.UserControls
                         }
                         catch { isReference = false; }
 
+                        // Check if member has active borrow for this book (prevent reserving your own borrowed book)
+                        bool memberHasActiveBorrowForDto = false;
+                        try
+                        {
+                            if (currentMemberId > 0)
+                            {
+                                try
+                                {
+                                    memberHasActiveBorrowForDto = _reservationManager.HasActiveBorrowForBook(dto.BookID, currentMemberId);
+                                }
+                                catch { memberHasActiveBorrowForDto = false; }
+                            }
+                        }
+                        catch { memberHasActiveBorrowForDto = false; }
+
                         // Only show "Reserve" when:
                         // - Book is NOT available
                         // - Book is NOT reference-only
                         // - Current user is Member with ReservationPrivilege (not Guest, not Librarian/Staff)
-                        bool showReserve = !isAvailable && !isReference && canReserve;
-                        item.SubItems.Add(showReserve ? "Reserve" : string.Empty);
+                        // - Current member does NOT currently have this book borrowed
+                        bool showReserveAction = !isAvailable && !isReference && canReserve && !memberHasActiveBorrowForDto;
+                        item.SubItems.Add(showReserveAction ? "Reserve" : string.Empty);
                         item.Tag = dto;
                         _lvSearchResults.Items.Add(item);
                     }
