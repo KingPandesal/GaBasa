@@ -982,6 +982,61 @@ namespace LMS.Presentation.Popup.Inventory
             {
                 var selectedType = GetSelectedResourceType() ?? ResourceType.PhysicalBook;
 
+                // 1) Standard ID validation per resource type
+                string standardIdError;
+                switch (selectedType)
+                {
+                    case ResourceType.PhysicalBook:
+                        if (!ValidateISBN(TxtBKISBN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtBKISBN.Focus();
+                            return;
+                        }
+                        break;
+
+                    case ResourceType.Periodical:
+                        if (!ValidateISSN(TxtPRISSN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtPRISSN.Focus();
+                            return;
+                        }
+                        break;
+
+                    case ResourceType.Thesis:
+                        if (!ValidateDOI(TxtTHDOI.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtTHDOI.Focus();
+                            return;
+                        }
+                        break;
+
+                    case ResourceType.AV:
+                        if (!ValidateUPCISAN(TxtAVUPCISAN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtAVUPCISAN.Focus();
+                            return;
+                        }
+                        break;
+
+                    case ResourceType.EBook:
+                        if (!ValidateISBN(TxtEBISBN.Text?.Trim(), out standardIdError))
+                        {
+                            MessageBox.Show(standardIdError, "Validation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            TxtEBISBN.Focus();
+                            return;
+                        }
+                        break;
+                }
+
                 // determine original material-format (digital if DownloadURL present OR book is EBook)
                 bool originalIsDigital = _book != null && (_book.ResourceType == ResourceType.EBook || !string.IsNullOrWhiteSpace(_book.DownloadURL));
 
@@ -1864,6 +1919,115 @@ namespace LMS.Presentation.Popup.Inventory
                     e.SuppressKeyPress = true;
                 }
             };
+        }
+
+        /// <summary>
+        /// Validates ISBN format for PhysicalBook and EBook: must be exactly 10, 13, or 17 digits.
+        /// </summary>
+        private bool ValidateISBN(string isbn, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(isbn))
+            {
+                errorMessage = "ISBN is required.";
+                return false;
+            }
+
+            // Remove any non-digit characters for counting
+            string digitsOnly = new string(isbn.Where(char.IsDigit).ToArray());
+            int digitCount = digitsOnly.Length;
+
+            if (digitCount != 10 && digitCount != 13 && digitCount != 17)
+            {
+                errorMessage = "ISBN must be exactly 10, 13, or 17 digits.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates ISSN format for Periodicals: only numbers, letters, and hyphens; 8-9 characters total.
+        /// </summary>
+        private bool ValidateISSN(string issn, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(issn))
+            {
+                errorMessage = "ISSN is required.";
+                return false;
+            }
+
+            // Check allowed characters: letters, digits, hyphens only
+            if (!Regex.IsMatch(issn, @"^[A-Za-z0-9\-]+$"))
+            {
+                errorMessage = "ISSN must contain only numbers, letters, and hyphens.";
+                return false;
+            }
+
+            if (issn.Length < 8 || issn.Length > 9)
+            {
+                errorMessage = "ISSN must be 8-9 characters.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates DOI format for Thesis: must start with "10." and contain "/".
+        /// </summary>
+        private bool ValidateDOI(string doi, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(doi))
+            {
+                errorMessage = "DOI is required.";
+                return false;
+            }
+
+            if (!doi.StartsWith("10."))
+            {
+                errorMessage = "DOI must start with \"10.\"";
+                return false;
+            }
+
+            if (!doi.Contains("/"))
+            {
+                errorMessage = "DOI must contain a \"/\" character.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates UPC/ISAN format for AV: letters, numbers, hyphens only; must be 12, 15, 24, or 32 characters.
+        /// </summary>
+        private bool ValidateUPCISAN(string upcIsan, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrWhiteSpace(upcIsan))
+            {
+                errorMessage = "UPC/ISAN is required.";
+                return false;
+            }
+
+            // Check allowed characters: letters, digits, hyphens only
+            if (!Regex.IsMatch(upcIsan, @"^[A-Za-z0-9\-]+$"))
+            {
+                errorMessage = "UPC/ISAN must contain only letters, numbers, and hyphens.";
+                return false;
+            }
+
+            int len = upcIsan.Length;
+            if (len != 12 && len != 15 && len != 24 && len != 32)
+            {
+                errorMessage = "UPC/ISAN must be 12, 15, 24, or 32 characters.";
+                return false;
+            }
+
+            return true;
         }
     }
 }

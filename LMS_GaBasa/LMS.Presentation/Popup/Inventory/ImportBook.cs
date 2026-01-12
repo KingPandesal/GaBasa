@@ -118,7 +118,7 @@ namespace LMS.Presentation.Popup.Inventory
 
                 int rejectedCount = parseErrors.Count + importErrors.Count;
                 string summary = $"Import completed — {successCount} record(s) imported, {rejectedCount} record(s) rejected.\n\n" +
-                                 "Some rows were skipped due to validation errors (for example: duplicate ISBN, duplicate Call Number, missing required fields or invalid formats). " +
+                                 "If some rows were skipped, this is due to validation errors (for example: duplicate ISBN, duplicate Call Number, missing required fields or invalid formats). " +
                                  "Please review the CSV and the error details, correct any issues, and retry if necessary.";
 
                 var allErrors = new List<string>();
