@@ -247,6 +247,12 @@
     <Compile Include="Popup\Profile\EditMemberProfile.Designer.cs">
       <DependentUpon>EditMemberProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup\Settings\ViewTermsAndServices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\Settings\ViewTermsAndServices.Designer.cs">
+      <DependentUpon>ViewTermsAndServices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup\Users\AddUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,6 +437,9 @@
     <EmbeddedResource Include="Popup\Members\AddMember.resx">
       <DependentUpon>AddMember.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Members\AllMemberTransaction.resx">
+      <DependentUpon>AllMemberTransaction.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\Members\EditMember.resx">
       <DependentUpon>EditMember.cs</DependentUpon>
     </EmbeddedResource>
@@ -451,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Profile\EditMemberProfile.resx">
       <DependentUpon>EditMemberProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\Settings\ViewTermsAndServices.resx">
+      <DependentUpon>ViewTermsAndServices.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\Users\AddUser.resx">
       <DependentUpon>AddUser.cs</DependentUpon>
@@ -540,7 +552,6 @@
     <Folder Include="Assets\dataimages\Members\" />
     <Folder Include="Assets\dataimages\Users\" />
     <Folder Include="Assets\dataimages\ValidIDs\" />
-    <Folder Include="Assets\ico\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LMS.BusinessLogic\LMS.BusinessLogic.csproj">
@@ -671,6 +682,7 @@
     <Content Include="Assets\icons\ModuleIcons\AllRoleIcons\Red\Profile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\ico\logo-zoom.ico" />
     <Content Include="Assets\logos\gabasa-banner.jpg" />
     <Content Include="Assets\logos\gabasa-logo-transparent-zoom.png" />
     <Content Include="Assets\logos\gabasa-logo-transparent.png" />

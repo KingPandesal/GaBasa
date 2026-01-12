@@ -195,6 +195,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditBookCopy";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit book copy";
             this.GrpBxEditCopyDetails.ResumeLayout(false);

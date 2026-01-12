@@ -315,6 +315,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditUser";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit user";
             this.groupBox1.ResumeLayout(false);

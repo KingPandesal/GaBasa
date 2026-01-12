@@ -334,6 +334,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ViewBookCopy";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View book copy";
             ((System.ComponentModel.ISupportInitialize)(this.DgwBookCopy)).EndInit();

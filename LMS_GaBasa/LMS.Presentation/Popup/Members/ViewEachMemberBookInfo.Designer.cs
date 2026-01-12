@@ -40,6 +40,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ViewEachMemberBookInfo";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ViewEachMemberBookInfo";
             this.ResumeLayout(false);

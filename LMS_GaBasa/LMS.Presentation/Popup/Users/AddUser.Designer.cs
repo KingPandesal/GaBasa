@@ -48,6 +48,8 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ChkBxShowPassword1 = new System.Windows.Forms.CheckBox();
+            this.ChkBxShowPassword2 = new System.Windows.Forms.CheckBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -56,8 +58,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.LblAddProfPic = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ChkBxShowPassword2 = new System.Windows.Forms.CheckBox();
-            this.ChkBxShowPassword1 = new System.Windows.Forms.CheckBox();
             this.PicBxProfilePicContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxProfilePic)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -264,6 +264,24 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Login Details";
             // 
+            // ChkBxShowPassword1
+            // 
+            this.ChkBxShowPassword1.AutoSize = true;
+            this.ChkBxShowPassword1.Location = new System.Drawing.Point(422, 149);
+            this.ChkBxShowPassword1.Name = "ChkBxShowPassword1";
+            this.ChkBxShowPassword1.Size = new System.Drawing.Size(22, 21);
+            this.ChkBxShowPassword1.TabIndex = 72;
+            this.ChkBxShowPassword1.UseVisualStyleBackColor = true;
+            // 
+            // ChkBxShowPassword2
+            // 
+            this.ChkBxShowPassword2.AutoSize = true;
+            this.ChkBxShowPassword2.Location = new System.Drawing.Point(422, 225);
+            this.ChkBxShowPassword2.Name = "ChkBxShowPassword2";
+            this.ChkBxShowPassword2.Size = new System.Drawing.Size(22, 21);
+            this.ChkBxShowPassword2.TabIndex = 71;
+            this.ChkBxShowPassword2.UseVisualStyleBackColor = true;
+            // 
             // textBox3
             // 
             this.textBox3.ForeColor = System.Drawing.Color.Black;
@@ -344,24 +362,6 @@
             this.panel1.Size = new System.Drawing.Size(546, 391);
             this.panel1.TabIndex = 73;
             // 
-            // ChkBxShowPassword2
-            // 
-            this.ChkBxShowPassword2.AutoSize = true;
-            this.ChkBxShowPassword2.Location = new System.Drawing.Point(422, 225);
-            this.ChkBxShowPassword2.Name = "ChkBxShowPassword2";
-            this.ChkBxShowPassword2.Size = new System.Drawing.Size(22, 21);
-            this.ChkBxShowPassword2.TabIndex = 71;
-            this.ChkBxShowPassword2.UseVisualStyleBackColor = true;
-            // 
-            // ChkBxShowPassword1
-            // 
-            this.ChkBxShowPassword1.AutoSize = true;
-            this.ChkBxShowPassword1.Location = new System.Drawing.Point(422, 149);
-            this.ChkBxShowPassword1.Name = "ChkBxShowPassword1";
-            this.ChkBxShowPassword1.Size = new System.Drawing.Size(22, 21);
-            this.ChkBxShowPassword1.TabIndex = 72;
-            this.ChkBxShowPassword1.UseVisualStyleBackColor = true;
-            // 
             // AddUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -378,6 +378,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddUser";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add user";
             this.PicBxProfilePicContainer.ResumeLayout(false);

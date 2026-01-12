@@ -384,6 +384,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditLibrarianStaffProfile";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Profile";
             this.PicBxProfilePicContainer.ResumeLayout(false);

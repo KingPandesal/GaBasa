@@ -73,6 +73,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ViewProfilePicture";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View profile picture";
             this.PnlforPicBxProfilePictureContainer.ResumeLayout(false);

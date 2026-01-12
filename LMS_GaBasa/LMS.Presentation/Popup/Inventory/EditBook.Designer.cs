@@ -2536,6 +2536,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditBook";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit book";
             this.GrpBxAV.ResumeLayout(false);

@@ -60,6 +60,7 @@
             this.PnlSidebar.Name = "PnlSidebar";
             this.PnlSidebar.Size = new System.Drawing.Size(279, 785);
             this.PnlSidebar.TabIndex = 27;
+            this.PnlSidebar.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlSidebar_Paint);
             // 
             // description
             // 
@@ -213,6 +214,7 @@
             this.Controls.Add(this.PnlLogo);
             this.Controls.Add(this.PnlSidebar);
             this.Controls.Add(this.PnlContent);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1920, 1080);
             this.MinimumSize = new System.Drawing.Size(1918, 1006);
             this.Name = "MainForm";

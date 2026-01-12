@@ -28,119 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lostBorderPanel3 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCSettings));
+            this.Lbl2 = new System.Windows.Forms.Label();
+            this.Lbl1 = new System.Windows.Forms.Label();
             this.lostBorderPanel1 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.BtnViewTermsAndServices = new System.Windows.Forms.Button();
+            this.Lbl6 = new System.Windows.Forms.Label();
+            this.Lbl5 = new System.Windows.Forms.Label();
             this.lostBorderPanel2 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.BtnCheckForUpdates = new System.Windows.Forms.Button();
+            this.Lbl4 = new System.Windows.Forms.Label();
+            this.Lbl3 = new System.Windows.Forms.Label();
             this.lostBorderPanel4 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.BtnSave = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.lostBorderPanel3.SuspendLayout();
+            this.BtnOpenHelp = new System.Windows.Forms.Button();
+            this.Lbl8 = new System.Windows.Forms.Label();
+            this.Lbl7 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lostBorderPanel1.SuspendLayout();
             this.lostBorderPanel2.SuspendLayout();
             this.lostBorderPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label2
+            // Lbl2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(50, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(371, 21);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Adjust interface settings and get help or information";
+            this.Lbl2.AutoSize = true;
+            this.Lbl2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl2.Location = new System.Drawing.Point(50, 101);
+            this.Lbl2.Name = "Lbl2";
+            this.Lbl2.Size = new System.Drawing.Size(371, 21);
+            this.Lbl2.TabIndex = 2;
+            this.Lbl2.Text = "Adjust interface settings and get help or information";
             // 
-            // label3
+            // Lbl1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label3.Location = new System.Drawing.Point(47, 51);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(322, 41);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Reference and Support";
-            // 
-            // lostBorderPanel3
-            // 
-            this.lostBorderPanel3.BackColor = System.Drawing.Color.White;
-            this.lostBorderPanel3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel3.Controls.Add(this.label6);
-            this.lostBorderPanel3.Controls.Add(this.comboBox1);
-            this.lostBorderPanel3.Controls.Add(this.label5);
-            this.lostBorderPanel3.Controls.Add(this.label4);
-            this.lostBorderPanel3.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lostBorderPanel3.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel3.Location = new System.Drawing.Point(82, 162);
-            this.lostBorderPanel3.Name = "lostBorderPanel3";
-            this.lostBorderPanel3.Padding = new System.Windows.Forms.Padding(5);
-            this.lostBorderPanel3.ShowText = true;
-            this.lostBorderPanel3.Size = new System.Drawing.Size(663, 118);
-            this.lostBorderPanel3.TabIndex = 13;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label6.Location = new System.Drawing.Point(17, 79);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(111, 21);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "or information";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Small",
-            "Medium",
-            "Large"});
-            this.comboBox1.Location = new System.Drawing.Point(522, 43);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(108, 36);
-            this.comboBox1.TabIndex = 15;
-            this.comboBox1.Text = "Medium";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label5.Location = new System.Drawing.Point(17, 58);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(266, 21);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Adjust interface settings and get help";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label4.Location = new System.Drawing.Point(14, 13);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(139, 41);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Font Size";
+            this.Lbl1.AutoSize = true;
+            this.Lbl1.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.Lbl1.Location = new System.Drawing.Point(47, 51);
+            this.Lbl1.Name = "Lbl1";
+            this.Lbl1.Size = new System.Drawing.Size(322, 41);
+            this.Lbl1.TabIndex = 3;
+            this.Lbl1.Text = "Reference and Support";
             // 
             // lostBorderPanel1
             // 
             this.lostBorderPanel1.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel1.Controls.Add(this.BtnSave);
-            this.lostBorderPanel1.Controls.Add(this.label8);
-            this.lostBorderPanel1.Controls.Add(this.label9);
+            this.lostBorderPanel1.Controls.Add(this.BtnViewTermsAndServices);
+            this.lostBorderPanel1.Controls.Add(this.Lbl6);
+            this.lostBorderPanel1.Controls.Add(this.Lbl5);
             this.lostBorderPanel1.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel1.ForeColor = System.Drawing.Color.Black;
             this.lostBorderPanel1.Location = new System.Drawing.Point(82, 320);
@@ -150,193 +86,197 @@
             this.lostBorderPanel1.Size = new System.Drawing.Size(663, 118);
             this.lostBorderPanel1.TabIndex = 17;
             // 
-            // label8
+            // BtnViewTermsAndServices
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label8.Location = new System.Drawing.Point(17, 68);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(219, 21);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Read our terms and Condition";
+            this.BtnViewTermsAndServices.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewTermsAndServices.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnViewTermsAndServices.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnViewTermsAndServices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnViewTermsAndServices.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnViewTermsAndServices.ForeColor = System.Drawing.Color.White;
+            this.BtnViewTermsAndServices.Location = new System.Drawing.Point(475, 39);
+            this.BtnViewTermsAndServices.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnViewTermsAndServices.Name = "BtnViewTermsAndServices";
+            this.BtnViewTermsAndServices.Size = new System.Drawing.Size(144, 43);
+            this.BtnViewTermsAndServices.TabIndex = 77;
+            this.BtnViewTermsAndServices.Text = "View";
+            this.BtnViewTermsAndServices.UseVisualStyleBackColor = false;
             // 
-            // label9
+            // Lbl6
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label9.Location = new System.Drawing.Point(14, 27);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(268, 41);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Terms and Services";
+            this.Lbl6.AutoSize = true;
+            this.Lbl6.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.Lbl6.Location = new System.Drawing.Point(17, 68);
+            this.Lbl6.Name = "Lbl6";
+            this.Lbl6.Size = new System.Drawing.Size(219, 21);
+            this.Lbl6.TabIndex = 14;
+            this.Lbl6.Text = "Read our terms and Condition";
+            // 
+            // Lbl5
+            // 
+            this.Lbl5.AutoSize = true;
+            this.Lbl5.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.Lbl5.Location = new System.Drawing.Point(14, 27);
+            this.Lbl5.Name = "Lbl5";
+            this.Lbl5.Size = new System.Drawing.Size(268, 41);
+            this.Lbl5.TabIndex = 14;
+            this.Lbl5.Text = "Terms and Services";
             // 
             // lostBorderPanel2
             // 
             this.lostBorderPanel2.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel2.Controls.Add(this.button3);
-            this.lostBorderPanel2.Controls.Add(this.label7);
-            this.lostBorderPanel2.Controls.Add(this.label10);
+            this.lostBorderPanel2.Controls.Add(this.BtnCheckForUpdates);
+            this.lostBorderPanel2.Controls.Add(this.Lbl4);
+            this.lostBorderPanel2.Controls.Add(this.Lbl3);
             this.lostBorderPanel2.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel2.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel2.Location = new System.Drawing.Point(824, 162);
+            this.lostBorderPanel2.Location = new System.Drawing.Point(82, 168);
             this.lostBorderPanel2.Name = "lostBorderPanel2";
             this.lostBorderPanel2.Padding = new System.Windows.Forms.Padding(5);
             this.lostBorderPanel2.ShowText = true;
             this.lostBorderPanel2.Size = new System.Drawing.Size(663, 118);
             this.lostBorderPanel2.TabIndex = 31;
             // 
-            // label7
+            // BtnCheckForUpdates
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label7.Location = new System.Drawing.Point(17, 68);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(332, 21);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Ensure the system is running the latest version";
+            this.BtnCheckForUpdates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnCheckForUpdates.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnCheckForUpdates.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnCheckForUpdates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCheckForUpdates.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnCheckForUpdates.ForeColor = System.Drawing.Color.White;
+            this.BtnCheckForUpdates.Location = new System.Drawing.Point(475, 39);
+            this.BtnCheckForUpdates.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnCheckForUpdates.Name = "BtnCheckForUpdates";
+            this.BtnCheckForUpdates.Size = new System.Drawing.Size(144, 43);
+            this.BtnCheckForUpdates.TabIndex = 77;
+            this.BtnCheckForUpdates.Text = "Check";
+            this.BtnCheckForUpdates.UseVisualStyleBackColor = false;
+            this.BtnCheckForUpdates.Click += new System.EventHandler(this.BtnCheckForUpdates_Click);
             // 
-            // label10
+            // Lbl4
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label10.Location = new System.Drawing.Point(14, 27);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(263, 41);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Check for Updates";
+            this.Lbl4.AutoSize = true;
+            this.Lbl4.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.Lbl4.Location = new System.Drawing.Point(17, 68);
+            this.Lbl4.Name = "Lbl4";
+            this.Lbl4.Size = new System.Drawing.Size(332, 21);
+            this.Lbl4.TabIndex = 14;
+            this.Lbl4.Text = "Ensure the system is running the latest version";
+            // 
+            // Lbl3
+            // 
+            this.Lbl3.AutoSize = true;
+            this.Lbl3.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.Lbl3.Location = new System.Drawing.Point(14, 27);
+            this.Lbl3.Name = "Lbl3";
+            this.Lbl3.Size = new System.Drawing.Size(263, 41);
+            this.Lbl3.TabIndex = 14;
+            this.Lbl3.Text = "Check for Updates";
             // 
             // lostBorderPanel4
             // 
             this.lostBorderPanel4.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel4.Controls.Add(this.button1);
-            this.lostBorderPanel4.Controls.Add(this.label11);
-            this.lostBorderPanel4.Controls.Add(this.label12);
+            this.lostBorderPanel4.Controls.Add(this.BtnOpenHelp);
+            this.lostBorderPanel4.Controls.Add(this.Lbl8);
+            this.lostBorderPanel4.Controls.Add(this.Lbl7);
             this.lostBorderPanel4.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel4.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel4.Location = new System.Drawing.Point(824, 320);
+            this.lostBorderPanel4.Location = new System.Drawing.Point(823, 168);
             this.lostBorderPanel4.Name = "lostBorderPanel4";
             this.lostBorderPanel4.Padding = new System.Windows.Forms.Padding(5);
             this.lostBorderPanel4.ShowText = true;
             this.lostBorderPanel4.Size = new System.Drawing.Size(663, 118);
             this.lostBorderPanel4.TabIndex = 32;
             // 
-            // label11
+            // BtnOpenHelp
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label11.Location = new System.Drawing.Point(17, 68);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(189, 21);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "Get Assistance or Support";
+            this.BtnOpenHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnOpenHelp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnOpenHelp.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnOpenHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnOpenHelp.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnOpenHelp.ForeColor = System.Drawing.Color.White;
+            this.BtnOpenHelp.Location = new System.Drawing.Point(476, 39);
+            this.BtnOpenHelp.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnOpenHelp.Name = "BtnOpenHelp";
+            this.BtnOpenHelp.Size = new System.Drawing.Size(144, 43);
+            this.BtnOpenHelp.TabIndex = 77;
+            this.BtnOpenHelp.Text = "Open";
+            this.BtnOpenHelp.UseVisualStyleBackColor = false;
             // 
-            // label12
+            // Lbl8
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label12.Location = new System.Drawing.Point(14, 27);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(80, 41);
-            this.label12.TabIndex = 14;
-            this.label12.Text = "Help";
+            this.Lbl8.AutoSize = true;
+            this.Lbl8.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.Lbl8.Location = new System.Drawing.Point(17, 68);
+            this.Lbl8.Name = "Lbl8";
+            this.Lbl8.Size = new System.Drawing.Size(189, 21);
+            this.Lbl8.TabIndex = 14;
+            this.Lbl8.Text = "Get Assistance or Support";
             // 
-            // BtnSave
+            // Lbl7
             // 
-            this.BtnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(522, 39);
-            this.BtnSave.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(97, 43);
-            this.BtnSave.TabIndex = 77;
-            this.BtnSave.Text = "View";
-            this.BtnSave.UseVisualStyleBackColor = false;
+            this.Lbl7.AutoSize = true;
+            this.Lbl7.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.Lbl7.Location = new System.Drawing.Point(14, 27);
+            this.Lbl7.Name = "Lbl7";
+            this.Lbl7.Size = new System.Drawing.Size(80, 41);
+            this.Lbl7.TabIndex = 14;
+            this.Lbl7.Text = "Help";
             // 
-            // button3
+            // pictureBox1
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(522, 39);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(97, 43);
-            this.button3.TabIndex = 77;
-            this.button3.Text = "Check";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(522, 39);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 43);
-            this.button1.TabIndex = 77;
-            this.button1.Text = "Open";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button3_Click);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(408, 460);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(790, 382);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 33;
+            this.pictureBox1.TabStop = false;
             // 
             // UCSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lostBorderPanel4);
             this.Controls.Add(this.lostBorderPanel2);
             this.Controls.Add(this.lostBorderPanel1);
-            this.Controls.Add(this.lostBorderPanel3);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.Lbl1);
+            this.Controls.Add(this.Lbl2);
             this.Name = "UCSettings";
             this.Size = new System.Drawing.Size(1580, 936);
-            this.lostBorderPanel3.ResumeLayout(false);
-            this.lostBorderPanel3.PerformLayout();
             this.lostBorderPanel1.ResumeLayout(false);
             this.lostBorderPanel1.PerformLayout();
             this.lostBorderPanel2.ResumeLayout(false);
             this.lostBorderPanel2.PerformLayout();
             this.lostBorderPanel4.ResumeLayout(false);
             this.lostBorderPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label Lbl2;
+        private System.Windows.Forms.Label Lbl1;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label Lbl6;
+        private System.Windows.Forms.Label Lbl5;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label Lbl4;
+        private System.Windows.Forms.Label Lbl3;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel4;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button BtnSave;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label Lbl8;
+        private System.Windows.Forms.Label Lbl7;
+        private System.Windows.Forms.Button BtnViewTermsAndServices;
+        private System.Windows.Forms.Button BtnCheckForUpdates;
+        private System.Windows.Forms.Button BtnOpenHelp;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

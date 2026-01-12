@@ -56,6 +56,7 @@
             this.BtnBKAddEditor = new System.Windows.Forms.Button();
             this.LstBxBKAuthor = new System.Windows.Forms.ListBox();
             this.BtnBKAddAuthor = new System.Windows.Forms.Button();
+            this.CmbBxBKPhysicalDescription = new System.Windows.Forms.ComboBox();
             this.CmbBxBKLanguage = new System.Windows.Forms.ComboBox();
             this.TxtBKCallNumber = new System.Windows.Forms.TextBox();
             this.LblBKCallNumber = new System.Windows.Forms.Label();
@@ -261,7 +262,6 @@
             this.textBox22 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.CmbBxBKPhysicalDescription = new System.Windows.Forms.ComboBox();
             this.PnlDesign.SuspendLayout();
             this.GrpBxResourceType.SuspendLayout();
             this.FlowPnlforRdoBtns.SuspendLayout();
@@ -648,6 +648,23 @@
             this.BtnBKAddAuthor.TabIndex = 78;
             this.BtnBKAddAuthor.Text = "Add";
             this.BtnBKAddAuthor.UseVisualStyleBackColor = false;
+            // 
+            // CmbBxBKPhysicalDescription
+            // 
+            this.CmbBxBKPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.CmbBxBKPhysicalDescription.ForeColor = System.Drawing.Color.Black;
+            this.CmbBxBKPhysicalDescription.FormattingEnabled = true;
+            this.CmbBxBKPhysicalDescription.Items.AddRange(new object[] {
+            "Hardcover",
+            "Paperback",
+            "Mass market paperback",
+            "Spiral bound",
+            "Board book"});
+            this.CmbBxBKPhysicalDescription.Location = new System.Drawing.Point(224, 979);
+            this.CmbBxBKPhysicalDescription.Name = "CmbBxBKPhysicalDescription";
+            this.CmbBxBKPhysicalDescription.Size = new System.Drawing.Size(332, 36);
+            this.CmbBxBKPhysicalDescription.TabIndex = 93;
+            this.CmbBxBKPhysicalDescription.SelectedIndexChanged += new System.EventHandler(this.CmbBxLanguage_SelectedIndexChanged);
             // 
             // CmbBxBKLanguage
             // 
@@ -3049,23 +3066,6 @@
             this.comboBox2.Size = new System.Drawing.Size(353, 36);
             this.comboBox2.TabIndex = 68;
             // 
-            // CmbBxBKPhysicalDescription
-            // 
-            this.CmbBxBKPhysicalDescription.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CmbBxBKPhysicalDescription.ForeColor = System.Drawing.Color.Black;
-            this.CmbBxBKPhysicalDescription.FormattingEnabled = true;
-            this.CmbBxBKPhysicalDescription.Items.AddRange(new object[] {
-            "Hardcover",
-            "Paperback",
-            "Mass market paperback",
-            "Spiral bound",
-            "Board book"});
-            this.CmbBxBKPhysicalDescription.Location = new System.Drawing.Point(224, 979);
-            this.CmbBxBKPhysicalDescription.Name = "CmbBxBKPhysicalDescription";
-            this.CmbBxBKPhysicalDescription.Size = new System.Drawing.Size(332, 36);
-            this.CmbBxBKPhysicalDescription.TabIndex = 93;
-            this.CmbBxBKPhysicalDescription.SelectedIndexChanged += new System.EventHandler(this.CmbBxLanguage_SelectedIndexChanged);
-            // 
             // AddBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -3082,6 +3082,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddBook";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add book";
             this.Load += new System.EventHandler(this.AddBook_Load);

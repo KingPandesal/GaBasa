@@ -221,6 +221,11 @@ namespace LMS.Presentation.Forms
 
         }
 
+        private void PnlSidebar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         // end code
     }
 }

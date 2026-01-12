@@ -407,6 +407,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FinePaymentReceipt";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FinePaymentReceipt";
             this.PnlDesign.ResumeLayout(false);

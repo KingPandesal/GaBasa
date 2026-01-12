@@ -187,6 +187,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ImportBook";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Import books";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
