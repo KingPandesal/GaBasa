@@ -1,5 +1,7 @@
 ﻿using LMS.BusinessLogic.Hashing;
 using LMS.BusinessLogic.Services.AddUser;
+using LMS.BusinessLogic.Services.Audit;
+using LMS.DataAccess.Database;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.User;
 using LMS.Model.Models.Enums;
@@ -12,6 +14,7 @@ namespace LMS.Presentation.Popup.Users
     public partial class AddUser : Form
     {
         private readonly IAddUserService _userService;
+        private readonly IAuditLogService _auditLogService;
         private string _selectedPhotoPath;
 
         // Relative path for storing user photos
@@ -25,6 +28,12 @@ namespace LMS.Presentation.Popup.Users
         {
             InitializeComponent();
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+
+            // Initialize audit log service
+            var dbConn = new DbConnection();
+            var auditLogRepo = new AuditLogRepository(dbConn);
+            _auditLogService = new AuditLogService(auditLogRepo);
+
             SetupForm();
         }
 
@@ -66,7 +75,8 @@ namespace LMS.Presentation.Popup.Users
                 return;
             }
 
-            var selectedRole = (comboBox1.SelectedItem as ComboItem)?.Value ?? Role.Staff;
+            var selectedRoleItem = comboBox1.SelectedItem as ComboItem;
+            var selectedRole = selectedRoleItem?.Value ?? Role.Staff;
 
             // Process photo - copy to Assets folder if selected
             string storedPhotoPath = null;
@@ -99,6 +109,17 @@ namespace LMS.Presentation.Popup.Users
 
             if (result.Success)
             {
+                // Log the add user action to audit log
+                try
+                {
+                    string roleDisplayName = selectedRoleItem?.Text ?? (selectedRole == Role.Librarian ? "Librarian / Admin" : "Library Staff");
+                    _auditLogService.LogAddUser(Program.CurrentUserId, roleDisplayName);
+                }
+                catch
+                {
+                    // Non-fatal: audit logging failed, but user was created.
+                }
+
                 MessageBox.Show("User created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

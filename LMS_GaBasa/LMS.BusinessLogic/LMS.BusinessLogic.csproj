@@ -78,6 +78,8 @@
     <Compile Include="Services\AddUser\AddUserService.cs" />
     <Compile Include="Services\AddUser\IAddUserService.cs" />
     <Compile Include="Services\ArchiveUser\ArchiveUserService.cs" />
+    <Compile Include="Services\Audit\AuditLogService.cs" />
+    <Compile Include="Services\Audit\IAuditLogService.cs" />
     <Compile Include="Services\BarcodeGenerator\IBarcodeGenerator.cs" />
     <Compile Include="Services\Book\AddBook\AddBookService.cs" />
     <Compile Include="Services\Book\AddBook\BookCreationResultService.cs" />

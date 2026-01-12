@@ -122,6 +122,7 @@
             this.BtnSave.TabIndex = 78;
             this.BtnSave.Text = "Import";
             this.BtnSave.UseVisualStyleBackColor = false;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click_1);
             // 
             // label3
             // 

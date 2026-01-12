@@ -35,6 +35,12 @@
             this.PnlDocked = new System.Windows.Forms.Panel();
             this.PnlBookDetails = new System.Windows.Forms.Panel();
             this.DgvBookCopy = new System.Windows.Forms.DataGridView();
+            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAccessionNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBarcode = new System.Windows.Forms.DataGridViewButtonColumn();
             this.LblResourceType = new System.Windows.Forms.Label();
             this.LblStandardID = new System.Windows.Forms.Label();
             this.LblCallNumber = new System.Windows.Forms.Label();
@@ -59,12 +65,6 @@
             this.LblTitle = new System.Windows.Forms.Label();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ColumnNumbering = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAccessionNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnBarcode = new System.Windows.Forms.DataGridViewButtonColumn();
             this.PnlPicBxBookCoverContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBxBookCover)).BeginInit();
             this.PnlDocked.SuspendLayout();
@@ -161,6 +161,49 @@
             this.DgvBookCopy.Size = new System.Drawing.Size(910, 326);
             this.DgvBookCopy.TabIndex = 60;
             this.DgvBookCopy.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwBookCopy_CellContentClick);
+            // 
+            // ColumnNumbering
+            // 
+            this.ColumnNumbering.HeaderText = "#";
+            this.ColumnNumbering.MinimumWidth = 8;
+            this.ColumnNumbering.Name = "ColumnNumbering";
+            this.ColumnNumbering.Width = 40;
+            // 
+            // ColumnAccessionNumber
+            // 
+            this.ColumnAccessionNumber.HeaderText = "Accession Number";
+            this.ColumnAccessionNumber.MinimumWidth = 8;
+            this.ColumnAccessionNumber.Name = "ColumnAccessionNumber";
+            this.ColumnAccessionNumber.Width = 150;
+            // 
+            // ColumnLocation
+            // 
+            this.ColumnLocation.HeaderText = "Location";
+            this.ColumnLocation.MinimumWidth = 8;
+            this.ColumnLocation.Name = "ColumnLocation";
+            this.ColumnLocation.Width = 150;
+            // 
+            // ColumnStatus
+            // 
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.MinimumWidth = 8;
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.Width = 150;
+            // 
+            // ColumnDateAdded
+            // 
+            this.ColumnDateAdded.HeaderText = "Date Added";
+            this.ColumnDateAdded.MinimumWidth = 8;
+            this.ColumnDateAdded.Name = "ColumnDateAdded";
+            this.ColumnDateAdded.Width = 150;
+            // 
+            // ColumnBarcode
+            // 
+            this.ColumnBarcode.HeaderText = "Barcode";
+            this.ColumnBarcode.MinimumWidth = 8;
+            this.ColumnBarcode.Name = "ColumnBarcode";
+            this.ColumnBarcode.Text = "View Barcode";
+            this.ColumnBarcode.Width = 150;
             // 
             // LblResourceType
             // 
@@ -391,6 +434,7 @@
             this.LblCategory.Size = new System.Drawing.Size(110, 32);
             this.LblCategory.TabIndex = 6;
             this.LblCategory.Text = "Category";
+            this.LblCategory.Click += new System.EventHandler(this.LblCategory_Click);
             // 
             // LblTitle
             // 
@@ -421,49 +465,6 @@
             this.dataGridViewImageColumn2.MinimumWidth = 8;
             this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
             this.dataGridViewImageColumn2.Width = 150;
-            // 
-            // ColumnNumbering
-            // 
-            this.ColumnNumbering.HeaderText = "#";
-            this.ColumnNumbering.MinimumWidth = 8;
-            this.ColumnNumbering.Name = "ColumnNumbering";
-            this.ColumnNumbering.Width = 40;
-            // 
-            // ColumnAccessionNumber
-            // 
-            this.ColumnAccessionNumber.HeaderText = "Accession Number";
-            this.ColumnAccessionNumber.MinimumWidth = 8;
-            this.ColumnAccessionNumber.Name = "ColumnAccessionNumber";
-            this.ColumnAccessionNumber.Width = 150;
-            // 
-            // ColumnLocation
-            // 
-            this.ColumnLocation.HeaderText = "Location";
-            this.ColumnLocation.MinimumWidth = 8;
-            this.ColumnLocation.Name = "ColumnLocation";
-            this.ColumnLocation.Width = 150;
-            // 
-            // ColumnStatus
-            // 
-            this.ColumnStatus.HeaderText = "Status";
-            this.ColumnStatus.MinimumWidth = 8;
-            this.ColumnStatus.Name = "ColumnStatus";
-            this.ColumnStatus.Width = 150;
-            // 
-            // ColumnDateAdded
-            // 
-            this.ColumnDateAdded.HeaderText = "Date Added";
-            this.ColumnDateAdded.MinimumWidth = 8;
-            this.ColumnDateAdded.Name = "ColumnDateAdded";
-            this.ColumnDateAdded.Width = 150;
-            // 
-            // ColumnBarcode
-            // 
-            this.ColumnBarcode.HeaderText = "Barcode";
-            this.ColumnBarcode.MinimumWidth = 8;
-            this.ColumnBarcode.Name = "ColumnBarcode";
-            this.ColumnBarcode.Text = "View Barcode";
-            this.ColumnBarcode.Width = 150;
             // 
             // ViewBookDetails
             // 

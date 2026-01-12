@@ -1,6 +1,8 @@
 ﻿using LMS.BusinessLogic.Managers;
 using LMS.BusinessLogic.Managers.Interfaces;
+using LMS.BusinessLogic.Services.Audit;
 using LMS.DataAccess.Database;
+using LMS.DataAccess.Interfaces;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Book;
 using LMS.Model.Models.Catalog;
@@ -31,6 +33,9 @@ namespace LMS.Presentation.Popup.Inventory
 
         // Barcode generator used when regenerating accessions/barcodes
         private readonly IBarcodeGenerator _barcodeGenerator;
+
+        // Audit logging service
+        private readonly IAuditLogService _auditLogService;
 
         private Book _book;
         private ResourceType _originalResourceType; // track original type
@@ -81,6 +86,10 @@ namespace LMS.Presentation.Popup.Inventory
             string barcodesFolder = Path.Combine(Application.StartupPath, "Assets", "dataimages", "BookCopyBarcodes");
             _barcodeGenerator = new LMS.Presentation.BarcodeGenerator.ZXingBarcodeGenerator(
                 barcodesFolder, ZXing.BarcodeFormat.CODE_128, width: 300, height: 100, margin: 10);
+
+            // Initialize audit log service
+            var auditLogRepo = new AuditLogRepository(dbConn);
+            _auditLogService = new AuditLogService(auditLogRepo);
 
             _book = book;
             _originalResourceType = book?.ResourceType ?? ResourceType.PhysicalBook;
@@ -1639,6 +1648,18 @@ namespace LMS.Presentation.Popup.Inventory
                     }
                 }
                 catch { /* non-fatal */ }
+
+                // Log the edit book action to audit log
+                try
+                {
+                    _auditLogService.LogEditBook(
+                        Program.CurrentUserId,
+                        _book.Title ?? "Unknown");
+                }
+                catch
+                {
+                    // Non-fatal: audit logging failed, but book was updated.
+                }
 
                 MessageBox.Show("Book updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;

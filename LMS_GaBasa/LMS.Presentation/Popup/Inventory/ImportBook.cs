@@ -138,6 +138,22 @@ namespace LMS.Presentation.Popup.Inventory
                     MessageBox.Show(summary, "Import Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
+                // Log the bulk import action to audit log (non-fatal) - only if at least one record was imported
+                if (successCount > 0)
+                {
+                    try
+                    {
+                        var dbConn = new LMS.DataAccess.Database.DbConnection();
+                        var auditLogRepo = new LMS.DataAccess.Repositories.AuditLogRepository(dbConn);
+                        var auditService = new LMS.BusinessLogic.Services.Audit.AuditLogService(auditLogRepo);
+                        auditService.LogBulkImportBook(Program.CurrentUserId);
+                    }
+                    catch
+                    {
+                        // swallow audit errors - non-fatal
+                    }
+                }
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -770,6 +786,11 @@ namespace LMS.Presentation.Popup.Inventory
                 _isSavingTemplate = false;
                 LblDownloadCSVTemplate.Enabled = true;
             }
+        }
+
+        private void BtnSave_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

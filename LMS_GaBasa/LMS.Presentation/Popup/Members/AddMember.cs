@@ -1,4 +1,7 @@
 ﻿using LMS.BusinessLogic.Services.AddMember;
+using LMS.BusinessLogic.Services.Audit;
+using LMS.DataAccess.Database;
+using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Member;
 using System;
 using System.Drawing;
@@ -10,6 +13,7 @@ namespace LMS.Presentation.Popup.Members
     public partial class AddMember : Form
     {
         private readonly IAddMemberService _memberService;
+        private readonly IAuditLogService _auditLogService;
         private string _profilePicPath = null;
         private string _validIdPath = null;
 
@@ -17,6 +21,12 @@ namespace LMS.Presentation.Popup.Members
         {
             _memberService = memberService ?? throw new ArgumentNullException(nameof(memberService));
             InitializeComponent();
+
+            // Initialize audit log service
+            var dbConn = new DbConnection();
+            var auditLogRepo = new AuditLogRepository(dbConn);
+            _auditLogService = new AuditLogService(auditLogRepo);
+
             WireUpEvents();
         }
 
@@ -73,6 +83,8 @@ namespace LMS.Presentation.Popup.Members
             if (!ValidateInputs())
                 return;
 
+            string memberTypeName = CmbBxMemberType.Text.Trim();
+
             var dto = new DTOCreateMember
             {
                 FirstName = TxtFirstName.Text.Trim(),
@@ -80,7 +92,7 @@ namespace LMS.Presentation.Popup.Members
                 Email = TxtEmail.Text.Trim(),
                 Address = TxtAddress.Text.Trim(),
                 ContactNumber = TxtContactNumber.Text.Trim(),
-                MemberTypeName = CmbBxMemberType.Text.Trim(),
+                MemberTypeName = memberTypeName,
                 Username = TxtUsername.Text.Trim(),
                 Password = TxtPassword.Text,
                 PhotoPath = _profilePicPath,
@@ -91,6 +103,17 @@ namespace LMS.Presentation.Popup.Members
 
             if (result.Success)
             {
+                // Log the add member action to audit log (include member full name)
+                try
+                {
+                    var memberFullName = $"{dto.FirstName} {dto.LastName}".Trim();
+                    _auditLogService.LogAddMember(Program.CurrentUserId, memberTypeName, memberFullName);
+                }
+                catch
+                {
+                    // Non-fatal: audit logging failed, but member was created.
+                }
+
                 MessageBox.Show("Member added successfully!", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;

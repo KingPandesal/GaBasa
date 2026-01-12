@@ -28,19 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.LblFrom = new System.Windows.Forms.Label();
+            this.DTPckFrom = new System.Windows.Forms.DateTimePicker();
+            this.LblTo = new System.Windows.Forms.Label();
+            this.DTPckTo = new System.Windows.Forms.DateTimePicker();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button3 = new ReaLTaiizor.Controls.Button();
-            this.button2 = new ReaLTaiizor.Controls.Button();
-            this.button1 = new ReaLTaiizor.Controls.Button();
-            this.button4 = new ReaLTaiizor.Controls.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.GrpBxBtns = new System.Windows.Forms.GroupBox();
+            this.BtnAuditLogs = new ReaLTaiizor.Controls.Button();
+            this.BtnFines = new ReaLTaiizor.Controls.Button();
+            this.BtnTransactions = new ReaLTaiizor.Controls.Button();
+            this.BtnInventory = new ReaLTaiizor.Controls.Button();
+            this.GrpBxDate = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.DgvTransactions = new System.Windows.Forms.DataGridView();
+            this.DgvInventory = new System.Windows.Forms.DataGridView();
+            this.DgvFines = new System.Windows.Forms.DataGridView();
+            this.DgvAuditLogs = new System.Windows.Forms.DataGridView();
+            this.LblReport = new System.Windows.Forms.Label();
+            this.BtnExport = new ReaLTaiizor.Controls.Button();
+            this.colNumberingTransactions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,7 +54,7 @@
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateReturned = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.colNumberingInventory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAccNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,66 +62,64 @@
             this.colStatus2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAddedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.colNumberingFines = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFineID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFineType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPaymentStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateSettled = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.colNumberingAuditLogs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLogID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAction = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LblOverdueBooks = new System.Windows.Forms.Label();
-            this.button5 = new ReaLTaiizor.Controls.Button();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.GrpBxBtns.SuspendLayout();
+            this.GrpBxDate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvTransactions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvFines)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvAuditLogs)).BeginInit();
             this.SuspendLayout();
             // 
-            // label3
+            // LblFrom
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label3.Location = new System.Drawing.Point(38, 31);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 32);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "From:";
+            this.LblFrom.AutoSize = true;
+            this.LblFrom.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.LblFrom.Location = new System.Drawing.Point(43, 39);
+            this.LblFrom.Name = "LblFrom";
+            this.LblFrom.Size = new System.Drawing.Size(74, 32);
+            this.LblFrom.TabIndex = 4;
+            this.LblFrom.Text = "From:";
             // 
-            // dateTimePicker1
+            // DTPckFrom
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.dateTimePicker1.Location = new System.Drawing.Point(114, 34);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(229, 30);
-            this.dateTimePicker1.TabIndex = 5;
+            this.DTPckFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DTPckFrom.Location = new System.Drawing.Point(128, 42);
+            this.DTPckFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DTPckFrom.Name = "DTPckFrom";
+            this.DTPckFrom.Size = new System.Drawing.Size(257, 30);
+            this.DTPckFrom.TabIndex = 5;
             // 
-            // label4
+            // LblTo
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label4.Location = new System.Drawing.Point(393, 31);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 32);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "To:";
+            this.LblTo.AutoSize = true;
+            this.LblTo.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.LblTo.Location = new System.Drawing.Point(442, 39);
+            this.LblTo.Name = "LblTo";
+            this.LblTo.Size = new System.Drawing.Size(44, 32);
+            this.LblTo.TabIndex = 7;
+            this.LblTo.Text = "To:";
             // 
-            // dateTimePicker2
+            // DTPckTo
             // 
-            this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.dateTimePicker2.Location = new System.Drawing.Point(440, 34);
-            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(229, 30);
-            this.dateTimePicker2.TabIndex = 8;
+            this.DTPckTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DTPckTo.Location = new System.Drawing.Point(495, 42);
+            this.DTPckTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DTPckTo.Name = "DTPckTo";
+            this.DTPckTo.Size = new System.Drawing.Size(257, 30);
+            this.DTPckTo.TabIndex = 8;
             // 
             // comboBox1
             // 
@@ -126,138 +130,143 @@
             "Guest",
             "Faculty",
             "Student"});
-            this.comboBox1.Location = new System.Drawing.Point(1295, 231);
+            this.comboBox1.Location = new System.Drawing.Point(1457, 289);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(57, 33);
+            this.comboBox1.Size = new System.Drawing.Size(64, 33);
             this.comboBox1.TabIndex = 10;
             this.comboBox1.Text = "All";
             // 
-            // groupBox1
+            // GrpBxBtns
             // 
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(32, 20);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(594, 96);
-            this.groupBox1.TabIndex = 40;
-            this.groupBox1.TabStop = false;
+            this.GrpBxBtns.Controls.Add(this.BtnAuditLogs);
+            this.GrpBxBtns.Controls.Add(this.BtnFines);
+            this.GrpBxBtns.Controls.Add(this.BtnTransactions);
+            this.GrpBxBtns.Controls.Add(this.BtnInventory);
+            this.GrpBxBtns.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GrpBxBtns.Location = new System.Drawing.Point(36, 25);
+            this.GrpBxBtns.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.GrpBxBtns.Name = "GrpBxBtns";
+            this.GrpBxBtns.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.GrpBxBtns.Size = new System.Drawing.Size(668, 120);
+            this.GrpBxBtns.TabIndex = 40;
+            this.GrpBxBtns.TabStop = false;
             // 
-            // button3
+            // BtnAuditLogs
             // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Image = null;
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Location = new System.Drawing.Point(448, 32);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button3.Name = "button3";
-            this.button3.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button3.Size = new System.Drawing.Size(128, 42);
-            this.button3.TabIndex = 33;
-            this.button3.Text = "Audit Logs";
-            this.button3.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnAuditLogs.BackColor = System.Drawing.Color.White;
+            this.BtnAuditLogs.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnAuditLogs.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAuditLogs.Image = null;
+            this.BtnAuditLogs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnAuditLogs.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.Location = new System.Drawing.Point(504, 40);
+            this.BtnAuditLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnAuditLogs.Name = "BtnAuditLogs";
+            this.BtnAuditLogs.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.Size = new System.Drawing.Size(144, 52);
+            this.BtnAuditLogs.TabIndex = 33;
+            this.BtnAuditLogs.Text = "Audit Logs";
+            this.BtnAuditLogs.TextAlignment = System.Drawing.StringAlignment.Center;
             // 
-            // button2
+            // BtnFines
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Image = null;
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Location = new System.Drawing.Point(305, 32);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button2.Name = "button2";
-            this.button2.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button2.Size = new System.Drawing.Size(128, 42);
-            this.button2.TabIndex = 32;
-            this.button2.Text = "Fines";
-            this.button2.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnFines.BackColor = System.Drawing.Color.White;
+            this.BtnFines.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnFines.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFines.Image = null;
+            this.BtnFines.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnFines.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.Location = new System.Drawing.Point(343, 40);
+            this.BtnFines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnFines.Name = "BtnFines";
+            this.BtnFines.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.Size = new System.Drawing.Size(144, 52);
+            this.BtnFines.TabIndex = 32;
+            this.BtnFines.Text = "Fines";
+            this.BtnFines.TextAlignment = System.Drawing.StringAlignment.Center;
             // 
-            // button1
+            // BtnTransactions
             // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = null;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Location = new System.Drawing.Point(162, 32);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Size = new System.Drawing.Size(128, 42);
-            this.button1.TabIndex = 31;
-            this.button1.Text = "Transactions";
-            this.button1.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnTransactions.BackColor = System.Drawing.Color.White;
+            this.BtnTransactions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnTransactions.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnTransactions.Image = null;
+            this.BtnTransactions.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnTransactions.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.Location = new System.Drawing.Point(182, 40);
+            this.BtnTransactions.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnTransactions.Name = "BtnTransactions";
+            this.BtnTransactions.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.Size = new System.Drawing.Size(144, 52);
+            this.BtnTransactions.TabIndex = 31;
+            this.BtnTransactions.Text = "Transactions";
+            this.BtnTransactions.TextAlignment = System.Drawing.StringAlignment.Center;
             // 
-            // button4
+            // BtnInventory
             // 
-            this.button4.BackColor = System.Drawing.Color.White;
-            this.button4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button4.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Image = null;
-            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.Location = new System.Drawing.Point(19, 32);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button4.Name = "button4";
-            this.button4.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button4.Size = new System.Drawing.Size(128, 42);
-            this.button4.TabIndex = 30;
-            this.button4.Text = "Inventory";
-            this.button4.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnInventory.BackColor = System.Drawing.Color.White;
+            this.BtnInventory.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnInventory.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnInventory.Image = null;
+            this.BtnInventory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnInventory.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.Location = new System.Drawing.Point(21, 40);
+            this.BtnInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnInventory.Name = "BtnInventory";
+            this.BtnInventory.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.Size = new System.Drawing.Size(144, 52);
+            this.BtnInventory.TabIndex = 30;
+            this.BtnInventory.Text = "Inventory";
+            this.BtnInventory.TextAlignment = System.Drawing.StringAlignment.Center;
             // 
-            // groupBox2
+            // GrpBxDate
             // 
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.dateTimePicker2);
-            this.groupBox2.Location = new System.Drawing.Point(625, 23);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(719, 92);
-            this.groupBox2.TabIndex = 41;
-            this.groupBox2.TabStop = false;
+            this.GrpBxDate.Controls.Add(this.DTPckFrom);
+            this.GrpBxDate.Controls.Add(this.LblFrom);
+            this.GrpBxDate.Controls.Add(this.LblTo);
+            this.GrpBxDate.Controls.Add(this.DTPckTo);
+            this.GrpBxDate.Location = new System.Drawing.Point(703, 29);
+            this.GrpBxDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.GrpBxDate.Name = "GrpBxDate";
+            this.GrpBxDate.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.GrpBxDate.Size = new System.Drawing.Size(809, 115);
+            this.GrpBxDate.TabIndex = 41;
+            this.GrpBxDate.TabStop = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.label5.Location = new System.Drawing.Point(1130, 227);
+            this.label5.Location = new System.Drawing.Point(1271, 284);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(180, 36);
             this.label5.TabIndex = 9;
             this.label5.Text = "Member Type:";
             // 
-            // dataGridView2
+            // DgvTransactions
             // 
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DgvTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvTransactions.BackgroundColor = System.Drawing.Color.White;
+            this.DgvTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvTransactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumberingTransactions,
             this.colTransactionID,
             this.colName,
             this.colTitle,
@@ -265,13 +274,115 @@
             this.colDueDate,
             this.colDateReturned,
             this.colStatus});
-            this.dataGridView2.Location = new System.Drawing.Point(32, 187);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 62;
-            this.dataGridView2.RowTemplate.Height = 28;
-            this.dataGridView2.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView2.TabIndex = 87;
+            this.DgvTransactions.Location = new System.Drawing.Point(36, 234);
+            this.DgvTransactions.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DgvTransactions.Name = "DgvTransactions";
+            this.DgvTransactions.RowHeadersWidth = 62;
+            this.DgvTransactions.RowTemplate.Height = 28;
+            this.DgvTransactions.Size = new System.Drawing.Size(1509, 449);
+            this.DgvTransactions.TabIndex = 87;
+            // 
+            // DgvInventory
+            // 
+            this.DgvInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvInventory.BackgroundColor = System.Drawing.Color.White;
+            this.DgvInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumberingInventory,
+            this.colBookID,
+            this.colAccNo,
+            this.colTitle2,
+            this.colCategory,
+            this.colStatus2,
+            this.colDateAdded,
+            this.colAddedBy});
+            this.DgvInventory.Location = new System.Drawing.Point(36, 285);
+            this.DgvInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DgvInventory.Name = "DgvInventory";
+            this.DgvInventory.RowHeadersWidth = 62;
+            this.DgvInventory.RowTemplate.Height = 28;
+            this.DgvInventory.Size = new System.Drawing.Size(1509, 449);
+            this.DgvInventory.TabIndex = 88;
+            // 
+            // DgvFines
+            // 
+            this.DgvFines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvFines.BackgroundColor = System.Drawing.Color.White;
+            this.DgvFines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvFines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumberingFines,
+            this.colFineID,
+            this.colName2,
+            this.colFineType,
+            this.colAmount,
+            this.colPaymentStatus,
+            this.colDateSettled});
+            this.DgvFines.Location = new System.Drawing.Point(36, 349);
+            this.DgvFines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DgvFines.Name = "DgvFines";
+            this.DgvFines.RowHeadersWidth = 62;
+            this.DgvFines.RowTemplate.Height = 28;
+            this.DgvFines.Size = new System.Drawing.Size(1509, 449);
+            this.DgvFines.TabIndex = 89;
+            // 
+            // DgvAuditLogs
+            // 
+            this.DgvAuditLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvAuditLogs.BackgroundColor = System.Drawing.Color.White;
+            this.DgvAuditLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvAuditLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumberingAuditLogs,
+            this.colLogID,
+            this.colUser,
+            this.colAction,
+            this.colTimestamp,
+            this.colModule});
+            this.DgvAuditLogs.Location = new System.Drawing.Point(36, 412);
+            this.DgvAuditLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DgvAuditLogs.Name = "DgvAuditLogs";
+            this.DgvAuditLogs.RowHeadersWidth = 62;
+            this.DgvAuditLogs.RowTemplate.Height = 28;
+            this.DgvAuditLogs.Size = new System.Drawing.Size(1509, 449);
+            this.DgvAuditLogs.TabIndex = 90;
+            // 
+            // LblReport
+            // 
+            this.LblReport.AutoSize = true;
+            this.LblReport.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblReport.Location = new System.Drawing.Point(30, 175);
+            this.LblReport.Name = "LblReport";
+            this.LblReport.Size = new System.Drawing.Size(217, 36);
+            this.LblReport.TabIndex = 91;
+            this.LblReport.Text = "Inventory Report";
+            // 
+            // BtnExport
+            // 
+            this.BtnExport.BackColor = System.Drawing.Color.White;
+            this.BtnExport.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnExport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnExport.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnExport.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnExport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnExport.Image = null;
+            this.BtnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnExport.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnExport.Location = new System.Drawing.Point(1401, 168);
+            this.BtnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnExport.Name = "BtnExport";
+            this.BtnExport.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnExport.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnExport.Size = new System.Drawing.Size(144, 52);
+            this.BtnExport.TabIndex = 34;
+            this.BtnExport.Text = "Export";
+            this.BtnExport.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
+            // colNumberingTransactions
+            // 
+            this.colNumberingTransactions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colNumberingTransactions.HeaderText = "#";
+            this.colNumberingTransactions.MinimumWidth = 8;
+            this.colNumberingTransactions.Name = "colNumberingTransactions";
+            this.colNumberingTransactions.Width = 54;
             // 
             // colTransactionID
             // 
@@ -323,26 +434,13 @@
             this.colStatus.Name = "colStatus";
             this.colStatus.ReadOnly = true;
             // 
-            // dataGridView1
+            // colNumberingInventory
             // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colBookID,
-            this.colAccNo,
-            this.colTitle2,
-            this.colCategory,
-            this.colStatus2,
-            this.colDateAdded,
-            this.colAddedBy});
-            this.dataGridView1.Location = new System.Drawing.Point(32, 228);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView1.TabIndex = 88;
+            this.colNumberingInventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colNumberingInventory.HeaderText = "#";
+            this.colNumberingInventory.MinimumWidth = 8;
+            this.colNumberingInventory.Name = "colNumberingInventory";
+            this.colNumberingInventory.Width = 54;
             // 
             // colBookID
             // 
@@ -394,25 +492,13 @@
             this.colAddedBy.Name = "colAddedBy";
             this.colAddedBy.ReadOnly = true;
             // 
-            // dataGridView3
+            // colNumberingFines
             // 
-            this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colFineID,
-            this.colName2,
-            this.colFineType,
-            this.colAmount,
-            this.colPaymentStatus,
-            this.colDateSettled});
-            this.dataGridView3.Location = new System.Drawing.Point(32, 279);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowHeadersWidth = 62;
-            this.dataGridView3.RowTemplate.Height = 28;
-            this.dataGridView3.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView3.TabIndex = 89;
+            this.colNumberingFines.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colNumberingFines.HeaderText = "#";
+            this.colNumberingFines.MinimumWidth = 8;
+            this.colNumberingFines.Name = "colNumberingFines";
+            this.colNumberingFines.Width = 54;
             // 
             // colFineID
             // 
@@ -456,24 +542,13 @@
             this.colDateSettled.MinimumWidth = 8;
             this.colDateSettled.Name = "colDateSettled";
             // 
-            // dataGridView4
+            // colNumberingAuditLogs
             // 
-            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView4.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colLogID,
-            this.colUser,
-            this.colAction,
-            this.colTimestamp,
-            this.colModule});
-            this.dataGridView4.Location = new System.Drawing.Point(32, 330);
-            this.dataGridView4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowHeadersWidth = 62;
-            this.dataGridView4.RowTemplate.Height = 28;
-            this.dataGridView4.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView4.TabIndex = 90;
+            this.colNumberingAuditLogs.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colNumberingAuditLogs.HeaderText = "#";
+            this.colNumberingAuditLogs.MinimumWidth = 8;
+            this.colNumberingAuditLogs.Name = "colNumberingAuditLogs";
+            this.colNumberingAuditLogs.Width = 54;
             // 
             // colLogID
             // 
@@ -492,7 +567,7 @@
             // colAction
             // 
             this.colAction.FillWeight = 18.46591F;
-            this.colAction.HeaderText = "Action Taken";
+            this.colAction.HeaderText = "Action Performed";
             this.colAction.MinimumWidth = 6;
             this.colAction.Name = "colAction";
             this.colAction.ReadOnly = true;
@@ -511,84 +586,56 @@
             this.colModule.MinimumWidth = 8;
             this.colModule.Name = "colModule";
             // 
-            // LblOverdueBooks
-            // 
-            this.LblOverdueBooks.AutoSize = true;
-            this.LblOverdueBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblOverdueBooks.Location = new System.Drawing.Point(27, 140);
-            this.LblOverdueBooks.Name = "LblOverdueBooks";
-            this.LblOverdueBooks.Size = new System.Drawing.Size(217, 36);
-            this.LblOverdueBooks.TabIndex = 91;
-            this.LblOverdueBooks.Text = "Inventory Report";
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.White;
-            this.button5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button5.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Image = null;
-            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button5.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.Location = new System.Drawing.Point(1245, 134);
-            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button5.Name = "button5";
-            this.button5.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button5.Size = new System.Drawing.Size(128, 42);
-            this.button5.TabIndex = 34;
-            this.button5.Text = "Export";
-            this.button5.TextAlignment = System.Drawing.StringAlignment.Center;
-            // 
             // UCReports
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.LblOverdueBooks);
-            this.Controls.Add(this.dataGridView4);
-            this.Controls.Add(this.dataGridView3);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.BtnExport);
+            this.Controls.Add(this.LblReport);
+            this.Controls.Add(this.DgvAuditLogs);
+            this.Controls.Add(this.DgvFines);
+            this.Controls.Add(this.DgvInventory);
+            this.Controls.Add(this.DgvTransactions);
+            this.Controls.Add(this.GrpBxDate);
+            this.Controls.Add(this.GrpBxBtns);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label5);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCReports";
-            this.Size = new System.Drawing.Size(1404, 749);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.Size = new System.Drawing.Size(1580, 936);
+            this.GrpBxBtns.ResumeLayout(false);
+            this.GrpBxDate.ResumeLayout(false);
+            this.GrpBxDate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvTransactions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvFines)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvAuditLogs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label LblFrom;
+        private System.Windows.Forms.DateTimePicker DTPckFrom;
+        private System.Windows.Forms.Label LblTo;
+        private System.Windows.Forms.DateTimePicker DTPckTo;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private ReaLTaiizor.Controls.Button button4;
-        private ReaLTaiizor.Controls.Button button3;
-        private ReaLTaiizor.Controls.Button button2;
-        private ReaLTaiizor.Controls.Button button1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox GrpBxBtns;
+        private ReaLTaiizor.Controls.Button BtnInventory;
+        private ReaLTaiizor.Controls.Button BtnAuditLogs;
+        private ReaLTaiizor.Controls.Button BtnFines;
+        private ReaLTaiizor.Controls.Button BtnTransactions;
+        private System.Windows.Forms.GroupBox GrpBxDate;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridView DgvTransactions;
+        private System.Windows.Forms.DataGridView DgvInventory;
+        private System.Windows.Forms.DataGridView DgvFines;
+        private System.Windows.Forms.DataGridView DgvAuditLogs;
+        private System.Windows.Forms.Label LblReport;
+        private ReaLTaiizor.Controls.Button BtnExport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumberingTransactions;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTransactionID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
@@ -596,6 +643,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDueDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDateReturned;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumberingInventory;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBookID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAccNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTitle2;
@@ -603,18 +651,18 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus2;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDateAdded;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAddedBy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumberingFines;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFineID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName2;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFineType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPaymentStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDateSettled;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumberingAuditLogs;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLogID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUser;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAction;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTimestamp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colModule;
-        private System.Windows.Forms.Label LblOverdueBooks;
-        private ReaLTaiizor.Controls.Button button5;
     }
 }

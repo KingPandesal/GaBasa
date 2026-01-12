@@ -12,6 +12,7 @@ using LMS.Model.Models.Enums;
 using System.Diagnostics;
 using LMS.BusinessLogic.Security;
 using LMS.Model.Models.Users;
+using LMS.BusinessLogic.Services.Audit;
 
 namespace LMS.Presentation.Popup.Catalog
 {
@@ -802,6 +803,39 @@ namespace LMS.Presentation.Popup.Catalog
 
                         if (reservation != null)
                         {
+                            // Log the reserve action to audit log (non-fatal)
+                            try
+                            {
+                                string memberFullName = "Unknown";
+                                try
+                                {
+                                    var memberRepo = new MemberRepository();
+                                    var memberDto = memberRepo.GetMemberForEdit(memberId);
+                                    if (memberDto != null)
+                                        memberFullName = $"{memberDto.FirstName} {memberDto.LastName}".Trim();
+                                }
+                                catch { }
+
+                                string bookTitle = _currentBook?.Title ?? "Unknown";
+
+                                // Construct audit service and log
+                                try
+                                {
+                                    var dbConn = new LMS.DataAccess.Database.DbConnection();
+                                    var auditLogRepo = new AuditLogRepository(dbConn);
+                                    var auditService = new LMS.BusinessLogic.Services.Audit.AuditLogService(auditLogRepo);
+                                    auditService.LogReserveBook(Program.CurrentUserId, memberFullName, bookTitle);
+                                }
+                                catch
+                                {
+                                    // swallow audit errors
+                                }
+                            }
+                            catch
+                            {
+                                // Non-fatal: continue
+                            }
+
                             MessageBox.Show(
                                 "This book has been reserved for you. Please check back later for availability.",
                                 "Reservation Successful",
@@ -837,6 +871,11 @@ namespace LMS.Presentation.Popup.Catalog
                 Debug.WriteLine("BtnReserve_Click failed: " + ex);
                 MessageBox.Show("Failed to reserve book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LblCategory_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

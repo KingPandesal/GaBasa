@@ -8,6 +8,8 @@ using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Circulation;
 using LMS.Presentation.Popup.Multipurpose;
 using LMS.Model.Models.Transactions;
+using LMS.BusinessLogic.Services.Audit;
+using LMS.DataAccess.Database;
 
 namespace LMS.Presentation.UserControls.Management
 {
@@ -15,6 +17,7 @@ namespace LMS.Presentation.UserControls.Management
     {
         private readonly ICirculationManager _circulationManager;
         private readonly ReservationRepository _reservationRepository;
+        private readonly IAuditLogService _auditLogService;
         private DTOCirculationMemberInfo _currentMember;
         private DTOCirculationBookInfo _currentBook;
 
@@ -35,6 +38,11 @@ namespace LMS.Presentation.UserControls.Management
             var circulationRepo = new CirculationRepository();
             _circulationManager = new CirculationManager(circulationRepo);
             _reservationRepository = new ReservationRepository();
+
+            // Initialize audit log service
+            var dbConn = new DbConnection();
+            var auditLogRepo = new AuditLogRepository(dbConn);
+            _auditLogService = new AuditLogService(auditLogRepo);
 
             // Wire up events
             TxtMemberID.KeyDown += TxtMemberID_KeyDown;
@@ -128,22 +136,30 @@ namespace LMS.Presentation.UserControls.Management
                 DateTime newDueDate;
                 bool success = false;
 
-                // Attempt call - assumes ICirculationManager (or concrete CirculationManager) exposes RenewBorrowingTransaction.
-                // If your ICirculationManager doesn't have this method yet, add it and route to the repository as previously discussed.
                 try
                 {
-                    // if interface exposes it:
                     success = _circulationManager.RenewBorrowingTransaction(_currentRenewal.TransactionID, out newDueDate);
                 }
                 catch (MissingMethodException)
                 {
-                    // Defensive fallback: surface clear message for missing API
                     MessageBox.Show("Renewal operation is not implemented in the manager. Add RenewBorrowingTransaction to ICirculationManager and implement it.", "Not Implemented", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (success)
                 {
+                    // Non-fatal audit log of renewal
+                    try
+                    {
+                        var memberName = _currentRenewal?.MemberName ?? _currentMember?.FullName ?? "Unknown";
+                        var bookTitle = _currentRenewal?.Title ?? "Unknown";
+                        _auditLogService?.LogRenewBook(Program.CurrentUserId, memberName, bookTitle);
+                    }
+                    catch
+                    {
+                        // Do not block user flow if audit fails
+                    }
+
                     MessageBox.Show($"Renewal successful. New Due Date: {newDueDate:MMMM d, yyyy}", "Renewed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // After successful transaction, clear UI fields as requested
@@ -1065,6 +1081,18 @@ namespace LMS.Presentation.UserControls.Management
                         // Don't fail the borrow if reservation completion fails
                     }
 
+                    // Log the borrow approval action to audit log (non-fatal)
+                    try
+                    {
+                        var memberName = _currentMember?.FullName ?? "Unknown";
+                        var bookTitle = _currentBook?.Title ?? "Unknown";
+                        _auditLogService?.LogApproveBorrowBook(Program.CurrentUserId, memberName, bookTitle);
+                    }
+                    catch
+                    {
+                        // swallow - audit logging must not block the user flow
+                    }
+
                     MessageBox.Show($"Borrow successful. Transaction ID: {transId}\nDue Date: {dueDate:MMMM d, yyyy}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Update UI to reflect new status
@@ -1597,6 +1625,18 @@ namespace LMS.Presentation.UserControls.Management
                     else
                     {
                         MessageBox.Show("Return processed successfully.", "Returned", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    // Log the return action to audit log (non-fatal)
+                    try
+                    {
+                        var memberName = returnInfoForReceipt?.MemberName ?? _currentMember?.FullName ?? "Unknown";
+                        var bookTitle = returnInfoForReceipt?.Title ?? _currentReturn?.Title ?? "Unknown";
+                        _auditLogService?.LogReturnBook(Program.CurrentUserId, memberName, bookTitle);
+                    }
+                    catch
+                    {
+                        // Non-fatal: audit logging failed, continue normal flow
                     }
 
                     // Clear active return

@@ -12,6 +12,8 @@ using LMS.Model.DTOs.Catalog;
 using LMS.DataAccess.Repositories;
 using LMS.Model.Models.Catalog;
 using LMS.Model.Models.Enums;
+using LMS.BusinessLogic.Services.Audit;
+using LMS.DataAccess.Database;
 
 namespace LMS.Presentation.UserControls
 {
@@ -19,6 +21,7 @@ namespace LMS.Presentation.UserControls
     {
         private readonly ICatalogManager _catalogManager;
         private readonly IReservationManager _reservationManager;
+        private readonly IAuditLogService _auditLogService;
 
         // search results UI
         private ListView _lvSearchResults;
@@ -116,6 +119,11 @@ namespace LMS.Presentation.UserControls
             try { WireFilterControls(); } catch { }
             try { WireFilterControls(); } catch { }
             try { InitializeSortControls(); } catch { }
+
+            // Initialize audit log service
+            var dbConn = new DbConnection();
+            var auditLogRepo = new AuditLogRepository(dbConn);
+            _auditLogService = new AuditLogService(auditLogRepo);
         }
 
         /// <summary>
@@ -508,6 +516,36 @@ namespace LMS.Presentation.UserControls
 
                         if (reservation != null)
                         {
+                            // Log the reserve action to audit log (non-fatal)
+                            try
+                            {
+                                string memberFullName = "Unknown";
+                                try
+                                {
+                                    var memberRepo = new MemberRepository();
+                                    var memberDto = memberRepo.GetMemberForEdit(memberId);
+                                    if (memberDto != null)
+                                        memberFullName = $"{memberDto.FirstName} {memberDto.LastName}".Trim();
+                                }
+                                catch { }
+
+                                string bookTitle = "Unknown";
+                                try
+                                {
+                                    var bookRepo = new BookRepository();
+                                    var book = bookRepo.GetById(bookId);
+                                    if (book != null)
+                                        bookTitle = book.Title ?? "Unknown";
+                                }
+                                catch { }
+
+                                _auditLogService?.LogReserveBook(Program.CurrentUserId, memberFullName, bookTitle);
+                            }
+                            catch
+                            {
+                                // swallow audit errors
+                            }
+
                             MessageBox.Show(
                                 "This book has been reserved for you. Please check back later for availability.",
                                 "Reservation Successful",
@@ -525,7 +563,7 @@ namespace LMS.Presentation.UserControls
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine("BtnReserve_Click failed: " + ex);
+                        Debug.WriteLine("BtnReserve_Click failed: " + ex);
                         MessageBox.Show("An error occurred while reserving the book.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -1570,6 +1608,36 @@ namespace LMS.Presentation.UserControls
 
                             if (reservation != null)
                             {
+                                // Log the reserve action to audit log (non-fatal)
+                                try
+                                {
+                                    string memberFullName = "Unknown";
+                                    try
+                                    {
+                                        var memberRepo = new MemberRepository();
+                                        var memberDto = memberRepo.GetMemberForEdit(memberId);
+                                        if (memberDto != null)
+                                            memberFullName = $"{memberDto.FirstName} {memberDto.LastName}".Trim();
+                                    }
+                                    catch { }
+
+                                    string bookTitle = "Unknown";
+                                    try
+                                    {
+                                        var bookRepo = new BookRepository();
+                                        var book = bookRepo.GetById(dto.BookID);
+                                        if (book != null)
+                                            bookTitle = book.Title ?? "Unknown";
+                                    }
+                                    catch { }
+
+                                    _auditLogService?.LogReserveBook(Program.CurrentUserId, memberFullName, bookTitle);
+                                }
+                                catch
+                                {
+                                    // swallow audit errors
+                                }
+
                                 MessageBox.Show(
                                     "This book has been reserved for you. Please check back later for availability.",
                                     "Reservation Successful",

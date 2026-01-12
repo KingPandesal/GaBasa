@@ -18,6 +18,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ZXing;
 using System.Text.RegularExpressions;
+using LMS.BusinessLogic.Services.Audit;
 
 namespace LMS.Presentation.Popup.Inventory
 {
@@ -29,6 +30,8 @@ namespace LMS.Presentation.Popup.Inventory
 
         // Barcode generator (presentation implements the business interface)
         private readonly IBarcodeGenerator _barcodeGenerator;
+
+        private readonly IAuditLogService _auditLogService;
 
         // Author repository used to populate suggestions and lookup existing authors/editors
         private readonly IAuthorRepository _authorRepo;
@@ -89,6 +92,10 @@ namespace LMS.Presentation.Popup.Inventory
             // keep reference to author repo for populating suggestions
             _authorRepo = authorRepo;
             _bookAuthorRepo = bookAuthorRepo;
+
+            // Initialize audit log service
+            var auditLogRepo = new AuditLogRepository(dbConnection);
+            _auditLogService = new AuditLogService(auditLogRepo);
 
             InitializeForm();
         }
@@ -1532,12 +1539,11 @@ namespace LMS.Presentation.Popup.Inventory
                         {
                             var map = _barcodeGenerator.GenerateMany(result.AccessionNumbers);
 
-                            // persist barcode image paths to DB
                             var bookCopyRepo = new BookCopyRepository(new DbConnection());
                             foreach (var kv in map)
                             {
                                 var accession = kv.Key;
-                                var barcodePath = kv.Value; // relative path returned by generator
+                                var barcodePath = kv.Value;
                                 if (!string.IsNullOrWhiteSpace(barcodePath))
                                     bookCopyRepo.UpdateBarcodeImage(accession, barcodePath);
                             }
@@ -1546,6 +1552,23 @@ namespace LMS.Presentation.Popup.Inventory
                     catch
                     {
                         // Non-fatal: barcode generation failed, but book was saved.
+                    }
+
+                    // Log the add book action to audit log
+                    try
+                    {
+                        int copyCount = (int)dto.InitialCopyCount;
+                        if (copyCount <= 0) copyCount = 1; // Digital resources count as 1
+                        
+                        _auditLogService.LogAddBook(
+                            Program.CurrentUserId,
+                            copyCount,
+                            dto.Title,
+                            dto.CategoryName ?? "Uncategorized");
+                    }
+                    catch
+                    {
+                        // Non-fatal: audit logging failed, but book was saved.
                     }
 
                     MessageBox.Show("Book added successfully!", "Success",

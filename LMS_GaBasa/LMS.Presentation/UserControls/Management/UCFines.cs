@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 using LMS.BusinessLogic.Managers;
 using LMS.BusinessLogic.Managers.Interfaces;
+using LMS.BusinessLogic.Services.Audit;
+using LMS.DataAccess.Database;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Circulation;
 using LMS.Model.DTOs.Fine;
@@ -15,6 +17,7 @@ namespace LMS.Presentation.UserControls.Management
     public partial class UCFines : UserControl
     {
         private readonly ICirculationManager _circulationManager;
+        private readonly IAuditLogService _auditLogService;
         private DTOCirculationMemberInfo _currentMember;
         private List<DTOFineRecord> _currentFines;
 
@@ -25,6 +28,11 @@ namespace LMS.Presentation.UserControls.Management
             // Setup dependencies
             var circulationRepo = new CirculationRepository();
             _circulationManager = new CirculationManager(circulationRepo);
+
+            // Initialize audit log service
+            var dbConn = new DbConnection();
+            var auditLogRepo = new AuditLogRepository(dbConn);
+            _auditLogService = new AuditLogService(auditLogRepo);
 
             // Wire up events
             TxtSearchMember.KeyDown += TxtSearchMember_KeyDown;
@@ -549,6 +557,17 @@ namespace LMS.Presentation.UserControls.Management
             {
                 MessageBox.Show($"Successfully waived {unpaidFines.Count} fine(s).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Log the waiver to audit log (non-fatal if it fails)
+                try
+                {
+                    var memberFullName = _currentMember?.FullName ?? "Unknown";
+                    _auditLogService.LogWaiveFines(Program.CurrentUserId, memberFullName, reason);
+                }
+                catch
+                {
+                    // Non-fatal: audit logging failed, do not block UI
+                }
+
                 // Refresh fines grid (waived entries are excluded)
                 LoadFinesGrid(_currentMember.MemberID);
 
@@ -688,6 +707,16 @@ namespace LMS.Presentation.UserControls.Management
 
             if (ok && paymentIds != null && paymentIds.Count > 0)
             {
+                // Log the pay fines action to audit log
+                try
+                {
+                    _auditLogService.LogPayFines(Program.CurrentUserId, _currentMember.FullName);
+                }
+                catch
+                {
+                    // Non-fatal: audit logging failed, but payment was processed.
+                }
+
                 MessageBox.Show($"Payment successful!\n\nChange: ₱{change:N2}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Show receipt - pass payment IDs so receipt can display Payment ID(s)
