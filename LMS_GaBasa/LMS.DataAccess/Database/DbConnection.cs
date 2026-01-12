@@ -16,7 +16,7 @@ namespace LMS.DataAccess.Database
         public DbConnection()
         {
             connectionString = ConfigurationManager
-                .ConnectionStrings["LibraryDb"]
+                .ConnectionStrings["LibraryDB"]
                 .ConnectionString;
         }
 

@@ -499,6 +499,9 @@
     <EmbeddedResource Include="UserControls\MemberFeatures\UCHistory.resx">
       <DependentUpon>UCHistory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MemberFeatures\UCMyFines.resx">
+      <DependentUpon>UCMyFines.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MemberFeatures\UCOverdue.resx">
       <DependentUpon>UCOverdue.cs</DependentUpon>
     </EmbeddedResource>
