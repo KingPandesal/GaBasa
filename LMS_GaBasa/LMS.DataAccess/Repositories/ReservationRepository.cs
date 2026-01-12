@@ -625,5 +625,38 @@ namespace LMS.DataAccess.Repositories
 
             return reservations;
         }
+
+        /// <summary>
+        /// Checks if a member currently has an active borrow for any copy of a book.
+        /// </summary>
+        public bool HasActiveBorrowForBook(int bookId, int memberId)
+        {
+            if (bookId <= 0 || memberId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+
+                // Check BorrowingTransaction for any active (unreturned) borrow
+                // where the copy belongs to the specified book
+                cmd.CommandText = @"
+                    SELECT COUNT(*)
+                    FROM [BorrowingTransaction] bt
+                    INNER JOIN [BookCopy] bc ON bt.CopyID = bc.CopyID
+                    WHERE bc.BookID = @BookID
+                      AND bt.MemberID = @MemberID
+                      AND bt.ReturnDate IS NULL
+                      AND bt.[Status] IN ('Borrowed', 'Overdue')";
+
+                AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+                AddParameter(cmd, "@MemberID", DbType.Int32, memberId);
+
+                var result = cmd.ExecuteScalar();
+                int count = result != null ? Convert.ToInt32(result) : 0;
+                return count > 0;
+            }
+        }
     }
 }

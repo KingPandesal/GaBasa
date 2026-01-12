@@ -30,8 +30,13 @@ namespace LMS.BusinessLogic.Managers
             if (memberId <= 0)
                 throw new ArgumentException("Invalid member ID.", nameof(memberId));
 
+            // Check if member already has an active reservation for this book
             if (HasActiveReservation(bookId, memberId))
                 throw new InvalidOperationException("You already have an active reservation for this book.");
+
+            // Check if member currently has this book borrowed
+            if (_reservationRepository.HasActiveBorrowForBook(bookId, memberId))
+                throw new InvalidOperationException("You cannot reserve a book that you currently have borrowed.");
 
             // Check if the book has any copies at all
             if (!_reservationRepository.HasAnyCopies(bookId))
@@ -196,6 +201,23 @@ namespace LMS.BusinessLogic.Managers
                 return null;
 
             return _reservationRepository.GetFirstInQueueByBookId(bookId);
+        }
+
+        public bool HasActiveBorrowForBook(int bookId, int memberId)
+        {
+            if (bookId <= 0 || memberId <= 0)
+                return false;
+
+            try
+            {
+                // Delegate to repository which checks BorrowingTransaction joined to BookCopy
+                return _reservationRepository.HasActiveBorrowForBook(bookId, memberId);
+            }
+            catch
+            {
+                // Defensive: on error treat as no active borrow so UI doesn't crash; repository/logging can reveal root cause
+                return false;
+            }
         }
     }
 }

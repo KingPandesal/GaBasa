@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LMS.Model.Models.Transactions;
 using LMS.Model.DTOs.Reservation;
 
@@ -98,5 +97,13 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// <param name="copyId">The copy ID.</param>
         /// <returns>The first reservation, or null if none.</returns>
         Reservation GetFirstReservationForCopy(int copyId);
+
+        /// <summary>
+        /// Checks if a member currently has an active (unreturned) borrow for any copy of a book.
+        /// </summary>
+        /// <param name="bookId">The book ID.</param>
+        /// <param name="memberId">The member ID.</param>
+        /// <returns>True if the member has an active borrow for this book.</returns>
+        bool HasActiveBorrowForBook(int bookId, int memberId);
     }
 }
