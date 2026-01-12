@@ -16,5 +16,20 @@ namespace LMS.Presentation.UserControls.MemberFeatures
         {
             InitializeComponent();
         }
+
+        private void bigTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bigTextBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UCMyFines_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
