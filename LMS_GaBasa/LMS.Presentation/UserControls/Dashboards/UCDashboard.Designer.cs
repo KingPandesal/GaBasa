@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCDashboard));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lostBorderPanel24 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.label43 = new System.Windows.Forms.Label();
@@ -43,7 +43,6 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.lostBorderPanel17 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.lostBorderPanel4 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.lostBorderPanel11 = new ReaLTaiizor.Controls.LostBorderPanel();
@@ -79,6 +78,10 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
+            this.parrotLineGraph1 = new ReaLTaiizor.Controls.ParrotLineGraph();
+            this.parrotPieGraph1 = new ReaLTaiizor.Controls.ParrotPieGraph();
+            this.lostBorderPanel1 = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.lostBorderPanel24.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -96,13 +99,15 @@
             this.lostBorderPanel13.SuspendLayout();
             this.lostBorderPanel14.SuspendLayout();
             this.lostBorderPanel15.SuspendLayout();
+            this.lostBorderPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.lostBorderPanel1);
+            this.panel2.Controls.Add(this.parrotLineGraph1);
             this.panel2.Controls.Add(this.lostBorderPanel24);
-            this.panel2.Controls.Add(this.lostBorderPanel17);
             this.panel2.Controls.Add(this.lostBorderPanel4);
             this.panel2.Controls.Add(this.lostBorderPanel3);
             this.panel2.Controls.Add(this.lostBorderPanel5);
@@ -112,8 +117,9 @@
             this.panel2.Controls.Add(this.lostBorderPanel14);
             this.panel2.Controls.Add(this.monthCalendar2);
             this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1580, 832);
+            this.panel2.Size = new System.Drawing.Size(1404, 666);
             this.panel2.TabIndex = 14;
             // 
             // lostBorderPanel24
@@ -127,17 +133,18 @@
             this.lostBorderPanel24.Controls.Add(this.label42);
             this.lostBorderPanel24.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel24.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel24.Location = new System.Drawing.Point(31, 35);
+            this.lostBorderPanel24.Location = new System.Drawing.Point(28, 28);
+            this.lostBorderPanel24.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel24.Name = "lostBorderPanel24";
-            this.lostBorderPanel24.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel24.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel24.ShowText = true;
-            this.lostBorderPanel24.Size = new System.Drawing.Size(1161, 253);
+            this.lostBorderPanel24.Size = new System.Drawing.Size(1032, 197);
             this.lostBorderPanel24.TabIndex = 10;
             // 
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(23, 107);
+            this.label43.Location = new System.Drawing.Point(20, 86);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(209, 32);
             this.label43.TabIndex = 18;
@@ -146,9 +153,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(877, 18);
+            this.pictureBox1.Location = new System.Drawing.Point(780, 14);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(278, 232);
+            this.pictureBox1.Size = new System.Drawing.Size(247, 172);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 17;
             this.pictureBox1.TabStop = false;
@@ -160,10 +168,10 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.button1.Location = new System.Drawing.Point(29, 192);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(26, 149);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(190, 46);
+            this.button1.Size = new System.Drawing.Size(169, 37);
             this.button1.TabIndex = 16;
             this.button1.Text = "View Catalog";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -173,7 +181,7 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(23, 75);
+            this.label41.Location = new System.Drawing.Point(20, 60);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(726, 32);
             this.label41.TabIndex = 1;
@@ -183,7 +191,7 @@
             // 
             this.label42.AutoSize = true;
             this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label42.Location = new System.Drawing.Point(21, 29);
+            this.label42.Location = new System.Drawing.Point(19, 23);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(198, 46);
             this.label42.TabIndex = 0;
@@ -193,35 +201,23 @@
             // 
             this.lostBorderPanel17.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel17.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel17.Controls.Add(this.label27);
+            this.lostBorderPanel17.Controls.Add(this.label1);
             this.lostBorderPanel17.Controls.Add(this.label28);
             this.lostBorderPanel17.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel17.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel17.Location = new System.Drawing.Point(1232, 400);
+            this.lostBorderPanel17.Location = new System.Drawing.Point(0, 49);
+            this.lostBorderPanel17.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel17.Name = "lostBorderPanel17";
-            this.lostBorderPanel17.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel17.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel17.ShowText = true;
-            this.lostBorderPanel17.Size = new System.Drawing.Size(312, 140);
+            this.lostBorderPanel17.Size = new System.Drawing.Size(248, 119);
             this.lostBorderPanel17.TabIndex = 14;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ForeColor = System.Drawing.Color.Gray;
-            this.label27.Location = new System.Drawing.Point(30, 90);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(259, 28);
-            this.label27.TabIndex = 6;
-            this.label27.Text = "Last updated: Dec 04, 2025";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label27.Click += new System.EventHandler(this.label27_Click);
             // 
             // label28
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label28.Location = new System.Drawing.Point(56, 20);
+            this.label28.Location = new System.Drawing.Point(22, 14);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(210, 81);
             this.label28.TabIndex = 5;
@@ -237,11 +233,12 @@
             this.lostBorderPanel4.Controls.Add(this.label19);
             this.lostBorderPanel4.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel4.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel4.Location = new System.Drawing.Point(846, 319);
+            this.lostBorderPanel4.Location = new System.Drawing.Point(851, 255);
+            this.lostBorderPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel4.Name = "lostBorderPanel4";
-            this.lostBorderPanel4.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel4.ShowText = true;
-            this.lostBorderPanel4.Size = new System.Drawing.Size(346, 221);
+            this.lostBorderPanel4.Size = new System.Drawing.Size(248, 168);
             this.lostBorderPanel4.TabIndex = 15;
             // 
             // lostBorderPanel11
@@ -253,20 +250,21 @@
             this.lostBorderPanel11.Controls.Add(this.label18);
             this.lostBorderPanel11.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel11.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel11.Location = new System.Drawing.Point(0, 78);
+            this.lostBorderPanel11.Location = new System.Drawing.Point(0, 49);
+            this.lostBorderPanel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel11.Name = "lostBorderPanel11";
-            this.lostBorderPanel11.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel11.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel11.ShowText = true;
-            this.lostBorderPanel11.Size = new System.Drawing.Size(346, 143);
+            this.lostBorderPanel11.Size = new System.Drawing.Size(248, 119);
             this.lostBorderPanel11.TabIndex = 13;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(146, 93);
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.label8.Location = new System.Drawing.Point(104, 72);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(99, 28);
+            this.label8.Size = new System.Drawing.Size(78, 21);
             this.label8.TabIndex = 10;
             this.label8.Text = "this week";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -274,11 +272,11 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.label9.ForeColor = System.Drawing.Color.Gold;
-            this.label9.Location = new System.Drawing.Point(90, 93);
+            this.label9.Location = new System.Drawing.Point(54, 71);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(65, 28);
+            this.label9.Size = new System.Drawing.Size(51, 21);
             this.label9.TabIndex = 9;
             this.label9.Text = "- 50%";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -287,7 +285,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label18.Location = new System.Drawing.Point(118, 21);
+            this.label18.Location = new System.Drawing.Point(78, 10);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(99, 81);
             this.label18.TabIndex = 8;
@@ -297,10 +295,10 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(55, 34);
+            this.label19.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label19.Location = new System.Drawing.Point(19, 9);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(226, 41);
+            this.label19.Size = new System.Drawing.Size(211, 38);
             this.label19.TabIndex = 1;
             this.label19.Text = "Overdue Books";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -313,11 +311,12 @@
             this.lostBorderPanel3.Controls.Add(this.label17);
             this.lostBorderPanel3.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel3.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel3.Location = new System.Drawing.Point(437, 319);
+            this.lostBorderPanel3.Location = new System.Drawing.Point(577, 255);
+            this.lostBorderPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel3.Name = "lostBorderPanel3";
-            this.lostBorderPanel3.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel3.ShowText = true;
-            this.lostBorderPanel3.Size = new System.Drawing.Size(346, 221);
+            this.lostBorderPanel3.Size = new System.Drawing.Size(248, 168);
             this.lostBorderPanel3.TabIndex = 14;
             // 
             // lostBorderPanel10
@@ -329,20 +328,21 @@
             this.lostBorderPanel10.Controls.Add(this.label16);
             this.lostBorderPanel10.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel10.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel10.Location = new System.Drawing.Point(0, 78);
+            this.lostBorderPanel10.Location = new System.Drawing.Point(0, 49);
+            this.lostBorderPanel10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel10.Name = "lostBorderPanel10";
-            this.lostBorderPanel10.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel10.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel10.ShowText = true;
-            this.lostBorderPanel10.Size = new System.Drawing.Size(346, 143);
+            this.lostBorderPanel10.Size = new System.Drawing.Size(248, 119);
             this.lostBorderPanel10.TabIndex = 13;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(151, 93);
+            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(103, 73);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 28);
+            this.label6.Size = new System.Drawing.Size(78, 21);
             this.label6.TabIndex = 10;
             this.label6.Text = "this week";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -350,11 +350,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.label7.Location = new System.Drawing.Point(88, 93);
+            this.label7.Location = new System.Drawing.Point(47, 73);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(71, 28);
+            this.label7.Size = new System.Drawing.Size(56, 21);
             this.label7.TabIndex = 9;
             this.label7.Text = "▲ 10%";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -363,7 +363,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label16.Location = new System.Drawing.Point(142, 21);
+            this.label16.Location = new System.Drawing.Point(91, 10);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(67, 81);
             this.label16.TabIndex = 8;
@@ -373,10 +373,10 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(55, 34);
+            this.label17.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label17.Location = new System.Drawing.Point(25, 9);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(215, 41);
+            this.label17.Size = new System.Drawing.Size(201, 38);
             this.label17.TabIndex = 1;
             this.label17.Text = "Reserve Books";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -389,37 +389,40 @@
             this.lostBorderPanel5.Controls.Add(this.chartBorrowingsByUserTypes);
             this.lostBorderPanel5.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel5.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel5.Location = new System.Drawing.Point(1232, 587);
+            this.lostBorderPanel5.Location = new System.Drawing.Point(1096, 459);
+            this.lostBorderPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel5.Name = "lostBorderPanel5";
-            this.lostBorderPanel5.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel5.ShowText = true;
-            this.lostBorderPanel5.Size = new System.Drawing.Size(312, 221);
+            this.lostBorderPanel5.Size = new System.Drawing.Size(277, 188);
             this.lostBorderPanel5.TabIndex = 12;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 14);
+            this.label5.Location = new System.Drawing.Point(12, 11);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(230, 28);
             this.label5.TabIndex = 6;
             this.label5.Text = "Borrowing by User Type";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // chartBorrowingsByUserTypes
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartBorrowingsByUserTypes.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartBorrowingsByUserTypes.Legends.Add(legend1);
-            this.chartBorrowingsByUserTypes.Location = new System.Drawing.Point(3, 45);
+            chartArea17.Name = "ChartArea1";
+            this.chartBorrowingsByUserTypes.ChartAreas.Add(chartArea17);
+            legend17.Name = "Legend1";
+            this.chartBorrowingsByUserTypes.Legends.Add(legend17);
+            this.chartBorrowingsByUserTypes.Location = new System.Drawing.Point(7, 36);
+            this.chartBorrowingsByUserTypes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartBorrowingsByUserTypes.Name = "chartBorrowingsByUserTypes";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartBorrowingsByUserTypes.Series.Add(series1);
-            this.chartBorrowingsByUserTypes.Size = new System.Drawing.Size(298, 173);
+            series17.ChartArea = "ChartArea1";
+            series17.Legend = "Legend1";
+            series17.Name = "Series1";
+            this.chartBorrowingsByUserTypes.Series.Add(series17);
+            this.chartBorrowingsByUserTypes.Size = new System.Drawing.Size(265, 136);
             this.chartBorrowingsByUserTypes.TabIndex = 0;
             this.chartBorrowingsByUserTypes.Text = "chart1";
             // 
@@ -427,26 +430,27 @@
             // 
             this.lostBorderPanel2.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel2.Controls.Add(this.label1);
-            this.lostBorderPanel2.Controls.Add(this.label2);
+            this.lostBorderPanel2.Controls.Add(this.lostBorderPanel17);
             this.lostBorderPanel2.Controls.Add(this.label4);
+            this.lostBorderPanel2.Controls.Add(this.label2);
             this.lostBorderPanel2.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel2.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel2.Location = new System.Drawing.Point(1232, 319);
+            this.lostBorderPanel2.Location = new System.Drawing.Point(1125, 255);
+            this.lostBorderPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel2.Name = "lostBorderPanel2";
-            this.lostBorderPanel2.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel2.ShowText = true;
-            this.lostBorderPanel2.Size = new System.Drawing.Size(312, 221);
+            this.lostBorderPanel2.Size = new System.Drawing.Size(248, 168);
             this.lostBorderPanel2.TabIndex = 13;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(26, 170);
+            this.label1.Location = new System.Drawing.Point(22, 74);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(259, 28);
+            this.label1.Size = new System.Drawing.Size(207, 21);
             this.label1.TabIndex = 6;
             this.label1.Text = "Last updated: Dec 04, 2025";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -455,7 +459,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label2.Location = new System.Drawing.Point(55, 89);
+            this.label2.Location = new System.Drawing.Point(33, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(210, 81);
             this.label2.TabIndex = 5;
@@ -465,10 +469,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(77, 34);
+            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(52, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(163, 41);
+            this.label4.Size = new System.Drawing.Size(150, 38);
             this.label4.TabIndex = 5;
             this.label4.Text = "Total Fines";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -481,18 +485,19 @@
             this.lostBorderPanel9.Controls.Add(this.ChartBorrowingTrends);
             this.lostBorderPanel9.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel9.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel9.Location = new System.Drawing.Point(437, 587);
+            this.lostBorderPanel9.Location = new System.Drawing.Point(388, 459);
+            this.lostBorderPanel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel9.Name = "lostBorderPanel9";
-            this.lostBorderPanel9.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel9.ShowText = true;
-            this.lostBorderPanel9.Size = new System.Drawing.Size(755, 221);
+            this.lostBorderPanel9.Size = new System.Drawing.Size(671, 188);
             this.lostBorderPanel9.TabIndex = 12;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(26, 17);
+            this.label13.Location = new System.Drawing.Point(23, 14);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(163, 28);
             this.label13.TabIndex = 7;
@@ -501,17 +506,18 @@
             // 
             // ChartBorrowingTrends
             // 
-            chartArea2.Name = "ChartArea1";
-            this.ChartBorrowingTrends.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.ChartBorrowingTrends.Legends.Add(legend2);
-            this.ChartBorrowingTrends.Location = new System.Drawing.Point(3, 48);
+            chartArea18.Name = "ChartArea1";
+            this.ChartBorrowingTrends.ChartAreas.Add(chartArea18);
+            legend18.Name = "Legend1";
+            this.ChartBorrowingTrends.Legends.Add(legend18);
+            this.ChartBorrowingTrends.Location = new System.Drawing.Point(42, 57);
+            this.ChartBorrowingTrends.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ChartBorrowingTrends.Name = "ChartBorrowingTrends";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.ChartBorrowingTrends.Series.Add(series2);
-            this.ChartBorrowingTrends.Size = new System.Drawing.Size(692, 170);
+            series18.ChartArea = "ChartArea1";
+            series18.Legend = "Legend1";
+            series18.Name = "Series1";
+            this.ChartBorrowingTrends.Series.Add(series18);
+            this.ChartBorrowingTrends.Size = new System.Drawing.Size(615, 115);
             this.ChartBorrowingTrends.TabIndex = 0;
             this.ChartBorrowingTrends.Text = "chart1";
             // 
@@ -524,11 +530,12 @@
             this.lostBorderPanel12.Controls.Add(this.label15);
             this.lostBorderPanel12.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel12.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel12.Location = new System.Drawing.Point(31, 587);
+            this.lostBorderPanel12.Location = new System.Drawing.Point(28, 255);
+            this.lostBorderPanel12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel12.Name = "lostBorderPanel12";
-            this.lostBorderPanel12.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel12.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel12.ShowText = true;
-            this.lostBorderPanel12.Size = new System.Drawing.Size(346, 221);
+            this.lostBorderPanel12.Size = new System.Drawing.Size(248, 168);
             this.lostBorderPanel12.TabIndex = 13;
             // 
             // lostBorderPanel13
@@ -538,18 +545,19 @@
             this.lostBorderPanel13.Controls.Add(this.label20);
             this.lostBorderPanel13.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel13.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel13.Location = new System.Drawing.Point(0, 92);
+            this.lostBorderPanel13.Location = new System.Drawing.Point(0, 49);
+            this.lostBorderPanel13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel13.Name = "lostBorderPanel13";
-            this.lostBorderPanel13.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel13.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel13.ShowText = true;
-            this.lostBorderPanel13.Size = new System.Drawing.Size(346, 129);
+            this.lostBorderPanel13.Size = new System.Drawing.Size(248, 119);
             this.lostBorderPanel13.TabIndex = 14;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label20.Location = new System.Drawing.Point(85, 26);
+            this.label20.Location = new System.Drawing.Point(38, 12);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(176, 81);
             this.label20.TabIndex = 1;
@@ -560,7 +568,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label14.Location = new System.Drawing.Point(85, 92);
+            this.label14.Location = new System.Drawing.Point(76, 74);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(176, 81);
             this.label14.TabIndex = 1;
@@ -570,10 +578,10 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(86, 33);
+            this.label15.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label15.Location = new System.Drawing.Point(44, 9);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(176, 41);
+            this.label15.Size = new System.Drawing.Size(164, 38);
             this.label15.TabIndex = 0;
             this.label15.Text = "Total Books";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -586,11 +594,12 @@
             this.lostBorderPanel14.Controls.Add(this.label24);
             this.lostBorderPanel14.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel14.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel14.Location = new System.Drawing.Point(31, 319);
+            this.lostBorderPanel14.Location = new System.Drawing.Point(302, 255);
+            this.lostBorderPanel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel14.Name = "lostBorderPanel14";
-            this.lostBorderPanel14.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel14.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel14.ShowText = true;
-            this.lostBorderPanel14.Size = new System.Drawing.Size(346, 221);
+            this.lostBorderPanel14.Size = new System.Drawing.Size(248, 168);
             this.lostBorderPanel14.TabIndex = 12;
             // 
             // lostBorderPanel15
@@ -602,21 +611,22 @@
             this.lostBorderPanel15.Controls.Add(this.label23);
             this.lostBorderPanel15.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel15.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel15.Location = new System.Drawing.Point(0, 78);
+            this.lostBorderPanel15.Location = new System.Drawing.Point(0, 49);
+            this.lostBorderPanel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lostBorderPanel15.Name = "lostBorderPanel15";
-            this.lostBorderPanel15.Padding = new System.Windows.Forms.Padding(5);
+            this.lostBorderPanel15.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lostBorderPanel15.ShowText = true;
-            this.lostBorderPanel15.Size = new System.Drawing.Size(346, 143);
+            this.lostBorderPanel15.Size = new System.Drawing.Size(248, 119);
             this.lostBorderPanel15.TabIndex = 13;
             this.lostBorderPanel15.Click += new System.EventHandler(this.lostBorderPanel15_Click);
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(155, 93);
+            this.label21.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.label21.Location = new System.Drawing.Point(107, 72);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(99, 28);
+            this.label21.Size = new System.Drawing.Size(78, 21);
             this.label21.TabIndex = 10;
             this.label21.Text = "this week";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -624,11 +634,11 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.label22.ForeColor = System.Drawing.Color.Red;
-            this.label22.Location = new System.Drawing.Point(87, 93);
+            this.label22.Location = new System.Drawing.Point(46, 71);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(80, 28);
+            this.label22.Size = new System.Drawing.Size(63, 21);
             this.label22.TabIndex = 9;
             this.label22.Text = "▼ 80% ";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -637,7 +647,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label23.Location = new System.Drawing.Point(123, 21);
+            this.label23.Location = new System.Drawing.Point(74, 10);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(99, 81);
             this.label23.TabIndex = 8;
@@ -647,27 +657,94 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(55, 34);
+            this.label24.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.label24.Location = new System.Drawing.Point(12, 9);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(242, 41);
+            this.label24.Size = new System.Drawing.Size(227, 38);
             this.label24.TabIndex = 1;
             this.label24.Text = "Borrowed Books";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // monthCalendar2
             // 
-            this.monthCalendar2.Location = new System.Drawing.Point(1232, 35);
+            this.monthCalendar2.Location = new System.Drawing.Point(1072, 27);
+            this.monthCalendar2.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.monthCalendar2.Name = "monthCalendar2";
             this.monthCalendar2.TabIndex = 7;
             // 
+            // parrotLineGraph1
+            // 
+            this.parrotLineGraph1.BackGroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(217)))), ((int)(((byte)(174)))));
+            this.parrotLineGraph1.BelowLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(202)))), ((int)(((byte)(142)))));
+            this.parrotLineGraph1.BorderColor = System.Drawing.Color.White;
+            this.parrotLineGraph1.GraphStyle = ReaLTaiizor.Controls.ParrotLineGraph.Style.Material;
+            this.parrotLineGraph1.GraphTitle = "Parrot Line Graph";
+            this.parrotLineGraph1.GraphTitleColor = System.Drawing.Color.Gray;
+            this.parrotLineGraph1.Items = ((System.Collections.Generic.List<int>)(resources.GetObject("parrotLineGraph1.Items")));
+            this.parrotLineGraph1.LineColor = System.Drawing.Color.White;
+            this.parrotLineGraph1.Location = new System.Drawing.Point(130, 535);
+            this.parrotLineGraph1.Name = "parrotLineGraph1";
+            this.parrotLineGraph1.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            this.parrotLineGraph1.PointSize = 7;
+            this.parrotLineGraph1.ShowBorder = false;
+            this.parrotLineGraph1.ShowPoints = true;
+            this.parrotLineGraph1.ShowTitle = false;
+            this.parrotLineGraph1.ShowVerticalLines = false;
+            this.parrotLineGraph1.Size = new System.Drawing.Size(135, 79);
+            this.parrotLineGraph1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            this.parrotLineGraph1.TabIndex = 16;
+            this.parrotLineGraph1.Text = "parrotLineGraph1";
+            this.parrotLineGraph1.TextRenderingType = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.parrotLineGraph1.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.parrotLineGraph1.VerticalLineColor = System.Drawing.Color.DimGray;
+            // 
+            // parrotPieGraph1
+            // 
+            this.parrotPieGraph1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.parrotPieGraph1.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("parrotPieGraph1.Colors")));
+            this.parrotPieGraph1.Location = new System.Drawing.Point(17, 57);
+            this.parrotPieGraph1.Name = "parrotPieGraph1";
+            this.parrotPieGraph1.Numbers = ((System.Collections.Generic.List<int>)(resources.GetObject("parrotPieGraph1.Numbers")));
+            this.parrotPieGraph1.Size = new System.Drawing.Size(100, 100);
+            this.parrotPieGraph1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            this.parrotPieGraph1.TabIndex = 17;
+            this.parrotPieGraph1.Text = "parrotPieGraph1";
+            // 
+            // lostBorderPanel1
+            // 
+            this.lostBorderPanel1.BackColor = System.Drawing.Color.White;
+            this.lostBorderPanel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.lostBorderPanel1.Controls.Add(this.parrotPieGraph1);
+            this.lostBorderPanel1.Controls.Add(this.label3);
+            this.lostBorderPanel1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lostBorderPanel1.ForeColor = System.Drawing.Color.Black;
+            this.lostBorderPanel1.Location = new System.Drawing.Point(28, 459);
+            this.lostBorderPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lostBorderPanel1.Name = "lostBorderPanel1";
+            this.lostBorderPanel1.Padding = new System.Windows.Forms.Padding(4);
+            this.lostBorderPanel1.ShowText = true;
+            this.lostBorderPanel1.Size = new System.Drawing.Size(326, 188);
+            this.lostBorderPanel1.TabIndex = 13;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(207, 28);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Category Distribution";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // UCDashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCDashboard";
-            this.Size = new System.Drawing.Size(1580, 832);
+            this.Size = new System.Drawing.Size(1404, 666);
             this.Load += new System.EventHandler(this.UCDashboardLibrarian_Load);
             this.panel2.ResumeLayout(false);
             this.lostBorderPanel24.ResumeLayout(false);
@@ -699,6 +776,8 @@
             this.lostBorderPanel14.PerformLayout();
             this.lostBorderPanel15.ResumeLayout(false);
             this.lostBorderPanel15.PerformLayout();
+            this.lostBorderPanel1.ResumeLayout(false);
+            this.lostBorderPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -713,7 +792,6 @@
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label42;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel17;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel4;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel11;
@@ -749,5 +827,9 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.MonthCalendar monthCalendar2;
+        private ReaLTaiizor.Controls.ParrotLineGraph parrotLineGraph1;
+        private ReaLTaiizor.Controls.ParrotPieGraph parrotPieGraph1;
+        private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel1;
+        private System.Windows.Forms.Label label3;
     }
 }

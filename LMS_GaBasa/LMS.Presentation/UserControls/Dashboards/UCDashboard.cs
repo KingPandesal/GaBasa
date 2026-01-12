@@ -52,5 +52,10 @@ namespace LMS.Presentation.UserControls.Dashboards
         {
 
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
