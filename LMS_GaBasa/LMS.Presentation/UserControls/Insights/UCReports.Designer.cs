@@ -41,27 +41,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.colLogID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAction = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFineID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFineType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPaymentStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDateSettled = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAccNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTitle2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStatus2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAddedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,6 +48,29 @@
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateReturned = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.colBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTitle2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAddedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.colFineID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFineType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPaymentStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDateSettled = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.colLogID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAction = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LblOverdueBooks = new System.Windows.Forms.Label();
+            this.button5 = new ReaLTaiizor.Controls.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -263,201 +265,13 @@
             this.colDueDate,
             this.colDateReturned,
             this.colStatus});
-            this.dataGridView2.Location = new System.Drawing.Point(32, 154);
+            this.dataGridView2.Location = new System.Drawing.Point(32, 187);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 62;
             this.dataGridView2.RowTemplate.Height = 28;
             this.dataGridView2.Size = new System.Drawing.Size(1341, 359);
             this.dataGridView2.TabIndex = 87;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colBookID,
-            this.colAccNo,
-            this.colTitle2,
-            this.colCategory,
-            this.colStatus2,
-            this.colDateAdded,
-            this.colAddedBy});
-            this.dataGridView1.Location = new System.Drawing.Point(32, 195);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView1.TabIndex = 88;
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colFineID,
-            this.colName2,
-            this.colFineType,
-            this.colAmount,
-            this.colPaymentStatus,
-            this.colDateSettled});
-            this.dataGridView3.Location = new System.Drawing.Point(32, 246);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowHeadersWidth = 62;
-            this.dataGridView3.RowTemplate.Height = 28;
-            this.dataGridView3.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView3.TabIndex = 89;
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView4.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colLogID,
-            this.colUser,
-            this.colAction,
-            this.colTimestamp,
-            this.colModule});
-            this.dataGridView4.Location = new System.Drawing.Point(32, 297);
-            this.dataGridView4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowHeadersWidth = 62;
-            this.dataGridView4.RowTemplate.Height = 28;
-            this.dataGridView4.Size = new System.Drawing.Size(1341, 359);
-            this.dataGridView4.TabIndex = 90;
-            // 
-            // colLogID
-            // 
-            this.colLogID.FillWeight = 426.1364F;
-            this.colLogID.HeaderText = "Log ID";
-            this.colLogID.MinimumWidth = 8;
-            this.colLogID.Name = "colLogID";
-            // 
-            // colUser
-            // 
-            this.colUser.FillWeight = 18.46591F;
-            this.colUser.HeaderText = "User";
-            this.colUser.MinimumWidth = 8;
-            this.colUser.Name = "colUser";
-            // 
-            // colAction
-            // 
-            this.colAction.FillWeight = 18.46591F;
-            this.colAction.HeaderText = "Action Taken";
-            this.colAction.MinimumWidth = 6;
-            this.colAction.Name = "colAction";
-            this.colAction.ReadOnly = true;
-            // 
-            // colTimestamp
-            // 
-            this.colTimestamp.FillWeight = 18.46591F;
-            this.colTimestamp.HeaderText = "Timestamp";
-            this.colTimestamp.MinimumWidth = 6;
-            this.colTimestamp.Name = "colTimestamp";
-            this.colTimestamp.ReadOnly = true;
-            // 
-            // colModule
-            // 
-            this.colModule.HeaderText = "Module Involved";
-            this.colModule.MinimumWidth = 8;
-            this.colModule.Name = "colModule";
-            // 
-            // colFineID
-            // 
-            this.colFineID.FillWeight = 426.1364F;
-            this.colFineID.HeaderText = "Fine ID";
-            this.colFineID.MinimumWidth = 8;
-            this.colFineID.Name = "colFineID";
-            // 
-            // colName2
-            // 
-            this.colName2.FillWeight = 18.46591F;
-            this.colName2.HeaderText = "Member Name";
-            this.colName2.MinimumWidth = 8;
-            this.colName2.Name = "colName2";
-            // 
-            // colFineType
-            // 
-            this.colFineType.FillWeight = 18.46591F;
-            this.colFineType.HeaderText = "Fine Type";
-            this.colFineType.MinimumWidth = 6;
-            this.colFineType.Name = "colFineType";
-            this.colFineType.ReadOnly = true;
-            // 
-            // colAmount
-            // 
-            this.colAmount.FillWeight = 18.46591F;
-            this.colAmount.HeaderText = "Amount";
-            this.colAmount.MinimumWidth = 6;
-            this.colAmount.Name = "colAmount";
-            this.colAmount.ReadOnly = true;
-            // 
-            // colPaymentStatus
-            // 
-            this.colPaymentStatus.HeaderText = "Status";
-            this.colPaymentStatus.MinimumWidth = 8;
-            this.colPaymentStatus.Name = "colPaymentStatus";
-            // 
-            // colDateSettled
-            // 
-            this.colDateSettled.HeaderText = "Date Settled";
-            this.colDateSettled.MinimumWidth = 8;
-            this.colDateSettled.Name = "colDateSettled";
-            // 
-            // colBookID
-            // 
-            this.colBookID.FillWeight = 426.1364F;
-            this.colBookID.HeaderText = "Book ID";
-            this.colBookID.MinimumWidth = 8;
-            this.colBookID.Name = "colBookID";
-            // 
-            // colAccNo
-            // 
-            this.colAccNo.FillWeight = 18.46591F;
-            this.colAccNo.HeaderText = "Accession No.";
-            this.colAccNo.MinimumWidth = 8;
-            this.colAccNo.Name = "colAccNo";
-            // 
-            // colTitle2
-            // 
-            this.colTitle2.FillWeight = 18.46591F;
-            this.colTitle2.HeaderText = "Book Title";
-            this.colTitle2.MinimumWidth = 6;
-            this.colTitle2.Name = "colTitle2";
-            this.colTitle2.ReadOnly = true;
-            // 
-            // colCategory
-            // 
-            this.colCategory.FillWeight = 18.46591F;
-            this.colCategory.HeaderText = "Category";
-            this.colCategory.MinimumWidth = 6;
-            this.colCategory.Name = "colCategory";
-            this.colCategory.ReadOnly = true;
-            // 
-            // colStatus2
-            // 
-            this.colStatus2.HeaderText = "Status";
-            this.colStatus2.MinimumWidth = 8;
-            this.colStatus2.Name = "colStatus2";
-            // 
-            // colDateAdded
-            // 
-            this.colDateAdded.HeaderText = "Date Added";
-            this.colDateAdded.MinimumWidth = 8;
-            this.colDateAdded.Name = "colDateAdded";
-            // 
-            // colAddedBy
-            // 
-            this.colAddedBy.FillWeight = 18.46591F;
-            this.colAddedBy.HeaderText = "Added By";
-            this.colAddedBy.MinimumWidth = 6;
-            this.colAddedBy.Name = "colAddedBy";
-            this.colAddedBy.ReadOnly = true;
             // 
             // colTransactionID
             // 
@@ -509,11 +323,232 @@
             this.colStatus.Name = "colStatus";
             this.colStatus.ReadOnly = true;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colBookID,
+            this.colAccNo,
+            this.colTitle2,
+            this.colCategory,
+            this.colStatus2,
+            this.colDateAdded,
+            this.colAddedBy});
+            this.dataGridView1.Location = new System.Drawing.Point(32, 228);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 62;
+            this.dataGridView1.RowTemplate.Height = 28;
+            this.dataGridView1.Size = new System.Drawing.Size(1341, 359);
+            this.dataGridView1.TabIndex = 88;
+            // 
+            // colBookID
+            // 
+            this.colBookID.FillWeight = 426.1364F;
+            this.colBookID.HeaderText = "Book ID";
+            this.colBookID.MinimumWidth = 8;
+            this.colBookID.Name = "colBookID";
+            // 
+            // colAccNo
+            // 
+            this.colAccNo.FillWeight = 18.46591F;
+            this.colAccNo.HeaderText = "Accession No.";
+            this.colAccNo.MinimumWidth = 8;
+            this.colAccNo.Name = "colAccNo";
+            // 
+            // colTitle2
+            // 
+            this.colTitle2.FillWeight = 18.46591F;
+            this.colTitle2.HeaderText = "Book Title";
+            this.colTitle2.MinimumWidth = 6;
+            this.colTitle2.Name = "colTitle2";
+            this.colTitle2.ReadOnly = true;
+            // 
+            // colCategory
+            // 
+            this.colCategory.FillWeight = 18.46591F;
+            this.colCategory.HeaderText = "Category";
+            this.colCategory.MinimumWidth = 6;
+            this.colCategory.Name = "colCategory";
+            this.colCategory.ReadOnly = true;
+            // 
+            // colStatus2
+            // 
+            this.colStatus2.HeaderText = "Status";
+            this.colStatus2.MinimumWidth = 8;
+            this.colStatus2.Name = "colStatus2";
+            // 
+            // colDateAdded
+            // 
+            this.colDateAdded.HeaderText = "Date Added";
+            this.colDateAdded.MinimumWidth = 8;
+            this.colDateAdded.Name = "colDateAdded";
+            // 
+            // colAddedBy
+            // 
+            this.colAddedBy.FillWeight = 18.46591F;
+            this.colAddedBy.HeaderText = "Added By";
+            this.colAddedBy.MinimumWidth = 6;
+            this.colAddedBy.Name = "colAddedBy";
+            this.colAddedBy.ReadOnly = true;
+            // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colFineID,
+            this.colName2,
+            this.colFineType,
+            this.colAmount,
+            this.colPaymentStatus,
+            this.colDateSettled});
+            this.dataGridView3.Location = new System.Drawing.Point(32, 279);
+            this.dataGridView3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.RowHeadersWidth = 62;
+            this.dataGridView3.RowTemplate.Height = 28;
+            this.dataGridView3.Size = new System.Drawing.Size(1341, 359);
+            this.dataGridView3.TabIndex = 89;
+            // 
+            // colFineID
+            // 
+            this.colFineID.FillWeight = 426.1364F;
+            this.colFineID.HeaderText = "Fine ID";
+            this.colFineID.MinimumWidth = 8;
+            this.colFineID.Name = "colFineID";
+            // 
+            // colName2
+            // 
+            this.colName2.FillWeight = 18.46591F;
+            this.colName2.HeaderText = "Member Name";
+            this.colName2.MinimumWidth = 8;
+            this.colName2.Name = "colName2";
+            // 
+            // colFineType
+            // 
+            this.colFineType.FillWeight = 18.46591F;
+            this.colFineType.HeaderText = "Fine Type";
+            this.colFineType.MinimumWidth = 6;
+            this.colFineType.Name = "colFineType";
+            this.colFineType.ReadOnly = true;
+            // 
+            // colAmount
+            // 
+            this.colAmount.FillWeight = 18.46591F;
+            this.colAmount.HeaderText = "Amount";
+            this.colAmount.MinimumWidth = 6;
+            this.colAmount.Name = "colAmount";
+            this.colAmount.ReadOnly = true;
+            // 
+            // colPaymentStatus
+            // 
+            this.colPaymentStatus.HeaderText = "Status";
+            this.colPaymentStatus.MinimumWidth = 8;
+            this.colPaymentStatus.Name = "colPaymentStatus";
+            // 
+            // colDateSettled
+            // 
+            this.colDateSettled.HeaderText = "Date Settled";
+            this.colDateSettled.MinimumWidth = 8;
+            this.colDateSettled.Name = "colDateSettled";
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView4.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colLogID,
+            this.colUser,
+            this.colAction,
+            this.colTimestamp,
+            this.colModule});
+            this.dataGridView4.Location = new System.Drawing.Point(32, 330);
+            this.dataGridView4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.RowHeadersWidth = 62;
+            this.dataGridView4.RowTemplate.Height = 28;
+            this.dataGridView4.Size = new System.Drawing.Size(1341, 359);
+            this.dataGridView4.TabIndex = 90;
+            // 
+            // colLogID
+            // 
+            this.colLogID.FillWeight = 426.1364F;
+            this.colLogID.HeaderText = "Log ID";
+            this.colLogID.MinimumWidth = 8;
+            this.colLogID.Name = "colLogID";
+            // 
+            // colUser
+            // 
+            this.colUser.FillWeight = 18.46591F;
+            this.colUser.HeaderText = "User";
+            this.colUser.MinimumWidth = 8;
+            this.colUser.Name = "colUser";
+            // 
+            // colAction
+            // 
+            this.colAction.FillWeight = 18.46591F;
+            this.colAction.HeaderText = "Action Taken";
+            this.colAction.MinimumWidth = 6;
+            this.colAction.Name = "colAction";
+            this.colAction.ReadOnly = true;
+            // 
+            // colTimestamp
+            // 
+            this.colTimestamp.FillWeight = 18.46591F;
+            this.colTimestamp.HeaderText = "Timestamp";
+            this.colTimestamp.MinimumWidth = 6;
+            this.colTimestamp.Name = "colTimestamp";
+            this.colTimestamp.ReadOnly = true;
+            // 
+            // colModule
+            // 
+            this.colModule.HeaderText = "Module Involved";
+            this.colModule.MinimumWidth = 8;
+            this.colModule.Name = "colModule";
+            // 
+            // LblOverdueBooks
+            // 
+            this.LblOverdueBooks.AutoSize = true;
+            this.LblOverdueBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblOverdueBooks.Location = new System.Drawing.Point(27, 140);
+            this.LblOverdueBooks.Name = "LblOverdueBooks";
+            this.LblOverdueBooks.Size = new System.Drawing.Size(217, 36);
+            this.LblOverdueBooks.TabIndex = 91;
+            this.LblOverdueBooks.Text = "Inventory Report";
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.White;
+            this.button5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button5.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Image = null;
+            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button5.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.Location = new System.Drawing.Point(1245, 134);
+            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button5.Name = "button5";
+            this.button5.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.button5.Size = new System.Drawing.Size(128, 42);
+            this.button5.TabIndex = 34;
+            this.button5.Text = "Export";
+            this.button5.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
             // UCReports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.LblOverdueBooks);
             this.Controls.Add(this.dataGridView4);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.dataGridView1);
@@ -579,5 +614,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colAction;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTimestamp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colModule;
+        private System.Windows.Forms.Label LblOverdueBooks;
+        private ReaLTaiizor.Controls.Button button5;
     }
 }
