@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportBook));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lostBorderPanel14 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,15 +38,18 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.LblDownloadCSVTemplate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.lostBorderPanel14.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(36, 22);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(68, 63);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -55,6 +59,7 @@
             this.lostBorderPanel14.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.lostBorderPanel14.Controls.Add(this.label1);
             this.lostBorderPanel14.Controls.Add(this.pictureBox1);
+            this.lostBorderPanel14.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lostBorderPanel14.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel14.ForeColor = System.Drawing.Color.Black;
             this.lostBorderPanel14.Location = new System.Drawing.Point(144, 33);
@@ -67,6 +72,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label1.Location = new System.Drawing.Point(46, 97);
             this.label1.Name = "label1";
@@ -93,7 +99,7 @@
             this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCancel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnCancel.Location = new System.Drawing.Point(222, 330);
+            this.BtnCancel.Location = new System.Drawing.Point(222, 374);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(97, 43);
@@ -109,7 +115,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(117, 330);
+            this.BtnSave.Location = new System.Drawing.Point(117, 374);
             this.BtnSave.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(97, 43);
@@ -150,12 +156,26 @@
             this.label5.TabIndex = 82;
             this.label5.Text = "• Columns are matched by name";
             // 
+            // LblDownloadCSVTemplate
+            // 
+            this.LblDownloadCSVTemplate.AutoSize = true;
+            this.LblDownloadCSVTemplate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LblDownloadCSVTemplate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.LblDownloadCSVTemplate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.LblDownloadCSVTemplate.Location = new System.Drawing.Point(30, 309);
+            this.LblDownloadCSVTemplate.Name = "LblDownloadCSVTemplate";
+            this.LblDownloadCSVTemplate.Size = new System.Drawing.Size(318, 25);
+            this.LblDownloadCSVTemplate.TabIndex = 83;
+            this.LblDownloadCSVTemplate.Text = "• Click here to download CSV template";
+            this.LblDownloadCSVTemplate.Click += new System.EventHandler(this.LblDownloadCSVTemplate_Click);
+            // 
             // ImportBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(443, 397);
+            this.ClientSize = new System.Drawing.Size(443, 446);
+            this.Controls.Add(this.LblDownloadCSVTemplate);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -188,5 +208,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label LblDownloadCSVTemplate;
     }
 }

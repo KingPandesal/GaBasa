@@ -167,6 +167,7 @@
             this.PicBxModuleIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PicBxModuleIcon.TabIndex = 1;
             this.PicBxModuleIcon.TabStop = false;
+            this.PicBxModuleIcon.Click += new System.EventHandler(this.PicBxModuleIcon_Click);
             // 
             // LblModuleName
             // 

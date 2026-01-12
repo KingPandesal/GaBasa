@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LMS.Model.Models.Enums;
+using System.Reflection;
 
 namespace LMS.Presentation.Popup.Inventory
 {
@@ -24,6 +25,7 @@ namespace LMS.Presentation.Popup.Inventory
         private readonly AuthorRepository _authorRepo;
         private readonly BookAuthorRepository _bookAuthorRepo;
 
+        private bool _isSavingTemplate = false;
         public ImportBook()
         {
             InitializeComponent();
@@ -679,6 +681,95 @@ namespace LMS.Presentation.Popup.Inventory
         {
             public string Name { get; set; }
             public string Role { get; set; }
+        }
+
+        private void LblDownloadCSVTemplate_Click(object sender, EventArgs e)
+        {
+            if (_isSavingTemplate)
+                return;
+
+            _isSavingTemplate = true;
+            LblDownloadCSVTemplate.Enabled = false;
+
+            try
+            {
+                using (var sfd = new SaveFileDialog())
+                {
+                    sfd.Title = "Save CSV Template";
+                    sfd.Filter = "CSV Files|*.csv";
+                    sfd.FileName = "GaBasa_BookImportTemplate.csv";
+                    sfd.DefaultExt = "csv";
+                    sfd.RestoreDirectory = true;
+
+                    if (sfd.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    try
+                    {
+                        // 1) Try embedded resource first (works when Build Action = Embedded Resource)
+                        var asm = Assembly.GetExecutingAssembly();
+                        string resourceName = asm.GetManifestResourceNames()
+                                                 .FirstOrDefault(n => n.EndsWith("BookImportTemplate.csv", StringComparison.OrdinalIgnoreCase));
+
+                        if (resourceName != null)
+                        {
+                            using (var rs = asm.GetManifestResourceStream(resourceName))
+                            using (var fs = File.Create(sfd.FileName))
+                            {
+                                rs.CopyTo(fs);
+                            }
+                        }
+                        else
+                        {
+                            // 2) Fallback: look for file next to the running exe (works when Copy to Output Directory is set)
+                            var fileInApp = Path.Combine(Application.StartupPath, "BookImportTemplate.csv");
+                            if (File.Exists(fileInApp))
+                            {
+                                File.Copy(fileInApp, sfd.FileName, true);
+                            }
+                            else
+                            {
+                                // 3) Final fallback: create a header-only CSV on the fly
+                                string[] headers = new[]
+                                {
+                            "Standard ID",
+                            "Call Number",
+                            "Title",
+                            "Subtitle",
+                            "Author",
+                            "Editor",
+                            "Adviser",
+                            "Publisher",
+                            "Category",
+                            "Language",
+                            "Pages",
+                            "Edition / Volume",
+                            "Publication Year",
+                            "Description / Format",
+                            "ResourceType",
+                            "LoanType",
+                            "isDigital",
+                            "Download URL"
+                        };
+
+                                string csvContent = string.Join(",", headers.Select(h => $"\"{h}\""));
+                                File.WriteAllText(sfd.FileName, csvContent, Encoding.UTF8);
+                            }
+                        }
+
+                        MessageBox.Show("CSV template saved successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving CSV template: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            finally
+            {
+                _isSavingTemplate = false;
+                LblDownloadCSVTemplate.Enabled = true;
+            }
         }
     }
 }

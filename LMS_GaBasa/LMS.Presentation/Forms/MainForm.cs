@@ -34,7 +34,7 @@ namespace LMS.Presentation.Forms
             { "INSIGHTS", new string[] { "Reports" } },
             { "MANAGEMENT", new string[] { "Users", "Members", "Inventory", "Reservations", "Circulation", "Fines" } },
             { "CONFIGURATION", new string[] { "Settings" } },
-            { "MEMBERS", new string[] { "My Wishlist", "My Borrowed", "My Overdue", "My Reserve", "My Fines", "My History" } }
+            { "MEMBERS", new string[] { "My Borrowed", "My Overdue", "My Reserve", "My Fines", "My History" } }
         };
 
         // ===== 3: Constructors =====
@@ -214,6 +214,11 @@ namespace LMS.Presentation.Forms
             // Refresh top bar display using profile DTO directly
             _topBarController.RefreshProfile(profile, PicBxProfilePic, LblProfileName,
                 _lblProfileRole); // Use the field instead of lookup
+        }
+
+        private void PicBxModuleIcon_Click(object sender, EventArgs e)
+        {
+
         }
 
         // end code
