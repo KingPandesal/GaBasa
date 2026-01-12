@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\ICirculationRepository.cs" />
     <Compile Include="Interfaces\ILanguageRepository.cs" />
+    <Compile Include="Interfaces\IMemberHistoryRepository.cs" />
     <Compile Include="Interfaces\IMemberRepository.cs" />
     <Compile Include="Interfaces\IPublisherRepository.cs" />
     <Compile Include="Interfaces\IReservationRepository.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\CirculationRepository.cs" />
     <Compile Include="Repositories\LanguageRepository.cs" />
+    <Compile Include="Repositories\MemberHistoryRepository.cs" />
     <Compile Include="Repositories\MemberRepository.cs" />
     <Compile Include="Repositories\PublisherRepository.cs" />
     <Compile Include="Repositories\ReservationRepository.cs" />

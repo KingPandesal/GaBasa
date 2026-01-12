@@ -3,57 +3,50 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LMS.BusinessLogic.Managers;
-using LMS.BusinessLogic.Managers.Interfaces;
-using LMS.DataAccess.Interfaces;
+using LMS.BusinessLogic.Services.MemberFeatures;
 using LMS.DataAccess.Repositories;
-using LMS.Model.DTOs.Circulation;
 using LMS.Model.DTOs.Fine;
 
 namespace LMS.Presentation.UserControls.MemberFeatures
 {
     public partial class UCMyFines : UserControl
     {
-        private readonly ICirculationManager _circulationManager;
-        private readonly IReservationRepository _reservationRepository;
+        private readonly MemberFinesService _finesService;
+        private readonly ReservationRepository _reservationRepository;
+
         private int _memberId;
-        private DTOCirculationMemberInfo _memberInfo;
-        private List<DTOFineRecord> _allFines;
+        private DTOMemberFinesView _viewModel;
         private List<DTOFineRecord> _filteredFines;
 
         public UCMyFines()
         {
             InitializeComponent();
 
-            // Setup dependencies
-            var circulationRepo = new CirculationRepository();
-            _circulationManager = new CirculationManager(circulationRepo);
+            _finesService = new MemberFinesService();
             _reservationRepository = new ReservationRepository();
 
-            // Wire up events
+            // Wire events
+            this.Load += UCMyFines_Load;
             TxtSearchBar.TextChanged += TxtSearchBar_TextChanged;
+
+            // Ensure grid read-only
+            DgvListOfFines.ReadOnly = true;
+            DgvListOfFines.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         private void UCMyFines_Load(object sender, EventArgs e)
         {
             InitializeMemberId();
-            LoadMemberInfo();
-            LoadFines();
+            LoadViewModelAndPopulate();
         }
 
         private void InitializeMemberId()
         {
             try
             {
-                // Get MainForm instance
                 var mainForm = this.FindForm();
-                if (mainForm == null)
-                {
-                    _memberId = 0;
-                    return;
-                }
+                if (mainForm == null) { _memberId = 0; return; }
 
-                // Use reflection to get _currentUser from MainForm
                 var currentUserField = mainForm.GetType().GetField("_currentUser",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
@@ -73,12 +66,11 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             }
             catch
             {
-                // Fallback: member ID not found
                 _memberId = 0;
             }
         }
 
-        private void LoadMemberInfo()
+        private void LoadViewModelAndPopulate()
         {
             if (_memberId <= 0)
             {
@@ -86,179 +78,82 @@ namespace LMS.Presentation.UserControls.MemberFeatures
                 return;
             }
 
-            try
-            {
-                _memberInfo = _circulationManager.GetMemberByFormattedId($"MEM-{_memberId:D4}");
-                if (_memberInfo == null)
-                {
-                    DisplayDefaultState();
-                    return;
-                }
+            _viewModel = _finesService.GetMemberFinesView(_memberId) ?? new DTOMemberFinesView();
+            _filteredFines = _viewModel.Fines ?? new List<DTOFineRecord>();
 
-                // Update LblOverduePerDay with member's fine rate
-                LblOverduePerDay.Text = $"• Overdue: ₱{_memberInfo.FineRate:N2} per day";
+            // Labels
+            LblOverduePerDay.Text = _viewModel.OverduePerDayText;
+            LblValueOustandingBalance.Text = $"₱{_viewModel.TotalOutstanding:N2}";
 
-                // Update Outstanding Balance
-                LblValueOustandingBalance.Text = $"₱{_memberInfo.TotalUnpaidFines:N2}";
+            // Account standing
+            LblValueAccountStanding.Text = _viewModel.AccountStanding ?? "Unknown";
+            SetAccountStandingColor(LblValueAccountStanding, _viewModel.AccountStanding);
 
-                // Determine and display Account Standing
-                UpdateAccountStanding();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading member info: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void UpdateAccountStanding()
-        {
-            if (_memberInfo == null)
-            {
-                LblValueAccountStanding.Text = "Unknown";
-                LblValueAccountStanding.ForeColor = Color.Black;
-                return;
-            }
-
-            bool hasFines = _memberInfo.TotalUnpaidFines > 0;
-            bool hasOverdue = _memberInfo.OverdueCount > 0;
-            bool reachedMaxFineCap = _memberInfo.TotalUnpaidFines >= _memberInfo.MaxFineCap;
-
-            // Account Standing Logic:
-            // Good = No fines, no overdue
-            // Restricted = with fine or with overdue
-            // Suspended = reaches MaxFineCap
-            if (reachedMaxFineCap)
-            {
-                LblValueAccountStanding.Text = "Suspended";
-                LblValueAccountStanding.ForeColor = Color.FromArgb(192, 0, 0); // Dark Red
-            }
-            else if (hasFines || hasOverdue)
-            {
-                LblValueAccountStanding.Text = "Restricted";
-                LblValueAccountStanding.ForeColor = Color.FromArgb(255, 165, 0); // Orange
-            }
-            else
-            {
-                LblValueAccountStanding.Text = "Good";
-                LblValueAccountStanding.ForeColor = Color.FromArgb(0, 150, 0); // Green
-            }
-        }
-
-        private void LoadFines()
-        {
-            if (_memberId <= 0)
-            {
-                DisplayNoFinesMessage();
-                return;
-            }
-
-            try
-            {
-                _allFines = _circulationManager.GetFinesByMemberId(_memberId) ?? new List<DTOFineRecord>();
-
-                if (_allFines.Count == 0)
-                {
-                    DisplayNoFinesMessage();
-                    return;
-                }
-
-                _filteredFines = _allFines;
-                ApplySearchFilter();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading fines: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            PopulateGrid(_filteredFines);
         }
 
         private void TxtSearchBar_TextChanged(object sender, EventArgs e)
         {
-            ApplySearchFilter();
-        }
-
-        private void ApplySearchFilter()
-        {
-            if (_allFines == null || _allFines.Count == 0)
-            {
-                DisplayNoFinesMessage();
+            if (_viewModel == null)
                 return;
-            }
 
-            string searchText = TxtSearchBar.Text?.Trim() ?? "";
-
-            if (string.IsNullOrWhiteSpace(searchText))
-            {
-                _filteredFines = _allFines;
-            }
-            else
-            {
-                // Search by Status (ColumnStatus) or Fine Type (ColumnTitleDescription)
-                _filteredFines = _allFines.Where(f =>
-                    (f.Status != null && f.Status.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (f.FineType != null && f.FineType.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                ).ToList();
-            }
-
-            PopulateGrid();
+            string q = TxtSearchBar.Text?.Trim() ?? "";
+            _filteredFines = _finesService.FilterFines(_viewModel.Fines, q);
+            PopulateGrid(_filteredFines);
         }
 
-        private void PopulateGrid()
+        private void PopulateGrid(List<DTOFineRecord> fines)
         {
             DgvListOfFines.Rows.Clear();
 
-            if (_filteredFines == null || _filteredFines.Count == 0)
+            if (fines == null || fines.Count == 0)
             {
-                DisplayNoFinesMessage();
+                // show empty row
+                var idxEmpty = DgvListOfFines.Rows.Add();
+                DgvListOfFines.Rows[idxEmpty].Cells["ColumnTitleDescription"].Value = "No fines found.";
                 return;
             }
 
-            int rowNum = 1;
-            foreach (var fine in _filteredFines)
+            int row = 1;
+            foreach (var f in fines)
             {
-                int rowIndex = DgvListOfFines.Rows.Add();
-                var row = DgvListOfFines.Rows[rowIndex];
+                int r = DgvListOfFines.Rows.Add();
+                var dgvRow = DgvListOfFines.Rows[r];
 
-                // Column mappings:
-                // ColumnNumbering = #
-                // ColumnDateIncurred = Date Incurred
-                // ColumnTitleDescription = Title / Description (Fine Type)
-                // ColumnDaysLate = Days Late (N/A for non-overdue fines)
-                // ColumnAmount = Amount
-                // ColumnStatus = Status
+                dgvRow.Cells["ColumnNumbering"].Value = row.ToString();
+                dgvRow.Cells["ColumnDateIncurred"].Value = f.DateIssued == DateTime.MinValue ? "" : f.DateIssued.ToString("MMM dd, yyyy");
+                dgvRow.Cells["ColumnTitleDescription"].Value = GetFriendlyFineType(f.FineType);
+                
+                // Days Late - attempt to estimate for Overdue fines
+                int daysLate = _finesService.EstimateDaysLate(f, _viewModel.MemberInfo);
+                dgvRow.Cells["ColumnDaysLate"].Value = daysLate >= 0 ? daysLate.ToString() : "N/A";
 
-                row.Cells["ColumnNumbering"].Value = rowNum.ToString();
-                row.Cells["ColumnDateIncurred"].Value = fine.DateIssued == DateTime.MinValue 
-                    ? "" 
-                    : fine.DateIssued.ToString("MMM dd, yyyy");
-                row.Cells["ColumnTitleDescription"].Value = GetFineTypeDescription(fine.FineType);
-                row.Cells["ColumnDaysLate"].Value = CalculateDaysLate(fine);
-                row.Cells["ColumnAmount"].Value = fine.FineAmount;
-                row.Cells["ColumnStatus"].Value = fine.Status;
+                // Amount - designer ColumnAmount already set to C2; supply decimal
+                dgvRow.Cells["ColumnAmount"].Value = f.FineAmount;
 
-                // Color code status
-                SetStatusCellColor(row.Cells["ColumnStatus"], fine.Status);
+                dgvRow.Cells["ColumnStatus"].Value = f.Status;
 
-                row.Tag = fine;
-                rowNum++;
+                SetStatusCellColor(dgvRow.Cells["ColumnStatus"], f.Status);
+
+                dgvRow.Tag = f;
+                row++;
             }
         }
 
-        private string GetFineTypeDescription(string fineType)
+        private string GetFriendlyFineType(string fineType)
         {
             if (string.IsNullOrWhiteSpace(fineType))
                 return "Unknown";
 
-            // Map fine types to friendly descriptions
-            switch (fineType.ToLowerInvariant())
+            switch (fineType.Trim().ToLowerInvariant())
             {
                 case "overdue":
-                    return "Overdue Fine";
+                    return "Overdue";
                 case "lost":
-                    return "Lost Book";
+                    return "Lost";
                 case "damaged":
-                    return "Damaged Book";
+                case "damage":
+                    return "Damaged";
                 case "cardreplacement":
                     return "ID Card Replacement";
                 default:
@@ -266,41 +161,21 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             }
         }
 
-        private string CalculateDaysLate(DTOFineRecord fine)
-        {
-            // Only calculate days late for overdue fines
-            if (fine.FineType == null || 
-                !fine.FineType.Equals("Overdue", StringComparison.OrdinalIgnoreCase))
-            {
-                return "N/A";
-            }
-
-            // Calculate days late based on fine amount and fine rate
-            if (_memberInfo != null && _memberInfo.FineRate > 0)
-            {
-                int daysLate = (int)Math.Ceiling(fine.FineAmount / _memberInfo.FineRate);
-                return daysLate.ToString();
-            }
-
-            return "N/A";
-        }
-
         private void SetStatusCellColor(DataGridViewCell cell, string status)
         {
-            if (cell == null || string.IsNullOrWhiteSpace(status))
-                return;
+            if (cell == null || string.IsNullOrWhiteSpace(status)) return;
 
-            switch (status.ToLowerInvariant())
+            switch (status.Trim().ToLowerInvariant())
             {
                 case "unpaid":
-                    cell.Style.ForeColor = Color.FromArgb(192, 0, 0); // Dark Red
+                    cell.Style.ForeColor = Color.FromArgb(192, 0, 0);
                     cell.Style.Font = new Font(DgvListOfFines.Font, FontStyle.Bold);
                     break;
                 case "paid":
-                    cell.Style.ForeColor = Color.FromArgb(0, 150, 0); // Green
+                    cell.Style.ForeColor = Color.FromArgb(0, 150, 0);
                     break;
                 case "waived":
-                    cell.Style.ForeColor = Color.FromArgb(0, 100, 200); // Blue
+                    cell.Style.ForeColor = Color.FromArgb(0, 100, 200);
                     break;
                 default:
                     cell.Style.ForeColor = Color.Black;
@@ -308,37 +183,35 @@ namespace LMS.Presentation.UserControls.MemberFeatures
             }
         }
 
-        private void DisplayNoFinesMessage()
+        private void SetAccountStandingColor(Label lbl, string standing)
         {
-            DgvListOfFines.Rows.Clear();
-            // Optionally add a message row
-            int rowIndex = DgvListOfFines.Rows.Add();
-            var row = DgvListOfFines.Rows[rowIndex];
-            row.Cells["ColumnTitleDescription"].Value = "No fines found.";
+            if (lbl == null) return;
+            if (string.IsNullOrWhiteSpace(standing)) { lbl.ForeColor = Color.Black; return; }
+
+            switch (standing.Trim().ToLowerInvariant())
+            {
+                case "good":
+                    lbl.ForeColor = Color.FromArgb(0, 150, 0);
+                    break;
+                case "restricted":
+                    lbl.ForeColor = Color.FromArgb(255, 165, 0);
+                    break;
+                case "suspended":
+                    lbl.ForeColor = Color.FromArgb(192, 0, 0);
+                    break;
+                default:
+                    lbl.ForeColor = Color.Black;
+                    break;
+            }
         }
 
         private void DisplayDefaultState()
         {
+            LblOverduePerDay.Text = "• Overdue: ₱0.00 per day";
             LblValueOustandingBalance.Text = "₱0.00";
             LblValueAccountStanding.Text = "Good";
             LblValueAccountStanding.ForeColor = Color.FromArgb(0, 150, 0);
-            LblOverduePerDay.Text = "• Overdue: ₱0.00 per day";
-            DisplayNoFinesMessage();
-        }
-
-        private void LblOverduePerDay_Click(object sender, EventArgs e)
-        {
-            // No action needed
-        }
-
-        private void bigTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            // Legacy event handler - can be removed if not wired in designer
-        }
-
-        private void bigTextBox1_TextChanged_1(object sender, EventArgs e)
-        {
-            // Legacy event handler - can be removed if not wired in designer
+            DgvListOfFines.Rows.Clear();
         }
     }
 }

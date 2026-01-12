@@ -99,6 +99,8 @@
     <Compile Include="Security\IPermissionService.cs" />
     <Compile Include="Hashing\Sha256PasswordHasher.cs" />
     <Compile Include="Security\RolePermissionService.cs" />
+    <Compile Include="Services\MemberFeatures\MemberFinesService.cs" />
+    <Compile Include="Services\MemberFeatures\MemberHistoryService.cs" />
     <Compile Include="Services\MemberProfileService.cs" />
     <Compile Include="Services\RenewMember\IRenewMemberService.cs" />
     <Compile Include="Services\RenewMember\RenewMemberService.cs" />

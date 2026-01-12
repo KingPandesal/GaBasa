@@ -207,7 +207,6 @@
             this.LblOverduePerDay.Size = new System.Drawing.Size(213, 28);
             this.LblOverduePerDay.TabIndex = 0;
             this.LblOverduePerDay.Text = "• Overdue: P10 per day";
-            this.LblOverduePerDay.Click += new System.EventHandler(this.LblOverduePerDay_Click);
             // 
             // GrpBxforBalanceandStanding
             // 
