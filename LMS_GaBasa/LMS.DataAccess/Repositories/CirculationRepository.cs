@@ -430,6 +430,17 @@ namespace LMS.DataAccess.Repositories
                             CheckAndSuspendMemberIfNeeded(memberId);
                         }
 
+                        // 4. Activate next reservation in queue (outside transaction for safety)
+                        try
+                        {
+                            var reservationRepo = new ReservationRepository();
+                            reservationRepo.ActivateNextReservationInQueue(copyId, 3); // 3 days default
+                        }
+                        catch
+                        {
+                            // Don't fail the return if reservation activation fails
+                        }
+
                         return true;
                     }
                     catch
@@ -531,7 +542,7 @@ namespace LMS.DataAccess.Repositories
 
                         tran.Commit();
 
-                        // After adding a fine, check if member should be suspended
+                        // After adding a fine, check if member should be reactivated
                         if (fineAmount > 0)
                         {
                             CheckAndSuspendMemberIfNeeded(memberId);

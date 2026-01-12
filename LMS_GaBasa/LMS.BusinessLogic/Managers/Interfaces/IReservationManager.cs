@@ -64,5 +64,39 @@ namespace LMS.BusinessLogic.Managers.Interfaces
         /// Gets all reservations with joined member and book info for display.
         /// </summary>
         List<DTOReservationView> GetAllReservationsForDisplay();
+
+        /// <summary>
+        /// Activates the next reservation in the queue when a copy becomes available.
+        /// Sets ExpirationDate for the first member in queue.
+        /// Should be called when a book copy status changes to "Available".
+        /// </summary>
+        /// <param name="copyId">The book copy ID that became available.</param>
+        /// <returns>The reservation that was activated, or null if no reservations in queue.</returns>
+        Reservation ActivateNextReservationInQueue(int copyId);
+
+        /// <summary>
+        /// Checks if a member can borrow a specific copy based on reservation priority.
+        /// Returns true if:
+        /// - There are no active reservations for the book, OR
+        /// - The member is the first in the reservation queue with a non-expired reservation
+        /// </summary>
+        /// <param name="copyId">The book copy ID.</param>
+        /// <param name="memberId">The member ID attempting to borrow.</param>
+        /// <returns>True if the member can borrow; otherwise false.</returns>
+        bool CanMemberBorrowCopy(int copyId, int memberId);
+
+        /// <summary>
+        /// Marks a reservation as completed when the book is borrowed.
+        /// </summary>
+        /// <param name="reservationId">The reservation ID.</param>
+        /// <returns>True if successfully completed.</returns>
+        bool CompleteReservation(int reservationId);
+
+        /// <summary>
+        /// Gets the first active reservation for a book's copy.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>The first reservation, or null if none.</returns>
+        Reservation GetFirstReservationForCopy(int copyId);
     }
 }

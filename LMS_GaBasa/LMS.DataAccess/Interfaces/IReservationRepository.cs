@@ -91,5 +91,57 @@ namespace LMS.DataAccess.Interfaces
         /// </summary>
         /// <returns>List of reservations for display.</returns>
         List<LMS.Model.DTOs.Reservation.DTOReservationView> GetAllForDisplay();
+
+        /// <summary>
+        /// Gets the status of a book copy by its ID.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>The status string (Available, Borrowed, Reserved, etc.), or null if not found.</returns>
+        string GetBookCopyStatus(int copyId);
+
+        /// <summary>
+        /// Checks if a book has any copies in the library.
+        /// </summary>
+        /// <param name="bookId">The book ID.</param>
+        /// <returns>True if at least one copy exists.</returns>
+        bool HasAnyCopies(int bookId);
+
+        /// <summary>
+        /// Gets the first (highest priority) active reservation for a book copy, ordered by ReservationDate ASC.
+        /// </summary>
+        /// <param name="copyId">The book copy ID.</param>
+        /// <returns>The first reservation in the queue, or null if none.</returns>
+        Reservation GetFirstInQueueByCopyId(int copyId);
+
+        /// <summary>
+        /// Gets the first (highest priority) active reservation for a book (any copy), ordered by ReservationDate ASC.
+        /// </summary>
+        /// <param name="bookId">The book ID.</param>
+        /// <returns>The first reservation in the queue, or null if none.</returns>
+        Reservation GetFirstInQueueByBookId(int bookId);
+
+        /// <summary>
+        /// Sets the expiration date for a reservation.
+        /// </summary>
+        /// <param name="reservationId">The reservation ID.</param>
+        /// <param name="expirationDate">The expiration date to set.</param>
+        /// <returns>True if updated successfully.</returns>
+        bool SetExpirationDate(int reservationId, DateTime expirationDate);
+
+        /// <summary>
+        /// Gets the BookID for a given CopyID.
+        /// </summary>
+        /// <param name="copyId">The copy ID.</param>
+        /// <returns>The BookID, or 0 if not found.</returns>
+        int GetBookIdByCopyId(int copyId);
+
+        /// <summary>
+        /// Activates the next reservation in the queue when a copy becomes available.
+        /// Sets ExpirationDate for the first member in queue.
+        /// </summary>
+        /// <param name="copyId">The book copy ID that became available.</param>
+        /// <param name="reservationPeriodDays">Number of days until the reservation expires.</param>
+        /// <returns>The reservation that was activated, or null if no reservations in queue.</returns>
+        Reservation ActivateNextReservationInQueue(int copyId, int reservationPeriodDays);
     }
 }

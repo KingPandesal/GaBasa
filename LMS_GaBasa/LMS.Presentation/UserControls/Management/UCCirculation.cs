@@ -7,6 +7,7 @@ using LMS.BusinessLogic.Managers.Interfaces;
 using LMS.DataAccess.Repositories;
 using LMS.Model.DTOs.Circulation;
 using LMS.Presentation.Popup.Multipurpose;
+using LMS.Model.Models.Transactions;
 
 namespace LMS.Presentation.UserControls.Management
 {
@@ -674,16 +675,16 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookLoanType.ForeColor = Color.Black;
             }
 
-            // Check if this copy has an active reservation
-            bool hasActiveReservation = false;
+            // --- Reservation: find first-in-queue reservation for this book/copy (if any) ---
+            Reservation firstReservation = null;
             try
             {
-                hasActiveReservation = _reservationRepository.HasActiveReservationForCopy(bookInfo.CopyID);
+                var reservationManager = new ReservationManager();
+                firstReservation = reservationManager.GetFirstReservationForCopy(bookInfo.CopyID);
             }
             catch
             {
-                // If check fails, assume no reservation
-                hasActiveReservation = false;
+                firstReservation = null;
             }
 
             // Status label: if loan type is Reference -> special message
@@ -695,9 +696,9 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookStatus.Text = "Status: In-Library Use";
                 LblBookStatus.ForeColor = Color.FromArgb(200, 0, 0);
             }
-            else if (hasActiveReservation)
+            else if (firstReservation != null)
             {
-                // Show Reserved status if copy has an active reservation
+                // Show Reserved status if copy has a queued active reservation (visual only)
                 LblBookStatus.Text = "Status: Reserved";
                 LblBookStatus.ForeColor = Color.FromArgb(200, 150, 0); // Orange/amber color for reserved
             }
@@ -709,7 +710,7 @@ namespace LMS.Presentation.UserControls.Management
 
             // Due Date rules:
             DateTime? showDue = null;
-            if (_currentMember != null && isAvailable && !hasActiveReservation)
+            if (_currentMember != null && isAvailable && firstReservation == null)
             {
                 if (isPhysicalBook)
                 {
@@ -733,11 +734,11 @@ namespace LMS.Presentation.UserControls.Management
                 LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
             }
 
-            // Update button state based on computed rules (pass reservation flag)
-            UpdateConfirmBorrowButton(bookInfo, hasActiveReservation);
+            // Update button state based on computed rules (pass the first reservation if any)
+            UpdateConfirmBorrowButton(bookInfo, firstReservation);
         }
 
-        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo, bool hasActiveReservation = false)
+        private void UpdateConfirmBorrowButton(DTOCirculationBookInfo bookInfo, Reservation firstReservation = null)
         {
             var resType = (bookInfo.ResourceType ?? string.Empty).Trim();
             bool isEBook = resType.Equals("EBook", StringComparison.OrdinalIgnoreCase);
@@ -763,15 +764,6 @@ namespace LMS.Presentation.UserControls.Management
                 return;
             }
 
-            // If copy has an active reservation, prevent borrowing
-            if (hasActiveReservation)
-            {
-                BtnConfirmBorrow.Text = "Reserved";
-                BtnConfirmBorrow.Enabled = false;
-                BtnConfirmBorrow.BackColor = Color.Gray;
-                return;
-            }
-
             // 1) E-Book (digital) -> never borrow
             if (isEBook)
             {
@@ -789,13 +781,52 @@ namespace LMS.Presentation.UserControls.Management
                     return;
                 }
 
+                // If not available at all, cannot borrow
                 if (!isAvailable)
                 {
                     BtnConfirmBorrow.Text = "Not Available";
                     return;
                 }
 
-                // All good and member is eligible (checked earlier)
+                // If there's a reservation queue (firstReservation != null) enforce queue rules:
+                if (firstReservation != null)
+                {
+                    // If current member is the first in queue
+                    if (_currentMember != null && firstReservation.MemberID == _currentMember.MemberID)
+                    {
+                        // Allow only if reservation is active (ExpirationDate set and not expired)
+                        if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                        {
+                            BtnConfirmBorrow.Enabled = true;
+                            BtnConfirmBorrow.Text = "Confirm Borrow";
+                            BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                            return;
+                        }
+                        else
+                        {
+                            BtnConfirmBorrow.Text = "Reservation Not Ready";
+                            BtnConfirmBorrow.Enabled = false;
+                            BtnConfirmBorrow.BackColor = Color.Gray;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        // Another member is first in queue:
+                        // If that reservation is active (has ExpirationDate and not expired) block borrowing.
+                        if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                        {
+                            BtnConfirmBorrow.Text = "Reserved";
+                            BtnConfirmBorrow.Enabled = false;
+                            BtnConfirmBorrow.BackColor = Color.Gray;
+                            return;
+                        }
+                        // If first reservation has no ExpirationDate (not yet activated) or has expired,
+                        // allow borrowing (fallback). The activation/expiration job will reconcile states.
+                    }
+                }
+
+                // No blocking reservation -> allow borrow
                 BtnConfirmBorrow.Enabled = true;
                 BtnConfirmBorrow.Text = "Confirm Borrow";
                 BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
@@ -815,6 +846,39 @@ namespace LMS.Presentation.UserControls.Management
                 // physical and available -> allow borrow (member eligibility checked earlier)
                 if (isAvailable)
                 {
+                    // If there's a reservation queue, apply same queue rules as for physical books
+                    if (firstReservation != null)
+                    {
+                        if (_currentMember != null && firstReservation.MemberID == _currentMember.MemberID)
+                        {
+                            if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                            {
+                                BtnConfirmBorrow.Enabled = true;
+                                BtnConfirmBorrow.Text = "Confirm Borrow";
+                                BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                                return;
+                            }
+                            else
+                            {
+                                BtnConfirmBorrow.Text = "Reservation Not Ready";
+                                BtnConfirmBorrow.Enabled = false;
+                                BtnConfirmBorrow.BackColor = Color.Gray;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                            {
+                                BtnConfirmBorrow.Text = "Reserved";
+                                BtnConfirmBorrow.Enabled = false;
+                                BtnConfirmBorrow.BackColor = Color.Gray;
+                                return;
+                            }
+                            // else allow
+                        }
+                    }
+
                     BtnConfirmBorrow.Enabled = true;
                     BtnConfirmBorrow.Text = "Confirm Borrow";
                     BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
@@ -829,9 +893,44 @@ namespace LMS.Presentation.UserControls.Management
             var loan = string.IsNullOrWhiteSpace(bookInfo.LoanType) ? "Circulation" : bookInfo.LoanType;
             if (string.Equals(loan, "Circulation", StringComparison.OrdinalIgnoreCase) && isAvailable)
             {
-                BtnConfirmBorrow.Enabled = true;
-                BtnConfirmBorrow.Text = "Confirm Borrow";
-                BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                // Apply reservation queue rules if needed (reuse firstReservation logic)
+                if (firstReservation != null)
+                {
+                    if (_currentMember != null && firstReservation.MemberID == _currentMember.MemberID)
+                    {
+                        if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                        {
+                            BtnConfirmBorrow.Enabled = true;
+                            BtnConfirmBorrow.Text = "Confirm Borrow";
+                            BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                        }
+                        else
+                        {
+                            BtnConfirmBorrow.Text = "Reservation Not Ready";
+                            BtnConfirmBorrow.Enabled = false;
+                            BtnConfirmBorrow.BackColor = Color.Gray;
+                        }
+                    }
+                    else
+                    {
+                        if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                        {
+                            BtnConfirmBorrow.Enabled = true;
+                            BtnConfirmBorrow.Text = "Confirm Borrow";
+                            BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                        }
+                        else
+                        {
+                            BtnConfirmBorrow.Text = "Cannot Borrow";
+                        }
+                    }
+                }
+                else
+                {
+                    BtnConfirmBorrow.Enabled = true;
+                    BtnConfirmBorrow.Text = "Confirm Borrow";
+                    BtnConfirmBorrow.BackColor = Color.FromArgb(175, 37, 50);
+                }
             }
             else
             {
@@ -903,6 +1002,47 @@ namespace LMS.Presentation.UserControls.Management
                 int copyId = _currentBook.CopyID;
                 int memberId = _currentMember.MemberID;
 
+                // Reservation priority check:
+                // Only the member who is next in queue AND has an active (non-expired) reservation
+                // may borrow. Others must wait until that reservation expires or is completed.
+                var reservationManager = new LMS.BusinessLogic.Managers.ReservationManager();
+                var firstReservation = reservationManager.GetFirstReservationForCopy(copyId);
+
+                if (firstReservation != null)
+                {
+                    // If the first-in-queue is this member
+                    if (firstReservation.MemberID == memberId)
+                    {
+                        // They may borrow only if their reservation is active (ExpirationDate set and not expired)
+                        if (!firstReservation.ExpirationDate.HasValue || firstReservation.ExpirationDate.Value < DateTime.Now)
+                        {
+                            MessageBox.Show(
+                                "Your reservation is not ready for pickup or has expired. You cannot borrow this copy now.",
+                                "Reservation Not Active",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            return;
+                        }
+                        // otherwise allowed to continue and borrow
+                    }
+                    else
+                    {
+                        // Another member is first in queue
+                        // If that reservation is active (expiration set and not expired) block borrowing
+                        if (firstReservation.ExpirationDate.HasValue && firstReservation.ExpirationDate.Value >= DateTime.Now)
+                        {
+                            MessageBox.Show(
+                                "This book is reserved for another member who has priority. The reserved member must pick up the book or let the reservation expire.",
+                                "Reserved",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            return;
+                        }
+                        // If the first reservation has no ExpirationDate (not yet activated) or has expired,
+                        // allow borrowing to proceed here (the expire job / activation flow should handle state cleanup).
+                    }
+                }
+
                 DateTime borrowDate = DateTime.Now;
                 DateTime dueDate = CalculateDueDateForMember(_currentMember);
 
@@ -910,6 +1050,21 @@ namespace LMS.Presentation.UserControls.Management
 
                 if (transId > 0)
                 {
+                    // Complete any active reservation for this member on this book
+                    try
+                    {
+                        // Re-fetch firstReservation to be safe (it may have changed) and complete only if it belongs to this member
+                        var maybeFirst = reservationManager.GetFirstReservationForCopy(copyId);
+                        if (maybeFirst != null && maybeFirst.MemberID == memberId)
+                        {
+                            reservationManager.CompleteReservation(maybeFirst.ReservationID);
+                        }
+                    }
+                    catch
+                    {
+                        // Don't fail the borrow if reservation completion fails
+                    }
+
                     MessageBox.Show($"Borrow successful. Transaction ID: {transId}\nDue Date: {dueDate:MMMM d, yyyy}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Update UI to reflect new status
@@ -922,7 +1077,7 @@ namespace LMS.Presentation.UserControls.Management
                     LblBookDueDate.Text = $"Due Date: {dueDate:MMMM d, yyyy}";
                     LblBookDueDate.ForeColor = Color.FromArgb(175, 37, 50);
 
-                    // Show receipt dialog (uses the partial BorrowReceiptForm in Popup.Circulation)
+                    // Show receipt dialog
                     try
                     {
                         using (var receipt = new LMS.Presentation.Popup.Circulation.BorrowReceiptForm(transId, _currentMember, _currentBook, borrowDate, dueDate))
@@ -932,7 +1087,6 @@ namespace LMS.Presentation.UserControls.Management
                     }
                     catch (Exception ex)
                     {
-                        // Don't fail the borrow if receipt fails — surface a friendly message
                         MessageBox.Show($"Borrow recorded but failed to show receipt: {ex.Message}", "Receipt Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }

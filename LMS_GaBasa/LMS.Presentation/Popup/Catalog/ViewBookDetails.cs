@@ -797,13 +797,6 @@ namespace LMS.Presentation.Popup.Catalog
                             return;
                         }
 
-                        // Check if already reserved
-                        if (reservationManager.HasActiveReservation(_currentBook.BookID, memberId))
-                        {
-                            MessageBox.Show("You already have an active reservation for this book.", "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
-
                         // Create the reservation
                         var reservation = reservationManager.CreateReservation(_currentBook.BookID, memberId);
 
@@ -826,6 +819,11 @@ namespace LMS.Presentation.Popup.Catalog
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
                         }
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        // Display the specific error message from the manager
+                        MessageBox.Show(ex.Message, "Reservation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     catch (Exception ex)
                     {

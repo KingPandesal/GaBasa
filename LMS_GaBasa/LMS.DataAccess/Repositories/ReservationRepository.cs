@@ -39,7 +39,7 @@ namespace LMS.DataAccess.Repositories
                 AddParameter(cmd, "@CopyID", DbType.Int32, reservation.CopyID);
                 AddParameter(cmd, "@MemberID", DbType.Int32, reservation.MemberID);
                 AddParameter(cmd, "@ReservationDate", DbType.DateTime, reservation.ReservationDate);
-                AddParameter(cmd, "@ExpirationDate", DbType.DateTime, reservation.ExpirationDate);
+                AddParameter(cmd, "@ExpirationDate", DbType.DateTime, reservation.ExpirationDate.HasValue ? (object)reservation.ExpirationDate.Value : DBNull.Value);
                 AddParameter(cmd, "@Status", DbType.String, reservation.Status ?? "Active", 50);
 
                 var result = cmd.ExecuteScalar();
@@ -260,6 +260,67 @@ namespace LMS.DataAccess.Repositories
             return null;
         }
 
+        public Reservation GetFirstInQueueByCopyId(int copyId)
+        {
+            if (copyId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT TOP 1 ReservationID, CopyID, MemberID, ReservationDate, ExpirationDate, [Status]
+                    FROM [Reservation]
+                    WHERE CopyID = @CopyID 
+                      AND [Status] = 'Active'
+                    ORDER BY ReservationDate ASC";
+
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return MapReservation(reader);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public Reservation GetFirstInQueueByBookId(int bookId)
+        {
+            if (bookId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    SELECT TOP 1 r.ReservationID, r.CopyID, r.MemberID, r.ReservationDate, r.ExpirationDate, r.[Status]
+                    FROM [Reservation] r
+                    INNER JOIN [BookCopy] bc ON r.CopyID = bc.CopyID
+                    WHERE bc.BookID = @BookID 
+                      AND r.[Status] = 'Active'
+                    ORDER BY r.ReservationDate ASC";
+
+                AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return MapReservation(reader);
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public bool UpdateStatus(int reservationId, string status)
         {
             if (reservationId <= 0 || string.IsNullOrWhiteSpace(status))
@@ -289,11 +350,12 @@ namespace LMS.DataAccess.Repositories
                 conn.Open();
                 cmd.CommandText = @"
                     UPDATE [Reservation]
-                    SET [Status] = 'Cancelled'
+                    SET [Status] = 'Expired'
                     WHERE [Status] = 'Active'
-                      AND ExpirationDate < @Today";
+                      AND ExpirationDate IS NOT NULL
+                      AND ExpirationDate < @Now";
 
-                AddParameter(cmd, "@Today", DbType.DateTime, DateTime.Today);
+                AddParameter(cmd, "@Now", DbType.DateTime, DateTime.Now);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -364,7 +426,7 @@ namespace LMS.DataAccess.Repositories
                 CopyID = reader.IsDBNull(reader.GetOrdinal("CopyID")) ? 0 : reader.GetInt32(reader.GetOrdinal("CopyID")),
                 MemberID = reader.IsDBNull(reader.GetOrdinal("MemberID")) ? 0 : reader.GetInt32(reader.GetOrdinal("MemberID")),
                 ReservationDate = reader.IsDBNull(reader.GetOrdinal("ReservationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ReservationDate")),
-                ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
+                ExpirationDate = reader.IsDBNull(reader.GetOrdinal("ExpirationDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpirationDate")),
                 Status = reader.IsDBNull(reader.GetOrdinal("Status")) ? "Active" : reader.GetString(reader.GetOrdinal("Status"))
             };
         }
@@ -377,6 +439,106 @@ namespace LMS.DataAccess.Repositories
             if (size > 0) p.Size = size;
             p.Value = value ?? DBNull.Value;
             cmd.Parameters.Add(p);
+        }
+
+        public string GetBookCopyStatus(int copyId)
+        {
+            if (copyId <= 0)
+                return null;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT [Status] FROM [BookCopy] WHERE CopyID = @CopyID";
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                var result = cmd.ExecuteScalar();
+                return result == null || result == DBNull.Value ? null : result.ToString();
+            }
+        }
+
+        public bool HasAnyCopies(int bookId)
+        {
+            if (bookId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT COUNT(*) FROM [BookCopy] WHERE BookID = @BookID";
+                AddParameter(cmd, "@BookID", DbType.Int32, bookId);
+
+                var count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+        }
+
+        public bool SetExpirationDate(int reservationId, DateTime expirationDate)
+        {
+            if (reservationId <= 0)
+                return false;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"
+                    UPDATE [Reservation]
+                    SET ExpirationDate = @ExpirationDate
+                    WHERE ReservationID = @ReservationID";
+
+                AddParameter(cmd, "@ReservationID", DbType.Int32, reservationId);
+                AddParameter(cmd, "@ExpirationDate", DbType.DateTime, expirationDate);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public Reservation ActivateNextReservationInQueue(int copyId, int reservationPeriodDays)
+        {
+            if (copyId <= 0 || reservationPeriodDays <= 0)
+                return null;
+
+            // Get the BookID for this copy
+            int bookId = GetBookIdByCopyId(copyId);
+            if (bookId <= 0)
+                return null;
+
+            // Find the first reservation in queue for this book (any copy)
+            var firstReservation = GetFirstInQueueByBookId(bookId);
+            if (firstReservation == null)
+                return null;
+
+            // Only set expiration if not already set (prevents overwriting)
+            if (!firstReservation.ExpirationDate.HasValue)
+            {
+                DateTime expirationDate = DateTime.Now.AddDays(reservationPeriodDays);
+                if (SetExpirationDate(firstReservation.ReservationID, expirationDate))
+                {
+                    firstReservation.ExpirationDate = expirationDate;
+                }
+            }
+
+            return firstReservation;
+        }
+
+        public int GetBookIdByCopyId(int copyId)
+        {
+            if (copyId <= 0)
+                return 0;
+
+            using (var conn = _db.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT BookID FROM [BookCopy] WHERE CopyID = @CopyID";
+                AddParameter(cmd, "@CopyID", DbType.Int32, copyId);
+
+                var result = cmd.ExecuteScalar();
+                return result == null || result == DBNull.Value ? 0 : Convert.ToInt32(result);
+            }
         }
     }
 }
