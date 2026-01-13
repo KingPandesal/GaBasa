@@ -460,6 +460,7 @@
             this.lostBorderPanel20.ShowText = true;
             this.lostBorderPanel20.Size = new System.Drawing.Size(346, 221);
             this.lostBorderPanel20.TabIndex = 13;
+            this.lostBorderPanel20.Click += new System.EventHandler(this.lostBorderPanel20_Click);
             // 
             // lostBorderPanel21
             // 
