@@ -34,18 +34,13 @@
             this.DTPckTo = new System.Windows.Forms.DateTimePicker();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.GrpBxBtns = new System.Windows.Forms.GroupBox();
-            this.BtnAuditLogs = new ReaLTaiizor.Controls.Button();
-            this.BtnFines = new ReaLTaiizor.Controls.Button();
-            this.BtnTransactions = new ReaLTaiizor.Controls.Button();
-            this.BtnInventory = new ReaLTaiizor.Controls.Button();
+            this.BtnAuditLogs = new System.Windows.Forms.Button();
+            this.BtnFines = new System.Windows.Forms.Button();
+            this.BtnTransactions = new System.Windows.Forms.Button();
+            this.BtnInventory = new System.Windows.Forms.Button();
             this.GrpBxDate = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.DgvTransactions = new System.Windows.Forms.DataGridView();
-            this.DgvInventory = new System.Windows.Forms.DataGridView();
-            this.DgvFines = new System.Windows.Forms.DataGridView();
-            this.DgvAuditLogs = new System.Windows.Forms.DataGridView();
-            this.LblReport = new System.Windows.Forms.Label();
-            this.BtnExport = new ReaLTaiizor.Controls.Button();
             this.colNumberingTransactions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTransactionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +49,7 @@
             this.colDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateReturned = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvInventory = new System.Windows.Forms.DataGridView();
             this.colNumberingInventory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBookID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAccNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,6 +58,7 @@
             this.colStatus2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAddedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvFines = new System.Windows.Forms.DataGridView();
             this.colNumberingFines = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFineID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,12 +66,15 @@
             this.colAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPaymentStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDateSettled = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgvAuditLogs = new System.Windows.Forms.DataGridView();
             this.colNumberingAuditLogs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLogID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUser = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAction = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LblReport = new System.Windows.Forms.Label();
+            this.BtnApplyFromTo = new System.Windows.Forms.Button();
             this.GrpBxBtns.SuspendLayout();
             this.GrpBxDate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvTransactions)).BeginInit();
@@ -87,7 +87,7 @@
             // 
             this.LblFrom.AutoSize = true;
             this.LblFrom.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.LblFrom.Location = new System.Drawing.Point(43, 39);
+            this.LblFrom.Location = new System.Drawing.Point(18, 43);
             this.LblFrom.Name = "LblFrom";
             this.LblFrom.Size = new System.Drawing.Size(74, 32);
             this.LblFrom.TabIndex = 4;
@@ -96,7 +96,7 @@
             // DTPckFrom
             // 
             this.DTPckFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.DTPckFrom.Location = new System.Drawing.Point(128, 42);
+            this.DTPckFrom.Location = new System.Drawing.Point(103, 46);
             this.DTPckFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DTPckFrom.Name = "DTPckFrom";
             this.DTPckFrom.Size = new System.Drawing.Size(257, 30);
@@ -106,7 +106,7 @@
             // 
             this.LblTo.AutoSize = true;
             this.LblTo.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.LblTo.Location = new System.Drawing.Point(442, 39);
+            this.LblTo.Location = new System.Drawing.Point(372, 43);
             this.LblTo.Name = "LblTo";
             this.LblTo.Size = new System.Drawing.Size(44, 32);
             this.LblTo.TabIndex = 7;
@@ -115,7 +115,7 @@
             // DTPckTo
             // 
             this.DTPckTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.DTPckTo.Location = new System.Drawing.Point(495, 42);
+            this.DTPckTo.Location = new System.Drawing.Point(425, 46);
             this.DTPckTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DTPckTo.Name = "DTPckTo";
             this.DTPckTo.Size = new System.Drawing.Size(257, 30);
@@ -154,90 +154,71 @@
             // 
             // BtnAuditLogs
             // 
-            this.BtnAuditLogs.BackColor = System.Drawing.Color.White;
-            this.BtnAuditLogs.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnAuditLogs.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAuditLogs.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAuditLogs.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAuditLogs.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAuditLogs.Image = null;
-            this.BtnAuditLogs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnAuditLogs.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnAuditLogs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAuditLogs.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnAuditLogs.ForeColor = System.Drawing.Color.White;
             this.BtnAuditLogs.Location = new System.Drawing.Point(504, 40);
-            this.BtnAuditLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnAuditLogs.Margin = new System.Windows.Forms.Padding(4);
             this.BtnAuditLogs.Name = "BtnAuditLogs";
-            this.BtnAuditLogs.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnAuditLogs.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnAuditLogs.Size = new System.Drawing.Size(144, 52);
-            this.BtnAuditLogs.TabIndex = 33;
+            this.BtnAuditLogs.TabIndex = 92;
             this.BtnAuditLogs.Text = "Audit Logs";
-            this.BtnAuditLogs.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnAuditLogs.UseVisualStyleBackColor = false;
             // 
             // BtnFines
             // 
-            this.BtnFines.BackColor = System.Drawing.Color.White;
-            this.BtnFines.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnFines.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnFines.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnFines.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnFines.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnFines.Image = null;
-            this.BtnFines.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnFines.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnFines.Location = new System.Drawing.Point(343, 40);
-            this.BtnFines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnFines.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnFines.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnFines.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnFines.ForeColor = System.Drawing.Color.White;
+            this.BtnFines.Location = new System.Drawing.Point(345, 40);
+            this.BtnFines.Margin = new System.Windows.Forms.Padding(4);
             this.BtnFines.Name = "BtnFines";
-            this.BtnFines.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnFines.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnFines.Size = new System.Drawing.Size(144, 52);
-            this.BtnFines.TabIndex = 32;
+            this.BtnFines.TabIndex = 92;
             this.BtnFines.Text = "Fines";
-            this.BtnFines.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnFines.UseVisualStyleBackColor = false;
             // 
             // BtnTransactions
             // 
-            this.BtnTransactions.BackColor = System.Drawing.Color.White;
-            this.BtnTransactions.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnTransactions.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnTransactions.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnTransactions.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnTransactions.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnTransactions.Image = null;
-            this.BtnTransactions.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnTransactions.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnTransactions.Location = new System.Drawing.Point(182, 40);
-            this.BtnTransactions.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnTransactions.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnTransactions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnTransactions.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnTransactions.ForeColor = System.Drawing.Color.White;
+            this.BtnTransactions.Location = new System.Drawing.Point(185, 40);
+            this.BtnTransactions.Margin = new System.Windows.Forms.Padding(4);
             this.BtnTransactions.Name = "BtnTransactions";
-            this.BtnTransactions.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnTransactions.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnTransactions.Size = new System.Drawing.Size(144, 52);
-            this.BtnTransactions.TabIndex = 31;
+            this.BtnTransactions.TabIndex = 92;
             this.BtnTransactions.Text = "Transactions";
-            this.BtnTransactions.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnTransactions.UseVisualStyleBackColor = false;
             // 
             // BtnInventory
             // 
-            this.BtnInventory.BackColor = System.Drawing.Color.White;
-            this.BtnInventory.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnInventory.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnInventory.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnInventory.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnInventory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnInventory.Image = null;
-            this.BtnInventory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnInventory.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnInventory.Location = new System.Drawing.Point(21, 40);
-            this.BtnInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnInventory.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnInventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnInventory.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnInventory.ForeColor = System.Drawing.Color.White;
+            this.BtnInventory.Location = new System.Drawing.Point(22, 40);
+            this.BtnInventory.Margin = new System.Windows.Forms.Padding(4);
             this.BtnInventory.Name = "BtnInventory";
-            this.BtnInventory.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnInventory.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.BtnInventory.Size = new System.Drawing.Size(144, 52);
-            this.BtnInventory.TabIndex = 30;
+            this.BtnInventory.TabIndex = 92;
             this.BtnInventory.Text = "Inventory";
-            this.BtnInventory.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.BtnInventory.UseVisualStyleBackColor = false;
             // 
             // GrpBxDate
             // 
+            this.GrpBxDate.Controls.Add(this.BtnApplyFromTo);
             this.GrpBxDate.Controls.Add(this.DTPckFrom);
             this.GrpBxDate.Controls.Add(this.LblFrom);
             this.GrpBxDate.Controls.Add(this.LblTo);
@@ -246,7 +227,7 @@
             this.GrpBxDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.GrpBxDate.Name = "GrpBxDate";
             this.GrpBxDate.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.GrpBxDate.Size = new System.Drawing.Size(809, 115);
+            this.GrpBxDate.Size = new System.Drawing.Size(842, 115);
             this.GrpBxDate.TabIndex = 41;
             this.GrpBxDate.TabStop = false;
             // 
@@ -262,7 +243,7 @@
             // 
             // DgvTransactions
             // 
-            this.DgvTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgvTransactions.BackgroundColor = System.Drawing.Color.White;
             this.DgvTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvTransactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -282,9 +263,75 @@
             this.DgvTransactions.Size = new System.Drawing.Size(1509, 449);
             this.DgvTransactions.TabIndex = 87;
             // 
+            // colNumberingTransactions
+            // 
+            this.colNumberingTransactions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colNumberingTransactions.HeaderText = "#";
+            this.colNumberingTransactions.MinimumWidth = 8;
+            this.colNumberingTransactions.Name = "colNumberingTransactions";
+            this.colNumberingTransactions.Width = 54;
+            // 
+            // colTransactionID
+            // 
+            this.colTransactionID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTransactionID.FillWeight = 426.1364F;
+            this.colTransactionID.HeaderText = "Transaction ID";
+            this.colTransactionID.MinimumWidth = 8;
+            this.colTransactionID.Name = "colTransactionID";
+            this.colTransactionID.Width = 137;
+            // 
+            // colName
+            // 
+            this.colName.FillWeight = 18.46591F;
+            this.colName.HeaderText = "Member Name";
+            this.colName.MinimumWidth = 8;
+            this.colName.Name = "colName";
+            this.colName.Width = 137;
+            // 
+            // colTitle
+            // 
+            this.colTitle.FillWeight = 18.46591F;
+            this.colTitle.HeaderText = "Book Title";
+            this.colTitle.MinimumWidth = 6;
+            this.colTitle.Name = "colTitle";
+            this.colTitle.ReadOnly = true;
+            this.colTitle.Width = 107;
+            // 
+            // colDateBorrowed
+            // 
+            this.colDateBorrowed.FillWeight = 18.46591F;
+            this.colDateBorrowed.HeaderText = "Date Borrowed";
+            this.colDateBorrowed.MinimumWidth = 6;
+            this.colDateBorrowed.Name = "colDateBorrowed";
+            this.colDateBorrowed.ReadOnly = true;
+            this.colDateBorrowed.Width = 140;
+            // 
+            // colDueDate
+            // 
+            this.colDueDate.HeaderText = "Due Date";
+            this.colDueDate.MinimumWidth = 8;
+            this.colDueDate.Name = "colDueDate";
+            this.colDueDate.Width = 106;
+            // 
+            // colDateReturned
+            // 
+            this.colDateReturned.HeaderText = "Date Returned";
+            this.colDateReturned.MinimumWidth = 8;
+            this.colDateReturned.Name = "colDateReturned";
+            this.colDateReturned.Width = 139;
+            // 
+            // colStatus
+            // 
+            this.colStatus.FillWeight = 18.46591F;
+            this.colStatus.HeaderText = "Status";
+            this.colStatus.MinimumWidth = 6;
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Width = 92;
+            // 
             // DgvInventory
             // 
-            this.DgvInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgvInventory.BackgroundColor = System.Drawing.Color.White;
             this.DgvInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvInventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -296,143 +343,13 @@
             this.colStatus2,
             this.colDateAdded,
             this.colAddedBy});
-            this.DgvInventory.Location = new System.Drawing.Point(36, 285);
+            this.DgvInventory.Location = new System.Drawing.Point(36, 234);
             this.DgvInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DgvInventory.Name = "DgvInventory";
             this.DgvInventory.RowHeadersWidth = 62;
             this.DgvInventory.RowTemplate.Height = 28;
             this.DgvInventory.Size = new System.Drawing.Size(1509, 449);
             this.DgvInventory.TabIndex = 88;
-            // 
-            // DgvFines
-            // 
-            this.DgvFines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvFines.BackgroundColor = System.Drawing.Color.White;
-            this.DgvFines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvFines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colNumberingFines,
-            this.colFineID,
-            this.colName2,
-            this.colFineType,
-            this.colAmount,
-            this.colPaymentStatus,
-            this.colDateSettled});
-            this.DgvFines.Location = new System.Drawing.Point(36, 349);
-            this.DgvFines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DgvFines.Name = "DgvFines";
-            this.DgvFines.RowHeadersWidth = 62;
-            this.DgvFines.RowTemplate.Height = 28;
-            this.DgvFines.Size = new System.Drawing.Size(1509, 449);
-            this.DgvFines.TabIndex = 89;
-            // 
-            // DgvAuditLogs
-            // 
-            this.DgvAuditLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvAuditLogs.BackgroundColor = System.Drawing.Color.White;
-            this.DgvAuditLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvAuditLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colNumberingAuditLogs,
-            this.colLogID,
-            this.colUser,
-            this.colAction,
-            this.colTimestamp,
-            this.colModule});
-            this.DgvAuditLogs.Location = new System.Drawing.Point(36, 412);
-            this.DgvAuditLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DgvAuditLogs.Name = "DgvAuditLogs";
-            this.DgvAuditLogs.RowHeadersWidth = 62;
-            this.DgvAuditLogs.RowTemplate.Height = 28;
-            this.DgvAuditLogs.Size = new System.Drawing.Size(1509, 449);
-            this.DgvAuditLogs.TabIndex = 90;
-            // 
-            // LblReport
-            // 
-            this.LblReport.AutoSize = true;
-            this.LblReport.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblReport.Location = new System.Drawing.Point(30, 175);
-            this.LblReport.Name = "LblReport";
-            this.LblReport.Size = new System.Drawing.Size(217, 36);
-            this.LblReport.TabIndex = 91;
-            this.LblReport.Text = "Inventory Report";
-            // 
-            // BtnExport
-            // 
-            this.BtnExport.BackColor = System.Drawing.Color.White;
-            this.BtnExport.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnExport.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnExport.EnteredBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnExport.EnteredColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnExport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnExport.Image = null;
-            this.BtnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnExport.InactiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnExport.Location = new System.Drawing.Point(1401, 168);
-            this.BtnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BtnExport.Name = "BtnExport";
-            this.BtnExport.PressedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnExport.PressedColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.BtnExport.Size = new System.Drawing.Size(144, 52);
-            this.BtnExport.TabIndex = 34;
-            this.BtnExport.Text = "Export";
-            this.BtnExport.TextAlignment = System.Drawing.StringAlignment.Center;
-            // 
-            // colNumberingTransactions
-            // 
-            this.colNumberingTransactions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colNumberingTransactions.HeaderText = "#";
-            this.colNumberingTransactions.MinimumWidth = 8;
-            this.colNumberingTransactions.Name = "colNumberingTransactions";
-            this.colNumberingTransactions.Width = 54;
-            // 
-            // colTransactionID
-            // 
-            this.colTransactionID.FillWeight = 426.1364F;
-            this.colTransactionID.HeaderText = "Transaction ID";
-            this.colTransactionID.MinimumWidth = 8;
-            this.colTransactionID.Name = "colTransactionID";
-            // 
-            // colName
-            // 
-            this.colName.FillWeight = 18.46591F;
-            this.colName.HeaderText = "Member Name";
-            this.colName.MinimumWidth = 8;
-            this.colName.Name = "colName";
-            // 
-            // colTitle
-            // 
-            this.colTitle.FillWeight = 18.46591F;
-            this.colTitle.HeaderText = "Book Title";
-            this.colTitle.MinimumWidth = 6;
-            this.colTitle.Name = "colTitle";
-            this.colTitle.ReadOnly = true;
-            // 
-            // colDateBorrowed
-            // 
-            this.colDateBorrowed.FillWeight = 18.46591F;
-            this.colDateBorrowed.HeaderText = "Date Borrowed";
-            this.colDateBorrowed.MinimumWidth = 6;
-            this.colDateBorrowed.Name = "colDateBorrowed";
-            this.colDateBorrowed.ReadOnly = true;
-            // 
-            // colDueDate
-            // 
-            this.colDueDate.HeaderText = "Due Date";
-            this.colDueDate.MinimumWidth = 8;
-            this.colDueDate.Name = "colDueDate";
-            // 
-            // colDateReturned
-            // 
-            this.colDateReturned.HeaderText = "Date Returned";
-            this.colDateReturned.MinimumWidth = 8;
-            this.colDateReturned.Name = "colDateReturned";
-            // 
-            // colStatus
-            // 
-            this.colStatus.FillWeight = 18.46591F;
-            this.colStatus.HeaderText = "Status";
-            this.colStatus.MinimumWidth = 6;
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
             // 
             // colNumberingInventory
             // 
@@ -444,10 +361,12 @@
             // 
             // colBookID
             // 
+            this.colBookID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBookID.FillWeight = 426.1364F;
             this.colBookID.HeaderText = "Book ID";
             this.colBookID.MinimumWidth = 8;
             this.colBookID.Name = "colBookID";
+            this.colBookID.Width = 96;
             // 
             // colAccNo
             // 
@@ -455,6 +374,7 @@
             this.colAccNo.HeaderText = "Accession No.";
             this.colAccNo.MinimumWidth = 8;
             this.colAccNo.Name = "colAccNo";
+            this.colAccNo.Width = 135;
             // 
             // colTitle2
             // 
@@ -463,6 +383,7 @@
             this.colTitle2.MinimumWidth = 6;
             this.colTitle2.Name = "colTitle2";
             this.colTitle2.ReadOnly = true;
+            this.colTitle2.Width = 107;
             // 
             // colCategory
             // 
@@ -471,18 +392,21 @@
             this.colCategory.MinimumWidth = 6;
             this.colCategory.Name = "colCategory";
             this.colCategory.ReadOnly = true;
+            this.colCategory.Width = 109;
             // 
             // colStatus2
             // 
             this.colStatus2.HeaderText = "Status";
             this.colStatus2.MinimumWidth = 8;
             this.colStatus2.Name = "colStatus2";
+            this.colStatus2.Width = 92;
             // 
             // colDateAdded
             // 
             this.colDateAdded.HeaderText = "Date Added";
             this.colDateAdded.MinimumWidth = 8;
             this.colDateAdded.Name = "colDateAdded";
+            this.colDateAdded.Width = 121;
             // 
             // colAddedBy
             // 
@@ -491,6 +415,28 @@
             this.colAddedBy.MinimumWidth = 6;
             this.colAddedBy.Name = "colAddedBy";
             this.colAddedBy.ReadOnly = true;
+            this.colAddedBy.Width = 106;
+            // 
+            // DgvFines
+            // 
+            this.DgvFines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DgvFines.BackgroundColor = System.Drawing.Color.White;
+            this.DgvFines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvFines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumberingFines,
+            this.colFineID,
+            this.colName2,
+            this.colFineType,
+            this.colAmount,
+            this.colPaymentStatus,
+            this.colDateSettled});
+            this.DgvFines.Location = new System.Drawing.Point(36, 234);
+            this.DgvFines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DgvFines.Name = "DgvFines";
+            this.DgvFines.RowHeadersWidth = 62;
+            this.DgvFines.RowTemplate.Height = 28;
+            this.DgvFines.Size = new System.Drawing.Size(1509, 449);
+            this.DgvFines.TabIndex = 89;
             // 
             // colNumberingFines
             // 
@@ -502,10 +448,12 @@
             // 
             // colFineID
             // 
+            this.colFineID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colFineID.FillWeight = 426.1364F;
             this.colFineID.HeaderText = "Fine ID";
             this.colFineID.MinimumWidth = 8;
             this.colFineID.Name = "colFineID";
+            this.colFineID.Width = 90;
             // 
             // colName2
             // 
@@ -513,6 +461,7 @@
             this.colName2.HeaderText = "Member Name";
             this.colName2.MinimumWidth = 8;
             this.colName2.Name = "colName2";
+            this.colName2.Width = 137;
             // 
             // colFineType
             // 
@@ -521,6 +470,7 @@
             this.colFineType.MinimumWidth = 6;
             this.colFineType.Name = "colFineType";
             this.colFineType.ReadOnly = true;
+            this.colFineType.Width = 106;
             // 
             // colAmount
             // 
@@ -529,18 +479,41 @@
             this.colAmount.MinimumWidth = 6;
             this.colAmount.Name = "colAmount";
             this.colAmount.ReadOnly = true;
+            this.colAmount.Width = 101;
             // 
             // colPaymentStatus
             // 
             this.colPaymentStatus.HeaderText = "Status";
             this.colPaymentStatus.MinimumWidth = 8;
             this.colPaymentStatus.Name = "colPaymentStatus";
+            this.colPaymentStatus.Width = 92;
             // 
             // colDateSettled
             // 
             this.colDateSettled.HeaderText = "Date Settled";
             this.colDateSettled.MinimumWidth = 8;
             this.colDateSettled.Name = "colDateSettled";
+            this.colDateSettled.Width = 125;
+            // 
+            // DgvAuditLogs
+            // 
+            this.DgvAuditLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DgvAuditLogs.BackgroundColor = System.Drawing.Color.White;
+            this.DgvAuditLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvAuditLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colNumberingAuditLogs,
+            this.colLogID,
+            this.colUser,
+            this.colAction,
+            this.colTimestamp,
+            this.colModule});
+            this.DgvAuditLogs.Location = new System.Drawing.Point(36, 234);
+            this.DgvAuditLogs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DgvAuditLogs.Name = "DgvAuditLogs";
+            this.DgvAuditLogs.RowHeadersWidth = 62;
+            this.DgvAuditLogs.RowTemplate.Height = 28;
+            this.DgvAuditLogs.Size = new System.Drawing.Size(1509, 449);
+            this.DgvAuditLogs.TabIndex = 90;
             // 
             // colNumberingAuditLogs
             // 
@@ -552,10 +525,12 @@
             // 
             // colLogID
             // 
+            this.colLogID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colLogID.FillWeight = 426.1364F;
             this.colLogID.HeaderText = "Log ID";
             this.colLogID.MinimumWidth = 8;
             this.colLogID.Name = "colLogID";
+            this.colLogID.Width = 72;
             // 
             // colUser
             // 
@@ -563,6 +538,7 @@
             this.colUser.HeaderText = "User";
             this.colUser.MinimumWidth = 8;
             this.colUser.Name = "colUser";
+            this.colUser.Width = 79;
             // 
             // colAction
             // 
@@ -571,6 +547,7 @@
             this.colAction.MinimumWidth = 6;
             this.colAction.Name = "colAction";
             this.colAction.ReadOnly = true;
+            this.colAction.Width = 154;
             // 
             // colTimestamp
             // 
@@ -579,19 +556,46 @@
             this.colTimestamp.MinimumWidth = 6;
             this.colTimestamp.Name = "colTimestamp";
             this.colTimestamp.ReadOnly = true;
+            this.colTimestamp.Width = 123;
             // 
             // colModule
             // 
             this.colModule.HeaderText = "Module Involved";
             this.colModule.MinimumWidth = 8;
             this.colModule.Name = "colModule";
+            this.colModule.Width = 146;
+            // 
+            // LblReport
+            // 
+            this.LblReport.AutoSize = true;
+            this.LblReport.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblReport.Location = new System.Drawing.Point(30, 175);
+            this.LblReport.Name = "LblReport";
+            this.LblReport.Size = new System.Drawing.Size(217, 36);
+            this.LblReport.TabIndex = 91;
+            this.LblReport.Text = "Inventory Report";
+            // 
+            // BtnApplyFromTo
+            // 
+            this.BtnApplyFromTo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnApplyFromTo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnApplyFromTo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.BtnApplyFromTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnApplyFromTo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.BtnApplyFromTo.ForeColor = System.Drawing.Color.White;
+            this.BtnApplyFromTo.Location = new System.Drawing.Point(700, 36);
+            this.BtnApplyFromTo.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnApplyFromTo.Name = "BtnApplyFromTo";
+            this.BtnApplyFromTo.Size = new System.Drawing.Size(107, 52);
+            this.BtnApplyFromTo.TabIndex = 92;
+            this.BtnApplyFromTo.Text = "Apply";
+            this.BtnApplyFromTo.UseVisualStyleBackColor = false;
             // 
             // UCReports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.BtnExport);
             this.Controls.Add(this.LblReport);
             this.Controls.Add(this.DgvAuditLogs);
             this.Controls.Add(this.DgvFines);
@@ -623,10 +627,6 @@
         private System.Windows.Forms.DateTimePicker DTPckTo;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.GroupBox GrpBxBtns;
-        private ReaLTaiizor.Controls.Button BtnInventory;
-        private ReaLTaiizor.Controls.Button BtnAuditLogs;
-        private ReaLTaiizor.Controls.Button BtnFines;
-        private ReaLTaiizor.Controls.Button BtnTransactions;
         private System.Windows.Forms.GroupBox GrpBxDate;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView DgvTransactions;
@@ -634,7 +634,6 @@
         private System.Windows.Forms.DataGridView DgvFines;
         private System.Windows.Forms.DataGridView DgvAuditLogs;
         private System.Windows.Forms.Label LblReport;
-        private ReaLTaiizor.Controls.Button BtnExport;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNumberingTransactions;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTransactionID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
@@ -664,5 +663,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colAction;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTimestamp;
         private System.Windows.Forms.DataGridViewTextBoxColumn colModule;
+        private System.Windows.Forms.Button BtnInventory;
+        private System.Windows.Forms.Button BtnAuditLogs;
+        private System.Windows.Forms.Button BtnFines;
+        private System.Windows.Forms.Button BtnTransactions;
+        private System.Windows.Forms.Button BtnApplyFromTo;
     }
 }
