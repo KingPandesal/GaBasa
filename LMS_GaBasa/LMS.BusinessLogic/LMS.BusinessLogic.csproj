@@ -69,9 +69,11 @@
     <Compile Include="Managers\IMemberManager.cs" />
     <Compile Include="Managers\Interfaces\ICatalogManager.cs" />
     <Compile Include="Managers\Interfaces\IInventoryManager.cs" />
+    <Compile Include="Managers\Interfaces\IReportManager.cs" />
     <Compile Include="Managers\Interfaces\IReservationManager.cs" />
     <Compile Include="Managers\InventoryManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
+    <Compile Include="Managers\ReportManager.cs" />
     <Compile Include="Managers\ReservationManager.cs" />
     <Compile Include="Services\AddMember\AddMemberService.cs" />
     <Compile Include="Services\AddMember\IAddMemberService.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="Services\MemberProfileService.cs" />
     <Compile Include="Services\RenewMember\IRenewMemberService.cs" />
     <Compile Include="Services\RenewMember\RenewMemberService.cs" />
+    <Compile Include="Services\Reports\IReportManager.cs" />
     <Compile Include="Services\UserProfileService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -67,5 +67,10 @@ namespace LMS.Presentation.UserControls.Dashboards
         {
 
         }
+
+        private void lostBorderPanel20_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -173,7 +173,9 @@ namespace LMS.Presentation.UI.MainForm.Navigation
             if (_permissionService.CanGenerateReports(_currentUser) || _permissionService.CanManageUsers(_currentUser))
             {
                 // staff / librarian view
-                return new UserControls.Dashboards.UCDashboard();
+                var dashboard = new UserControls.Dashboards.UCDashboard();
+                dashboard.SetWelcomeUser(_currentUser);
+                return dashboard;
             }
 
             if (_permissionService.CanBorrowBooks(_currentUser) || _permissionService.CanViewBorrowed(_currentUser))
@@ -183,7 +185,9 @@ namespace LMS.Presentation.UI.MainForm.Navigation
             }
 
             // default fallback dashboard
-            return new UserControls.Dashboards.UCDashboard();
+            var defaultDashboard = new UserControls.Dashboards.UCDashboard();
+            defaultDashboard.SetWelcomeUser(_currentUser);
+            return defaultDashboard;
         }
 
         // Updated: return profile control based on the user's Role (no dependency on deleted UCProfile)
