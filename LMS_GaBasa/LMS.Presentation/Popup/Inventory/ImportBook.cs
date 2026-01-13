@@ -364,12 +364,13 @@ namespace LMS.Presentation.Popup.Inventory
                     rowErrors.Add($"Row {lineNumber}: 'isDigital' must be either 0 or 1.");
                 }
 
-                // 18. Download URL required only if isDigital == 1
+                // 18. Download URL required only if isDigital == 1 — accept any string (do not validate/format)
                 string downloadUrl = GetValue("Download URL");
                 if (isDigital == 1)
                 {
                     if (string.IsNullOrWhiteSpace(downloadUrl))
                         rowErrors.Add($"Row {lineNumber}: 'Download URL' is required when 'isDigital' is 1.");
+                    // intentionally accept any string value for Download URL; no further validation or formatting
                 }
 
                 // If any prior validations failed, skip further processing for this row
@@ -393,6 +394,7 @@ namespace LMS.Presentation.Popup.Inventory
                 }
 
                 // If resourceType is PhysicalBook enforce LoanType required
+                // NOTE: This enforces LoanType only when ResourceType == PhysicalBook regardless of isDigital value.
                 if (resourceType == ResourceType.PhysicalBook)
                 {
                     if (string.IsNullOrWhiteSpace(loanTypeRaw))
@@ -417,14 +419,14 @@ namespace LMS.Presentation.Popup.Inventory
 
                 // set DownloadURL if provided (and required when isDigital==1)
                 if (!string.IsNullOrWhiteSpace(downloadUrl))
-                    book.DownloadURL = downloadUrl;
+                    book.DownloadURL = downloadUrl; // keep as-is, no formatting
 
                 // Edition handling: if Periodical, editionRaw may contain "vol,issue" like "10,2"
                 if (resourceType == ResourceType.Periodical)
                 {
                     // Convert "10, 2" or "10,2" to "Vol. 10, No. 2"
                     var parts = editionRaw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                          .Select(p => p.Trim()).ToArray();
+                                      .Select(p => p.Trim()).ToArray();
                     if (parts.Length >= 2)
                     {
                         book.Edition = $"Vol. {parts[0]}, No. {parts[1]}";
@@ -789,6 +791,11 @@ namespace LMS.Presentation.Popup.Inventory
         }
 
         private void BtnSave_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImportBook_Load(object sender, EventArgs e)
         {
 
         }

@@ -191,6 +191,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Import books";
+            this.Load += new System.EventHandler(this.ImportBook_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.lostBorderPanel14.ResumeLayout(false);
             this.lostBorderPanel14.PerformLayout();
