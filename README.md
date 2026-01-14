@@ -55,6 +55,7 @@ Thanks to everyone who contributed to GaBasa!
 - 📄 <a href="https://docs.google.com/document/d/19aFYf08i4C4z6e4DFtAghInzjfmnRpLYf-IXhrbw5I0/edit?tab=t.1cfd565ykjka">Documentation</a>
 - 🎨 <a href="https://www.figma.com/design/OdcDOrOT7lrfCN9eDQYJZP/IT13---LMS?node-id=0-1&p=f&t=Hq0fi7MlIlmH2Gtk-0">Prototype (Lo-Fi)</a>
 - 🗂️ <a href="https://drive.google.com/drive/folders/1gb0dMvQgkr17ntrtM6xtuifRdsj52C16?usp=drive_link">Assets</a>
+- 👩‍🏫 <a href="https://www.canva.com/design/DAG91zAZAxg/IqTMnhIgklxVp-eJYHpyeg/edit?fbclid=IwY2xjawPSzd5leHRuA2FlbQIxMABicmlkETFCVkNRSFBnbDRLeEowMGRuc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHoHmEfMLnR1Dw7-Y_ekbx1mCcpl1r2X_WgbgvZBAG5H9wdTbL6a45VrIZ5rO_aem_NtkAhUrnBGZnLJyKS9Y5ag">Powerpoint Presentation</a>
 
 ---
 
