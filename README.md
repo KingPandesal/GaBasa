@@ -114,4 +114,4 @@ Developed with best practices, collaboration, and a passion for building meaning
 ## License
 
 This project is licensed under the MIT License.
-© 2026 Ken Madayag
+© 2026 Ken Crisostomo
