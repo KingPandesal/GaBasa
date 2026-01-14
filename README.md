@@ -120,7 +120,7 @@ This project uses the following NuGet packages:
    - Library for generating and scanning barcodes, used for book accession numbers and circulation processes.
 - 🎥 **AForge**
    - Computer vision and image processing framework, used for camera-based barcode scanning support.
-- **CsvHelper**
+- 🧾 **CsvHelper**
    - Handles CSV file reading and writing, used for bulk import of books and catalog data.
 
 **Note**:
