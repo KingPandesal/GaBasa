@@ -7,7 +7,7 @@
    <i>Built with care, so every book finds a reader — and every reader finds a story.</i>
 </p>
 
-### © 2026 Ken Madayag
+### © 2026 Ken Crisostomo
 
 - This project is provided for educational and portfolio purposes.
 - Attribution is required for reuse.
