@@ -84,12 +84,44 @@ git clone https://github.com/SixxCodes/GaBasa.git
 ### 3️⃣ Set Startup Project
 - Right-click LMS.Presentation → Set as Startup Project.
 
-### 4️⃣ Restore NuGet Packages / Install Dependencies
+### 4️⃣ Configuration Database Connection (App.config)
+This project requires a SQL Server connection.
+1. Navigate to the LMS.Presentation project.
+2. Locate the file:
+```bash
+App.config.example
+```
+3. Make a copy and rename it to:
+```bash
+App.config
+```
+4. Open App.config and update the connection string:
+```bash
+<connectionStrings>
+  <add
+    name="LibraryDB"
+    connectionString="Server=YOUR_SERVER_NAME;Database=YOUR_DATABASE_NAME;Trusted_Connection=True;"
+    providerName="System.Data.SqlClient" />
+</connectionStrings>
+```
+## 📌 Notes:
+- Replace YOUR_SERVER_NAME with your SQL Server instance (e.g. localhost\SQLEXPRESS)
+- Replace YOUR_DATABASE_NAME with your database name
+- App.config is intentionally not tracked in the repository for security reasons (included in .gitignore)
+
+### 5️⃣ Restore NuGet Packages / Install Dependencies
 This project uses the following NuGet packages:
 
 - 🖌️ **ReaLTaiizor** (for modern UI components)
    - [ReaLTaiizor GitHub](https://github.com/roy-t/ReaLTaiizor) – check this for tutorials, usage examples, and themes. (Make sure you're installing the correct package! Look at the package title, description, and authors to make sure.)
-- 🔒 **BCrypt.Net-Next** (for password hashing)
+- 🔒 **BCrypt.Net-Next**
+   - Used for secure password hashing and verification to protect user credentials.
+- 🧾 **ZXing.net**
+   - Library for generating and scanning barcodes, used for book accession numbers and circulation processes.
+- 🎥 **AForge**
+   - Computer vision and image processing framework, used for camera-based barcode scanning support.
+- **CsvHelper**
+   - Handles CSV file reading and writing, used for bulk import of books and catalog data.
 
 **Note**:
 - Visual Studio should restore them automatically when you build the solution.  
@@ -103,7 +135,7 @@ To get a clearer view of all dependencies and their relationships:
 
 Or go to **Insights** of this repository and click the **Dependency Graph** tab to view all packages installed in this project.
 
-### 5️⃣ Build and Run
+### 6️⃣ Build and Run
 - Press F5 to build and run the application.
 
 --- 
