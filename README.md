@@ -101,3 +101,8 @@ Or go to **Insights** of this repository and click the **Dependency Graph** tab 
 
 ## ✨ Thank you for exploring GaBasa! ✨
 Developed with best practices, collaboration, and a passion for building meaningful systems.
+
+## License
+
+This project is licensed under the MIT License.
+© 2026 Ken Madayag
