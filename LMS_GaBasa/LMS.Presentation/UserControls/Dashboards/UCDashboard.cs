@@ -138,7 +138,6 @@ namespace LMS.Presentation.UserControls.Dashboards
                 LblValueOverdueBooks.Text = _reportManager.GetTotalOverdueBooks().ToString("N0");
                 decimal totalFines = _reportManager.GetTotalUnpaidFines();
                 LblValueTotalFInes.Text = $"₱{totalFines:N2}";
-                LblFinesLastUpdated.Text = $"Last updated: {DateTime.Now:MMM dd, yyyy}";
                 TryAdjustFinesLabel();
 
                 // Charts

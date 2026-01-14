@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCDashboard));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel2 = new System.Windows.Forms.Panel();
             this.PnlforCategoryDistribution = new ReaLTaiizor.Controls.LostBorderPanel();
+            this.chartMostUse = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LblCategoryDistribution = new System.Windows.Forms.Label();
             this.parrotLineGraph1 = new ReaLTaiizor.Controls.ParrotLineGraph();
             this.lostBorderPanel24 = new ReaLTaiizor.Controls.LostBorderPanel();
@@ -50,25 +51,17 @@
             this.Lbl1 = new System.Windows.Forms.Label();
             this.PnlforOverdueBooks = new ReaLTaiizor.Controls.LostBorderPanel();
             this.lostBorderPanel11 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.Lbl4 = new System.Windows.Forms.Label();
-            this.LblPercentOverdueBooks = new System.Windows.Forms.Label();
             this.LblValueOverdueBooks = new System.Windows.Forms.Label();
             this.LblOverdueBooks = new System.Windows.Forms.Label();
             this.PnlforReserveBooks = new ReaLTaiizor.Controls.LostBorderPanel();
             this.lostBorderPanel10 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.Lbl3 = new System.Windows.Forms.Label();
-            this.LblPercentReserveBooks = new System.Windows.Forms.Label();
             this.LblValueReserveBooks = new System.Windows.Forms.Label();
             this.LblReserveBooks = new System.Windows.Forms.Label();
             this.PnlBorrowingByUserType = new ReaLTaiizor.Controls.LostBorderPanel();
             this.LblBorrowingByUserType = new System.Windows.Forms.Label();
             this.chartBorrowingsByUserTypes = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.PnlforTotalFines = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.lostBorderPanel17 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.LblFinesLastUpdated = new System.Windows.Forms.Label();
-            this.LblValueTotalFInes = new System.Windows.Forms.Label();
             this.LblTotalFines = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.PnlBorrowingTrend = new ReaLTaiizor.Controls.LostBorderPanel();
             this.LblBorrowingTrend = new System.Windows.Forms.Label();
             this.ChartBorrowingTrends = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -79,14 +72,15 @@
             this.LblTotalBooks = new System.Windows.Forms.Label();
             this.lostBorderPanel14 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.lostBorderPanel15 = new ReaLTaiizor.Controls.LostBorderPanel();
-            this.Lbl2 = new System.Windows.Forms.Label();
-            this.LblPercentBorrowedBooks = new System.Windows.Forms.Label();
             this.LblValueBorrowedBooks = new System.Windows.Forms.Label();
             this.LblBorrowedBooks = new System.Windows.Forms.Label();
             this.Calendar = new System.Windows.Forms.MonthCalendar();
-            this.chartMostUse = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label2 = new System.Windows.Forms.Label();
+            this.LblValueTotalFInes = new System.Windows.Forms.Label();
+            this.lostBorderPanel17 = new ReaLTaiizor.Controls.LostBorderPanel();
             this.panel2.SuspendLayout();
             this.PnlforCategoryDistribution.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartMostUse)).BeginInit();
             this.lostBorderPanel24.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.PnlforOverdueBooks.SuspendLayout();
@@ -96,14 +90,13 @@
             this.PnlBorrowingByUserType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartBorrowingsByUserTypes)).BeginInit();
             this.PnlforTotalFines.SuspendLayout();
-            this.lostBorderPanel17.SuspendLayout();
             this.PnlBorrowingTrend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartBorrowingTrends)).BeginInit();
             this.PnlforTotalBooks.SuspendLayout();
             this.lostBorderPanel13.SuspendLayout();
             this.lostBorderPanel14.SuspendLayout();
             this.lostBorderPanel15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartMostUse)).BeginInit();
+            this.lostBorderPanel17.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -141,6 +134,23 @@
             this.PnlforCategoryDistribution.ShowText = true;
             this.PnlforCategoryDistribution.Size = new System.Drawing.Size(367, 235);
             this.PnlforCategoryDistribution.TabIndex = 13;
+            // 
+            // chartMostUse
+            // 
+            chartArea7.Name = "ChartArea1";
+            this.chartMostUse.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chartMostUse.Legends.Add(legend7);
+            this.chartMostUse.Location = new System.Drawing.Point(34, 54);
+            this.chartMostUse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chartMostUse.Name = "chartMostUse";
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chartMostUse.Series.Add(series7);
+            this.chartMostUse.Size = new System.Drawing.Size(283, 148);
+            this.chartMostUse.TabIndex = 7;
+            this.chartMostUse.Text = "chart1";
             // 
             // LblCategoryDistribution
             // 
@@ -228,7 +238,7 @@
             this.LblViewCatalog.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.LblViewCatalog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
             this.LblViewCatalog.Location = new System.Drawing.Point(29, 186);
-            this.LblViewCatalog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LblViewCatalog.Margin = new System.Windows.Forms.Padding(4);
             this.LblViewCatalog.Name = "LblViewCatalog";
             this.LblViewCatalog.Size = new System.Drawing.Size(190, 46);
             this.LblViewCatalog.TabIndex = 16;
@@ -276,8 +286,6 @@
             // 
             this.lostBorderPanel11.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel11.Controls.Add(this.Lbl4);
-            this.lostBorderPanel11.Controls.Add(this.LblPercentOverdueBooks);
             this.lostBorderPanel11.Controls.Add(this.LblValueOverdueBooks);
             this.lostBorderPanel11.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel11.ForeColor = System.Drawing.Color.Black;
@@ -286,31 +294,8 @@
             this.lostBorderPanel11.Name = "lostBorderPanel11";
             this.lostBorderPanel11.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lostBorderPanel11.ShowText = true;
-            this.lostBorderPanel11.Size = new System.Drawing.Size(279, 149);
+            this.lostBorderPanel11.Size = new System.Drawing.Size(279, 147);
             this.lostBorderPanel11.TabIndex = 13;
-            // 
-            // Lbl4
-            // 
-            this.Lbl4.AutoSize = true;
-            this.Lbl4.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.Lbl4.Location = new System.Drawing.Point(117, 90);
-            this.Lbl4.Name = "Lbl4";
-            this.Lbl4.Size = new System.Drawing.Size(78, 21);
-            this.Lbl4.TabIndex = 10;
-            this.Lbl4.Text = "this week";
-            this.Lbl4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LblPercentOverdueBooks
-            // 
-            this.LblPercentOverdueBooks.AutoSize = true;
-            this.LblPercentOverdueBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.LblPercentOverdueBooks.ForeColor = System.Drawing.Color.Gold;
-            this.LblPercentOverdueBooks.Location = new System.Drawing.Point(61, 89);
-            this.LblPercentOverdueBooks.Name = "LblPercentOverdueBooks";
-            this.LblPercentOverdueBooks.Size = new System.Drawing.Size(51, 21);
-            this.LblPercentOverdueBooks.TabIndex = 9;
-            this.LblPercentOverdueBooks.Text = "- 50%";
-            this.LblPercentOverdueBooks.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LblValueOverdueBooks
             // 
@@ -354,8 +339,6 @@
             // 
             this.lostBorderPanel10.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel10.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel10.Controls.Add(this.Lbl3);
-            this.lostBorderPanel10.Controls.Add(this.LblPercentReserveBooks);
             this.lostBorderPanel10.Controls.Add(this.LblValueReserveBooks);
             this.lostBorderPanel10.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel10.ForeColor = System.Drawing.Color.Black;
@@ -364,31 +347,8 @@
             this.lostBorderPanel10.Name = "lostBorderPanel10";
             this.lostBorderPanel10.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lostBorderPanel10.ShowText = true;
-            this.lostBorderPanel10.Size = new System.Drawing.Size(279, 149);
+            this.lostBorderPanel10.Size = new System.Drawing.Size(279, 147);
             this.lostBorderPanel10.TabIndex = 13;
-            // 
-            // Lbl3
-            // 
-            this.Lbl3.AutoSize = true;
-            this.Lbl3.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.Lbl3.Location = new System.Drawing.Point(116, 91);
-            this.Lbl3.Name = "Lbl3";
-            this.Lbl3.Size = new System.Drawing.Size(78, 21);
-            this.Lbl3.TabIndex = 10;
-            this.Lbl3.Text = "this week";
-            this.Lbl3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LblPercentReserveBooks
-            // 
-            this.LblPercentReserveBooks.AutoSize = true;
-            this.LblPercentReserveBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.LblPercentReserveBooks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.LblPercentReserveBooks.Location = new System.Drawing.Point(53, 91);
-            this.LblPercentReserveBooks.Name = "LblPercentReserveBooks";
-            this.LblPercentReserveBooks.Size = new System.Drawing.Size(56, 21);
-            this.LblPercentReserveBooks.TabIndex = 9;
-            this.LblPercentReserveBooks.Text = "▲ 10%";
-            this.LblPercentReserveBooks.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LblValueReserveBooks
             // 
@@ -441,17 +401,17 @@
             // 
             // chartBorrowingsByUserTypes
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartBorrowingsByUserTypes.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartBorrowingsByUserTypes.Legends.Add(legend2);
+            chartArea8.Name = "ChartArea1";
+            this.chartBorrowingsByUserTypes.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chartBorrowingsByUserTypes.Legends.Add(legend8);
             this.chartBorrowingsByUserTypes.Location = new System.Drawing.Point(8, 45);
             this.chartBorrowingsByUserTypes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartBorrowingsByUserTypes.Name = "chartBorrowingsByUserTypes";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartBorrowingsByUserTypes.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chartBorrowingsByUserTypes.Series.Add(series8);
             this.chartBorrowingsByUserTypes.Size = new System.Drawing.Size(298, 170);
             this.chartBorrowingsByUserTypes.TabIndex = 0;
             this.chartBorrowingsByUserTypes.Text = "chart1";
@@ -473,45 +433,6 @@
             this.PnlforTotalFines.Size = new System.Drawing.Size(279, 210);
             this.PnlforTotalFines.TabIndex = 13;
             // 
-            // lostBorderPanel17
-            // 
-            this.lostBorderPanel17.BackColor = System.Drawing.Color.White;
-            this.lostBorderPanel17.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel17.Controls.Add(this.LblFinesLastUpdated);
-            this.lostBorderPanel17.Controls.Add(this.LblValueTotalFInes);
-            this.lostBorderPanel17.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lostBorderPanel17.ForeColor = System.Drawing.Color.Black;
-            this.lostBorderPanel17.Location = new System.Drawing.Point(0, 61);
-            this.lostBorderPanel17.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lostBorderPanel17.Name = "lostBorderPanel17";
-            this.lostBorderPanel17.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.lostBorderPanel17.ShowText = true;
-            this.lostBorderPanel17.Size = new System.Drawing.Size(279, 149);
-            this.lostBorderPanel17.TabIndex = 14;
-            // 
-            // LblFinesLastUpdated
-            // 
-            this.LblFinesLastUpdated.AutoSize = true;
-            this.LblFinesLastUpdated.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.LblFinesLastUpdated.ForeColor = System.Drawing.Color.Gray;
-            this.LblFinesLastUpdated.Location = new System.Drawing.Point(36, 92);
-            this.LblFinesLastUpdated.Name = "LblFinesLastUpdated";
-            this.LblFinesLastUpdated.Size = new System.Drawing.Size(207, 21);
-            this.LblFinesLastUpdated.TabIndex = 6;
-            this.LblFinesLastUpdated.Text = "Last updated: Dec 04, 2025";
-            this.LblFinesLastUpdated.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LblValueTotalFInes
-            // 
-            this.LblValueTotalFInes.AutoSize = true;
-            this.LblValueTotalFInes.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.LblValueTotalFInes.Location = new System.Drawing.Point(36, 18);
-            this.LblValueTotalFInes.Name = "LblValueTotalFInes";
-            this.LblValueTotalFInes.Size = new System.Drawing.Size(210, 81);
-            this.LblValueTotalFInes.TabIndex = 5;
-            this.LblValueTotalFInes.Text = "P3,750";
-            this.LblValueTotalFInes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // LblTotalFines
             // 
             this.LblTotalFines.AutoSize = true;
@@ -522,17 +443,6 @@
             this.LblTotalFines.TabIndex = 5;
             this.LblTotalFines.Text = "Total Fines";
             this.LblTotalFines.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 30F);
-            this.label2.Location = new System.Drawing.Point(37, 89);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(210, 81);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "P3,750";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PnlBorrowingTrend
             // 
@@ -563,17 +473,17 @@
             // 
             // ChartBorrowingTrends
             // 
-            chartArea3.Name = "ChartArea1";
-            this.ChartBorrowingTrends.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.ChartBorrowingTrends.Legends.Add(legend3);
+            chartArea9.Name = "ChartArea1";
+            this.ChartBorrowingTrends.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.ChartBorrowingTrends.Legends.Add(legend9);
             this.ChartBorrowingTrends.Location = new System.Drawing.Point(47, 71);
             this.ChartBorrowingTrends.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ChartBorrowingTrends.Name = "ChartBorrowingTrends";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.ChartBorrowingTrends.Series.Add(series3);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.ChartBorrowingTrends.Series.Add(series9);
             this.ChartBorrowingTrends.Size = new System.Drawing.Size(692, 144);
             this.ChartBorrowingTrends.TabIndex = 0;
             this.ChartBorrowingTrends.Text = "chart1";
@@ -607,7 +517,7 @@
             this.lostBorderPanel13.Name = "lostBorderPanel13";
             this.lostBorderPanel13.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lostBorderPanel13.ShowText = true;
-            this.lostBorderPanel13.Size = new System.Drawing.Size(279, 149);
+            this.lostBorderPanel13.Size = new System.Drawing.Size(279, 147);
             this.lostBorderPanel13.TabIndex = 14;
             // 
             // LblValueTotalBooks
@@ -663,8 +573,6 @@
             // 
             this.lostBorderPanel15.BackColor = System.Drawing.Color.White;
             this.lostBorderPanel15.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
-            this.lostBorderPanel15.Controls.Add(this.Lbl2);
-            this.lostBorderPanel15.Controls.Add(this.LblPercentBorrowedBooks);
             this.lostBorderPanel15.Controls.Add(this.LblValueBorrowedBooks);
             this.lostBorderPanel15.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lostBorderPanel15.ForeColor = System.Drawing.Color.Black;
@@ -673,31 +581,8 @@
             this.lostBorderPanel15.Name = "lostBorderPanel15";
             this.lostBorderPanel15.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lostBorderPanel15.ShowText = true;
-            this.lostBorderPanel15.Size = new System.Drawing.Size(279, 149);
+            this.lostBorderPanel15.Size = new System.Drawing.Size(279, 147);
             this.lostBorderPanel15.TabIndex = 13;
-            // 
-            // Lbl2
-            // 
-            this.Lbl2.AutoSize = true;
-            this.Lbl2.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.Lbl2.Location = new System.Drawing.Point(120, 90);
-            this.Lbl2.Name = "Lbl2";
-            this.Lbl2.Size = new System.Drawing.Size(78, 21);
-            this.Lbl2.TabIndex = 10;
-            this.Lbl2.Text = "this week";
-            this.Lbl2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LblPercentBorrowedBooks
-            // 
-            this.LblPercentBorrowedBooks.AutoSize = true;
-            this.LblPercentBorrowedBooks.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.LblPercentBorrowedBooks.ForeColor = System.Drawing.Color.Red;
-            this.LblPercentBorrowedBooks.Location = new System.Drawing.Point(52, 89);
-            this.LblPercentBorrowedBooks.Name = "LblPercentBorrowedBooks";
-            this.LblPercentBorrowedBooks.Size = new System.Drawing.Size(63, 21);
-            this.LblPercentBorrowedBooks.TabIndex = 9;
-            this.LblPercentBorrowedBooks.Text = "▼ 80% ";
-            this.LblPercentBorrowedBooks.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LblValueBorrowedBooks
             // 
@@ -727,22 +612,42 @@
             this.Calendar.Name = "Calendar";
             this.Calendar.TabIndex = 7;
             // 
-            // chartMostUse
+            // label2
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartMostUse.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartMostUse.Legends.Add(legend1);
-            this.chartMostUse.Location = new System.Drawing.Point(34, 54);
-            this.chartMostUse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chartMostUse.Name = "chartMostUse";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartMostUse.Series.Add(series1);
-            this.chartMostUse.Size = new System.Drawing.Size(283, 148);
-            this.chartMostUse.TabIndex = 7;
-            this.chartMostUse.Text = "chart1";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 30F);
+            this.label2.Location = new System.Drawing.Point(37, 89);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(210, 81);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "P3,750";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LblValueTotalFInes
+            // 
+            this.LblValueTotalFInes.AutoSize = true;
+            this.LblValueTotalFInes.Font = new System.Drawing.Font("Segoe UI", 30F);
+            this.LblValueTotalFInes.Location = new System.Drawing.Point(36, 18);
+            this.LblValueTotalFInes.Name = "LblValueTotalFInes";
+            this.LblValueTotalFInes.Size = new System.Drawing.Size(210, 81);
+            this.LblValueTotalFInes.TabIndex = 5;
+            this.LblValueTotalFInes.Text = "P3,750";
+            this.LblValueTotalFInes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lostBorderPanel17
+            // 
+            this.lostBorderPanel17.BackColor = System.Drawing.Color.White;
+            this.lostBorderPanel17.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(37)))), ((int)(((byte)(50)))));
+            this.lostBorderPanel17.Controls.Add(this.LblValueTotalFInes);
+            this.lostBorderPanel17.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lostBorderPanel17.ForeColor = System.Drawing.Color.Black;
+            this.lostBorderPanel17.Location = new System.Drawing.Point(0, 61);
+            this.lostBorderPanel17.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lostBorderPanel17.Name = "lostBorderPanel17";
+            this.lostBorderPanel17.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.lostBorderPanel17.ShowText = true;
+            this.lostBorderPanel17.Size = new System.Drawing.Size(279, 147);
+            this.lostBorderPanel17.TabIndex = 14;
             // 
             // UCDashboard
             // 
@@ -756,6 +661,7 @@
             this.panel2.ResumeLayout(false);
             this.PnlforCategoryDistribution.ResumeLayout(false);
             this.PnlforCategoryDistribution.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartMostUse)).EndInit();
             this.lostBorderPanel24.ResumeLayout(false);
             this.lostBorderPanel24.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -772,8 +678,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartBorrowingsByUserTypes)).EndInit();
             this.PnlforTotalFines.ResumeLayout(false);
             this.PnlforTotalFines.PerformLayout();
-            this.lostBorderPanel17.ResumeLayout(false);
-            this.lostBorderPanel17.PerformLayout();
             this.PnlBorrowingTrend.ResumeLayout(false);
             this.PnlBorrowingTrend.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartBorrowingTrends)).EndInit();
@@ -785,7 +689,8 @@
             this.lostBorderPanel14.PerformLayout();
             this.lostBorderPanel15.ResumeLayout(false);
             this.lostBorderPanel15.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartMostUse)).EndInit();
+            this.lostBorderPanel17.ResumeLayout(false);
+            this.lostBorderPanel17.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -799,26 +704,18 @@
         private System.Windows.Forms.Button LblViewCatalog;
         private System.Windows.Forms.Label LblWelcomeWithName;
         private System.Windows.Forms.Label Lbl1;
-        private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel17;
-        private System.Windows.Forms.Label LblValueTotalFInes;
         private ReaLTaiizor.Controls.LostBorderPanel PnlforOverdueBooks;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel11;
-        private System.Windows.Forms.Label Lbl4;
-        private System.Windows.Forms.Label LblPercentOverdueBooks;
         private System.Windows.Forms.Label LblValueOverdueBooks;
         private System.Windows.Forms.Label LblOverdueBooks;
         private ReaLTaiizor.Controls.LostBorderPanel PnlforReserveBooks;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel10;
-        private System.Windows.Forms.Label Lbl3;
-        private System.Windows.Forms.Label LblPercentReserveBooks;
         private System.Windows.Forms.Label LblValueReserveBooks;
         private System.Windows.Forms.Label LblReserveBooks;
         private ReaLTaiizor.Controls.LostBorderPanel PnlBorrowingByUserType;
         private System.Windows.Forms.Label LblBorrowingByUserType;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartBorrowingsByUserTypes;
         private ReaLTaiizor.Controls.LostBorderPanel PnlforTotalFines;
-        private System.Windows.Forms.Label LblFinesLastUpdated;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label LblTotalFines;
         private ReaLTaiizor.Controls.LostBorderPanel PnlBorrowingTrend;
         private System.Windows.Forms.Label LblBorrowingTrend;
@@ -830,8 +727,6 @@
         private System.Windows.Forms.Label LblTotalBooks;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel14;
         private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel15;
-        private System.Windows.Forms.Label Lbl2;
-        private System.Windows.Forms.Label LblPercentBorrowedBooks;
         private System.Windows.Forms.Label LblValueBorrowedBooks;
         private System.Windows.Forms.Label LblBorrowedBooks;
         private System.Windows.Forms.MonthCalendar Calendar;
@@ -839,5 +734,8 @@
         private ReaLTaiizor.Controls.LostBorderPanel PnlforCategoryDistribution;
         private System.Windows.Forms.Label LblCategoryDistribution;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartMostUse;
+        private ReaLTaiizor.Controls.LostBorderPanel lostBorderPanel17;
+        private System.Windows.Forms.Label LblValueTotalFInes;
+        private System.Windows.Forms.Label label2;
     }
 }
