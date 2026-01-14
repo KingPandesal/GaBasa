@@ -1,8 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
 	<connectionStrings>
-		<add name="LibraryDB" connectionString="Server=LAPTOP-40FGBKCR\SQLEXPRESS;Database=LibraryDB;Trusted_Connection=True;" providerName="System.Data.SqlClient" />
-	</connectionStrings>
+    <!-- 
+      Replace the values below with your own SQL Server configuration.
+      Example:
+      Server=YOUR_SERVER_NAME;
+      Database=YOUR_DATABASE_NAME;
+      Trusted_Connection=True;
+    -->
+    <add
+      name="LibraryDB"
+      connectionString="Server=YOUR_SERVER_NAME;Database=YOUR_DATABASE_NAME;Trusted_Connection=True;"
+      providerName="System.Data.SqlClient" />
+  </connectionStrings>
 
 	<startup>
 		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8" />
