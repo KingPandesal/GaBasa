@@ -104,7 +104,7 @@ App.config
     providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
-## 📌 Notes:
+**📌 Notes**
 - Replace YOUR_SERVER_NAME with your SQL Server instance (e.g. localhost\SQLEXPRESS)
 - Replace YOUR_DATABASE_NAME with your database name
 - App.config is intentionally not tracked in the repository for security reasons (included in .gitignore)
