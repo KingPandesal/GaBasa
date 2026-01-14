@@ -7,6 +7,11 @@
    <i>Built with care, so every book finds a reader — and every reader finds a story.</i>
 </p>
 
+© 2026 Ken Madayag
+
+This project is provided for educational and portfolio purposes.
+Attribution is required for reuse.
+
 A Windows Desktop Application built with **C# .NET Framework WinForms** for managing library operations including cataloging, circulation, member management, and reporting. 
 
 Take a look at our **Wiki** here on github to understand more about <i><strong>GaBasa: The Library Management System.</strong></i>
