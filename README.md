@@ -52,7 +52,7 @@ Thanks to everyone who contributed to GaBasa!
 
 | Name        | Role             | GitHub                                         |
 | ----------- | ---------------- | ---------------------------------------------- |
-| Ken Madayag | Lead Developer   | [@SixxCodes](https://github.com/SixxCodes)     |
+| Kenny Crisostomo | Lead Developer   | [@SixxCodes](https://github.com/KingPandesal)     |
 | Merry Guisihan | Database Manager | [@Mauitypings](https://github.com/Mauitypings) |
 | Vien Ugay | UI Design | [@viensed](https://github.com/viensed) |
 | Jerard Lavilla | UI Design | [@lavillajerard](https://github.com/lavillajerard) |
