@@ -1,4 +1,3 @@
-
 <h1 align="center">📚 GaBasa: Library Management System 📚 </h1>
 
 <p align="center">
